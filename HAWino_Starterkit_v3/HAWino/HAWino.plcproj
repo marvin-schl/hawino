@@ -81,6 +81,9 @@
     <Compile Include="POUs\HAWinoCore\MQTT.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\HAWinoCore\DS_GW1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\HAWinoCore\PowerManager.TcPOU">
       <SubType>Code</SubType>
     </Compile>

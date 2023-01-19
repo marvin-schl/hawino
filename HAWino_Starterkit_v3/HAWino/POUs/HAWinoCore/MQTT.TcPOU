@@ -31,6 +31,9 @@ VAR
     fbMessage      : FB_IotMqttMessage;
 	hrErrorOccurred : HRESULT; 			// Enthlt dern letzten augetretenen Fehler
 	
+	//wir geändert
+	sTopicSubToGW1: STRING(255);
+	
 // Variables for JSON
 	fbJson			: FB_JsonSaxWriter;
 	fbJsonDataType 	: FB_JsonReadWriteDataType;
@@ -73,6 +76,7 @@ IF txtReadInit THEN
 		sTopicPubToPowerMgmt  := CONCAT('Robots/PowerMgmt/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number)); 	
 		sTopicPubToPowerMgmt_SOC  := CONCAT('Robots/PowerMgmt/SoC_Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number)); 
 		sTopicSubToPowerMgmt  := CONCAT('PowerMgmt/Robots/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
+		sTopicSubToGW1  := CONCAT('VPJ/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
 		initMQTT:= TRUE;
 	END_IF
 	
@@ -158,6 +162,9 @@ IF txtReadInit THEN
 			//
 			// Abbonieren der Toopics, welche vom Gewerk 1 kommen
 			//
+			//Abbonieren von Topic: VPJ/Roboter
+			bSubscribed := fbIotMqttClient.Subscribe(sTopic:=sTopicSubToGW1, eQoS:=TcIotMqttQos.AtMostOnceDelivery);
+			
 			
 			//bSubscribed := fbIotMqttClient.Subscribe(sTopic:=sTopicSubToFleetMgmt, eQoS:=TcIotMqttQos.AtMostOnceDelivery);
 			//IF fbIotMqttClient.bError THEN
@@ -282,7 +289,9 @@ END_IF]]></ST>
       <LineId Id="189" Count="0" />
       <LineId Id="756" Count="0" />
       <LineId Id="821" Count="0" />
-      <LineId Id="823" Count="2" />
+      <LineId Id="823" Count="1" />
+      <LineId Id="960" Count="0" />
+      <LineId Id="825" Count="0" />
       <LineId Id="822" Count="0" />
       <LineId Id="757" Count="0" />
       <LineId Id="5" Count="0" />
@@ -316,7 +325,11 @@ END_IF]]></ST>
       <LineId Id="241" Count="0" />
       <LineId Id="252" Count="0" />
       <LineId Id="251" Count="0" />
-      <LineId Id="280" Count="14" />
+      <LineId Id="280" Count="13" />
+      <LineId Id="954" Count="0" />
+      <LineId Id="956" Count="0" />
+      <LineId Id="955" Count="0" />
+      <LineId Id="294" Count="0" />
       <LineId Id="300" Count="0" />
       <LineId Id="295" Count="3" />
       <LineId Id="301" Count="0" />
@@ -326,7 +339,8 @@ END_IF]]></ST>
       <LineId Id="302" Count="0" />
       <LineId Id="307" Count="0" />
       <LineId Id="310" Count="25" />
-      <LineId Id="620" Count="1" />
+      <LineId Id="961" Count="0" />
+      <LineId Id="621" Count="0" />
       <LineId Id="629" Count="1" />
       <LineId Id="627" Count="1" />
       <LineId Id="626" Count="0" />

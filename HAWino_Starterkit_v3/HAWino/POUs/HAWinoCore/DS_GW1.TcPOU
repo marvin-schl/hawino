@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="DS_GW1" Id="{7e9462bd-5363-4324-b3f5-baf8741cfe0a}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM DS_GW1
+VAR
+
+// Local Variables for Mqtt Client handling
+	fbIotMqttClient : FB_IotMqttClient;
+	//ClientId : STRING(255);
+    //ClientId : STRING(255) := CONCAT('HAWino_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
+	bSetParameter 	: BOOL := TRUE;
+	bConnect 		: BOOL := TRUE;	
+	
+// Publish message
+	initMQTT : BOOL := FALSE;
+	fbTimerPub 	: TON := (PT:=T#500MS);									// Intervall für das Senden des Akku-Status
+	
+	
+	bComCheckAnswer	AT%Q*	: BOOL;
+	
+	
+// Timer to create a time stamp
+	fbTimerTimestamp : TON := (PT:=T#71582M47S295MS);
+	
+// Local Vaiables to evaluate and act to input
+	fbComCheckFlag	: RS;
+	hrErrorOccurred : HRESULT; 			// Enthlt dern letzten augetretenen Fehler	
+
+	sTopicSubToFleetMgmt: STRING;
+	Reset1: BOOL;
+	//Input synccheck. robotdata has been read and can be used.
+	txtReadInit AT%I* : BOOL := FALSE;
+	
+	feedback: ARRAY[0..7] OF STRING := ['Verfügbar', 'Auftrag angenommen', 'Auf Anfahrt', 'Teil aufgenommen', 
+											'Abmeldung', 'Auf Transport', 'Anmeldung', 'Teil abgelegt'];
+	sTopicPubToGW1: STRING(255) := CONCAT('VPJ/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
+	s0, s1, s2, s3, s4, s5, s6, s7: BOOL := 0;
+	AuftragDa: BOOL;
+	Timer : TON;
+	startTime: BOOL;
+	WerkstueckAusgelesen: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//vielleicht schlauer hier mit Statemaschine zu arbeiten
+
+
+	//
+	// Setting the parameters for establishing the connection to the Mqtt Broker and initializing the connection.
+	//
+	IF bSetParameter THEN
+		fbIotMqttClient.sHostName := '192.168.0.11';	// IP-Adresse des Servers
+		fbIotMqttClient.nHostPort := 1883;
+		//fbIotMqttClient.sClientId := ClientId;
+		fbIotMqttClient.sClientId := CONCAT('Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
+		fbIotMqttClient.sTopicPrefix := '';
+		//fbIotMqttClient.nKeepAlive:= 60; 
+		fbIotMqttClient.sUserName:= 'VPJ';
+		fbIotMqttClient.sUserPassword:= 'R462';
+		//fbIotMqttClient.stWill:= ; 
+		//fbIotMqttClient.stTLS:= ;
+		fbIotMqttClient.ipMessageQueue := fbMessageQueue;
+	
+		bSetParameter := FALSE;
+	END_IF
+	
+	
+	//
+	// This method -> MUST BE CALLED CYCLICALLY <- to ensure background communication with the MQTT broker.
+	//
+	fbIotMqttClient.Execute(bConnect);
+	
+	IF fbIotMqttClient.bError THEN
+		// ToDo: add error logging here
+		hrErrorOccurred := fbIotMqttClient.hrErrorCode;
+	END_IF
+
+	
+	// Senden der MQTT- Nachrichten
+	
+	IF fbIotMqttClient.bConnected THEN			// Kontrolle, ob Broker verbunden ist
+			
+		//
+		// Nachricht an GW1 - Produktionsauftrag
+		//
+		//Statemaschine
+		Timer(IN:= startTime, PT:=T#500MS);
+		s0 := 1;
+		//Rückmeldung Verfügbar
+		fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+										pPayload:=ADR(feedback[0]), 
+										nPayloadSize:= INT_TO_UDINT(LEN(feedback[0])),
+										eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+										bRetain:= FALSE, 
+										bQueue:= FALSE);
+										
+		//Warten auf Auftrag
+		IF s0 AND NOT s1 AND AuftragDa THEN
+			s0 := 0; s1 := 1;
+			//Rückmeldung Auftrag angenommen
+			fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+										pPayload:=ADR(feedback[1]), 
+										nPayloadSize:= INT_TO_UDINT(LEN(feedback[1])),
+										eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+										bRetain:= FALSE, 
+										bQueue:= FALSE);
+			startTime := 1;
+		END_IF
+		IF s1 AND NOT s2 AND Timer.Q THEN
+			startTime := 0;
+			s1 := 0; s2 := 1;
+			//Rückmeldung Auf Anfahrt
+			fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+										pPayload:=ADR(feedback[2]), 
+										nPayloadSize:= INT_TO_UDINT(LEN(feedback[2])),
+										eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+										bRetain:= FALSE, 
+										bQueue:= FALSE);
+			startTime := 1;
+		END_IF
+		IF s2 AND NOT s3 AND Timer.Q THEN
+			startTime := 0;
+			s2 := 0; s3 := 1;
+			//Rückmeldung Teil aufgenommen
+			fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+										pPayload:=ADR(feedback[3]), 
+										nPayloadSize:= INT_TO_UDINT(LEN(feedback[3])),
+										eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+										bRetain:= FALSE, 
+										bQueue:= FALSE);
+			startTime := 1;
+		END_IF
+		IF s3 AND NOT s4 AND Timer.Q THEN
+			startTime := 0;
+			s3 := 0; s4 := 1;
+			//Rückmeldung Abmeldung
+			fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+										pPayload:=ADR(feedback[4]), 
+										nPayloadSize:= INT_TO_UDINT(LEN(feedback[4])),
+										eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+										bRetain:= FALSE, 
+										bQueue:= FALSE);
+		END_IF
+		//Warten auf Werkstück ausgelesen
+		IF s4 AND NOT s5 AND WerkstueckAusgelesen THEN
+			s4 := 0; s5 := 1;
+			//Rückmeldung Auf Transport
+			fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+										pPayload:=ADR(feedback[5]), 
+										nPayloadSize:= INT_TO_UDINT(LEN(feedback[5])),
+										eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+										bRetain:= FALSE, 
+										bQueue:= FALSE);
+			startTime := 1;
+		END_IF
+		IF s5 AND NOT s6 AND Timer.Q THEN
+			startTime := 0;
+			s2 := 0; s3 := 1;
+			//Rückmeldung Anmeldung
+			fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+										pPayload:=ADR(feedback[6]), 
+										nPayloadSize:= INT_TO_UDINT(LEN(feedback[6])),
+										eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+										bRetain:= FALSE, 
+										bQueue:= FALSE);
+		END_IF
+		//Warten auf Werkstück ausgelesen
+		IF s6 AND NOT s7 AND WerkstueckAusgelesen THEN
+			s6 := 0; s7 := 1;
+			//Rückmeldung Teil abgelegt
+			fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+										pPayload:=ADR(feedback[7]), 
+										nPayloadSize:= INT_TO_UDINT(LEN(feedback[7])),
+										eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+										bRetain:= FALSE, 
+										bQueue:= FALSE);
+			startTime := 1;
+		END_IF
+		IF s7 AND NOT s0 AND Timer.Q THEN
+			startTime := 0;
+			s7 := 0; s0 := 1;
+			//Rückmeldung Verfügbar
+			fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+										pPayload:=ADR(feedback[0]), 
+										nPayloadSize:= INT_TO_UDINT(LEN(feedback[0])),
+										eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+										bRetain:= FALSE, 
+										bQueue:= FALSE);
+		END_IF
+		
+//Hier müsste noch die ankommenden Daten vom GW1 ausglesen und ausgewertet (AuftragDa und WerkstueckAusgelesen schreiben) werden
+//IN MQTT könnte dann evtl das Auslesen/Subscribe wegfallen fürs erste...
+
+								
+										
+		IF fbIotMqttClient.bError THEN
+			// ToDo: add error logging here
+			hrErrorOccurred := fbIotMqttClient.hrErrorCode;
+		END_IF	
+	END_IF
+	
+	// Hier Communication Check einbauen
+	
+	//fbComCheckFlag(Set:= stMqtt_HAWinoValues.Input.bComCheckRequest, 
+	//					Reset1:= NOT stMqtt_HAWinoValues.Input.bComCheckRequest,
+	//					Q1 => bComCheckAnswer);
+	bComCheckAnswer	:= TRUE;
+					]]></ST>
+    </Implementation>
+    <LineIds Name="DS_GW1">
+      <LineId Id="180" Count="0" />
+      <LineId Id="424" Count="0" />
+      <LineId Id="423" Count="0" />
+      <LineId Id="181" Count="28" />
+      <LineId Id="346" Count="0" />
+      <LineId Id="239" Count="0" />
+      <LineId Id="241" Count="1" />
+      <LineId Id="244" Count="0" />
+      <LineId Id="251" Count="0" />
+      <LineId Id="253" Count="2" />
+      <LineId Id="427" Count="0" />
+      <LineId Id="436" Count="1" />
+      <LineId Id="485" Count="0" />
+      <LineId Id="487" Count="4" />
+      <LineId Id="484" Count="0" />
+      <LineId Id="499" Count="0" />
+      <LineId Id="439" Count="0" />
+      <LineId Id="428" Count="1" />
+      <LineId Id="493" Count="5" />
+      <LineId Id="475" Count="0" />
+      <LineId Id="441" Count="0" />
+      <LineId Id="430" Count="0" />
+      <LineId Id="433" Count="0" />
+      <LineId Id="442" Count="0" />
+      <LineId Id="434" Count="0" />
+      <LineId Id="501" Count="5" />
+      <LineId Id="500" Count="0" />
+      <LineId Id="446" Count="0" />
+      <LineId Id="432" Count="0" />
+      <LineId Id="443" Count="2" />
+      <LineId Id="508" Count="5" />
+      <LineId Id="507" Count="0" />
+      <LineId Id="447" Count="0" />
+      <LineId Id="440" Count="0" />
+      <LineId Id="449" Count="2" />
+      <LineId Id="515" Count="5" />
+      <LineId Id="514" Count="0" />
+      <LineId Id="448" Count="0" />
+      <LineId Id="521" Count="0" />
+      <LineId Id="454" Count="0" />
+      <LineId Id="456" Count="0" />
+      <LineId Id="523" Count="5" />
+      <LineId Id="522" Count="0" />
+      <LineId Id="457" Count="0" />
+      <LineId Id="453" Count="0" />
+      <LineId Id="460" Count="2" />
+      <LineId Id="530" Count="5" />
+      <LineId Id="529" Count="0" />
+      <LineId Id="459" Count="0" />
+      <LineId Id="536" Count="0" />
+      <LineId Id="465" Count="0" />
+      <LineId Id="467" Count="0" />
+      <LineId Id="538" Count="5" />
+      <LineId Id="537" Count="0" />
+      <LineId Id="468" Count="0" />
+      <LineId Id="464" Count="0" />
+      <LineId Id="470" Count="2" />
+      <LineId Id="545" Count="5" />
+      <LineId Id="544" Count="0" />
+      <LineId Id="469" Count="0" />
+      <LineId Id="285" Count="0" />
+      <LineId Id="551" Count="1" />
+      <LineId Id="554" Count="0" />
+      <LineId Id="553" Count="0" />
+      <LineId Id="286" Count="4" />
+      <LineId Id="295" Count="1" />
+      <LineId Id="339" Count="6" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
