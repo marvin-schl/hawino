@@ -1,23 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
-  <POU Name="DS_GW2und3" Id="{088ef7f9-632e-414f-83fe-772780584ea7}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK DS_GW2und3 IMPLEMENTS ITcIoUdpProtocolRecv
+  <POU Name="DS_TrajectoryController" Id="{088ef7f9-632e-414f-83fe-772780584ea7}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK DS_TrajectoryController IMPLEMENTS ITcIoUdpProtocolRecv
 //aus Sicht GW3, Input: von GW2 zu Gw3, output: von GW3 zu GW2
 VAR_INPUT
-	wpListeRec: ARRAY[0...30] OF RobotPose;
-	wpListeCirc: ARRAY[0...30] OF RobotPose;
-	controller: TrajectoryController;
+	wpListeRec: ARRAY[0...100] OF RobotPoseSimple;
+	wpListeCirc: ARRAY[0...100] OF RobotPoseSimple;
 END_VAR
 VAR_OUTPUT
 	fahren: BOOL := 0;		//1 = fahren
 	amZiel: BOOL := 0;		//1 = am Ziel
 END_VAR
 VAR
+	RechteckX: ARRAY[0...10] OF LREAL := [1000,3000,5000,5000,5000,3000,1000,1000,1000,-1];
+	RechteckY: ARRAY[0...10] OF LREAL := [1000,1000,1000,1500,2000,2000,2000,1500,1000,-1];
+	RechteckTheta: LREAL := pi/2;
+	KreisX: ARRAY[0...10] OF LREAL := [4000,4200,4500,4700,5000,4700,4500,4200,4000,-1];
+	KreisY: ARRAY[0...10] OF LREAL := [1500,1200,1000,1200,1500,1700,2000,1700,1500,-1];
+	KreisTheta: LREAL := pi;
+	randomParameter: INT := 0;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//fahren ohne Kollision
-//wpListeRec := [
+wpListeRec := ArrayToStruct(RechteckX,RechteckY, RechteckTheta);
+
+WHILE fahren <> 1 DO
+	randomParameter := 1;
+END_WHILE;
+
+WHILE amZiel <> 1 DO
+	randomParameter := 2;
+END_WHILE;
+
+wpListeCirc := ArrayToStruct(RechteckX,RechteckY, RechteckTheta);
+
+WHILE fahren <> 1 DO
+	randomParameter := 3;
+END_WHILE;
+
+WHILE amZiel <> 1 DO
+	randomParameter := 4;
+END_WHILE;
+
+
+//Rechteck
 	//1000,1000,0
 	//3000,1000,0
 	//5000,1000,90
@@ -26,19 +53,15 @@ END_VAR
 	//3000,2000,180
 	//1000,2000,-90
 	//1000,1500,-90
-	//1000,1000,0
+	//1000,1000,0 
 	
-	
-//wpListeCirc :=
+//Kreis
 	//4000, 1500, -45
 	//4500, 1000, 45
 	//5000, 1500, 135
 	//4500, 2000, -135
 	
 	
-	//winkel überhaupt nötig?
-	//kein FB sondern eine Funktion schreiben?
-	//RobotPose :	x, y, theta,e : LREAL;
 ]]></ST>
     </Implementation>
     <Method Name="ReceiveData" Id="{876ceff4-21e0-48e4-b506-a672d857e671}">
@@ -105,24 +128,38 @@ METHOD TcRelease : UDINT
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="DS_GW2und3">
-      <LineId Id="10" Count="13" />
+    <LineIds Name="DS_TrajectoryController">
+      <LineId Id="10" Count="1" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="108" Count="2" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="124" Count="0" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="115" Count="6" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="113" Count="0" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="12" Count="8" />
+      <LineId Id="22" Count="1" />
       <LineId Id="9" Count="0" />
-      <LineId Id="31" Count="5" />
-      <LineId Id="53" Count="0" />
+      <LineId Id="31" Count="3" />
       <LineId Id="61" Count="0" />
       <LineId Id="75" Count="0" />
     </LineIds>
-    <LineIds Name="DS_GW2und3.ReceiveData">
+    <LineIds Name="DS_TrajectoryController.ReceiveData">
       <LineId Id="17" Count="0" />
     </LineIds>
-    <LineIds Name="DS_GW2und3.TcAddRef">
+    <LineIds Name="DS_TrajectoryController.TcAddRef">
       <LineId Id="9" Count="0" />
     </LineIds>
-    <LineIds Name="DS_GW2und3.TcQueryInterface">
+    <LineIds Name="DS_TrajectoryController.TcQueryInterface">
       <LineId Id="13" Count="0" />
     </LineIds>
-    <LineIds Name="DS_GW2und3.TcRelease">
+    <LineIds Name="DS_TrajectoryController.TcRelease">
       <LineId Id="9" Count="0" />
     </LineIds>
   </POU>

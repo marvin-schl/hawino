@@ -6,8 +6,6 @@ VAR_INPUT
 	//Freigabesignal für Fahrt, Roboter stoppt bei FALSE
 	xBoEnable: 					BOOL := FALSE;
 	
-	//Anfahrt (in Sperrzone vor Tasche oder Ladestation) = 1, Fahrt = 0
-	xIntMoveToEndPosition: INT := 0;
 END_VAR
 VAR_OUTPUT
 	//TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP

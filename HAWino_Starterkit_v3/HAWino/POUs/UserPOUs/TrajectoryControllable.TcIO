@@ -57,7 +57,7 @@ END_VAR
     </Property>
     <Property Name="WaypointList" Id="{0f714a63-4da7-4ce4-970a-5f548b22afcc}">
       <Declaration><![CDATA[//TODO: define max number of waypoints!
-PROPERTY WaypointList : ARRAY[1...30] OF RobotPoseSimple]]></Declaration>
+PROPERTY WaypointList : ARRAY[1...100] OF RobotPoseSimple]]></Declaration>
       <Get Name="Get" Id="{df97e5eb-b2c4-4a74-b86e-f8c094cde9ee}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
