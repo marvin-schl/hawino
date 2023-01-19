@@ -20,7 +20,7 @@ VAR_OUTPUT
 	yUintWaypointIndex: 		BOOL := 0;
 	
 	//aktuelle Roboterposition, für Simulationszwecke
-	yRPposition: 				RobotPose;
+	yRPposition: 				RobotPoseSimple;
 	
 END_VAR
 VAR
