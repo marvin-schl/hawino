@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="DS_GW2und3" Id="{088ef7f9-632e-414f-83fe-772780584ea7}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK DS_GW2und3 IMPLEMENTS ITcIoUdpProtocolRecv
+//aus Sicht GW3, Input: von GW2 zu Gw3, output: von GW3 zu GW2
+VAR_INPUT
+	wpListeRec: ARRAY[0...30] OF RobotPose;
+	wpListeCirc: ARRAY[0...30] OF RobotPose;
+	controller: TrajectoryController;
+END_VAR
+VAR_OUTPUT
+	fahren: BOOL := 0;		//1 = fahren
+	amZiel: BOOL := 0;		//1 = am Ziel
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//fahren ohne Kollision
+//wpListeRec := [
+	//1000,1000,0
+	//3000,1000,0
+	//5000,1000,90
+	//5000,1500,90
+	//5000,2000,180
+	//3000,2000,180
+	//1000,2000,-90
+	//1000,1500,-90
+	//1000,1000,0
+	
+	
+//wpListeCirc :=
+	//4000, 1500, -45
+	//4500, 1000, 45
+	//5000, 1500, 135
+	//4500, 2000, -135
+	
+	
+	//winkel überhaupt nötig?
+	//kein FB sondern eine Funktion schreiben?
+	//RobotPose :	x, y, theta,e : LREAL;
+]]></ST>
+    </Implementation>
+    <Method Name="ReceiveData" Id="{876ceff4-21e0-48e4-b506-a672d857e671}">
+      <Declaration><![CDATA[{attribute 'TcTypeSystem'}
+{attribute 'no-analysis'}
+{attribute 'c++_compatible'}
+{attribute 'minimal_input_size' := '4'}
+{attribute 'pack_mode' := '4'}
+{warning 'Methodenimplementierung hinzufügen'}
+METHOD ReceiveData : HRESULT
+VAR_INPUT
+	ipAddr	: UDINT;
+	udpDestPort	: UINT;
+	udpSrcPort	: UINT;
+	nData	: UDINT;
+	pData	: PVOID;
+	pVlan	: POINTER TO ETYPE_VLAN_HEADER := 0;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TcAddRef" Id="{a724e14b-b97a-4d35-99c5-b7db2456f759}">
+      <Declaration><![CDATA[{attribute 'TcTypeSystem'}
+{attribute 'no-analysis'}
+{attribute 'c++_compatible'}
+{attribute 'minimal_input_size' := '4'}
+{attribute 'pack_mode' := '4'}
+{warning 'Methodenimplementierung hinzufügen'}
+METHOD TcAddRef : UDINT
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TcQueryInterface" Id="{4a0ce0e0-df2b-49ce-8b7a-3628d707309a}">
+      <Declaration><![CDATA[{attribute 'TcTypeSystem'}
+{attribute 'no-analysis'}
+{attribute 'c++_compatible'}
+{attribute 'minimal_input_size' := '4'}
+{attribute 'pack_mode' := '4'}
+{warning 'Methodenimplementierung hinzufügen'}
+METHOD TcQueryInterface : HRESULT
+VAR_INPUT
+	iid	: REFERENCE TO IID;
+	pipItf	: POINTER TO PVOID;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TcRelease" Id="{2252b447-c0dc-4c4b-90fa-58df4d2c4c07}">
+      <Declaration><![CDATA[{attribute 'TcTypeSystem'}
+{attribute 'no-analysis'}
+{attribute 'c++_compatible'}
+{attribute 'minimal_input_size' := '4'}
+{attribute 'pack_mode' := '4'}
+{warning 'Methodenimplementierung hinzufügen'}
+METHOD TcRelease : UDINT
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="DS_GW2und3">
+      <LineId Id="10" Count="13" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="31" Count="5" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="75" Count="0" />
+    </LineIds>
+    <LineIds Name="DS_GW2und3.ReceiveData">
+      <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="DS_GW2und3.TcAddRef">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="DS_GW2und3.TcQueryInterface">
+      <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="DS_GW2und3.TcRelease">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
