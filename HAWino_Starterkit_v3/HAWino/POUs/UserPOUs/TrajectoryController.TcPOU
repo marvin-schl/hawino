@@ -92,7 +92,7 @@ END_VAR
     </Property>
     <Property Name="RobotPose" Id="{5458479b-1905-4ad8-915e-7c40700f6181}">
       <Declaration><![CDATA[{warning 'Eigenschaftenimplementierung hinzufügen'}
-PROPERTY RobotPose : RobotPose
+PROPERTY RobotPose : RobotPoseSimple
 ]]></Declaration>
       <Get Name="Get" Id="{9482d3aa-f011-4fb8-873a-7e15ede74c4b}">
         <Declaration><![CDATA[VAR
@@ -115,7 +115,7 @@ END_VAR
       <Declaration><![CDATA[{warning 'Methodenimplementierung hinzufügen'}
 METHOD setWaypointList
 VAR_INPUT
-	WaypointList	: ARRAY [1...30] OF RobotPose;
+	WaypointList	: ARRAY [1..100] OF RobotPoseSimple;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -146,7 +146,7 @@ END_VAR
     <Property Name="WaypointList" Id="{31729257-f6ad-4e64-b69d-baa1e11be102}">
       <Declaration><![CDATA[{warning 'Eigenschaftenimplementierung hinzufügen'}
 (*TODO: define max number of waypoints!*)
-PROPERTY WaypointList : ARRAY [1...!!!'ERROR'!!!] OF RobotPose
+PROPERTY WaypointList : ARRAY [1..100] OF RobotPoseSimple
 ]]></Declaration>
       <Get Name="Get" Id="{c07493c7-6255-4ec1-9fbe-73733b144694}">
         <Declaration><![CDATA[VAR

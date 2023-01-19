@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="ArrayToStruct" Id="{6439d747-769e-4bfb-9908-84e5f43ae286}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION ArrayToStruct : ARRAY[0...100]  OF RobotPoseSimple 
+    <Declaration><![CDATA[FUNCTION ArrayToStruct : ARRAY[1..100]  OF RobotPoseSimple 
 VAR_INPUT
-	x: ARRAY [0...100] OF LREAL;
-	y: ARRAY [0...100] OF LREAL;
+	x: ARRAY [1..10] OF LREAL;
+	y: ARRAY [1..10] OF LREAL;
 	theta: LREAL;
 END_VAR
 VAR
-	i: INT := 0;
-	lastPosition: INT := 0;
+	i: INT := 1;
+	lastPosition: INT := 1;
 END_VAR
 VAR_OUTPUT
-	outputArray: ARRAY[0...100]  OF RobotPoseSimple;
+	outputArray: ARRAY[1..100]  OF RobotPoseSimple;
 END_VAR
 ]]></Declaration>
     <Implementation>
