@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <POU Name="IrDistanceSensors" Id="{a7ebd4d1-b79f-44fb-9aa2-85a679c908b8}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM IrDistanceSensors
+VAR
+	distanceRaw AT %I* : ARRAY [1..9] OF INT;
+	
+	distance_mm AT %Q* : ARRAY [1..9] OF REAL;
+
+	i : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[FOR  i := 1 TO 9 DO
+	distance_mm[i] := IrDistanceFromRaw(distanceRaw[i]);
+END_FOR
+]]></ST>
+    </Implementation>
+    <LineIds Name="IrDistanceSensors">
+      <LineId Id="5" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="80" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

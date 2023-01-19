@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <POU Name="HAWino" Id="{19efa873-38c9-4bfb-a6cf-5d3d5e993a21}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM HAWino
+VAR
+	//CX35CDD6
+	Robot_Number	AT%Q*	: INT;
+	operationState : DUT_SysState := DUT_SysState.init; 
+	RobotData : RobotInternalData;
+	GetId : Tc2_Utilities.FB_GetSystemId;
+	init : INT;
+	SysGUID : GUID;
+	start : BOOL:= TRUE;
+	initDone AT%Q* : BOOL := FALSE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE operationState OF
+	//Get SysId for Identification
+	DUT_SysState.init:
+		GetId(bexecute := start,stSystemId=>SysGUID);
+		IF NOT GetId.bBusy THEN	
+			operationState:=DUT_SysState.preOp;
+		END_IF
+	DUT_SysState.preOp:
+	//Set RobotNumber for MQTT and set flag to start MQTT
+		IF InitSysId(GUID_to_String(SysGUID)) THEN
+			Var_HAWIno.Robot_Number := RobotData.Robot_Number;		
+			initDone := TRUE;
+			operationState:=DUT_SysState.Op;
+		END_IF
+	DUT_SysState.Op:
+	//Operate System
+		MotorDrivers();
+		WheelEncoders();
+		IrDistanceSensors();
+		Camera();
+		PowerManager();
+		Gripper();
+END_CASE
+]]></ST>
+    </Implementation>
+    <Method Name="InitSysId" Id="{37bf9ffd-58e5-4464-98c5-221c269d2560}">
+      <Declaration><![CDATA[METHOD InitSysId : BOOL
+VAR_INPUT
+	SysId : STRING;
+END_VAR
+VAR
+	state : INT;
+	CX31C9D6 : STRING := '77726FC0-DD5E-F7D7-002E-41ED9B95AABA';
+	CX35CFB8 : STRING := '2A7FC16A-555A-D05D-0E28-E804E05477FE';
+	CX35CDC8 : STRING := 'AD3D576A-9CE4-FB95-7439-909C21AA2B33';
+	CX35CDD6 : STRING := '975A6B25-37E2-0E46-4C4D-43CCC26F2A66';
+	CX4D0046 : STRING := '4FFA7061-8E1F-E1C9-731A-38EAA9BAEAC6';
+END_VAR
+// CX-31C9D6 = 1
+// CX-35CFB8 = 2
+// CX-35CDC8 = 3
+// CX-35CDD6 = 4
+// CX-4D0046 = 5]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF SysId = CX31C9D6 THEN
+	state := 1;
+ELSIF SysId = CX35CFB8 THEN
+	state := 2;
+ELSIF SysId = CX35CDC8 THEN
+	state := 3;
+ELSIF SysId = CX35CDD6 THEN
+	state := 4;
+ELSIF SysId = CX4D0046 THEN
+	state := 5;
+ELSE
+	state := 0;
+END_IF
+
+CASE state OF 
+		1 : 	
+				RobotData.Robot_IP_WiFi :='192.169.0.18';
+				RobotData.Robot_IP_Wire :='192.169.0.28';
+				RobotData.Robot_Name :='CX-35C9D6';
+				RobotData.Robot_Nickname :='9D6';
+				RobotData.Robot_Number := 1;
+				InitSysId := True;
+		2:
+				RobotData.Robot_IP_WiFi :='192.169.0.17';
+				RobotData.Robot_IP_Wire :='192.169.0.27';
+				RobotData.Robot_Name :='CX-35CFB8';
+				RobotData.Robot_Nickname :='FB8';
+				RobotData.Robot_Number := 2;
+				InitSysId := TRUE;
+		3:
+				RobotData.Robot_IP_WiFi :='192.169.0.16';
+				RobotData.Robot_IP_Wire :='192.169.0.26';
+				RobotData.Robot_Name :='CX-35CDC8';
+				RobotData.Robot_Nickname :='DC8';
+				RobotData.Robot_Number := 3;
+				InitSysId := TRUE;
+		4:
+				RobotData.Robot_IP_WiFi :='192.169.0.15';
+				RobotData.Robot_IP_Wire :='192.169.0.25';
+				RobotData.Robot_Name :='CX-35CDD6';
+				RobotData.Robot_Nickname :='DD6';
+				RobotData.Robot_Number := 4;
+				InitSysId := TRUE;
+		5:
+				RobotData.Robot_IP_WiFi :='192.169.0.19';
+				RobotData.Robot_IP_Wire :='192.169.0.29';
+				RobotData.Robot_Name :='CX-04D0046';
+				RobotData.Robot_Nickname :='046';
+				RobotData.Robot_Number := 5;
+				InitSysId := TRUE;			
+		ELSE	//Ungültige Roboter Nummer
+				RobotData.Robot_IP_WiFi :='0.0.0.0';
+				RobotData.Robot_IP_Wire :='0.0.0.0';
+				RobotData.Robot_Name :='Invalid';
+				RobotData.Robot_Nickname :='Invalid';
+				RobotData.Robot_Number := 0;
+				InitSysId := false;
+	END_CASE;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="HAWino">
+      <LineId Id="153" Count="0" />
+      <LineId Id="180" Count="0" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="161" Count="0" />
+      <LineId Id="158" Count="0" />
+      <LineId Id="162" Count="1" />
+      <LineId Id="157" Count="0" />
+      <LineId Id="181" Count="0" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="175" Count="0" />
+      <LineId Id="178" Count="0" />
+      <LineId Id="166" Count="1" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="182" Count="0" />
+      <LineId Id="169" Count="5" />
+      <LineId Id="156" Count="0" />
+      <LineId Id="98" Count="0" />
+    </LineIds>
+    <LineIds Name="HAWino.InitSysId">
+      <LineId Id="164" Count="0" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="170" Count="2" />
+      <LineId Id="169" Count="0" />
+      <LineId Id="174" Count="0" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="176" Count="0" />
+      <LineId Id="175" Count="0" />
+      <LineId Id="177" Count="1" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="121" Count="42" />
+      <LineId Id="86" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <POU Name="Camera" Id="{e90280ff-791e-436e-94db-5e32a5133a14}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Camera
+VAR
+		cameraData : CameraConnectionUDP;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[cameraData();]]></ST>
+    </Implementation>
+    <LineIds Name="Camera">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

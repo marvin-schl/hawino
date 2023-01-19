@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <POU Name="Gripper" Id="{914b4c40-8d67-4edc-a810-6f17709861da}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Gripper
+VAR
+	closeGripperFromSimulink AT%I* : LREAL:=0;
+	closeGripperCommand		AT%I* : BOOL;
+	slider					AT%I* : BOOL;
+	partGripped				AT%I* : BOOL;
+	
+	sliderToSimulink 		AT%Q* : LREAL:=0;
+	partInGripperToSimulink AT%Q*  :LREAL:=0;
+	
+	driveEnable				AT%Q* : BOOL;
+	driveVelocity 			AT%Q* : INT;
+	
+	state : CoreGripperControlState := CoreGripperControlState.Open;
+	
+	timer : TON;
+	
+	movementTime : TIME := T#1.0S;
+	
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE state OF 
+		
+	CoreGripperControlState.Opening:
+		driveEnable:=1;
+		driveVelocity:=-32767;
+		timer(IN:=1);
+		
+		IF timer.Q THEN state := CoreGripperControlState.Open;
+		END_IF
+		
+		IF closeGripperFromSimulink < 0.5 AND NOT closeGripperCommand THEN
+			state := CoreGripperControlState.Closing;
+			timer(in := 0, pt:= movementTime);
+		END_IF
+		
+	CoreGripperControlState.Closing:
+		driveEnable:=1;
+		driveVelocity:=32767;
+		timer(IN:=1);
+		
+		IF timer.Q THEN state := CoreGripperControlState.Closed;
+		END_IF
+		
+		IF closeGripperFromSimulink > 0.5 OR  closeGripperCommand THEN
+			state := CoreGripperControlState.Opening;
+			timer(in := 0, pt:= movementTime);
+		END_IF
+		
+		
+	CoreGripperControlState.Open:	
+		driveEnable:=0;
+		driveVelocity:=0;
+
+		IF closeGripperFromSimulink < 0.5 AND NOT closeGripperCommand THEN
+			state := CoreGripperControlState.Closing;
+			timer(in := 0, pt:= movementTime);
+		END_IF
+		
+	CoreGripperControlState.Closed:	
+		driveEnable:=0;
+		driveVelocity:=0;
+		
+		IF closeGripperFromSimulink > 0.5 OR closeGripperCommand THEN
+			state := CoreGripperControlState.Opening;
+			timer(in := 0, pt:= movementTime);
+		END_IF
+		
+END_CASE
+
+sliderToSimulink:=BOOL_TO_LREAL(NOT(slider));
+partInGripperToSimulink:=BOOL_TO_LREAL(NOT(partGripped));]]></ST>
+    </Implementation>
+    <LineIds Name="Gripper">
+      <LineId Id="62" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="91" Count="1" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="97" Count="2" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="109" Count="10" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="122" Count="3" />
+      <LineId Id="131" Count="4" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="143" Count="1" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="138" Count="2" />
+      <LineId Id="137" Count="0" />
+      <LineId Id="121" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="38" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

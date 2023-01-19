@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <GVL Name="Var_HAWIno" Id="{5f5931d7-3ffd-492e-9313-bf8c985fa24f}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+
+// Roboternummern:
+// 
+// CX-31C9D6 = 1
+// CX-35CFB8 = 2
+// CX-35CDC8 = 3 	!!Vorläufig
+// CX-35CDD6 = 4
+// CX-4D0046 = 5
+
+VAR_GLOBAL
+	Robot_Number : INT :=4;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
