@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="StateObserver" Id="{039231fe-9cf2-4974-9a44-025359184cf4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK StateObserver
+VAR_INPUT
+	xRobotPoseCam : RobotPose :=[-1, -1, -1];
+	xRobotVelocities : RobotVelocities := [0, 0, 0];
+END_VAR
+VAR_OUTPUT
+	yRobotPose : RobotPose;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <LineIds Name="StateObserver">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

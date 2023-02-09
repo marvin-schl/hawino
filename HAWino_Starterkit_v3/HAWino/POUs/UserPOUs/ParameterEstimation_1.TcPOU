@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="ParameterEstimation_1" Id="{040b9f75-cfbc-4b7f-ab7b-5dec9270a65d}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM ParameterEstimation_1
+VAR
+	// Inputs
+	vXFromMotor AT%I*: LREAL;
+	vYFromMotor AT%I*: LREAL;
+	vThetaFromMotor AT%I*: LREAL;
+	i1_raw, i2_raw, i3_raw	AT%I*: 					UINT;
+	//Outputs
+	vx,vy,vtheta AT%Q*: LREAL:= 0;
+	
+	//local
+	state: INT := 0;
+	counter: INT := 0;
+	
+	//Odometry
+	distX, distY, distTheta :LREAL :=0;
+	// Task Freqeuncy in ms
+	taskfreq: LREAL := 10;
+	
+	//the actual robot has to be selected in connecting PlcTaskInputs to actual Robot Camera data
+	// x Koordinate bei Start nach Kamera
+	camX AT%I*: LREAL := 0;
+	// y Koordinate bei Start laut Kamera
+	camY AT%I*: LREAL;
+	// theta laut Kamera zu Beginn
+	camTheta AT%I*: LREAL := 0;
+	
+	// Error in x
+	ErrX: LREAL;
+	// Error in y
+	ErrY: LREAL;
+	// Error in Theta
+	ErrTheta: LREAL;
+	//errorcam via UDP
+	ErrCam AT%I*: LREAL;
+	// soll geschwindigkeit
+	vSoll: LREAL := 300;
+	i1: INT;
+	i2: INT;
+	i3: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*IF state = 0 THEN
+	v := 100;
+	counter := counter+1;
+	IF counter >  1990 THEN
+		state:=1;
+	END_IF
+END_IF
+	
+IF state = 1 THEN
+		v := 0;
+END_IF *)
+
+//X ACHSE ANFAHREN
+//state 0 to wait for cameraposition data
+IF state = 0 THEN
+	counter := counter+1;
+	IF counter > 199 THEN
+		state := 1;
+		counter := 0;
+	END_IF
+END_IF
+
+IF state = 1 THEN
+	vx := vSoll;
+	
+	
+	//Initiale Pose nach Kamera als Startpose setzen
+	IF counter < 1 THEN
+		distX:= camX ;
+		distY :=camY ;
+		distTheta :=camTheta ;
+	END_IF
+
+	counter := counter + 1;
+	IF counter > 199 THEN
+		state := 2;
+		counter := 0;
+	END_IF
+END_IF
+
+IF state = 2 THEN
+	vx := 0;
+	counter := counter + 1;
+	IF counter > 199 THEN
+		state := 3;
+		counter := 0;
+	END_IF
+END_IF
+
+IF state = 3 THEN
+	vx := -vSoll;
+	counter := counter + 1;
+	IF counter > 199 THEN
+		state := 4;
+		counter := 0;
+	END_IF
+END_IF
+
+
+IF state = 4 THEN
+	vx := 0;
+	counter := counter + 1;
+	IF counter > 199 THEN
+		state := 5;
+		counter := 0;
+	END_IF
+END_IF
+
+// Y ACHSE ANFAHREN 
+IF state = 5 THEN
+	vy := vSoll;
+	counter := counter + 1;
+	IF counter > 199 THEN
+		state := 6;
+		counter := 0;
+	END_IF
+END_IF
+
+IF state = 6 THEN
+	vy := 0;
+	counter := counter + 1;
+	IF counter > 199 THEN
+		state := 7;
+		counter := 0;
+	END_IF
+END_IF
+
+IF state = 7 THEN
+	vy := -vSoll;
+	counter := counter + 1;
+	IF counter > 199 THEN
+		state := 8;
+		counter := 0;
+	END_IF
+END_IF
+
+IF state = 8 THEN
+	vy := 0;
+	counter := counter + 1;
+	IF counter > 199 THEN
+		state := 9;
+		counter := 0;
+	END_IF
+END_IF
+
+// THETA ANFAHREN
+IF state = 9 THEN
+	vtheta := vSoll/300;
+	counter := counter + 1;
+	IF counter > 199 THEN
+		state := 10;
+		counter := 0;
+	END_IF
+END_IF
+
+IF state = 10 THEN
+	vtheta := 0;
+	counter := counter + 1;
+	IF counter > 199 THEN
+		state := 11;
+		counter := 0;
+	END_IF
+END_IF
+
+IF state = 11 THEN
+	vtheta := -vSoll/300;
+	counter := counter + 1;
+	IF counter > 199 THEN
+		state := 12;
+		counter := 0;
+	END_IF
+END_IF
+
+IF state = 12 THEN
+	vtheta := 0;
+END_IF
+
+//Odometry calculation
+distX := distX + vXFromMotor*taskfreq/1000;
+distY := distY + vYFromMotor*taskfreq/1000;
+distTheta := distTheta + vThetaFromMotor*taskfreq/1000;
+
+//Error Calculation
+ErrX := camX-distX; 
+ErrY := camY-distY;
+ErrTheta := camTheta-distTheta;
+
+//ACHTUNG LOKALE ROBOTER DATEN MÜSSEN FÜR DIREKTE VERGLEICHBARKEI MIT KAMERAPOSE IN GLOBALE KS TRANSFORMEIRT WERDEN
+
+// Ströme umrechnen
+IF i1 > 32.767 THEN
+	i1 := UINT_TO_INT(i1_raw - 65535);
+ELSE
+	i1 := UINT_TO_INT(i1_raw);
+END_IF
+
+IF i2 > 32.767 THEN
+	i2 := UINT_TO_INT(i2_raw - 65535);
+ELSE
+	i2 := UINT_TO_INT(i2_raw);
+END_IF
+
+IF i3 > 32.767 THEN
+	i3 := UINT_TO_INT(i3_raw - 65535);
+ELSE
+	i3 := UINT_TO_INT(i3_raw);
+END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="ParameterEstimation_1">
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="17" Count="2" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="15" Count="1" />
+      <LineId Id="331" Count="0" />
+      <LineId Id="121" Count="0" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="116" Count="0" />
+      <LineId Id="118" Count="1" />
+      <LineId Id="156" Count="0" />
+      <LineId Id="120" Count="0" />
+      <LineId Id="117" Count="0" />
+      <LineId Id="29" Count="2" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="98" Count="1" />
+      <LineId Id="86" Count="1" />
+      <LineId Id="92" Count="1" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="158" Count="0" />
+      <LineId Id="157" Count="0" />
+      <LineId Id="33" Count="1" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="35" Count="7" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="43" Count="7" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="51" Count="1" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="261" Count="8" />
+      <LineId Id="332" Count="0" />
+      <LineId Id="270" Count="8" />
+      <LineId Id="283" Count="16" />
+      <LineId Id="282" Count="0" />
+      <LineId Id="340" Count="0" />
+      <LineId Id="333" Count="6" />
+      <LineId Id="260" Count="0" />
+      <LineId Id="341" Count="0" />
+      <LineId Id="301" Count="29" />
+      <LineId Id="300" Count="0" />
+      <LineId Id="82" Count="3" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="102" Count="1" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="159" Count="0" />
+      <LineId Id="238" Count="18" />
+      <LineId Id="237" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1189,7 +1189,7 @@
 		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1006">424de6000000000000007600000028000000100000000e000000010004000000000070000000000000000000000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffff788833338887ffff78883bb38887ffffffff3bb3ffffffffffff8778fffffffffffffffffffffffffffffffff999ffff78f78fffffffffff78f78ffff999ffff78f7888fffffffff78f78f78f999ffff78f78f78ffffffff78f7888ff999ffffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.49.201.214.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.200.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="2">
 				<Cpu BaseTime="1000"/>
@@ -3206,6 +3206,52 @@
 							<Name>Gripper.closeGripperFromSimulink</Name>
 							<Type>LREAL</Type>
 						</Var>
+						<Var>
+							<Name>ParameterEstimation_1.vXFromMotor</Name>
+							<Comment><![CDATA[ Inputs]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ParameterEstimation_1.vYFromMotor</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ParameterEstimation_1.vThetaFromMotor</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ParameterEstimation_1.i1_raw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ParameterEstimation_1.i2_raw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ParameterEstimation_1.i3_raw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ParameterEstimation_1.camX</Name>
+							<Comment><![CDATA[the actual robot has to be selected in connecting PlcTaskInputs to actual Robot Camera data
+ x Koordinate bei Start nach Kamera]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ParameterEstimation_1.camY</Name>
+							<Comment><![CDATA[ y Koordinate bei Start laut Kamera]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ParameterEstimation_1.camTheta</Name>
+							<Comment><![CDATA[ theta laut Kamera zu Beginn]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ParameterEstimation_1.ErrCam</Name>
+							<Comment><![CDATA[errorcam via UDP]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
 					</Vars>
 					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
 						<Name>PlcTask Outputs</Name>
@@ -3309,11 +3355,56 @@
 							<Name>Gripper.driveVelocity</Name>
 							<Type>INT</Type>
 						</Var>
+						<Var>
+							<Name>ParameterEstimation_1.vx</Name>
+							<Comment><![CDATA[Outputs]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ParameterEstimation_1.vy</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ParameterEstimation_1.vtheta</Name>
+							<Type>LREAL</Type>
+						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2022-04-26T16:44:07">
 						<OwnerA Name="InputDst" Prefix="TIPC^HAWino^HAWino Instance" Type="1">
 							<OwnerB Name="TIRC^TcCOM Objects^SoC_Model_Data_Aquisition_2022">
 								<Link VarA="PowerManager.supplyVoltage_filtered" TypeA="REAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Output^VoltageMean" Size="32" RestoreInfo="ANotFound"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+					<UnrestoredVarLinks ImportTime="2023-02-09T17:00:54">
+						<OwnerA Name="InputDst" Prefix="TIPC^HAWino^HAWino Instance" Type="1">
+							<OwnerB Name="TIPC^HAWino^HAWino Instance">
+								<Link VarA="MotorDrivers.vXCartesianToMotors" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^Sinusfahrt.v" RestoreInfo="BNotFound"/>
+								<Link VarA="Sinusfahrt.ErrCam" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[3]^e" RestoreInfo="ANotFound"/>
+								<Link VarA="Sinusfahrt.camTheta" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[3]^theta" RestoreInfo="ANotFound"/>
+								<Link VarA="Sinusfahrt.camX" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[3]^x" RestoreInfo="ANotFound"/>
+								<Link VarA="Sinusfahrt.camY" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[3]^y" RestoreInfo="ANotFound"/>
+								<Link VarA="Sinusfahrt.vThetaFromMotor" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^WheelEncoders.vthetaCartesianFromMotors" RestoreInfo="ANotFound"/>
+								<Link VarA="Sinusfahrt.vXFromMotor" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^WheelEncoders.vXCartesianFromMotors" RestoreInfo="ANotFound"/>
+								<Link VarA="Sinusfahrt.vYFromMotor" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^WheelEncoders.vYCartesianFromMotors" RestoreInfo="ANotFound"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+					<UnrestoredVarLinks ImportTime="2023-02-09T17:33:55">
+						<OwnerA Name="InputDst" Prefix="TIPC^HAWino^HAWino Instance" Type="1">
+							<OwnerB Name="TIPC^HAWino^HAWino Instance">
+								<Link VarA="CameraNoise.cam2e" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[2]^e" RestoreInfo="ANotFound"/>
+								<Link VarA="CameraNoise.cam2theta" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[2]^theta" RestoreInfo="ANotFound"/>
+								<Link VarA="CameraNoise.cam2x" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[2]^x" RestoreInfo="ANotFound"/>
+								<Link VarA="CameraNoise.cam2y" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[2]^y" RestoreInfo="ANotFound"/>
+								<Link VarA="CameraNoise.cam3e" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[3]^e" RestoreInfo="ANotFound"/>
+								<Link VarA="CameraNoise.cam3theta" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[3]^theta" RestoreInfo="ANotFound"/>
+								<Link VarA="CameraNoise.cam3x" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[3]^x" RestoreInfo="ANotFound"/>
+								<Link VarA="CameraNoise.cam3y" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[3]^y" RestoreInfo="ANotFound"/>
+								<Link VarA="CameraNoise.cam4e" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[4]^e" RestoreInfo="ANotFound"/>
+								<Link VarA="CameraNoise.cam4theta" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[4]^theta" RestoreInfo="ANotFound"/>
+								<Link VarA="CameraNoise.cam4x" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[4]^x" RestoreInfo="ANotFound"/>
+								<Link VarA="CameraNoise.cam4y" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[4]^y" RestoreInfo="ANotFound"/>
 							</OwnerB>
 						</OwnerA>
 					</UnrestoredVarLinks>
@@ -3355,7 +3446,7 @@
 			<PlcAuxTask Affinity="#x00000002"/>
 		</Plc>
 		<Io>
-			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="5.49.201.214.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
+			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="5.53.205.200.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
 				<Name>Gerät 1 (EtherCAT)</Name>
 				<AddressInfo>
 					<Ccat>
@@ -3407,7 +3498,7 @@
 							<SyncMan>001080002600010001000000400080008000001026010000</SyncMan>
 							<SyncMan>801080002200010002000000400080008000801022010000</SyncMan>
 							<SyncMan>001110002400010003000000000000001000001124010000</SyncMan>
-							<SyncMan>001210002000010004000000000000001000001220010000</SyncMan>
+							<SyncMan>001218002000010004000000000000001000001220010000</SyncMan>
 							<Fmmu>0000000000000000001100020100000001000000000000000000000000000000</Fmmu>
 							<Fmmu>0000000000000000001200010100000002000000000000000000000000000000</Fmmu>
 							<Fmmu>00000000000000000d0800010100000003000000000000000000000000000000</Fmmu>
@@ -3699,7 +3790,7 @@
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="DCM Synchron info data Channel 1" Index="#x1a07" Flags="#x0010">
+							<Pdo Name="DCM Synchron info data Channel 1" Index="#x1a07" Flags="#x0010" SyncMan="3">
 								<Entry Name="Info data 1" Index="#x6020" Sub="#x11">
 									<Type>UINT</Type>
 								</Entry>
@@ -3751,7 +3842,7 @@
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="DCM Synchron info data Channel 2" Index="#x1a09" Flags="#x0010">
+							<Pdo Name="DCM Synchron info data Channel 2" Index="#x1a09" Flags="#x0010" SyncMan="3">
 								<Entry Name="Info data 1" Index="#x6030" Sub="#x11">
 									<Type>UINT</Type>
 								</Entry>
@@ -4178,7 +4269,7 @@
 							<SyncMan>001080002600010001000000400080008000001026010000</SyncMan>
 							<SyncMan>801080002200010002000000400080008000801022010000</SyncMan>
 							<SyncMan>001110002400010003000000000000001000001124010000</SyncMan>
-							<SyncMan>001210002000010004000000000000001000001220010000</SyncMan>
+							<SyncMan>001214002000010004000000000000001000001220010000</SyncMan>
 							<Fmmu>0000000000000000001100020100000001000000000000000000000000000000</Fmmu>
 							<Fmmu>0000000000000000001200010100000002000000000000000000000000000000</Fmmu>
 							<Fmmu>00000000000000000d0800010100000003000000000000000000000000000000</Fmmu>
@@ -4458,7 +4549,7 @@
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="DCM Synchron info data Channel 1" Index="#x1a07" Flags="#x0010">
+							<Pdo Name="DCM Synchron info data Channel 1" Index="#x1a07" Flags="#x0010" SyncMan="3">
 								<Entry Name="Info data 1" Index="#x6020" Sub="#x11">
 									<Type>UINT</Type>
 								</Entry>
@@ -6199,6 +6290,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 	<Mappings>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500800205008}" Id="#x02030050"/>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500810000403}" Id="#x02030010"/>
+		<MappingInfo Identifier="{00000000-2002-0850-0020-500800205008}" Id="#x02030080"/>
 		<MappingInfo Identifier="{00000000-2002-0850-0120-500831000403}" Id="#x02030020"/>
 		<MappingInfo Identifier="{08502001-2002-0850-0020-500801205008}" Id="#x02030070" Watchdog="04000000280000000400000004000000"/>
 		<MappingInfo Identifier="{08502001-0060-0201-0020-500820000101}" Id="#x02030060" Watchdog="04000000280000000400000004000000"/>
@@ -6229,6 +6321,8 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^PowerManager.shutdownButton" VarB="ShutdownRequested (S11)^Input"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Motorklemme A2 (EL7342)">
+				<Link VarA="PlcTask Inputs^ParameterEstimation_1.i1_raw" VarB="DCM Synchron info data Channel 1^Info data 2"/>
+				<Link VarA="PlcTask Inputs^ParameterEstimation_1.i2_raw" VarB="DCM Synchron info data Channel 2^Info data 2"/>
 				<Link VarA="PlcTask Inputs^WheelEncoders.encDataFromMotor1" VarB="ENC Status compact Channel 1^Counter value"/>
 				<Link VarA="PlcTask Inputs^WheelEncoders.encDataFromMotor2" VarB="ENC Status compact Channel 2^Counter value"/>
 				<Link VarA="PlcTask Outputs^MotorDrivers.enableToMotor1" VarB="DCM Control Channel 1^Control^Enable"/>
@@ -6237,6 +6331,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^MotorDrivers.velocityToMotor2" VarB="DCM Velocity Channel 2^Velocity"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Motorklemme A3 (EL7342)">
+				<Link VarA="PlcTask Inputs^ParameterEstimation_1.i3_raw" VarB="DCM Synchron info data Channel 1^Info data 2"/>
 				<Link VarA="PlcTask Inputs^WheelEncoders.encDataFromMotor3" VarB="ENC Status compact Channel 1^Counter value"/>
 				<Link VarA="PlcTask Outputs^Gripper.driveEnable" VarB="DCM Control Channel 2^Control^Enable"/>
 				<Link VarA="PlcTask Outputs^Gripper.driveVelocity" VarB="DCM Velocity Channel 2^Velocity"/>
@@ -6250,6 +6345,16 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^bComCheckAnswer" VarB="MQTT_1 Outputs^MQTT.bComCheckAnswer"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^nRobotNumber" VarB="PlcTask Outputs^HAWino.Robot_Number"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.txtReadInit" VarB="PlcTask Outputs^HAWino.initDone"/>
+				<Link VarA="PlcTask Inputs^MotorDrivers.vThetaCartesianToMotors" VarB="PlcTask Outputs^ParameterEstimation_1.vtheta"/>
+				<Link VarA="PlcTask Inputs^MotorDrivers.vXCartesianToMotors" VarB="PlcTask Outputs^ParameterEstimation_1.vx"/>
+				<Link VarA="PlcTask Inputs^MotorDrivers.vYCartesianToMotors" VarB="PlcTask Outputs^ParameterEstimation_1.vy"/>
+				<Link VarA="PlcTask Inputs^ParameterEstimation_1.ErrCam" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[3]^e"/>
+				<Link VarA="PlcTask Inputs^ParameterEstimation_1.camTheta" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[3]^theta"/>
+				<Link VarA="PlcTask Inputs^ParameterEstimation_1.camX" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[3]^x"/>
+				<Link VarA="PlcTask Inputs^ParameterEstimation_1.camY" VarB="PlcTask Outputs^Camera.cameraData.robotPosition[3]^y"/>
+				<Link VarA="PlcTask Inputs^ParameterEstimation_1.vThetaFromMotor" VarB="PlcTask Outputs^WheelEncoders.vthetaCartesianFromMotors"/>
+				<Link VarA="PlcTask Inputs^ParameterEstimation_1.vXFromMotor" VarB="PlcTask Outputs^WheelEncoders.vXCartesianFromMotors"/>
+				<Link VarA="PlcTask Inputs^ParameterEstimation_1.vYFromMotor" VarB="PlcTask Outputs^WheelEncoders.vYCartesianFromMotors"/>
 			</OwnerB>
 			<OwnerB Name="TIRC^TcCOM Objects^Object2 (SoC_Model_Data_Aquisition_2022)">
 				<Link VarA="PlcTask Outputs^PowerManager.stMqtt_HAWino_IN^fActualBatteryCurrent" VarB="SoC_Model_Data_Aquisition_202_U^Current"/>
