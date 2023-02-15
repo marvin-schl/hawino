@@ -13,6 +13,9 @@
     <Content Include="ParameterEstimation.tcscopex">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="SimplePoseEst.tcscopex">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="sinusfahrt.tcscopex">
       <SubType>Content</SubType>
     </Content>

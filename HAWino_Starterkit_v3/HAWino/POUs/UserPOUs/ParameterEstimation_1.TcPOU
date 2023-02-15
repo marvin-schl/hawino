@@ -78,7 +78,7 @@ IF state = 1 THEN
 	END_IF
 
 	counter := counter + 1;
-	IF counter > 199 THEN
+	IF counter > 1990 THEN
 		state := 2;
 		counter := 0;
 	END_IF
@@ -116,7 +116,7 @@ END_IF
 IF state = 5 THEN
 	vy := vSoll;
 	counter := counter + 1;
-	IF counter > 199 THEN
+	IF counter > 399 THEN
 		state := 6;
 		counter := 0;
 	END_IF
@@ -153,7 +153,7 @@ END_IF
 IF state = 9 THEN
 	vtheta := vSoll/300;
 	counter := counter + 1;
-	IF counter > 199 THEN
+	IF counter > 699 THEN
 		state := 10;
 		counter := 0;
 	END_IF

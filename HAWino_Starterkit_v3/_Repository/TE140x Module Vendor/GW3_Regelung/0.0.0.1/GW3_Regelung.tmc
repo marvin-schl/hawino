@@ -1,0 +1,2007 @@
+<TcModuleClass Hash="{BEF1F9AC-FBBD-49F2-B03D-F66071E1359B}" GeneratedBy="TE140x-TargetForMatlabSimulink 2.3.1.1, MATLAB 9.11.0.2022996 (R2021b) Update 4 (win64)">
+  <Vendor>
+    <Name>TE140x Module Vendor</Name>
+    <ImageData />
+  </Vendor>
+  <DataTypes>
+    <DataType>
+      <Name GUID="{EFC3A64D-6B42-4239-5B8B-DB06400FA41F}">ITcGW3_Regelung</Name>
+      <BitSize X64="64">32</BitSize>
+      <BaseType GUID="{00000001-0000-0000-E000-000000000064}">ITcUnknown</BaseType>
+      <Method>
+        <Name VTableIndex="0">GW3_Regelung_step</Name>
+        <ReturnType GUID="{18071995-0000-0000-0000-000000000019}">HRESULT</ReturnType>
+        <ReturnBitSize>32</ReturnBitSize>
+      </Method>
+    </DataType>
+    <DataType>
+      <Name GUID="{D94EAD20-451D-4AE0-87CC-9A9884043E25}" Namespace="TcMgSdk" CName="TcMgSdk::ModuleCaller">ModuleCaller</Name>
+      <BitSize>32</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+      <EnumInfo>
+        <Text><![CDATA[CyclicTask]]></Text>
+        <Enum>0</Enum>
+        <Comment><![CDATA[Add to the specified cyclic caller tasks.]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[Module]]></Text>
+        <Enum>1</Enum>
+        <Comment><![CDATA[Don't add to cyclic callers. The module can be called from other TwinCAT modules (e. g. a PLC).]]></Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{1F89595E-59E5-47C7-9A58-A611A4C98DEC}" Namespace="TcMgSdk" CName="TcMgSdk::CallerVerification">CallerVerification</Name>
+      <BitSize>32</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+      <EnumInfo>
+        <Text><![CDATA[Default]]></Text>
+        <Enum>0</Enum>
+        <Comment><![CDATA[Verify the caller task only if the "ModuleCaller" parameter is set to "Module" but not when added to cyclic caller tasks.]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[Always]]></Text>
+        <Enum>1</Enum>
+        <Comment><![CDATA[Always verify the caller context to prevent concurrent execution of model code and corresponding DataArea mappings.]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[Never]]></Text>
+        <Enum>2</Enum>
+        <Comment><![CDATA[Skip caller verification to reduce execution times.]]></Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{65804E5D-07CA-41C0-AEDC-C5051585B216}" Namespace="TcMgSdk" CName="TcMgSdk::StepSizeAdaptation">StepSizeAdaptation</Name>
+      <BitSize>32</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+      <EnumInfo>
+        <Text><![CDATA[RequireMatchingTaskCycleTime]]></Text>
+        <Enum>0</Enum>
+        <Comment><![CDATA[Don't accept task cycle times other than the Simulink step sizes.]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[UseTaskCycleTime]]></Text>
+        <Enum>1</Enum>
+        <Comment><![CDATA[Adapt the Smulink step sizes to the task cycle times.]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[UseModelStepSize]]></Text>
+        <Enum>2</Enum>
+        <Comment><![CDATA[Keep the Smulink step sizes, independent of the callers cycle time.]]></Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{3856C4C8-CCAF-403F-A7C8-4E1502F2FFFC}" Namespace="TcMgSdk" CName="TcMgSdk::ExecutionSequence1">ExecutionSequence1</Name>
+      <BitSize>32</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+      <EnumInfo>
+        <Text><![CDATA[UpdateBeforeOutputMapping]]></Text>
+        <Enum>0</Enum>
+        <Comment><![CDATA[Input mapping -> State and output update -> Output mapping -> ADS processing]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[IoAtTaskBegin]]></Text>
+        <Enum>1</Enum>
+        <Comment><![CDATA[Input mapping -> Code execution -> Output update -> ADS processing]]></Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{18071995-0000-0000-0000-000000000061}" TcBaseType="true" CName="TCOM_STATE">TCOM_STATE</Name>
+      <BitSize>32</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+      <EnumInfo>
+        <Text><![CDATA[TCOM_STATE_INIT]]></Text>
+        <Enum>1</Enum>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[TCOM_STATE_PREOP]]></Text>
+        <Enum>2</Enum>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[TCOM_STATE_SAFEOP]]></Text>
+        <Enum>4</Enum>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[TCOM_STATE_OP]]></Text>
+        <Enum>8</Enum>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{53CDED75-D12E-408E-B06D-0E50F6A35065}" Namespace="TcMgSdk" CName="TcMgSdk::FpExcptCtrlSet">FpExcptCtrlSet</Name>
+      <BitSize>8</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000002}">USINT</BaseType>
+      <EnumInfo>
+        <Text><![CDATA[CallerExceptions]]></Text>
+        <Enum>1</Enum>
+        <Comment><![CDATA[Use the floating point exception settings provided by the caller]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[ThrowExceptions]]></Text>
+        <Enum>3</Enum>
+        <Comment><![CDATA[Enable floating point exceptions on invalid operations and divisions by zero]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[SuppressExceptions]]></Text>
+        <Enum>12</Enum>
+        <Comment><![CDATA[Disable floating point exceptions.]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[LogExceptions]]></Text>
+        <Enum>19</Enum>
+        <Comment><![CDATA[Log exception information.]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[LogAndHold]]></Text>
+        <Enum>51</Enum>
+        <Comment><![CDATA[Log exception information and puase execution of the cyclic code after completion of the actual cycle]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[LogAndCatch]]></Text>
+        <Enum>83</Enum>
+        <Comment><![CDATA[Log exception information and immediately terminate execution of the cyclic code. Reinitialization is required to restart.]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[LogAndDump]]></Text>
+        <Enum>147</Enum>
+        <Comment><![CDATA[Log exception information, create a dump file with detailed exception information and try to continue execution of the cyclic code]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[LogHoldAndDump]]></Text>
+        <Enum>179</Enum>
+        <Comment><![CDATA[Log exception information, create a dump file with detailed exception information and puase execution of the cyclic code after completion of the actual cycle]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[LogCatchAndDump]]></Text>
+        <Enum>211</Enum>
+        <Comment><![CDATA[Log exception information, create a dump file with detailed exception information and immediately terminate execution of the cyclic code. Reinitialization is required to restart.]]></Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{0564A6B7-D0A7-47F6-9375-C2F05C960A28}" Namespace="TcMgSdk" CName="TcMgSdk::ModuleBuildInfo">ModuleBuildInfo</Name>
+      <BitSize>96</BitSize>
+      <SubItem>
+        <Name>TcBuild</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>TcRevision</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>32</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>Debug</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>64</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name GUID="{241597CD-DFF8-4569-90EE-6B470D7A1D92}" Namespace="TcMgSdk" CName="TcMgSdk::ExceptionInfo">ExceptionInfo</Name>
+      <BitSize>1376</BitSize>
+      <SubItem>
+        <Name>ExceptionCode</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000009}">DINT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>TmxName</Name>
+        <Type GUID="{18071995-0000-0000-0000-00010000007F}">STRING(127)</Type>
+        <BitSize>1024</BitSize>
+        <BitOffs>32</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>TmxVersion</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>4</Elements>
+        </ArrayInfo>
+        <BitSize>128</BitSize>
+        <BitOffs>1056</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>InstructionAddr</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>1184</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>ReturnAddr</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>4</Elements>
+        </ArrayInfo>
+        <BitSize>128</BitSize>
+        <BitOffs>1216</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DumpCreated</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>1344</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name GUID="{AA20257C-9755-505A-03CA-F39B0A052371}">matrix_100_real_T</Name>
+      <BitSize>6400</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>100</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</Name>
+      <BitSize>192</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>3</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{448AF116-7E33-F05A-EAB9-DC3661D64403}">matrix_2_real_T</Name>
+      <BitSize>128</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>2</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{18B872B6-023F-1A5D-7C6B-F5F60341D01E}">B_KoordinatentransformationWR_T</Name>
+      <BitSize>192</BitSize>
+      <SubItem>
+        <Name>vX_R</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>vY_R</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>64</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>vTheta_R</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>128</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name GUID="{80C90743-0B01-3CEF-610D-D2A448D7D7ED}">B_MATLABFunction_GW3_Regelung_T</Name>
+      <BitSize>192</BitSize>
+      <SubItem>
+        <Name>V1</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>V2</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>64</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>V3</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>128</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name GUID="{A5A7CD56-CE12-32D5-930D-F1442CC42F36}">B_MATLABFunction1_GW3_Regelun_T</Name>
+      <BitSize>192</BitSize>
+      <SubItem>
+        <Name>V1</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>V2</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>64</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>V3</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>128</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name GUID="{1406F16C-CC03-BF7B-E9D0-A1C4F1E05AF7}">B_CTR2WControl_GW3_Regelung_T</Name>
+      <BitSize>192</BitSize>
+      <SubItem>
+        <Name>Vector_w</Name>
+        <Type GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</Type>
+        <BitSize>192</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name GUID="{72A91784-953A-FD09-4E66-5B1F6549B49B}">matrix_9_real_T</Name>
+      <BitSize>576</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>9</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{0723D0AF-1FB9-70EB-B12E-FE5423B3C4D3}">matrix_150_real_T</Name>
+      <BitSize>9600</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>150</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{5ECDED3E-365B-1DDF-CA2C-DC8DDA8361C1}" HideSubItems="true">matrix_450_real_T</Name>
+      <BitSize>28800</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>450</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{6700C0D7-A928-45BF-1073-E095AB8E2602}">matrix_75_real_T</Name>
+      <BitSize>4800</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>75</Elements>
+      </ArrayInfo>
+    </DataType>
+  </DataTypes>
+  <Licenses />
+  <Groups>
+    <Group SortOrder="101">
+      <Name>TE140x</Name>
+      <DisplayName>TE140x</DisplayName>
+      <ImageData>424d3603000000000000360000002800000010000000100000000100180000000000000300000000000000000000000000000000000023542c32784c31784b3077493076482f75462e74442d72422c71402b703e2a6e3c296c3a286b372769352667331d4a1e337b4f3d94833c93803a917d398f7a378d76358a7233886f31856a2f81662d7e612b7b5d29775827735424704f266733357d5340998a3f98873d97843c95813a927d389079368d75348a7032876c3083672d7f622b7c5d297859277454276935378056439e913c8f712e66232e66232e66232e66232e66232e66232e66232e66232e66232e66233d7c50297759286b3838835946a5982e6623419d8d409b893e98863c96823a927d388f78358c7333876f31836a2e7c622e6623468b6f296c3a3a855b4caa9e2e66234ba99b397e4f57ad9c42a08d409d883c99833a957d389178368d7333886d2e6623478c702a6e3c4289605eb5aa2e662360b7ac2b6421326a29519d7f43a390409e893d9a833b967e389078358c732e6623488f732b703f4a8f6670bfb52e662373c3b82c65225ea997326c36407e4953a996409e893d99833a947e378f782e66234a91782c724153936b81c9c02e662385ccc42d65237cc8be70c1b5488a6e31682a539b7c409d893d98833a937d2e66234b947b2d73435b987092d2c92e662397d6ce2e66238cd1c980cbc172c2b659a79a3473453977404fa28e3c96812e66234d967f2e7445629b74a2d9d22e6623a8ded72e65229ad9d18dd1c97ec9bf6dbeb25ab2a43d8d702a612a4d92712e66234e98822f7647699e77b1dfd92e6623bce6e02d6520abdfd89bd7d08acfc67bc5bc68baae55ad9f49a2923977532e66234b98833077496ea079bde4df87aa942e66232e66232e66232e66232e66232e66232e66232e66232e66232e662332794f3c928031784b6fa07ac2e6e1d3edead2ede9c2e7e2b1e0d9a0d8d08dcfc77bc5bb69bab056afa446a497439f91409a8a3d948332784c6d9f79bde3dec9e8e4c8e8e4bde3deadddd79dd5ce8bcdc57ac3ba67b9ae54aea247a59945a093419b8c3e958633794e3e66416f9f7973a27c73a27c6fa07a689d76609a7258956e4f9169468b633d865d388259378157367e54347b5123542d</ImageData>
+    </Group>
+    <Group SortOrder="101" ParentGroup="TE140x">
+      <Name>TE140x|Simulink Modules</Name>
+      <DisplayName>Simulink Modules</DisplayName>
+      <ImageData>424d3603000000000000360000002800000010000000100000000100180000000000000300000000000000000000000000000000000023542c32784c31784b3077493076482f75462e74442d72422c71402b703e2a6e3c296c3a286b372769352667331d4a1e337b4f3d94833c93803a917d398f7a378d76358a7233886f31856a2f81662d7e612b7b5d29775827735424704f266733357d5340998a3f98873d97843c95813a927d389079368d75348a7032876c3083672d7f622b7c5d297859277454276935378056439e913c8f712e66232e66232e66232e66232e66232e66232e66232e66232e66232e66233d7c50297759286b3838835946a5982e6623419d8d409b893e98863c96823a927d388f78358c7333876f31836a2e7c622e6623468b6f296c3a3a855b4caa9e2e66234ba99b397e4f57ad9c42a08d409d883c99833a957d389178368d7333886d2e6623478c702a6e3c4289605eb5aa2e662360b7ac2b6421326a29519d7f43a390409e893d9a833b967e389078358c732e6623488f732b703f4a8f6670bfb52e662373c3b82c65225ea997326c36407e4953a996409e893d99833a947e378f782e66234a91782c724153936b81c9c02e662385ccc42d65237cc8be70c1b5488a6e31682a539b7c409d893d98833a937d2e66234b947b2d73435b987092d2c92e662397d6ce2e66238cd1c980cbc172c2b659a79a3473453977404fa28e3c96812e66234d967f2e7445629b74a2d9d22e6623a8ded72e65229ad9d18dd1c97ec9bf6dbeb25ab2a43d8d702a612a4d92712e66234e98822f7647699e77b1dfd92e6623bce6e02d6520abdfd89bd7d08acfc67bc5bc68baae55ad9f49a2923977532e66234b98833077496ea079bde4df87aa942e66232e66232e66232e66232e66232e66232e66232e66232e66232e662332794f3c928031784b6fa07ac2e6e1d3edead2ede9c2e7e2b1e0d9a0d8d08dcfc77bc5bb69bab056afa446a497439f91409a8a3d948332784c6d9f79bde3dec9e8e4c8e8e4bde3deadddd79dd5ce8bcdc57ac3ba67b9ae54aea247a59945a093419b8c3e958633794e3e66416f9f7973a27c73a27c6fa07a689d76609a7258956e4f9169468b633d865d388259378157367e54347b5123542d</ImageData>
+    </Group>
+  </Groups>
+  <Modules>
+    <Module GUID="{B22EBE0C-B653-0DD9-40F7-A0226A49B78D}" Group="TE140x|Simulink Modules">
+      <Name>GW3_Regelung</Name>
+      <CLSID ClassFactory="GW3_Regelung" RealTimeInstantiable="true">{B22EBE0C-B653-0DD9-40F7-A0226A49B78D}</CLSID>
+      <Info>
+        <TabExtension GUID="{BB6DDFDC-900F-473F-83FC-D83513217B55}" />
+        <ImageData>424d3603000000000000360000002800000010000000100000000100180000000000000300000000000000000000000000000000000023542c32784c31784b3077493076482f75462e74442d72422c71402b703e2a6e3c296c3a286b372769352667331d4a1e337b4f3d94833c93803a917d398f7a378d76358a7233886f31856a2f81662d7e612b7b5d29775827735424704f266733357d5340998a3f98873d97843c95813a927d389079368d75348a7032876c3083672d7f622b7c5d297859277454276935378056439e913c8f712e66232e66232e66232e66232e66232e66232e66232e66232e66232e66233d7c50297759286b3838835946a5982e6623419d8d409b893e98863c96823a927d388f78358c7333876f31836a2e7c622e6623468b6f296c3a3a855b4caa9e2e66234ba99b397e4f57ad9c42a08d409d883c99833a957d389178368d7333886d2e6623478c702a6e3c4289605eb5aa2e662360b7ac2b6421326a29519d7f43a390409e893d9a833b967e389078358c732e6623488f732b703f4a8f6670bfb52e662373c3b82c65225ea997326c36407e4953a996409e893d99833a947e378f782e66234a91782c724153936b81c9c02e662385ccc42d65237cc8be70c1b5488a6e31682a539b7c409d893d98833a937d2e66234b947b2d73435b987092d2c92e662397d6ce2e66238cd1c980cbc172c2b659a79a3473453977404fa28e3c96812e66234d967f2e7445629b74a2d9d22e6623a8ded72e65229ad9d18dd1c97ec9bf6dbeb25ab2a43d8d702a612a4d92712e66234e98822f7647699e77b1dfd92e6623bce6e02d6520abdfd89bd7d08acfc67bc5bc68baae55ad9f49a2923977532e66234b98833077496ea079bde4df87aa942e66232e66232e66232e66232e66232e66232e66232e66232e66232e662332794f3c928031784b6fa07ac2e6e1d3edead2ede9c2e7e2b1e0d9a0d8d08dcfc77bc5bb69bab056afa446a497439f91409a8a3d948332784c6d9f79bde3dec9e8e4c8e8e4bde3deadddd79dd5ce8bcdc57ac3ba67b9ae54aea247a59945a093419b8c3e958633794e3e66416f9f7973a27c73a27c6fa07a689d76609a7258956e4f9169468b633d865d388259378157367e54347b5123542d</ImageData>
+      </Info>
+      <Licenses>
+        <License>
+          <LicenseId>{AD7F40C3-F160-4413-83E3-6B7656A795A2}</LicenseId>
+        </License>
+      </Licenses>
+      <InitSequence>PSO</InitSequence>
+      <Contexts>
+        <Context>
+          <Id>0</Id>
+          <Name>Context0 (10 ms)</Name>
+          <CycleTime>10000000</CycleTime>
+        </Context>
+      </Contexts>
+      <Interfaces>
+        <Interface>
+          <Type GUID="{00000001-0000-0000-E000-000000000064}">ITcUnknown</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{00000002-0000-0000-E000-000000000064}">ITcPersist</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{00000012-0000-0000-E000-000000000064}">ITComObject</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{03000018-0000-0000-E000-000000000064}">ITcWatchSource</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{03000010-0000-0000-E000-000000000064}">ITcCyclic</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{03000025-0000-0000-E000-000000000064}">ITcPostCyclic</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{03000012-0000-0000-E000-000000000064}">ITcADI</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{EFC3A64D-6B42-4239-5B8B-DB06400FA41F}">ITcGW3_Regelung</Type>
+          <ContextId>0</ContextId>
+        </Interface>
+      </Interfaces>
+      <Parameters>
+        <Parameter HideParameter="true" CreateSymbol="true">
+          <Name>TaskOid</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-00000000000F}">OTCID</BaseType>
+          <PTCID>#x03002060</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true" CreateSymbol="true">
+          <Name>TaskPriority</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+          <PTCID>#x03002070</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true" CreateSymbol="true">
+          <Name>TaskCycleTimeNs</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+          <PTCID>#x03002080</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true" CreateSymbol="true">
+          <Name>TaskPort</Name>
+          <BitSize>16</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000005}">UINT</BaseType>
+          <PTCID>#x03002090</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true" CreateSymbol="true">
+          <Name>TaskSortOrder</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+          <PTCID>#x030020b0</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true">
+          <Name>TraceLevelMax</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{8007AE3B-86BB-40F2-B385-EF87FCC239A4}">TcTraceLevel</BaseType>
+          <Default>
+            <EnumText>tlInfo</EnumText>
+          </Default>
+          <PTCID>#x00000001</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="true">
+          <Name>ModuleCaller</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{D94EAD20-451D-4AE0-87CC-9A9884043E25}" Namespace="TcMgSdk">ModuleCaller</BaseType>
+          <Default>
+            <EnumText>CyclicTask</EnumText>
+          </Default>
+          <PTCID>#x00000002</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true">
+          <Name>CallerVerification</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{1F89595E-59E5-47C7-9A58-A611A4C98DEC}" Namespace="TcMgSdk">CallerVerification</BaseType>
+          <Default>
+            <EnumText>Default</EnumText>
+          </Default>
+          <PTCID>#x00000003</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="true">
+          <Name>StepSizeAdaptation</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{65804E5D-07CA-41C0-AEDC-C5051585B216}" Namespace="TcMgSdk">StepSizeAdaptation</BaseType>
+          <Default>
+            <EnumText>RequireMatchingTaskCycleTime</EnumText>
+          </Default>
+          <PTCID>#x00000004</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="true">
+          <Name>ExecutionSequence</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{3856C4C8-CCAF-403F-A7C8-4E1502F2FFFC}" Namespace="TcMgSdk">ExecutionSequence1</BaseType>
+          <Default>
+            <EnumText>UpdateBeforeOutputMapping</EnumText>
+          </Default>
+          <PTCID>#x00000005</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="true">
+          <Name>Execute</Name>
+          <BitSize>8</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+          <Default>
+            <EnumText>TRUE</EnumText>
+          </Default>
+          <PTCID>#x00000006</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true">
+          <Name>AccessLockState</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000061}">TCOM_STATE</BaseType>
+          <Default>
+            <EnumText>TCOM_STATE_OP</EnumText>
+          </Default>
+          <PTCID>#x00000007</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true">
+          <Name>InitExceptionHandling</Name>
+          <BitSize>8</BitSize>
+          <BaseType GUID="{53CDED75-D12E-408E-B06D-0E50F6A35065}" Namespace="TcMgSdk">FpExcptCtrlSet</BaseType>
+          <Default>
+            <EnumText>CallerExceptions</EnumText>
+          </Default>
+          <PTCID>#x00000008</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true">
+          <Name>UpdateExceptionHandling</Name>
+          <BitSize>8</BitSize>
+          <BaseType GUID="{53CDED75-D12E-408E-B06D-0E50F6A35065}" Namespace="TcMgSdk">FpExcptCtrlSet</BaseType>
+          <Default>
+            <EnumText>CallerExceptions</EnumText>
+          </Default>
+          <PTCID>#x00000009</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
+          <Name>ModuleBuildInfo</Name>
+          <BitSize>96</BitSize>
+          <BaseType GUID="{0564A6B7-D0A7-47F6-9375-C2F05C960A28}" Namespace="TcMgSdk">ModuleBuildInfo</BaseType>
+          <PTCID>#x0000000a</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
+          <Name>Initialized</Name>
+          <BitSize>8</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+          <Default>
+            <EnumText>FALSE</EnumText>
+          </Default>
+          <PTCID>#x0000000b</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="true" HideParameter="true" CreateSymbol="true" ReadOnly="true">
+          <Name>InitExceptionInfo</Name>
+          <BitSize>1376</BitSize>
+          <BaseType GUID="{241597CD-DFF8-4569-90EE-6B470D7A1D92}" Namespace="TcMgSdk">ExceptionInfo</BaseType>
+          <PTCID>#x0000000c</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
+          <Name>CycleCount</Name>
+          <BitSize>64</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-00000000000B}">ULINT</BaseType>
+          <PTCID>#x0000000d</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="true" HideParameter="true" CreateSymbol="true" ReadOnly="true">
+          <Name>ExceptionCount</Name>
+          <BitSize>64</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-00000000000B}">ULINT</BaseType>
+          <PTCID>#x0000000e</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="true" HideParameter="true" CreateSymbol="true" ReadOnly="true">
+          <Name>ExeceptionInfo</Name>
+          <BitSize>1376</BitSize>
+          <BaseType GUID="{241597CD-DFF8-4569-90EE-6B470D7A1D92}" Namespace="TcMgSdk">ExceptionInfo</BaseType>
+          <PTCID>#x0000000f</PTCID>
+        </Parameter>
+      </Parameters>
+      <DataAreas>
+        <DataArea>
+          <AreaNo AreaType="InputDst" CreateSymbols="true">0</AreaNo>
+          <Name>GW3_Regelung_U</Name>
+          <ContextId>0</ContextId>
+          <ByteSize>1600</ByteSize>
+          <Symbol>
+            <Name>ptWaypointListX</Name>
+            <BitSize>6400</BitSize>
+            <BaseType GUID="{AA20257C-9755-505A-03CA-F39B0A052371}">matrix_100_real_T</BaseType>
+            <PTCID>#x80000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>ptWaypointListY</Name>
+            <BitSize>6400</BitSize>
+            <BaseType GUID="{AA20257C-9755-505A-03CA-F39B0A052371}">matrix_100_real_T</BaseType>
+            <PTCID>#x80000320</PTCID>
+            <BitOffs>6400</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="InputDst" CreateSymbols="true">1</AreaNo>
+          <Name>AdditionalInports</Name>
+          <ContextId>0</ContextId>
+          <ByteSize>272</ByteSize>
+          <Symbol>
+            <Name>TcModuleInput_enableExternalRefVelocities</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x81000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_externalVThetaRef</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000008</PTCID>
+            <BitOffs>64</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_externalVxRef</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000010</PTCID>
+            <BitOffs>128</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_externalVyRef</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000018</PTCID>
+            <BitOffs>192</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_kalInCamError</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000020</PTCID>
+            <BitOffs>256</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_kalInCamMM</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000028</PTCID>
+            <BitOffs>320</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_kalInCamSS</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000030</PTCID>
+            <BitOffs>384</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_kalInInit</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x81000038</PTCID>
+            <BitOffs>448</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_kalInSysMM</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000040</PTCID>
+            <BitOffs>512</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_kalInSysMS</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000048</PTCID>
+            <BitOffs>576</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_kalInSysSS</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000050</PTCID>
+            <BitOffs>640</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_kalInTCam</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000058</PTCID>
+            <BitOffs>704</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_kalInTEnc</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000060</PTCID>
+            <BitOffs>768</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_kalInUt</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000068</PTCID>
+            <BitOffs>832</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_kalInUx</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000070</PTCID>
+            <BitOffs>896</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_kalInUy</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000078</PTCID>
+            <BitOffs>960</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_kalInXCam</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000080</PTCID>
+            <BitOffs>1024</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_kalInXEnc</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000088</PTCID>
+            <BitOffs>1088</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_kalInYCam</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000090</PTCID>
+            <BitOffs>1152</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_kalInYEnc</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000098</PTCID>
+            <BitOffs>1216</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_ptDisableNearestPointSearch</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x810000a0</PTCID>
+            <BitOffs>1280</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_ptEnableController</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x810000a1</PTCID>
+            <BitOffs>1288</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_ptGripperSliderTriggered</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x810000a2</PTCID>
+            <BitOffs>1296</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_ptInitialize</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x810000a3</PTCID>
+            <BitOffs>1304</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_ptParCrossErrorTolerance</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x810000a8</PTCID>
+            <BitOffs>1344</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_ptParDistanceChangeWP</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x810000b0</PTCID>
+            <BitOffs>1408</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_ptParDistanceSlowDown</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x810000b8</PTCID>
+            <BitOffs>1472</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_ptParDistanceStop</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x810000c0</PTCID>
+            <BitOffs>1536</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_ptParMaxVelocity</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x810000c8</PTCID>
+            <BitOffs>1600</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_ptParPredictionHorizon</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x810000d0</PTCID>
+            <BitOffs>1664</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_ptRobotDrivesToStation</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x810000d8</PTCID>
+            <BitOffs>1728</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_rlInB</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x810000e0</PTCID>
+            <BitOffs>1792</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_rlInM</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x810000e8</PTCID>
+            <BitOffs>1856</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_rlInSollT</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x810000f0</PTCID>
+            <BitOffs>1920</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_rlInToleranceT</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x810000f8</PTCID>
+            <BitOffs>1984</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_zrInVmaxRotatoric</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000100</PTCID>
+            <BitOffs>2048</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_zrInVmaxTranslatoric</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x81000108</PTCID>
+            <BitOffs>2112</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="OutputSrc" CreateSymbols="true">2</AreaNo>
+          <Name>AdditionalOutports</Name>
+          <ContextId>0</ContextId>
+          <ByteSize>176</ByteSize>
+          <Symbol>
+            <Name>TcModuleOutput_Debug_zrTrafoVtheta</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_Debug_zrTrafoVx</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000008</PTCID>
+            <BitOffs>64</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_Debug_zrTrafoVy</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000010</PTCID>
+            <BitOffs>128</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_GW03ControllerVersionNumber</Name>
+            <BitSize>32</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000D}">REAL</BaseType>
+            <PTCID>#x82000018</PTCID>
+            <BitOffs>192</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_kalOutTHat</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000020</PTCID>
+            <BitOffs>256</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_kalOutVtHat</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000028</PTCID>
+            <BitOffs>320</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_kalOutVxHat</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000030</PTCID>
+            <BitOffs>384</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_kalOutVyHat</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000038</PTCID>
+            <BitOffs>448</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_kalOutXHat</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000040</PTCID>
+            <BitOffs>512</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_kalOutYHat</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000048</PTCID>
+            <BitOffs>576</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_ptCurrentCrossError</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000050</PTCID>
+            <BitOffs>640</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_ptCurrentDrivingDirection</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000058</PTCID>
+            <BitOffs>704</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_ptDistanceToCurrentTarget</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000060</PTCID>
+            <BitOffs>768</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_ptIndexOfLastWaypoint</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000068</PTCID>
+            <BitOffs>832</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_ptOutCurrentTargetIndex</Name>
+            <BitSize>32</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+            <PTCID>#x82000070</PTCID>
+            <BitOffs>896</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_ptOutPreviousTargetIndex</Name>
+            <BitSize>32</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+            <PTCID>#x82000074</PTCID>
+            <BitOffs>928</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_ptOutVxRef</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000078</PTCID>
+            <BitOffs>960</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_ptOutVyRef</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000080</PTCID>
+            <BitOffs>1024</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_ptRobotInPosition</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x82000088</PTCID>
+            <BitOffs>1088</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_ptStatusCode</Name>
+            <BitSize>16</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000005}">UINT</BaseType>
+            <PTCID>#x8200008a</PTCID>
+            <BitOffs>1104</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_rlOutThetaDiff</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000090</PTCID>
+            <BitOffs>1152</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_zrOutStellwertVtheta</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000098</PTCID>
+            <BitOffs>1216</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_zrOutStellwertVx</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820000a0</PTCID>
+            <BitOffs>1280</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_zrOutStellwertVy</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820000a8</PTCID>
+            <BitOffs>1344</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="Internal" CreateSymbols="true">3</AreaNo>
+          <Name>GW3_Regelung_B</Name>
+          <ContextId>0</ContextId>
+          <ByteSize>2496</ByteSize>
+          <Symbol>
+            <Name>scaleWPLxmmm</Name>
+            <BitSize>6400</BitSize>
+            <BaseType GUID="{AA20257C-9755-505A-03CA-F39B0A052371}">matrix_100_real_T</BaseType>
+            <PTCID>#x83000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>scaleWPLymmm</Name>
+            <BitSize>6400</BitSize>
+            <BaseType GUID="{AA20257C-9755-505A-03CA-F39B0A052371}">matrix_100_real_T</BaseType>
+            <PTCID>#x83000320</PTCID>
+            <BitOffs>6400</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>MatrixConcatenate1</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+            <PTCID>#x83000640</PTCID>
+            <BitOffs>12800</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>MatrixConcatenate</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+            <PTCID>#x83000658</PTCID>
+            <BitOffs>12992</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Delay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000670</PTCID>
+            <BitOffs>13184</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>MatrixConcatenate2</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+            <PTCID>#x83000678</PTCID>
+            <BitOffs>13248</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>concatposition</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{448AF116-7E33-F05A-EAB9-DC3661D64403}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000690</PTCID>
+            <BitOffs>13440</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>ptParDistanceChangeWP</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830006a0</PTCID>
+            <BitOffs>13568</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>ptParPredictionHorizon</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830006a8</PTCID>
+            <BitOffs>13632</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>ptParDistanceSlowDown</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830006b0</PTCID>
+            <BitOffs>13696</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>ptParDistanceStop</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830006b8</PTCID>
+            <BitOffs>13760</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>ptParCrossErrorTolerance</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830006c0</PTCID>
+            <BitOffs>13824</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>ptParMaxVelocity</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830006c8</PTCID>
+            <BitOffs>13888</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>scalevelocitymmm1</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830006d0</PTCID>
+            <BitOffs>13952</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>zrInVmaxTranslatoric</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830006d8</PTCID>
+            <BitOffs>14016</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Gain</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830006e0</PTCID>
+            <BitOffs>14080</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>zrInVmaxRotatoric</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830006e8</PTCID>
+            <BitOffs>14144</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>kalInCamMM</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830006f0</PTCID>
+            <BitOffs>14208</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>kalInCamSS</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830006f8</PTCID>
+            <BitOffs>14272</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>kalInSysMM</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000700</PTCID>
+            <BitOffs>14336</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>kalInSysSS</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000708</PTCID>
+            <BitOffs>14400</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>kalInSysMS</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000710</PTCID>
+            <BitOffs>14464</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>externalVxRef</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000718</PTCID>
+            <BitOffs>14528</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>scalevXmsmms</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000720</PTCID>
+            <BitOffs>14592</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>vX_refswitch</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000728</PTCID>
+            <BitOffs>14656</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>externalVyRef</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000730</PTCID>
+            <BitOffs>14720</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>scalevYmsmms</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000738</PTCID>
+            <BitOffs>14784</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>vY_refswitch</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000740</PTCID>
+            <BitOffs>14848</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>externalVThetaRef</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000748</PTCID>
+            <BitOffs>14912</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>rlInM</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000750</PTCID>
+            <BitOffs>14976</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>rlInB</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000758</PTCID>
+            <BitOffs>15040</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>rlInSollT</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000760</PTCID>
+            <BitOffs>15104</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>rlInToleranceT</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000768</PTCID>
+            <BitOffs>15168</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>vTheta_refswitch</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000770</PTCID>
+            <BitOffs>15232</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>ut</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000778</PTCID>
+            <BitOffs>15296</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>ut_n</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000780</PTCID>
+            <BitOffs>15360</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>ut_i</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000788</PTCID>
+            <BitOffs>15424</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Switch2</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000790</PTCID>
+            <BitOffs>15488</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Switch2_d</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000798</PTCID>
+            <BitOffs>15552</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Switch2_d5</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830007a0</PTCID>
+            <BitOffs>15616</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>kalInCamError</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830007a8</PTCID>
+            <BitOffs>15680</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Switch</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830007b0</PTCID>
+            <BitOffs>15744</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Switch_f</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830007b8</PTCID>
+            <BitOffs>15808</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Switch_a</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830007c0</PTCID>
+            <BitOffs>15872</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Velocity</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830007c8</PTCID>
+            <BitOffs>15936</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Enable</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830007d0</PTCID>
+            <BitOffs>16000</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>ControlDifference</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830007d8</PTCID>
+            <BitOffs>16064</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>targetIndexOUT</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830007e0</PTCID>
+            <BitOffs>16128</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>previousIndexOUT</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830007e8</PTCID>
+            <BitOffs>16192</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>vXrefOUT</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830007f0</PTCID>
+            <BitOffs>16256</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>vYrefOUT</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830007f8</PTCID>
+            <BitOffs>16320</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>indexOfLastWPOUT</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000800</PTCID>
+            <BitOffs>16384</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>crossErrorOUT</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000808</PTCID>
+            <BitOffs>16448</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>drivingDirectionOUT</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000810</PTCID>
+            <BitOffs>16512</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>distanceToCurrentTarget</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000818</PTCID>
+            <BitOffs>16576</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Xn</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+            <PTCID>#x83000820</PTCID>
+            <BitOffs>16640</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Vn</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+            <PTCID>#x83000838</PTCID>
+            <BitOffs>16832</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Xn_c</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+            <PTCID>#x83000850</PTCID>
+            <BitOffs>17024</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Vn_a</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+            <PTCID>#x83000868</PTCID>
+            <BitOffs>17216</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Xmn_Enc</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+            <PTCID>#x83000880</PTCID>
+            <BitOffs>17408</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TimeSteps</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000898</PTCID>
+            <BitOffs>17600</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TimeSteps_l</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830008a0</PTCID>
+            <BitOffs>17664</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Theta</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830008a8</PTCID>
+            <BitOffs>17728</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Xmn_Cam</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+            <PTCID>#x830008b0</PTCID>
+            <BitOffs>17792</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Gain1</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830008c8</PTCID>
+            <BitOffs>17984</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>kT1</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830008d0</PTCID>
+            <BitOffs>18048</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>V</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830008d8</PTCID>
+            <BitOffs>18112</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Cast</Name>
+            <BitSize>32</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+            <PTCID>#x830008e0</PTCID>
+            <BitOffs>18176</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Cast1</Name>
+            <BitSize>32</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+            <PTCID>#x830008e4</PTCID>
+            <BitOffs>18208</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>statusCode</Name>
+            <BitSize>16</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000005}">UINT</BaseType>
+            <PTCID>#x830008e8</PTCID>
+            <BitOffs>18240</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>statusCodeOUT</Name>
+            <BitSize>16</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000005}">UINT</BaseType>
+            <PTCID>#x830008ea</PTCID>
+            <BitOffs>18256</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>kalInInit</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x830008ec</PTCID>
+            <BitOffs>18272</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>ptInitialize</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x830008ed</PTCID>
+            <BitOffs>18280</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>ptDisableNearestPointSearch</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x830008ee</PTCID>
+            <BitOffs>18288</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>ptGripperSliderTriggered</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x830008ef</PTCID>
+            <BitOffs>18296</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>ptRobotDrivesToStation</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x830008f0</PTCID>
+            <BitOffs>18304</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>ptEnableController</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x830008f1</PTCID>
+            <BitOffs>18312</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>enableExternalRefVelocities</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x830008f2</PTCID>
+            <BitOffs>18320</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>inPosOUT</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x830008f3</PTCID>
+            <BitOffs>18328</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Cam_Trigger</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x830008f4</PTCID>
+            <BitOffs>18336</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>UpperRelop</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x830008f5</PTCID>
+            <BitOffs>18344</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>UpperRelop_k</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x830008f6</PTCID>
+            <BitOffs>18352</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>UpperRelop_c</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x830008f7</PTCID>
+            <BitOffs>18360</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>LowerRelop1</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x830008f8</PTCID>
+            <BitOffs>18368</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>sf_KoordinatentransformationWRG</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{18B872B6-023F-1A5D-7C6B-F5F60341D01E}">B_KoordinatentransformationWR_T</BaseType>
+            <PTCID>#x83000900</PTCID>
+            <BitOffs>18432</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>sf_KoordinatentransformationWR</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{18B872B6-023F-1A5D-7C6B-F5F60341D01E}">B_KoordinatentransformationWR_T</BaseType>
+            <PTCID>#x83000918</PTCID>
+            <BitOffs>18624</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>sf_MATLABFunction3</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{80C90743-0B01-3CEF-610D-D2A448D7D7ED}">B_MATLABFunction_GW3_Regelung_T</BaseType>
+            <PTCID>#x83000930</PTCID>
+            <BitOffs>18816</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>sf_MATLABFunction2</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{A5A7CD56-CE12-32D5-930D-F1442CC42F36}">B_MATLABFunction1_GW3_Regelun_T</BaseType>
+            <PTCID>#x83000948</PTCID>
+            <BitOffs>19008</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>sf_MATLABFunction1</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{A5A7CD56-CE12-32D5-930D-F1442CC42F36}">B_MATLABFunction1_GW3_Regelun_T</BaseType>
+            <PTCID>#x83000960</PTCID>
+            <BitOffs>19200</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>sf_MATLABFunction</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{80C90743-0B01-3CEF-610D-D2A448D7D7ED}">B_MATLABFunction_GW3_Regelung_T</BaseType>
+            <PTCID>#x83000978</PTCID>
+            <BitOffs>19392</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>sf_CTR2WEncoder</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{1406F16C-CC03-BF7B-E9D0-A1C4F1E05AF7}">B_CTR2WControl_GW3_Regelung_T</BaseType>
+            <PTCID>#x83000990</PTCID>
+            <BitOffs>19584</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>sf_CTR2WControl</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{1406F16C-CC03-BF7B-E9D0-A1C4F1E05AF7}">B_CTR2WControl_GW3_Regelung_T</BaseType>
+            <PTCID>#x830009a8</PTCID>
+            <BitOffs>19776</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="Internal" CreateSymbols="true">4</AreaNo>
+          <Name>GW3_Regelung_DW1</Name>
+          <ContextId>0</ContextId>
+          <ByteSize>8744</ByteSize>
+          <Symbol>
+            <Name>Delay_DSTATE</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>previousTargetIndex</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000008</PTCID>
+            <BitOffs>64</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>lastWaypointOfList</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{448AF116-7E33-F05A-EAB9-DC3661D64403}">matrix_2_real_T</BaseType>
+            <PTCID>#x84000010</PTCID>
+            <BitOffs>128</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>lastWaypointIndex</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000020</PTCID>
+            <BitOffs>256</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>cycleCounter</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000028</PTCID>
+            <BitOffs>320</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Xn_1</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+            <PTCID>#x84000030</PTCID>
+            <BitOffs>384</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Yn_1</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+            <PTCID>#x84000048</PTCID>
+            <BitOffs>576</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Pn_1</Name>
+            <BitSize>576</BitSize>
+            <BaseType GUID="{72A91784-953A-FD09-4E66-5B1F6549B49B}">matrix_9_real_T</BaseType>
+            <PTCID>#x84000060</PTCID>
+            <BitOffs>768</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Xmn_Enc_Stored</Name>
+            <BitSize>9600</BitSize>
+            <BaseType GUID="{0723D0AF-1FB9-70EB-B12E-FE5423B3C4D3}">matrix_150_real_T</BaseType>
+            <PTCID>#x840000a8</PTCID>
+            <BitOffs>1344</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>un_Stored</Name>
+            <BitSize>9600</BitSize>
+            <BaseType GUID="{0723D0AF-1FB9-70EB-B12E-FE5423B3C4D3}">matrix_150_real_T</BaseType>
+            <PTCID>#x84000558</PTCID>
+            <BitOffs>10944</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Xn_Stored</Name>
+            <BitSize>9600</BitSize>
+            <BaseType GUID="{0723D0AF-1FB9-70EB-B12E-FE5423B3C4D3}">matrix_150_real_T</BaseType>
+            <PTCID>#x84000a08</PTCID>
+            <BitOffs>20544</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Pn_Stored</Name>
+            <BitSize>28800</BitSize>
+            <BaseType GUID="{5ECDED3E-365B-1DDF-CA2C-DC8DDA8361C1}">matrix_450_real_T</BaseType>
+            <PTCID>#x84000eb8</PTCID>
+            <BitOffs>30144</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Xn_1_p</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+            <PTCID>#x84001cc8</PTCID>
+            <BitOffs>58944</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Yn_1_p</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+            <PTCID>#x84001ce0</PTCID>
+            <BitOffs>59136</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Pn_1_h</Name>
+            <BitSize>576</BitSize>
+            <BaseType GUID="{72A91784-953A-FD09-4E66-5B1F6549B49B}">matrix_9_real_T</BaseType>
+            <PTCID>#x84001cf8</PTCID>
+            <BitOffs>59328</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Xmn_Enc_Stored_o</Name>
+            <BitSize>4800</BitSize>
+            <BaseType GUID="{6700C0D7-A928-45BF-1073-E095AB8E2602}">matrix_75_real_T</BaseType>
+            <PTCID>#x84001d40</PTCID>
+            <BitOffs>59904</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>un_Stored_j</Name>
+            <BitSize>4800</BitSize>
+            <BaseType GUID="{6700C0D7-A928-45BF-1073-E095AB8E2602}">matrix_75_real_T</BaseType>
+            <PTCID>#x84001f98</PTCID>
+            <BitOffs>64704</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>temp_Cam_Data</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+            <PTCID>#x840021f0</PTCID>
+            <BitOffs>69504</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>temp_Time</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84002208</PTCID>
+            <BitOffs>69696</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>temp_X</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84002210</PTCID>
+            <BitOffs>69760</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>temp_Y</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84002218</PTCID>
+            <BitOffs>69824</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>temp_Theta</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84002220</PTCID>
+            <BitOffs>69888</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="Internal" CreateSymbols="true">5</AreaNo>
+          <Name>GW3_Regelung_DW3</Name>
+          <ContextId>0</ContextId>
+          <ByteSize>19</ByteSize>
+          <Symbol>
+            <Name>currentTargetIsEOL</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x85000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>initializationDone</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x85000001</PTCID>
+            <BitOffs>8</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Xn_1_not_empty</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x85000002</PTCID>
+            <BitOffs>16</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Yn_1_not_empty</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x85000003</PTCID>
+            <BitOffs>24</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Pn_1_not_empty</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x85000004</PTCID>
+            <BitOffs>32</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Xmn_Enc_Stored_not_empty</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x85000005</PTCID>
+            <BitOffs>40</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>un_Stored_not_empty</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x85000006</PTCID>
+            <BitOffs>48</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Xn_Stored_not_empty</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x85000007</PTCID>
+            <BitOffs>56</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Pn_Stored_not_empty</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x85000008</PTCID>
+            <BitOffs>64</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Xn_1_not_empty_l</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x85000009</PTCID>
+            <BitOffs>72</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Yn_1_not_empty_g</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x8500000a</PTCID>
+            <BitOffs>80</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Pn_1_not_empty_d</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x8500000b</PTCID>
+            <BitOffs>88</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Xmn_Enc_Stored_not_empty_c</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x8500000c</PTCID>
+            <BitOffs>96</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>un_Stored_not_empty_k</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x8500000d</PTCID>
+            <BitOffs>104</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>temp_Cam_Data_not_empty</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x8500000e</PTCID>
+            <BitOffs>112</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>temp_Time_not_empty</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x8500000f</PTCID>
+            <BitOffs>120</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Trigger_Delay</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x85000010</PTCID>
+            <BitOffs>128</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Trigger_Delay_not_empty</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x85000011</PTCID>
+            <BitOffs>136</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>PathTrackingESS_MODE</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x85000012</PTCID>
+            <BitOffs>144</BitOffs>
+          </Symbol>
+        </DataArea>
+      </DataAreas>
+      <Properties>
+        <Property>
+          <Name>CoderLicense</Name>
+          <Value>{73C71EBD-104A-4EE6-955D-ADE86A37EFC3}</Value>
+        </Property>
+      </Properties>
+      <Xml>
+        <GeneratedModuleInfoFile>GW3_Regelung_ModuleInfo.xml</GeneratedModuleInfoFile>
+      </Xml>
+    </Module>
+  </Modules>
+  <Configurations />
+  <Library>
+    <Name>GW3_Regelung</Name>
+    <Version>0.0.0.1</Version>
+  </Library>
+</TcModuleClass>
