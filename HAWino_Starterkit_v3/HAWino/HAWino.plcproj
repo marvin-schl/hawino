@@ -17,6 +17,9 @@
     <LibraryReferences>{8c16abc0-f2da-470c-9f77-19ec34318f24}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DUTs\Auftrag.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\CoreDriveState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -39,6 +42,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\RobotPoseSimple.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\RobotStatus_GW1.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\Sys\DUT_SysState.TcDUT">

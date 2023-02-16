@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <DUT Name="Auftrag" Id="{41c235f9-fb6f-4187-b7c7-b7d40aa4b93a}">
+    <Declaration><![CDATA[TYPE Auftrag :
+STRUCT
+	Art: STRING;
+	Abholort : RobotPoseSimple;
+	Ablegeort: RobotPoseSimple;
+	Station : INT;
+	Position : INT; 
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
