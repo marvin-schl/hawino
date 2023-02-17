@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="TestSimpleEstimatorANDController" Id="{61c80a2a-3fb9-47a1-947b-5d5e0c0438c0}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM TestSimpleEstimatorANDController
+VAR
+	//inputs
+	ErrorPose AT%I*: RobotPoseSimple;
+	//Outputs
+	nextWP AT%Q*: RobotPoseSimple;
+	P, I, D, N AT%Q*: LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[nextWP.x:=5150;
+nextWP.y:=1560;
+nextWP.theta:=0;
+P:=1;
+I:=0;
+D:=0;
+N:=100;]]></ST>
+    </Implementation>
+    <LineIds Name="TestSimpleEstimatorANDController">
+      <LineId Id="5" Count="0" />
+      <LineId Id="15" Count="1" />
+      <LineId Id="11" Count="3" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

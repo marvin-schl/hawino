@@ -114,6 +114,9 @@
     <Compile Include="POUs\UserPOUs\StateObserver.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\TestSimpleEstimatorANDController.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\TrackingController.TcPOU">
       <SubType>Code</SubType>
     </Compile>

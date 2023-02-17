@@ -41,7 +41,8 @@ END_VAR
 		//MeasureVariance();
 		//Sinusfahrt();
 		//CameraNoise();
-		ParameterEstimation_1();
+		//ParameterEstimation_1();
+		TestSimpleEstimatorANDController();
 END_CASE
 ]]></ST>
     </Implementation>
@@ -127,6 +128,7 @@ CASE state OF
     <LineIds Name="HAWino">
       <LineId Id="195" Count="23" />
       <LineId Id="220" Count="2" />
+      <LineId Id="235" Count="0" />
       <LineId Id="219" Count="0" />
       <LineId Id="98" Count="0" />
     </LineIds>

@@ -1,0 +1,165 @@
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Condition="Exists('$(TWINCATSDK)\Sdk.props')" Project="$(TWINCATSDK)\Sdk.props"/>
+	<Import Condition="Exists('$(TWINCATSDK)\MsBuild\TwinCAT Common')" Project="$(TWINCATSDK)\MsBuild\TwinCAT Common\*.targets"/>
+	<ItemGroup Label="ProjectConfigurations">
+		<ProjectConfiguration Include="Debug|TwinCAT RT (x86)">
+			<Configuration>Debug</Configuration>
+			<Platform>TwinCAT RT (x86)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|TwinCAT RT (x86)">
+			<Configuration>Release</Configuration>
+			<Platform>TwinCAT RT (x86)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|TwinCAT RT (x64)">
+			<Configuration>Debug</Configuration>
+			<Platform>TwinCAT RT (x64)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|TwinCAT RT (x64)">
+			<Configuration>Release</Configuration>
+			<Platform>TwinCAT RT (x64)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|TwinCAT OS (x64)">
+			<Configuration>Debug</Configuration>
+			<Platform>TwinCAT OS (x64)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|TwinCAT OS (x64)">
+			<Configuration>Release</Configuration>
+			<Platform>TwinCAT OS (x64)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|TwinCAT UM (x86)">
+			<Configuration>Debug</Configuration>
+			<Platform>TwinCAT UM (x86)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|TwinCAT UM (x86)">
+			<Configuration>Release</Configuration>
+			<Platform>TwinCAT UM (x86)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|TwinCAT UM (x64)">
+			<Configuration>Debug</Configuration>
+			<Platform>TwinCAT UM (x64)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|TwinCAT UM (x64)">
+			<Configuration>Release</Configuration>
+			<Platform>TwinCAT UM (x64)</Platform>
+		</ProjectConfiguration>
+	</ItemGroup>
+	<PropertyGroup Label="Globals">
+		<RootNamespace>DraftSimpleEstimatorANDControl</RootNamespace>
+		<AutomaticRetargetPlatformVersion>true</AutomaticRetargetPlatformVersion>
+		<TcSignTwinCatCertName>HAW_Hamburg_VPJ_BT7_R462</TcSignTwinCatCertName>
+		<TcPublishAddFiles>DraftSimpleEstimatorANDControl_ModuleInfo.xml;;$(TcPublishAddFiles)</TcPublishAddFiles>
+		<PreferredToolArchitecture>x64</PreferredToolArchitecture>
+		<_IsNativeEnvironment>true</_IsNativeEnvironment>
+		<ProjectGuid>{3B26A061-E612-4327-A8C3-7F9E2660779A}</ProjectGuid>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
+	<Import Project="DraftSimpleEstimatorANDControlArtifacts.props"/>
+	<PropertyGroup Label="Configuration">
+		<ModuleGeneratorSdk Condition="'$(ModuleGeneratorSdk)'==''">C:\TwinCAT\Functions\TE14xx-ToolsForMatlabAndSimulink\TE140x\SDK</ModuleGeneratorSdk>
+		<PlatformToolset>v142</PlatformToolset>
+		<MATLAB_ROOT Condition="'$(MATLAB_ROOT)'==''">C:\Program Files\MATLAB\R2021b</MATLAB_ROOT>
+		<TE140xSdk Condition="'$(TE140xSdk)'==''">C:\TwinCAT\Functions\TE14xx-ToolsForMatlabAndSimulink\TE140x\SDK</TE140xSdk>
+		<TcGeneralUseTmx>true</TcGeneralUseTmx>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
+	<ImportGroup Label="ExtensionSettings">
+		<Import Project="$(ModuleGeneratorSdk)\MsBuild\Targets\*.props"/>
+		<Import Project="$(TE140xSdk)\MsBuild\Targets\*.props" Condition="'$(TE140xSdk)'!='$(ModuleGeneratorSdk)'"/>
+	</ImportGroup>
+	<ImportGroup Label="PropertySheets">
+		<Import Project="$(ModuleGeneratorSdk)\MsBuild\Props\*.props"/>
+		<Import Project="$(TE140xSdk)\MsBuild\Props\*.props" Condition="'$(TE140xSdk)'!='$(ModuleGeneratorSdk)'"/>
+	</ImportGroup>
+	<PropertyGroup Label="UserMacros"/>
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<AdditionalIncludeDirectories Condition="$(Platform.StartsWith('TwinCAT RT'))">$(ProjectDir)\TwinCAT RT\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories Condition="$(Platform.StartsWith('TwinCAT OS'))">$(ProjectDir)\TwinCAT OS\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories Condition="$(Platform.StartsWith('TwinCAT UM'))">$(ProjectDir)\TwinCAT UM\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories Condition="$(Platform.StartsWith('TwinCAT CE'))">$(ProjectDir)\TwinCAT CE\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PreprocessorDefinitions>TCMATH_BLOCK_STANDARDLIB=0;TC_BUILD_MIN=4024;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+		</ClCompile>
+		<Link>
+			<AdditionalDependencies>TcMgFramework.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies>TcMgFramework.lib;%(AdditionalDependencies)</AdditionalDependencies>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemGroup>
+		<ClInclude Include="TcPch.h"/>
+		<ClInclude Include="DraftSimpleEstimatorANDControlServices.h"/>
+		<ClInclude Include="DraftSimpleEstimatorANDControlDuts.h"/>
+		<ClInclude Include="DraftSimpleEstimatorANDControlInterfaces.h"/>
+		<ClInclude Include="DraftSimpleEstimatorANDControlClassFactory.h"/>
+		<ClInclude Include="DraftSimpleEstimatorANDControlDrv.h"/>
+		<ClInclude Include="DraftSimpleEstimatorANDControlCtrl.h"/>
+		<ClInclude Include="DraftSimpleEstimatorANDControlW32.h"/>
+		<ClInclude Include="DraftSimpleEstimatorANDControlW32Resource.h"/>
+		<ClInclude Include="TcComDraftSimpleEstimatorANDControl.h"/>
+		<ClInclude Include="FbDraftSimpleEstimatorANDControl.h"/>
+		<ClInclude Include="DraftSimpleEstimatorANDControlInternal.h"/>
+		<ClInclude Include="$(Simulink_DraftSimpleEstimatorANDControl_START_DIR)\DraftSimpleEstimatorANDControl_tcgrt\DraftSimpleEstimatorANDControl.h"/>
+		<ClInclude Include="$(Simulink_DraftSimpleEstimatorANDControl_START_DIR)\DraftSimpleEstimatorANDControl_tcgrt\DraftSimpleEstimatorANDControl_private.h"/>
+		<ClInclude Include="$(Simulink_DraftSimpleEstimatorANDControl_START_DIR)\DraftSimpleEstimatorANDControl_tcgrt\DraftSimpleEstimatorANDControl_types.h"/>
+		<ClInclude Include="$(Simulink_DraftSimpleEstimatorANDControl_START_DIR)\DraftSimpleEstimatorANDControl_tcgrt\multiword_types.h"/>
+		<ClInclude Include="$(Simulink_DraftSimpleEstimatorANDControl_START_DIR)\DraftSimpleEstimatorANDControl_tcgrt\rtmodel.h"/>
+		<ClInclude Include="$(Simulink_DraftSimpleEstimatorANDControl_START_DIR)\DraftSimpleEstimatorANDControl_tcgrt\rtwtypes.h"/>
+	</ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="TcPch.cpp">
+			<PrecompiledHeader>Create</PrecompiledHeader>
+		</ClCompile>
+		<ClCompile Include="DraftSimpleEstimatorANDControlClassFactory.cpp"/>
+		<ClCompile Include="DraftSimpleEstimatorANDControlDrv.cpp">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT RT'))">true</ExcludedFromBuild>
+		</ClCompile>
+		<ClCompile Include="DraftSimpleEstimatorANDControlModulesMain.cpp">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT OS'))">true</ExcludedFromBuild>
+		</ClCompile>
+		<ClCompile Include="DraftSimpleEstimatorANDControlCtrl.cpp">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT UM'))">true</ExcludedFromBuild>
+		</ClCompile>
+		<ClCompile Include="DraftSimpleEstimatorANDControlW32.cpp">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT UM'))">true</ExcludedFromBuild>
+		</ClCompile>
+		<ClCompile Include="TcComDraftSimpleEstimatorANDControl.cpp">
+			<PreprocessorDefinitions>$(Simulink_DraftSimpleEstimatorANDControl_Definitions)%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>$(Simulink_DraftSimpleEstimatorANDControl_IncludeDir)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+		<ClCompile Include="FbDraftSimpleEstimatorANDControl.cpp">
+			<PreprocessorDefinitions>$(Simulink_DraftSimpleEstimatorANDControl_Definitions)%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>$(Simulink_DraftSimpleEstimatorANDControl_IncludeDir)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_DraftSimpleEstimatorANDControl_START_DIR)\DraftSimpleEstimatorANDControl_tcgrt\DraftSimpleEstimatorANDControl.cpp">
+			<PreprocessorDefinitions>$(Simulink_DraftSimpleEstimatorANDControl_Definitions)%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>$(Simulink_DraftSimpleEstimatorANDControl_IncludeDir)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PrecompiledHeader>NotUsing</PrecompiledHeader>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_DraftSimpleEstimatorANDControl_MATLAB_ROOT)\rtw\c\src\common\rt_malloc_main.cpp">
+			<PreprocessorDefinitions>$(Simulink_DraftSimpleEstimatorANDControl_Definitions)%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>$(Simulink_DraftSimpleEstimatorANDControl_IncludeDir)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PrecompiledHeader>NotUsing</PrecompiledHeader>
+			<ExcludedFromBuild>true</ExcludedFromBuild>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="DraftSimpleEstimatorANDControlW32.rc">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT UM'))">true</ExcludedFromBuild>
+		</ResourceCompile>
+		<ResourceCompile Include="DraftSimpleEstimatorANDControl.rc"/>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="DraftSimpleEstimatorANDControlArtifacts.props"/>
+		<None Include="DraftSimpleEstimatorANDControlW32.def">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT UM'))">true</ExcludedFromBuild>
+		</None>
+		<None Include="DraftSimpleEstimatorANDControl_ModuleInfo.xml"/>
+		<None Include="DraftSimpleEstimatorANDControl.libcat.xml"/>
+		<None Include="DraftSimpleEstimatorANDControl.tmc"/>
+		<None Include="DraftSimpleEstimatorANDControl.tml"/>
+	</ItemGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
+	<ImportGroup Label="ExtensionTargets">
+		<Import Project="$(ModuleGeneratorSdk)\MsBuild\Targets\*.targets"/>
+		<Import Project="$(TE140xSdk)\MsBuild\Targets\*.targets" Condition="'$(TE140xSdk)'!='$(ModuleGeneratorSdk)'"/>
+	</ImportGroup>
+</Project>
