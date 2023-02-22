@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="Robot2World" Id="{43a0fc94-b010-4129-bae3-4a831e83fafa}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION Robot2World 
+VAR_INPUT
+	vx_robot: 	 LREAL;
+	vy_robot: 	 LREAL;
+	omega_robot: LREAL;
+	theta: 		 LREAL;
+END_VAR
+
+VAR_OUTPUT
+	vx_world: 	 LREAL;
+	vy_world: 	 LREAL;
+	omega_world: LREAL;
+END_VAR
+
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[vx_world 	:= COS(theta)*vx_robot - SIN(theta)*vy_robot;
+vy_world 	:= SIN(theta)*vx_robot + COS(theta)*vy_robot;
+omega_world := omega_robot;]]></ST>
+    </Implementation>
+    <LineIds Name="Robot2World">
+      <LineId Id="60" Count="1" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

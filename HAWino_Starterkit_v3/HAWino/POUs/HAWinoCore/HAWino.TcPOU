@@ -42,7 +42,8 @@ END_VAR
 		//Sinusfahrt();
 		//CameraNoise();
 		//ParameterEstimation_1();
-		TestSimpleEstimatorANDController();
+		//SimpleObserver();
+		TrackingController();
 END_CASE
 ]]></ST>
     </Implementation>
@@ -126,10 +127,10 @@ CASE state OF
       </Implementation>
     </Method>
     <LineIds Name="HAWino">
-      <LineId Id="195" Count="23" />
-      <LineId Id="220" Count="2" />
-      <LineId Id="235" Count="0" />
-      <LineId Id="219" Count="0" />
+      <LineId Id="248" Count="26" />
+      <LineId Id="278" Count="0" />
+      <LineId Id="277" Count="0" />
+      <LineId Id="276" Count="0" />
       <LineId Id="98" Count="0" />
     </LineIds>
     <LineIds Name="HAWino.InitSysId">

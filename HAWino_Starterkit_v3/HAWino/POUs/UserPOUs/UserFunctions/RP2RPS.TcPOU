@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="RP2RPS" Id="{32517886-ccfa-45ed-a75b-c9097123353f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION RPS2RP : RobotPose
+VAR_INPUT
+	pose: RobotPose;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[RPS2RP.x   		:= pose.x;
+RPS2RP.y		:= pose.y;
+RPS2RP.theta  	:= pose.theta;
+RPS2RP.e		:= 0;]]></ST>
+    </Implementation>
+    <LineIds Name="RP2RPS">
+      <LineId Id="7" Count="0" />
+      <LineId Id="9" Count="1" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,24 +1,92 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="TrackingController" Id="{012ed989-ad00-4074-8a95-3f6b38ed2b93}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK TrackingController
+    <Declaration><![CDATA[PROGRAM TrackingController
 VAR_INPUT
-	xRobotPose : RobotPose;
-	xRobotPoseRef : RobotPose;
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	k1, k2, k3 : REAL;		// strictly positive control parameters
-	vRef : REAL;			// reference linear velocity
-	omegaRef : REAL;		// reference rotational velocity
+	observer 	: SimpleObserver;	
+	controller	: SimpleStateFeedbackController;
+	
+	//inputs from GW2, uncomment and link when needed
+	//xBoEnable AT%I*: BOOL := FALSE;					// Freigabesignal für Fahrt, Roboter stoppt bei FALSE
+	//xIntMoveToEndPosition AT%I*: INT := 0;			// Anfahrt (in Sperrzone vor Tasche oder Ladestation) = 1, Fahrt = 0
+	
+	//outputs to GW2, uncomment and link when needed
+	//yBoDriving AT%Q*: BOOL;							// TRUE, wenn Roboter fährt				
+	//yBoArrivedAtDestination AT%Q*:	BOOL := FALSE;	// TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP
+	//yUintWaypointIndex AT%Q*: BOOL := 0;				// COUNTER zur Anzeige, des Indexes des nächstes WP
+	//yRPposition AT%Q*: RobotPoseSimple;				// aktuelle Roboterposition, für Simulationszwecke
+	//waypointList AT%Q*: ARRAY[0..100] OF RobotPoseSimple;	// Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)
+	//newWaypointListAvailable AT%Q*: BOOL := FALSE;	// Status-Bit zur Signalisierung einer neuen WP-Liste
+	
+	//inputs to robot
+	vXtoRobot 		AT%Q*: LREAL;
+	vYtoRobot		AT%Q*: LREAL;
+	vThetaToRobot 	AT%Q*: LREAL;
+	
+	//outputs from robot
+	vXfromRobot 		AT%I*: LREAL;
+	vYfromRobot			AT%I*: LREAL;
+	vThetaFromRobot 	AT%I*: LREAL;
+	
+	//input from camera
+	robotPoses 	AT%I*: ARRAY [1..8] OF RobotPose;
+	
+	//static control parameters
+	K: ARRAY [0..2,0..2] OF LREAL := [1,0,0,
+									  0,1,0,
+									  0,0,1];
+	//vRef : REAL;			// reference linear velocity
+	//omegaRef : REAL;		// reference rotational velocity
+	//nextWP: INT;
+	robotPoseRef: RobotPoseSimple;
+	xRef: LREAL := 0;
+	yRef: LREAL := 0;
+	thetaRef: LREAL := 0;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[//create refernce position
+robotPoseRef.x 		:= xRef;
+robotPoseRef.y 		:= yRef;
+robotPoseRef.theta 	:= thetaRef;
+
+//init observer
+observer(xCameraPose := robotPoses[Var_HAWIno.Robot_Number],
+		 xVyRobot    := vXfromRobot,
+		 xVyRobot    := vXfromRobot,
+		 xVxRobot    := vThetaFromRobot);
+
+//init controller and link to observer
+controller(xRobotPose 		:= observer.yObserverdPose,
+		   xRobotPoseRef	:= robotPoseRef,
+		   xK				:= K);
+
+//write control outputs to robot
+vXtoRobot		:= controller.vXrobot;
+vYtoRobot		:= controller.vYrobot;
+vThetaToRobot	:= controller.omegaRobot;]]></ST>
     </Implementation>
     <LineIds Name="TrackingController">
+      <LineId Id="102" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="100" Count="1" />
+      <LineId Id="99" Count="0" />
       <LineId Id="9" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="72" Count="2" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="93" Count="1" />
     </LineIds>
   </POU>
 </TcPlcObject>

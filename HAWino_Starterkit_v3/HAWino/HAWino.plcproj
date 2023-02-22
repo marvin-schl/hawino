@@ -90,7 +90,7 @@
     <Compile Include="POUs\HAWinoCore\HAWino.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\CameraNoise.TcPOU">
+    <Compile Include="POUs\UserPOUs\DeletablePOUs\StateObserver.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\DS_GW2und3.TcPOU">
@@ -99,22 +99,40 @@
     <Compile Include="POUs\UserPOUs\FKT_Scale.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\MeasureVariance.TcPOU">
+    <Compile Include="POUs\UserPOUs\SimpleStateFeedbackController.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\ParameterEstimation_1.TcPOU">
+    <Compile Include="POUs\UserPOUs\TestAndMeasurement\CameraNoise.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\ParameterEstimation.TcPOU">
+    <Compile Include="POUs\UserPOUs\TestAndMeasurement\MeasureVariance.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\Sinusfahrt.TcPOU">
+    <Compile Include="POUs\UserPOUs\TestAndMeasurement\ParameterEstimation.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\StateObserver.TcPOU">
+    <Compile Include="POUs\UserPOUs\TestAndMeasurement\ParameterEstimation_1.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\TestSimpleEstimatorANDController.TcPOU">
+    <Compile Include="POUs\UserPOUs\TestAndMeasurement\Sinusfahrt.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\Robot2World.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\RP2RPS.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\RPS2ARRAY.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\RP2ARRAY.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\World2Robot.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\SimpleObserver.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\TrackingController.TcPOU">
@@ -137,6 +155,9 @@
     <Folder Include="GVLs" />
     <Folder Include="POUs\HAWinoCore" />
     <Folder Include="POUs\UserPOUs" />
+    <Folder Include="POUs\UserPOUs\DeletablePOUs" />
+    <Folder Include="POUs\UserPOUs\UserFunctions" />
+    <Folder Include="POUs\UserPOUs\TestAndMeasurement" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
