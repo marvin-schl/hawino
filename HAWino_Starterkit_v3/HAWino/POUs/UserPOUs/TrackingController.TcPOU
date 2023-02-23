@@ -8,7 +8,7 @@ VAR_OUTPUT
 END_VAR
 VAR
 	observer 	: SimpleObserver;	
-	controller	: SimpleStateFeedbackController;
+	controller	: SimpleStateFeedbackLaw;
 	
 	//inputs from GW2, uncomment and link when needed
 	//xBoEnable AT%I*: BOOL := FALSE;					// Freigabesignal für Fahrt, Roboter stoppt bei FALSE
@@ -31,21 +31,22 @@ VAR
 	vXfromRobot 		AT%I*: LREAL;
 	vYfromRobot			AT%I*: LREAL;
 	vThetaFromRobot 	AT%I*: LREAL;
-	
+
 	//input from camera
 	robotPoses 	AT%I*: ARRAY [1..8] OF RobotPose;
 	
-	//static control parameters
-	K: ARRAY [0..2,0..2] OF LREAL := [1,0,0,
-									  0,1,0,
-									  0,0,1];
+	
 	//vRef : REAL;			// reference linear velocity
 	//omegaRef : REAL;		// reference rotational velocity
 	//nextWP: INT;
 	robotPoseRef: RobotPoseSimple;
-	xRef: LREAL := 0;
-	yRef: LREAL := 0;
+	xRef: LREAL 	:= 0;
+	yRef: LREAL 	:= 0;
 	thetaRef: LREAL := 0;
+	omega_world: LREAL;
+	vy_robot: INT;
+	xO: STRING(INT#4);
+	enable: BOOL := FALSE;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -54,26 +55,40 @@ robotPoseRef.x 		:= xRef;
 robotPoseRef.y 		:= yRef;
 robotPoseRef.theta 	:= thetaRef;
 
+
 //init observer
 observer(xCameraPose := robotPoses[Var_HAWIno.Robot_Number],
-		 xVyRobot    := vXfromRobot,
-		 xVyRobot    := vXfromRobot,
-		 xVxRobot    := vThetaFromRobot);
+		 xVxRobot    := vXfromRobot,
+		 xVyRobot    := vYfromRobot,
+		 xOmegaRobot    := vThetaFromRobot);
 
 //init controller and link to observer
 controller(xRobotPose 		:= observer.yObserverdPose,
-		   xRobotPoseRef	:= robotPoseRef,
-		   xK				:= K);
+		   xRobotPoseRef	:= robotPoseRef);
 
 //write control outputs to robot
-vXtoRobot		:= controller.vXrobot;
-vYtoRobot		:= controller.vYrobot;
-vThetaToRobot	:= controller.omegaRobot;]]></ST>
+IF enable = TRUE THEN
+	World2Robot(
+			vx_world := controller.vXrobot,
+			vy_world := controller.vYrobot,
+			omega_world := controller.omegaRobot,
+			theta := observer.yObserverdPose.theta,
+			vx_robot => vXtoRobot,
+			vy_robot => vYtoRobot,
+			omega_robot => vThetaToRobot);
+ELSE
+	vXtoRobot     := 0;
+	vYtoRobot	  := 0;
+	vThetaToRobot := 0;
+END_IF
+
+]]></ST>
     </Implementation>
     <LineIds Name="TrackingController">
       <LineId Id="102" Count="0" />
       <LineId Id="98" Count="0" />
       <LineId Id="100" Count="1" />
+      <LineId Id="271" Count="0" />
       <LineId Id="99" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="70" Count="0" />
@@ -82,11 +97,19 @@ vThetaToRobot	:= controller.omegaRobot;]]></ST>
       <LineId Id="77" Count="0" />
       <LineId Id="76" Count="0" />
       <LineId Id="78" Count="0" />
-      <LineId Id="86" Count="0" />
       <LineId Id="95" Count="0" />
       <LineId Id="92" Count="0" />
-      <LineId Id="80" Count="0" />
-      <LineId Id="93" Count="1" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="223" Count="0" />
+      <LineId Id="168" Count="4" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="173" Count="1" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="157" Count="0" />
+      <LineId Id="94" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

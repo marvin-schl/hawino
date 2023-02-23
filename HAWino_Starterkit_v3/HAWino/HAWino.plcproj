@@ -17,6 +17,9 @@
     <LibraryReferences>{8c16abc0-f2da-470c-9f77-19ec34318f24}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ControlTask.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\CoreDriveState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -90,16 +93,13 @@
     <Compile Include="POUs\HAWinoCore\HAWino.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\DeletablePOUs\StateObserver.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\UserPOUs\DS_GW2und3.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\FKT_Scale.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\SimpleStateFeedbackController.TcPOU">
+    <Compile Include="POUs\UserPOUs\SimpleStateFeedbackLaw.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\TestAndMeasurement\CameraNoise.TcPOU">
@@ -144,9 +144,6 @@
     <Compile Include="POUs\UserPOUs\TrajectoryController.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\TrajectoryGenerator.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
@@ -155,7 +152,6 @@
     <Folder Include="GVLs" />
     <Folder Include="POUs\HAWinoCore" />
     <Folder Include="POUs\UserPOUs" />
-    <Folder Include="POUs\UserPOUs\DeletablePOUs" />
     <Folder Include="POUs\UserPOUs\UserFunctions" />
     <Folder Include="POUs\UserPOUs\TestAndMeasurement" />
     <Folder Include="VISUs" />

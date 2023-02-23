@@ -34,7 +34,9 @@ Robot2World(
 	vx_world 	=> vXworldToSimulink,
 	vy_world  	=> vYworldToSimulink,
 	omega_world => omegaWorldToSimulink);
-	
+
+cameraPoseToSimulink := RPS2ARRAY(xCameraPose);
+
 yObserverdPose.x := estimatedPoseFromSimlink[0];
 yObserverdPose.y := estimatedPoseFromSimlink[1];			
 yObserverdPose.theta := estimatedPoseFromSimlink[2];
@@ -48,6 +50,8 @@ yObserverdPose.theta := estimatedPoseFromSimlink[2];
       <LineId Id="68" Count="0" />
       <LineId Id="52" Count="0" />
       <LineId Id="61" Count="6" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="93" Count="0" />
       <LineId Id="69" Count="1" />
       <LineId Id="60" Count="0" />
       <LineId Id="53" Count="4" />

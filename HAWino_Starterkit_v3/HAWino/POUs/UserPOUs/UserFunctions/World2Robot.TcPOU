@@ -20,7 +20,7 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[vx_robot 	:= COS(theta)*vx_world + SIN(theta)* vy_world;
-vy_robot	:= -SIN(theta)*vx_world + SIN(theta)*vy_world;
+vy_robot	:= -SIN(theta)*vx_world + COS(theta)*vy_world;
 omega_robot := omega_world;]]></ST>
     </Implementation>
     <LineIds Name="World2Robot">
