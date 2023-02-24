@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="RPS2ARRAY" Id="{300ce0ab-c6c2-43a9-865f-504abeefb5be}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION RPS2ARRAY : ARRAY [0..2] OF LREAL
+    <Declaration><![CDATA[//Converts a RobotPoseSimple to a ARRAY [0..2] OF LREAL
+FUNCTION RPS2ARRAY : ARRAY [0..2] OF LREAL
 VAR_INPUT
 	pose: RobotPoseSimple;
 END_VAR

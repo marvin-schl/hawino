@@ -20,6 +20,9 @@
     <Compile Include="ControlTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\ControllerState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\CoreDriveState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -93,13 +96,19 @@
     <Compile Include="POUs\HAWinoCore\HAWino.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\DS_GW2und3.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\UserPOUs\FKT_Scale.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\GW2DummyPRG.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\Robot.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\SimpleStateFeedbackLaw.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\SimpleTrajectory.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\TestAndMeasurement\CameraNoise.TcPOU">
@@ -139,9 +148,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\TrajectoryControl.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\UserPOUs\TrajectoryController.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

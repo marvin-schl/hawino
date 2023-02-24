@@ -1,7 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="SimpleObserver" Id="{61c80a2a-3fb9-47a1-947b-5d5e0c0438c0}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK SimpleObserver
+    <Declaration><![CDATA[//SimpleObserver:
+//Implements a simple observer which assumes the camera position is the true position of the robot whenever camera data arrives. Between new cam data
+//odometry is used to correct the robots position. The cameras latency is also considered by correcting the arrived camera data with odometry based correction
+//within the time interval of the latency. The observer is implemented in Simulink and is linked within this FB to abstract the implementation of the observer from the
+//main control algorithm. Inside the Simulink model all coordinates are considered as world coordinates, following that the transformation of between robot and world coordinates 
+//is implemented in ST.
+FUNCTION_BLOCK SimpleObserver
 VAR_INPUT
 	xCameraPose:	RobotPoseSimple;
 	xVxRobot: 		LREAL;
