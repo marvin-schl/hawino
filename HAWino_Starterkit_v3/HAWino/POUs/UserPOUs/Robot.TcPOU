@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="Robot" Id="{c2c95814-6e9d-4a67-9cd4-cf68c7267fb5}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Robot
+    <Declaration><![CDATA[//Robot:
+//This FB represents the robot and links the control algorithm with the physical I/O of the robot. It is implemented in a separate FB so it is easily interchangeable with
+//simulated robot whenever needed. 
+FUNCTION_BLOCK Robot
 VAR_INPUT
 	enable: BOOL;
 	vXref, vYref, vThetaRef: LREAL;

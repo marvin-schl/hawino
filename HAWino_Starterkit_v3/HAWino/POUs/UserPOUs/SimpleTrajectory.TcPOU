@@ -4,7 +4,7 @@
     <Declaration><![CDATA[//SimpleTrajectory:
 //implements a simple trajectory which takes a waypoint list od max 100 poses. The points are outputted one by one as reference pose with no further modifications.
 //The trajectory switches to the next pose if the x-y-distance d between  'currentPose' and the current reference 'referencePose[WPLidx]'
-//is within a tolerance 'tol' to the current . TODO: modify d such it represents a x-y-theta distance. 
+//is within a tolerance 'tol' to the current .
 //waypoint. If all three coordinates of the waypoint are set to -1 the trajectory marks itself
 //as finished.
 FUNCTION_BLOCK SimpleTrajectory
@@ -18,15 +18,18 @@ VAR_OUTPUT
 END_VAR
 VAR
 	wayPointList		: ARRAY [0..100] OF RobotPoseSimple;
-	d: LREAL  := 0;
-	tol: LREAL := 10; 
+	dPosition: LREAL  := 0;
+	dOrientation:   LREAL  := 0;
+	tolPosition: LREAL := 10; 
+	tolOrientation: LREAL := 0.314/2;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//calculte current distance from reference point
-d := SQRT(EXPT(currentPose.x - wayPointList[WPLidx].x, 2) + EXPT(currentPose.y - wayPointList[WPLidx].y,2));
+dPosition := SQRT(EXPT(currentPose.x - wayPointList[WPLidx].x, 2) + EXPT(currentPose.y - wayPointList[WPLidx].y,2));
+dOrientation := ABS(currentPose.theta - wayPointList[WPLidx].theta);
 
-IF d < tol AND NOT finished THEN
+IF dOrientation < tolOrientation AND dPosition < tolPosition AND NOT finished AND WPLidx < 100 THEN
 	WPLidx := WPLidx +1;
 END_IF
 
@@ -36,15 +39,6 @@ END_IF
 
 referencePose := wayPointList[WPLidx];]]></ST>
     </Implementation>
-    <Method Name="getReferencePose" Id="{5ec1042d-abfb-4a75-8fd5-89022b6f0e89}">
-      <Declaration><![CDATA[METHOD getReferencePose : RobotPoseSimple
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="setRobotPose" Id="{612c742a-1fe7-4003-9836-d6bbc0467a35}">
       <Declaration><![CDATA[METHOD setRobotPose : RobotPoseSimple
 VAR_INPUT
@@ -71,15 +65,13 @@ wayPointList 	:= newWayPointList;]]></ST>
       <LineId Id="9" Count="0" />
       <LineId Id="16" Count="0" />
       <LineId Id="21" Count="0" />
+      <LineId Id="70" Count="0" />
       <LineId Id="19" Count="0" />
       <LineId Id="23" Count="1" />
       <LineId Id="26" Count="2" />
       <LineId Id="25" Count="0" />
       <LineId Id="46" Count="0" />
       <LineId Id="45" Count="0" />
-    </LineIds>
-    <LineIds Name="SimpleTrajectory.getReferencePose">
-      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="SimpleTrajectory.setRobotPose">
       <LineId Id="5" Count="0" />

@@ -14,7 +14,7 @@ VAR_OUTPUT
 END_VAR
 VAR
 	//declare objects
-	observer 	: SimpleObserver;					//Observer object
+	observer 	: SimpleObserver;//Observer object
 	controller	: SimpleStateFeedbackLaw;			//Control law object
 	trajectory	: SimpleTrajectory;					//Trajectory Object
 	robot		: Robot;							//link to physical I/O of roboter or simulation model of the roboter
@@ -35,7 +35,7 @@ VAR
 	//outputs to GW2, uncomment and link when needed
 	yBoDriving AT%Q*: BOOL;									// implemented, TRUE, wenn Roboter fährt				
 	yBoArrivedAtDestination AT%Q*:	BOOL := FALSE;			// implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP
-	yUintWaypointIndex AT%Q*: INT := 0;						// implemented, COUNTER zur Anzeige, des Indexes des nächstes WP
+	yUintWaypointIndex AT%Q*: INT  := 0;						// implemented, COUNTER zur Anzeige, des Indexes des nächstes WP
 	yRPposition AT%Q*: RobotPoseSimple;						// implemented, aktuelle Roboterposition, für Simulationszwecke
 END_VAR
 ]]></Declaration>
@@ -52,7 +52,7 @@ yUintWaypointIndex 		:= trajectory.WPLidx;
 CASE state OF
 	ControllerState.init:
 		//initilize objects and link them
-		//init();
+		init();
 		//go into idle
 		state := ControllerState.idle;
 	
@@ -69,6 +69,7 @@ CASE state OF
 		calculateTrajectory();
 		//go into ready
 		state := ControllerState.ready;
+		
 	
 	ControllerState.ready:
 		IF newWaypointListAvailable THEN
@@ -184,7 +185,9 @@ END_VAR]]></Declaration>
       <LineId Id="344" Count="0" />
       <LineId Id="339" Count="0" />
       <LineId Id="345" Count="0" />
-      <LineId Id="340" Count="2" />
+      <LineId Id="340" Count="0" />
+      <LineId Id="517" Count="0" />
+      <LineId Id="341" Count="1" />
       <LineId Id="445" Count="1" />
       <LineId Id="444" Count="0" />
       <LineId Id="343" Count="0" />

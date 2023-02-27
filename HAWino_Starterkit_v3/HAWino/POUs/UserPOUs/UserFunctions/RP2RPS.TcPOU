@@ -5,7 +5,7 @@
 //NOTE: the reverse conversion is not needed because of polymorphmism of RobotPose, see Defintion of RobotPose STRUCT
 FUNCTION RPS2RP : RobotPose
 VAR_INPUT
-	pose: RobotPose;
+	pose: RobotPoseSimple;
 END_VAR
 VAR
 END_VAR

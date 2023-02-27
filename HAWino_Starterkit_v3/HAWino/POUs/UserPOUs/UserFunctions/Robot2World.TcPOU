@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="Robot2World" Id="{43a0fc94-b010-4129-bae3-4a831e83fafa}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION Robot2World 
+    <Declaration><![CDATA[//transformation of robot 2 world velocities
+FUNCTION Robot2World 
 VAR_INPUT
 	vx_robot: 	 LREAL;
 	vy_robot: 	 LREAL;
