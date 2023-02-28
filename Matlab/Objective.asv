@@ -1,0 +1,8 @@
+function t = Objective(x, x_end, ts, tol)
+    for i = 1:100
+        x(i) == x_end-
+end
+
+
+
+
