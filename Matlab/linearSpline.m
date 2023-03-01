@@ -1,4 +1,4 @@
-classdef LinearSpline
+classdef linearSpline
     properties
         
     end
