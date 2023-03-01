@@ -1,43 +1,39 @@
-classdef LinearSpline
+classdef LinearSpline < Spline
     properties
-        
+       startPoint
+       endPoint 
     end
-
+    
     properties (Access =private)
-        x
-        y 
         m
     end
     
-    
+
     methods 
         function obj = LinearSpline(x,y)
-            obj.x = x
-            obj.y = y
+            obj.startPoint = struct("x", x(1), "y", y(1));
+            obj.endPoint   = struct("x", x(2), "y", y(2));
             if x(1) ~= x(2)
                 obj.m = diff(y)/diff(x);
             end   
         end
         
         function [x,y] = getPoint(obj, s)
-            if  x(1) == x(2)
+            if  obj.startPoint.x == obj.endPoint.x
               dy = s;
               dx = 0;
             else
-              dx = cos(atan(obj.m))*s;
-              dy = sqrt(s^2-dx^2);
+              dx = cos(atan(obj.m)).*s;
+              dy = sqrt(s.^2-dx.^2);
             end
-            y = obj.y[1] + sign(m)*dy
-            x = obj.x[1] + sign(m)*dx
+            y = obj.startPoint.y + sign(obj.endPoint.y-obj.startPoint.y).*dy;
+            x = obj.startPoint.x + sign(obj.endPoint.x-obj.startPoint.x).*dx;
         end   
         
         function len = getLength(obj)
-            len = sqrt(diff(x)^2+diff(y)^2)
+            len = sqrt((obj.startPoint.x - obj.endPoint.x)^2+(obj.startPoint.y - obj.endPoint.y)^2);
         end
+        
     end
     
-    methods (Access = private)
-        
-        
-    end
 end
