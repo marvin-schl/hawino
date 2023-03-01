@@ -1,0 +1,19 @@
+function [x,y] = path(s,coeff, wpx, wpy)
+    %calculate switching points in s
+    
+    s_switch = [0, cumsum(abs(wpx(1:length(wpx)-1) ./ cos(atan(coeff(2,:))))];
+    splineIdx = zeros(length(s),1);
+    
+    for i = 1:length(s)
+        idx = find((s_switch > s(i)) == 1, 1);
+        if length(idx) == 0
+            idx = length(s_switch);
+        end
+        splineIdx(i,1) = idx;
+    end
+    wpx(splineIdx)
+    
+    x = wpx(splineIdx) + cos(atan(coeff(2,splineIdx))).*(s-s_switch(splineIdx)-s_switch(1));
+    y = wpy(splineIdx) + sin(atan(coeff(2,splineIdx))).*(s-s_switch(splineIdx)-s_switch(1));
+end
+

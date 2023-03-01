@@ -1,7 +1,7 @@
 close all; clear, clc
 
 % Waypoints
-wpx = [-2, 1, 2, 2.2, 4];
+wpx = [-2, 1, 2, 2, 4];
 wpy = [0, 5, 5, 10, 10];
 
 % Initializations and constants
@@ -70,7 +70,7 @@ end
 
 % Step 4: Create linear subsplines
 coeffs = linearSpline(wpx2, wpy2, coeffs);
-coeffs = biquadraticalSpline(wpx2, wpy2, coeffs);
+%%coeffs = cubucal(wpx2, wpy2, coeffs);
 
 
 
@@ -114,7 +114,7 @@ end
 %    y_vals = f(x_vals,coeffs(:,i));
 %    plot(x_vals, y_vals)
 % end
-
+%%
 %select spline
 i = 2;
 a = coeffs(:,i);
@@ -123,41 +123,36 @@ xend = wpx(i+1);
 %create optim problem
 problem = optimproblem('ObjectiveSense','minimize');
 nmbPoints = 50;
-x = optimvar("x", nmbPoints, 1);
+%max beschl.
+amax = 1;
+a = optimvar("a", nmbPoints, 1, "LowerBound", -amax, "UpperBound", amax);
 t = optimvar("t", nmbPoints, 1);
 
-t0 = [1:1/(nmbPoints-1):2].^2;
+t0 = [1:1/(nmbPoints-1):2];
 x0 = t0;
-x0 = struct("x",x0,"t",t0);
-problem.Objective = t(nmbPoints);
+x0 = struct("x",x0,"t",t0, "a", zeros(nmbPoints,1));
+problem.Objective = sum(diff(t));
 
 %start endwert in x
-problem.Constraints.x0 =   x(1)         == xstart;
-problem.Constraints.xend = x(nmbPoints) == xend;
+problem.Constraints.x0 =   a(1)         == 0;
+problem.Constraints.xend = a(nmbPoints) == 0;
 
-%startwert in v
-problem.Constraints.v0 =   diff(x(1:2))./diff(t(1:2)) == 0;
+%endwerte
+problem.Constraints.vend =   sum(a) == 0;
+problem.Constraints.xend =   sum(cumsum(a(1:nmbPoints-1).*diff(t)).*diff(t)) == xend-xstart;
 
-%start bei t=0
+%start bei t=0 steigende zeit
 problem.Constraints.t0 = t(1) == 0;
-
-%monoton in x und t
-problem.Constraints.xmono = diff(x) >= 0;
 problem.Constraints.tmono = diff(t) >= 0;
 
 %max beschl.
 vmax = 1;
-problem.Constraints.v1 = sqrt((diff(x,1)./diff(t,1)).^2+ (diff(S(x,a),1)./diff(t,1)).^2) <=vmax;
-problem.Constraints.v2 = sqrt((diff(x,1)./diff(t,1)).^2+ (diff(S(x,a),1)./diff(t,1)).^2) >= -vmax;
+problem.Constraints.v1 = cumsum(a(1:nmbPoints-1).*diff(t)) <=vmax;
+problem.Constraints.v1 = cumsum(a(1:nmbPoints-1).*diff(t)) >=0;
 
 
-%max beschl.
-amax = 1;
-problem.Constraints.a1 = sqrt((diff(x,2)./diff(t,2)).^2+ (diff(S(x,a),2)./diff(t,2)).^2) <= amax;
-problem.Constraints.a2 = sqrt((diff(x,2)./diff(t,2)).^2+ (diff(S(x,a),2)./diff(t,2)).^2) >= -amax;
 
-
-sol = solve(problem, x0);
+sol = solve(problem,x0);
 
 %plot(sol.t, sol.x)
 %plot(sol.x, S(sol.x,a))
