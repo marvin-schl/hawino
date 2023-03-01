@@ -1,10 +1,11 @@
 classdef LinearSpline < Spline
+
     properties
        startPoint
        endPoint 
     end
     
-    properties (Access =private)
+    properties (Access = private)
         m
     end
     
@@ -16,6 +17,7 @@ classdef LinearSpline < Spline
             if x(1) ~= x(2)
                 obj.m = diff(y)/diff(x);
             end   
+            obj.length = obj.calculateLength();
         end
         
         function [x,y] = getPoint(obj, s)
@@ -30,10 +32,11 @@ classdef LinearSpline < Spline
             x = obj.startPoint.x + sign(obj.endPoint.x-obj.startPoint.x).*dx;
         end   
         
-        function len = getLength(obj)
-            len = sqrt((obj.startPoint.x - obj.endPoint.x)^2+(obj.startPoint.y - obj.endPoint.y)^2);
-        end
-        
     end
     
+    methods( Access = protected)
+         function len = calculateLength(obj)
+            len = sqrt((obj.startPoint.x - obj.endPoint.x)^2+(obj.startPoint.y - obj.endPoint.y)^2);
+         end
+    end
 end

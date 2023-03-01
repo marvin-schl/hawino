@@ -14,35 +14,37 @@ classdef Path < Spline
         function obj = Path(x,y,r,dx)
            
            nmbSubSplines = 2*length(x)-3;
-           subsplines   = Spline.empty(nmbSubSplines,0);
+           %%obj.subsplines   = Spline.empty(nmbSubSplines,0);
+           subsplines   = Spline.empty();
            obj.transitions  = zeros(length(obj.subsplines)-1,1);
            
            %generate bezier curves
            for i = 2:2:nmbSubSplines-1
-               subsplines(i) = BezierCurve(x(i/2:i/2+2),y(i/2:i/2+2),r,dx);
+                spline  = BezierCurve(x(i-1:i+1),y(i-1:i+1),r,dx);
+                isa(spline,"
+                subsplines(i) = BezierCurve(x(i-1:i+1),y(i-1:i+1),r,dx);
            end
            
            %generate first linear
-           subsplines(1) = LinearSpline(...
-                            [x(1),subsplines(2).startPoint.x],...
-                            [y(1),subsplines(2).startPoint.y]);
-                        
+           obj.subsplines(1) = LinearSpline(...
+                            [x(1),obj.subsplines(2).startPoint.x],...
+                            [y(1),obj.subsplines(2).startPoint.y]);
            %generate last linear
-           subsplines(nmbSubSplines) = LinearSpline(...
-                        [subsplines(nmbSubSplines-1).endPoint.x, x(length(x))],...
-                        [subsplines(nmbSubSplines-1).endPoint.y, y(length(y))]);
+           obj.subsplines(nmbSubSplines) = LinearSpline(...
+                        [obj.subsplines(nmbSubSplines-1).endPoint.x, x(nmbSubSplines)],...
+                        [obj.subsplines(nmbSubSplines-1).endPoint.y, y(nmbSubSplines)]);
 
            %generate linears in between
            for i = 3:2:nmbSubSplines-3
-                x = [subsplines(i-1).endPoint.x,subsplines(i+1).startPoint.x];
-                y = [subsplines(i-1).endPoint.y,subsplines(i+1).startPoint.y];
-                subsplines(i) = LinearSpline(x,y);
+                x = [obj.subsplines(i-1).endPoint.x,obj.subsplines(i+1).startPoint.x];
+                y = [obj.subsplines(i-1).endPoint.y,obj.subsplines(i+1).startPoint.y];
+                obj.subsplines(i) = LinearSpline(x,y);
            end
-           obj.subsplines = subsplines;
+           
            obj.length = obj.calculateLength();
            obj.transitions = obj.calculateTransitions();
            obj.startPoint = struct("x", x(1), "y", y(1));
-           obj.endPoint =  struct("x", x(length(x)), "y", y(length(y)));      
+           obj.endPoint =  struct("x", x(nmbSubSplines+1), "y", y(nmbSubSplines+1));      
         end
         
         function [x,y] = getPoint(obj, s)
