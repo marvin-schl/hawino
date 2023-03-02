@@ -6,10 +6,6 @@ classdef Path < Spline
         subsplines
     end
     
-    properties (Access=private)
-     
-    end
-    
     methods 
         function obj = Path(x,y,r,dx)
            
@@ -33,7 +29,7 @@ classdef Path < Spline
                         [subsplines(nmbSubSplines-1).endPoint.y, y(length(y))]);
 
            %generate linears in between
-           for i = 3:2:nmbSubSplines-3
+           for i = 3:2:nmbSubSplines-2
                 x = [subsplines(i-1).endPoint.x,subsplines(i+1).startPoint.x];
                 y = [subsplines(i-1).endPoint.y,subsplines(i+1).startPoint.y];
                 subsplines(i) = LinearSpline(x,y);
@@ -72,10 +68,12 @@ classdef Path < Spline
             for i=1:length(s)
                 idx(i) = 1;
                 s_offset(i) = s(i);
-                while s_offset(i) - obj.subsplines(idx(i)).length >= 0
+                while s_offset(i) - obj.subsplines(idx(i)).length() > 0 && idx(i) < length(obj.subsplines)
                     s_offset(i) = s_offset(i) - obj.subsplines(idx(i)).length;
                     idx(i) = idx(i) + 1;
                 end
+                
+                
             end
         end
         

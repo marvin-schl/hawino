@@ -4,7 +4,7 @@ classdef Spline <  matlab.mixin.Heterogeneous
        endPoint 
     end
 
-    properties (Access = protected)
+    properties 
       length
     end
     
@@ -35,15 +35,15 @@ classdef Spline <  matlab.mixin.Heterogeneous
                 order = 1;
             end
            
-            x_t = derivest(@(x)func_x(x,obj), s, 'Style','forward','MethodOrder', 4, 'DerivativeOrder', order);
-            y_t = derivest(@(y)func_y(y,obj), s, 'Style','forward','MethodOrder', 4, 'DerivativeOrder', order);
+            x_t = derivest(@(x)func_x(obj,x), s, 'Style','forward','MethodOrder', 4, 'DerivativeOrder', order);
+            y_t = derivest(@(y)func_y(obj,y), s, 'Style','forward','MethodOrder', 4, 'DerivativeOrder', order);
 
-            function x = func_x(s,obj)
-                [x,~] = obj.getPoint(s);
+            function x = func_x(pathObj,s)
+                [x,~] = pathObj.getPoint(s);
             end
 
-            function y = func_y(s,obj)
-                [~,y] = obj.getPoint(s);
+            function y = func_y(pathObj,s)
+                [~,y] = pathObj.getPoint(s);
             end   
        end
     end
