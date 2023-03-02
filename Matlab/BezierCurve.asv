@@ -40,11 +40,11 @@ classdef BezierCurve < Spline
 
             % 2.) Calculate all points on curve and save as struct
             % (all points on parameter interval s = 0 : dx : 1)
-            [curvePointsX, curvePointsY] = obj.getPoint([0 : dx : 1], true);
+            [curvePointsX, curvePointsY] = obj.getPoint([0 : dx : 1]);
             obj.curvePoints = struct("x", curvePointsX, "y", curvePointsY);
 
             % 3.) Calculate length of curve
-            obj.calculateLength();
+            obj.length = obj.calculateLength();
         end
         % -----------------------------------------------------------------
 
@@ -63,7 +63,7 @@ classdef BezierCurve < Spline
         %   [x, y]          corresponding point (array of points) for parameter (vector)
         function [x,y] = getPoint(obj, s, isNormalized)
             % normalize parameter if required
-            if ~exist('isNormalized', 'var')
+            if ~exists("isNormalized", "var")
                 isNormalized = false;
             end
  
@@ -159,9 +159,9 @@ classdef BezierCurve < Spline
     methods (Access = protected)
         % -----------------------------------------------------------------
         % FUNCTION: calculateLength()
-        % Calculates the curve length
-        % Inputs:   none
-        % Outputs:  none
+        % Returns length of the Bezier curve object that calls it
+        % Inputs: none
+        % Outputs: none
         function  calculateLength(obj)
             obj.length = sum(sqrt(diff(obj.curvePoints.x).^2 + diff(obj.curvePoints.y).^2));
         end

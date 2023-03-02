@@ -1,0 +1,15 @@
+clear all, clc, close all
+
+wpx = [0, 5, 10];
+wpy = [0, 1, 4];
+r = 3;
+dx = 1e-3;
+
+myCurve = BezierCurve(wpx, wpy, r, dx);
+
+figure()
+hold on
+plot(wpx, wpy, '*', 'color', 'blue')
+plot(myCurve.curvePoints.x, myCurve.curvePoints.y, 'color', 'green');
+plot(myCurve.startPoint.x, myCurve.startPoint.y, '+')
+plot(myCurve.endPoint.x, myCurve.endPoint.y, '+')

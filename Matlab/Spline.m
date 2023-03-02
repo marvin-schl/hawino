@@ -3,8 +3,9 @@ classdef Spline <  matlab.mixin.Heterogeneous
        startPoint
        endPoint 
     end
+    
+    properties
 
-    properties 
       length
     end
     
