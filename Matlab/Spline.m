@@ -4,7 +4,7 @@ classdef Spline <  matlab.mixin.Heterogeneous
        endPoint 
     end
 
-    properties (Access = protected)
+    properties
       length
     end
     
