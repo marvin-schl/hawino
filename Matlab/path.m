@@ -3,11 +3,11 @@ classdef Path < Spline
         startPoint
         endPoint
         transitions
+        subsplines
     end
     
     properties (Access=private)
-        subsplines
-        
+     
     end
     
     methods 
@@ -38,6 +38,7 @@ classdef Path < Spline
                 y = [subsplines(i-1).endPoint.y,subsplines(i+1).startPoint.y];
                 subsplines(i) = LinearSpline(x,y);
            end
+           
            obj.subsplines = subsplines;
            obj.length = obj.calculateLength();
            obj.transitions = obj.calculateTransitions();
@@ -46,34 +47,43 @@ classdef Path < Spline
         end
         
         function [x,y] = getPoint(obj, s)
-            idx = obj.getSubsplineToPoint(s);
+            [idx, s_offset] = obj.getSubsplineToPoint(s);
             x = zeros(length(s),1);
             y = zeros(length(s),1);
             for i = 1:length(idx)
-                [x(i),y(i)] = obj.subsplines(idx(i)).getPoint(s(i)-obj.transitions(idx(i)));
+                [x(i),y(i)] = obj.subsplines(idx(i)).getPoint(s_offset(i));
             end
         end
         
     end
     
     methods (Access = private)
-        function splineIdx = getSubsplineToPoint(obj, s)
-            splineIdx = zeros(length(s),1);
-            for i = 1:length(s)
-                idx = find((obj.transitions <= s(i)) == 0,1);
-                if isempty(idx)
-                    idx = length(obj.transitions);
+        function [idx, s_offset] = getSubsplineToPoint(obj, s)
+%           splineIdx = zeros(length(s),1);
+%             for i = 1:length(s)
+%                 idx = find((obj.transitions < s(i)) == 1,1,"last");
+%                 if isempty(idx)
+%                     idx = length(obj.transitions);
+%                 end
+%                 splineIdx(i,1) = idx-1;
+%             end
+            idx = zeros(length(s),1);
+            s_offset = zeros(length(s),1);
+            for i=1:length(s)
+                idx(i) = 1;
+                s_offset(i) = s(i);
+                while s_offset(i) - obj.subsplines(idx(i)).length >= 0
+                    s_offset(i) = s_offset(i) - obj.subsplines(idx(i)).length;
+                    idx(i) = idx(i) + 1;
                 end
-                splineIdx(i,1) = idx-1;
             end
-            
         end
         
         function t = calculateTransitions(obj)    
             t = zeros(length(obj.subsplines)-1,1);
             for i = 1:length(obj.subsplines)
                 t(i+1,1) = t(i,1) + obj.subsplines(i).getLength();
-            end 
+            end
         end
         
         

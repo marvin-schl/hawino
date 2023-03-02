@@ -15,42 +15,42 @@ classdef BezierCurve < Spline
         function obj = BezierCurve(x, y, r, dx)
             
             prevWP = struct("x", x(1), "y", y(1));
-            nextWP = struct("x", x(3), "y", y(3));  
-            
+            nextWP = struct("x", x(3), "y", y(3));      
             obj.controlPoint = struct("x", x(2), "y", y(2));
-
+    
             obj.r = r;
             obj.dx = dx;
             obj.startPoint = struct("x", 0, "y", 0);
             obj.endPoint = struct("x", 0, "y", 0);
 
             [obj.startPoint, obj.endPoint] = obj.getStartEndPoint(prevWP, nextWP);
-            obj.curvePoints = obj.getCurvePoints(obj.startPoint, obj.controlPoint, obj.endPoint, obj.dx);
+            [xCurve,yCurve] = obj.getPoint([0:dx:1]);
+            obj.curvePoints = struct("x", xCurve, "y", yCurve);
             obj.length = obj.calculateLength();
            
         end
-
         
         function curvePoints = getCurvePoints(obj, startPoint, controlPoint, endPoint, dx)
-            n = 3;
-            n1 = n - 1;
+%             n = 3;
+%             n1 = n - 1;
+%             
+%             for i = 0 : 1 : n1
+%                 sigma(i+1) = factorial(n1) / (factorial(i)*factorial(n1-i)); 
+%             end
+%             
+%             l = [];
+%             UB = [];
+%             
+%             for u = 0 : dx : 1
+%                 for d = 1 : n
+%                     UB(d) = sigma(d)*((1-u)^(n-d))*(u^(d-1));
+%                 end
+%                 
+%                 l = cat(1,l,UB);                                       
+%             end
+%             
+%             curvePoints = l * [startPoint.x, startPoint.y; controlPoint.x, controlPoint.y; endPoint.x, endPoint.y];
             
-            for i = 0 : 1 : n1
-                sigma(i+1) = factorial(n1) / (factorial(i)*factorial(n1-i)); 
-            end
-            
-            l = [];
-            UB = [];
-            
-            for u = 0 : dx : 1
-                for d = 1 : n
-                    UB(d) = sigma(d)*((1-u)^(n-d))*(u^(d-1));
-                end
-                
-                l = cat(1,l,UB);                                       
-            end
-            
-            curvePoints = l * [startPoint.x, startPoint.y; controlPoint.x, controlPoint.y; endPoint.x, endPoint.y];
         end
 
         function [x,y] = getPoint(obj, s)
@@ -64,7 +64,10 @@ classdef BezierCurve < Spline
             l = [];
             UB = [];
             
-            s = s / obj.length;
+             %s = s / obj.length;
+             if max(s) ~= 1
+                   s = s/obj.length;
+             end
 
             %if any((s < 0)) || any((s > 1))
                % throw(MException("BezierCurve:NotDefined","Invalid parameter range! Expected s in range [0 ... obj.length]"))
@@ -82,6 +85,13 @@ classdef BezierCurve < Spline
                 x = point(:,1);
                 y = point(:,2);
             end
+%            t = s;
+%            if max(s) ~= 1
+%                t = s/obj.length;
+%            end
+% 
+%            x = (obj.startPoint.x - 2*obj.controlPoint.x + obj.endPoint.x)*t.^2 + (2*obj.controlPoint.x - 2*obj.startPoint.x) * t + obj.startPoint.x;
+%            y = (obj.startPoint.y - 2*obj.controlPoint.y + obj.endPoint.y)*t.^2 + (2*obj.controlPoint.y - 2*obj.startPoint.y) * t + obj.startPoint.y;
         end
 
     end
@@ -151,7 +161,7 @@ classdef BezierCurve < Spline
     methods (Access = protected)
                 
         function len = calculateLength(obj)
-            len = sum(sqrt(diff(obj.curvePoints(:,1)).^2 + diff(obj.curvePoints(:,2)).^2));
+            len = sum(sqrt(diff(obj.curvePoints.x).^2 + diff(obj.curvePoints.y).^2));
         end
     end
 end

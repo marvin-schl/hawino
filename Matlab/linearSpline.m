@@ -7,8 +7,7 @@ classdef LinearSpline < Spline
     
     properties (Access = private)
         m
-    end
-    
+    end   
 
     methods 
         function obj = LinearSpline(x,y)
@@ -21,6 +20,7 @@ classdef LinearSpline < Spline
         end
         
         function [x,y] = getPoint(obj, s)
+            
             if  obj.startPoint.x == obj.endPoint.x
               dy = s;
               dx = 0;
