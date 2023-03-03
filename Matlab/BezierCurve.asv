@@ -4,13 +4,14 @@ classdef BezierCurve < Spline
         startPoint          % Entry point of the Bezier curve [x, y]
         endPoint            % Exit point of the Bezier curve [x, y]
         r                   % Radius of Bezier curve
-        ds                  % Sampling distance
-        curvePoints         % array of curve points [x1, y1; ...; xn, yn]
+        dt                  % Sampling distance for only length calculation
+        %curvePoints         % array of curve points [x1, y1; ...; xn, yn]
+        controlPoint        % Control point of the Bezier curve [x, y]
+
     end
 
     % P R I V A T E  P R O P E R T I E S ==================================
     properties (Access = private)
-        controlPoint        % Control point of the Bezier curve [x, y]
     end
 
     % P U B L I C  M E T H O D S ==========================================
@@ -24,27 +25,30 @@ classdef BezierCurve < Spline
         %   r       radius of Bezier circle with respect to control
         %   dx      sampling distance
         % Outputs:  none
-        function obj = BezierCurve(x, y, r, ds)
+        function obj = BezierCurve(x, y, r, dt)
             % Initializations
             prevWP = struct("x", x(1), "y", y(1));
             nextWP = struct("x", x(3), "y", y(3));
             obj.controlPoint = struct("x", x(2), "y", y(2));
             obj.r = r;
-            obj.ds = ds;
+            
+            if (~exist("dt","var"))
+                obj.dt = 1e-3;
+            else
+                obj.dt = ds;
+            end
+            
             obj.startPoint = struct("x", 0, "y", 0);
             obj.endPoint = struct("x", 0, "y", 0);
+            
+            
 
             % 1.) Calculate start- and end point of curve (intersections of
             % linear waypoint connections with circle around control point)
             [obj.startPoint, obj.endPoint] = obj.getStartEndPoint(prevWP, nextWP);
-
-            % 2.) Calculate all points on curve and save as struct
-            % (all points on parameter interval s = 0 : dx : 1)
-            [curvePointsX, curvePointsY] = obj.getPoint([0 : ds : 1], true);
-            obj.curvePoints = struct("x", curvePointsX, "y", curvePointsY);
-
-            % 3.) Calculate length of curve
-            oobj.calculateLength();
+            
+            % 2.) Calculate length of curve
+            obj = obj.calculateLength();
         end
         % -----------------------------------------------------------------
 
@@ -61,23 +65,34 @@ classdef BezierCurve < Spline
         %                   neglected in method call.
         % Outputs:
         %   [x, y]          corresponding point (array of points) for parameter (vector)
-        function [x,y] = getPoint(obj, s, isNormalized)
-            % normalize parameter if required
-            if ~exist('isNormalized', 'var')
-                isNormalized = false;
-            end
- 
-            if ~isNormalized
-                t = s/obj.length;
-            else
-                t = s;
-            end
-            
-            % calculate corresponding point (hard-coded for 3rd order Bezier curve)
-            x = (obj.startPoint.x - 2*obj.controlPoint.x + obj.endPoint.x)*t.^2 + (2*obj.controlPoint.x - 2*obj.startPoint.x) * t + obj.startPoint.x;
-            y = (obj.startPoint.y - 2*obj.controlPoint.y + obj.endPoint.y)*t.^2 + (2*obj.controlPoint.y - 2*obj.startPoint.y) * t + obj.startPoint.y;
+        function [x,y] = getPoint(obj, s)
+            t = obj.normalize(s);
+            [x,y] = obj.getPointNorm(t);
         end
         % -----------------------------------------------------------------
+        
+        % -----------------------------------------------------------------
+        % FUNCTION diff:
+        % Computes derivate of function at point/interval s
+        %Inputs:
+        %   [s]     parameter: scalar or vector
+        % Outputs:
+        %   [x, y]          corresponding derivative (array of points) for parameter (vector)
+        function [dx,dy] = diff(obj, s)
+           t = obj.normalize(s);
+           [dx,dy] = obj.diffNorm(t);
+        end
+        % -----------------------------------------------------------------
+        
+        function obj = diffAnalytical(obj)
+           t = obj.normalize(s);
+           x = [obj.startPoint.x, obj.endPoint.x]
+           y = [obj.]
+           obj = 
+        end
+        % -----------------------------------------------------------------
+        
+        
     end
 
     % P R I V A T E  M E T H O D S ========================================
@@ -153,6 +168,31 @@ classdef BezierCurve < Spline
             endPoint.y = zpy2;
         end
         % -----------------------------------------------------------------
+        
+        
+        function [x,y] = getPointNorm(obj, t)
+            % calculate corresponding point(s) (hard-coded for 3rd order Bezier curve)
+            x = (obj.startPoint.x - 2*obj.controlPoint.x + obj.endPoint.x)*t.^2 + (2*obj.controlPoint.x - 2*obj.startPoint.x) * t + obj.startPoint.x;
+            y = (obj.startPoint.y - 2*obj.controlPoint.y + obj.endPoint.y)*t.^2 + (2*obj.controlPoint.y - 2*obj.startPoint.y) * t + obj.startPoint.y;
+        end
+        
+        
+        function [dx,dy] = diffNorm(obj,t)
+            % calculate corresponding derivative at point(s) (hard-coded for 3rd order Bezier curve)
+            dx = 2*(obj.startPoint.x - 2*obj.controlPoint.x + obj.endPoint.x)*t + (2*obj.controlPoint.x - 2*obj.startPoint.x);
+            dy = 2*(obj.startPoint.y - 2*obj.controlPoint.y + obj.endPoint.y)*t + (2*obj.controlPoint.y - 2*obj.startPoint.y);
+           
+            %TODO: Why is this scaling needed?!
+            dx = dx/(2*obj.r);
+            dy = dy/(2*obj.r); 
+        end
+        
+        
+        
+        function t = normalize(obj,s)
+            t = s/obj.length;
+        end
+        
     end
 
     % P R O T E C T E D  M E T H O D S ====================================
@@ -163,8 +203,11 @@ classdef BezierCurve < Spline
         % Inputs:   none
         % Outputs:  none
         function  obj = calculateLength(obj)
-            obj.length = sum(sqrt(diff(obj.curvePoints.x).^2 + diff(obj.curvePoints.y).^2));
+            t = [0:obj.dt:1];
+            [dx,dy] = obj.diffNorm(t); 
+            obj.length = sum(sqrt(dx.^2 + dy.^2)*obj.dt);
         end
         % -----------------------------------------------------------------
     end
+
 end

@@ -7,7 +7,7 @@ classdef Path < Spline
     end
     
     methods 
-        function obj = Path(x,y,r,dx)
+        function obj = Path(x,y,r)
            
            nmbSubSplines = 2*length(x)-3;
            subsplines   = Spline.empty(nmbSubSplines,0);
@@ -15,7 +15,7 @@ classdef Path < Spline
            
            %generate bezier curves
            for i = 2:2:nmbSubSplines-1
-               subsplines(i) = BezierCurve(x(i/2:i/2+2),y(i/2:i/2+2),r,dx);
+               subsplines(i) = BezierCurve(x(i/2:i/2+2),y(i/2:i/2+2),r);
            end
            
            %generate first linear
@@ -51,6 +51,16 @@ classdef Path < Spline
             end
         end
         
+        function [x,y] = diff(obj, s)
+            x = zeros(length(s),1);
+            y = zeros(length(s),1);
+            
+            [idx, s_offset] = obj.getSubsplineToPoint(s);
+            for i = 1:length(idx)
+                [x(i),y(i)] = obj.subsplines(idx(i)).diff(s_offset(i));
+            end
+            
+        end
     end
     
     methods (Access = private)

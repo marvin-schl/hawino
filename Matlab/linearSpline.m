@@ -27,6 +27,16 @@ classdef LinearSpline < Spline
             x = obj.startPoint.x + dx;
         end   
         
+        function [x, y] = diff(obj, s)
+           x = cos(obj.phi);
+           y = sin(obj.phi);
+        end
+        
+        function diffObj = diffAnalytical(obj)
+           [x1,y1] = obj.diff(0);
+           [x2,y2] = obj.diff(obj.length);
+           diffObj = LinearSpline([x1,x2],[y1,y2]);
+        end
     end
     
     methods( Access = protected)
@@ -34,4 +44,6 @@ classdef LinearSpline < Spline
             len = sqrt((obj.startPoint.x - obj.endPoint.x)^2+(obj.startPoint.y - obj.endPoint.y)^2);
          end
     end
+    
+    
 end
