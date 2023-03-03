@@ -33,7 +33,7 @@ classdef BezierCurve < Spline
             if (~exist("dt","var"))
                 obj.dt = 1e-3;
             else
-                obj.dt = ds;
+                obj.dt = dt;
             end
             
             obj.startPoint = struct("x", 0, "y", 0);
@@ -199,9 +199,15 @@ classdef BezierCurve < Spline
         % Inputs:   none
         % Outputs:  none
         function  obj = calculateLength(obj)
-            t = [0:obj.dt:1];
+            t = [0:obj.dt:1 - obj.dt];
             [dx,dy] = obj.diffNorm(t); 
-            obj.length = sum(sqrt(dx.^2 + dy.^2)*obj.dt);
+    	    ax = (obj.startPoint.x - 2*obj.controlPoint.x + obj.endPoint.x);
+            ay = (obj.startPoint.y - 2*obj.controlPoint.y + obj.endPoint.y);
+            bx = (2*obj.controlPoint.x - 2*obj.startPoint.x);
+            by = (2*obj.controlPoint.y - 2*obj.startPoint.y);
+            ds = sqrt((2*ax*t + bx).^2 + (2*ay*t + by).^2)*obj.dt;
+
+            obj.length = sum(ds);
         end
         % -----------------------------------------------------------------
     end
