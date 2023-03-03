@@ -77,8 +77,30 @@ classdef BezierCurve < Spline
         % Outputs:
         %   [x, y]          corresponding derivative (array of points) for parameter (vector)
         function [dx,dy] = diff(obj, s)
-           t = obj.normalize(s);
+           t = obj.normalize(s); %t(s)
+           
+            ax = (obj.startPoint.x - 2*obj.controlPoint.x + obj.endPoint.x);
+            ay = (obj.startPoint.y - 2*obj.controlPoint.y + obj.endPoint.y);
+            bx = (2*obj.controlPoint.x - 2*obj.startPoint.x);
+            by = (2*obj.controlPoint.y - 2*obj.startPoint.y);
+           
+           ds  = @(t) ((4*ax^2*t^2 + 4*ax*bx*t + 4*ay^2*t^2 + 4*ay*by*t + bx^2 + by^2)^(1/2));
+%            dds = @(t) ((8*t*ax^2 + 4*bx*ax + 8*t*ay^2 + 4*by*ay)/(2*(4*ax^2*t^2 + 4*ax*bx*t + 4*ay^2*t^2 + 4*ay*by*t + bx^2 + by^2)^(1/2)));
+%            
+%             dt = zeros(length(s),1);
+%             for i=1:length(s)
+%                     dt_prev = 2;
+%                     while abs(dt(i)-dt_prev) > 1e-4    
+%                        dt_prev = dt(i);
+%                        dt(i) = dt(i) - (ds(dt(i)) - s(i)) / dds(dt(i));
+%                     end
+%             end
+%            
            [dx,dy] = obj.diffNorm(t);
+           
+           %inner derivative
+           dx = dx*1./ds(t)*(2*obj.r);
+           dy = dy*1./ds(t)*(2*obj.r);
         end
         % -----------------------------------------------------------------
         
@@ -105,6 +127,18 @@ classdef BezierCurve < Spline
             dx = dx/(2*obj.r);
             dy = dy/(2*obj.r); 
         end
+        
+        function  s = calculateLengthTo(obj, t, dt)
+            [dx,dy] = obj.diffNorm(t); 
+    	    ax = (obj.startPoint.x - 2*obj.controlPoint.x + obj.endPoint.x);
+            ay = (obj.startPoint.y - 2*obj.controlPoint.y + obj.endPoint.y);
+            bx = (2*obj.controlPoint.x - 2*obj.startPoint.x);
+            by = (2*obj.controlPoint.y - 2*obj.startPoint.y);
+            ds = sqrt((2*ax*t + bx).^2 + (2*ay*t + by).^2)*dt;
+
+            s = cumsum(ds);
+        end
+        % -----------------------------------------------------------------
         
         
     end
@@ -185,8 +219,31 @@ classdef BezierCurve < Spline
         
         
 
-        function t = normalize(obj,s)
-            t = s/obj.length;
+        function t = normalize(obj,s0)
+            ax = (obj.startPoint.x - 2*obj.controlPoint.x + obj.endPoint.x);
+            ay = (obj.startPoint.y - 2*obj.controlPoint.y + obj.endPoint.y);
+            bx = (2*obj.controlPoint.x - 2*obj.startPoint.x);
+            by = (2*obj.controlPoint.y - 2*obj.startPoint.y);
+            
+            %matlab symbolic integration of: sqrt((dx/dt)^2+(dy/dt)^2)
+            sIn = @(t)( (t/2 + (4*ax*bx + 4*ay*by)/(4*(4*ax^2 + 4*ay^2)))*(t*(4*ax*bx + 4*ay*by) ...
+                + bx^2 + by^2 + t^2*(4*ax^2 + 4*ay^2))^(1/2) ...
+               - (log((2*ax*bx + 2*ay*by + t*(4*ax^2 + 4*ay^2))/(4*ax^2 + 4*ay^2)^(1/2) ...
+               + (t*(4*ax*bx + 4*ay*by) + bx^2 + by^2 ...
+               + t^2*(4*ax^2 + 4*ay^2))^(1/2))*((4*ax*bx + 4*ay*by)^2/4 ...
+               - (4*ax^2 + 4*ay^2)*(bx^2 + by^2)))/(2*(4*ax^2 + 4*ay^2)^(3/2)));
+
+            s = @(t) (sIn(t)-sIn(0));
+            ds = @(t) ((4*ax^2*t^2 + 4*ax*bx*t + 4*ay^2*t^2 + 4*ay*by*t + bx^2 + by^2)^(1/2));
+            
+            t = zeros(length(s0),1);
+            for i=1:length(s0)
+                    t_prev = 2;
+                    while abs(t(i)-t_prev) > 1e-4
+                        t_prev = t(i);
+                        t(i) = t(i) - (s(t(i)) - s0(i)) / ds(t(i));
+                    end
+            end
         end
         
     end
