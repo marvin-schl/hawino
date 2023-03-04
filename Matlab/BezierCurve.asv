@@ -63,28 +63,25 @@ classdef BezierCurve < Spline
         % Outputs:
         %   [x, y]          corresponding derivative (array of points) for parameter (vector)
         function [dx,dy] = diff(obj, s, order)
-           if (~exist("order","var"))
+           if (~exist("order","var")
                order = 1;
            end
             t = obj.normalize(s); %t(s)
             [dx,dy] = obj.diffNorm(t);
-            ds          = obj.ds(t);      
            switch order
                case 1
                    %calculate first derivative
                    %inner derivative
-                    dx = dx*1./ds;
-                    dy = dy*1./ds;
+                    dx = dx*1./obj.ds(t);
+                    dy = dy*1./obj.ds(t);
                case 2
-                    dds         = obj.dds(t, ds);        %d^2/dt^2 s(t)
-                    [ddx, ddy]  = obj.diff2Norm(t);  %d/dt gamma(t)
+                    [ddx, ddy] = obj.diff2Norm(t);
+                    dds = obj.dds(t)
                     
-                    %calculate second derivate, derivation not trivial
-                    dx = ddx.*ds.^-2 - dx .* ds.^-3 .* dds;
-                    dy = ddy.*ds.^-2 - dy .* ds.^-3 .* dds;
-               otherwise   
-                    throw(MException("BezierCurve:DerivativeNotImplemented", sprintf("Derivative of order %d not implemnted.",order)));
-
+                    %calculate second derivate
+                    dx = dx+
+               otherwise
+                   
            end
         end
         % -----------------------------------------------------------------

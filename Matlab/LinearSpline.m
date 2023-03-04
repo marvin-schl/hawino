@@ -27,16 +27,20 @@ classdef LinearSpline < Spline
             x = obj.startPoint.x + dx;
         end   
         
-        function [x, y] = diff(obj, s)
-           x = cos(obj.phi);
-           y = sin(obj.phi);
+        function [x, y] = diff(obj, s, order)
+          if (~exist("order","var"))
+               order = 1;
+           end
+           switch order
+               case 1
+                   x = cos(obj.phi);
+                   y = sin(obj.phi);
+             otherwise   
+                   x = 0;
+                   y = 0;           
+           end
         end
-        
-        function diffObj = diffAnalytical(obj)
-           [x1,y1] = obj.diff(0);
-           [x2,y2] = obj.diff(obj.length);
-           diffObj = LinearSpline([x1,x2],[y1,y2]);
-        end
+
     end
     
     methods( Access = protected)

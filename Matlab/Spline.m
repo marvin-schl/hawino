@@ -5,7 +5,7 @@ classdef Spline <  matlab.mixin.Heterogeneous
     end
     
     properties
-
+       
       length
     end
     
@@ -18,7 +18,6 @@ classdef Spline <  matlab.mixin.Heterogeneous
     methods (Abstract)
        getPoint(obj, s)   
        diff
-       %diffAnalytical
     end
     
     methods ( Access=protected, Abstract)
