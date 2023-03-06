@@ -144,7 +144,6 @@ classdef BezierCurve < Spline
             for i=1:length(s0)
                     t_prev = 2;
                     while abs(t(i)-t_prev) > 1e-4
-                        abs(t(i)-t_prev)
                         t_prev = t(i);
                         t(i) = t(i) - (obj.s(t(i)) - s0(i)) / obj.ds(t(i));
                     end

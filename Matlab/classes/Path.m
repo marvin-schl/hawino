@@ -43,10 +43,10 @@ classdef Path < Spline
            obj.endPoint =  struct("x", x(length(x)), "y", y(length(y)));      
            
            obj.maxAbsCurvature = struct("x",0,"y",0)
-%            for spline=obj.subsplines
-%                obj.maxAbsCurvature.x = max(obj.maxAbsCurvature.x,  spline.maxAbsCurvature.x);
-%                obj.maxAbsCurvature.y = max(obj.maxAbsCurvature.y,  spline.maxAbsCurvature.y);
-%            end
+           for spline=obj.subsplines
+               obj.maxAbsCurvature.x = max(obj.maxAbsCurvature.x,  spline.maxAbsCurvature.x);
+               obj.maxAbsCurvature.y = max(obj.maxAbsCurvature.y,  spline.maxAbsCurvature.y);
+           end
         end
         
         function [x,y] = getPoint(obj, s)
