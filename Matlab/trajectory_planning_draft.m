@@ -6,7 +6,7 @@ wpx = [0, 3, 5, 7];
 
 %wpx = [0, 1, 2];
 %wpy = [0, 2, 1];
-%[wpx, coeffs] = getSpline(wpx, wpy,1);
+[wpx, coeffs] = getSpline(wpx, wpy,1);
 
 %plot polynomials
 %plot(wpx,wpx)
