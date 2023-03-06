@@ -4253,13 +4253,6 @@
 							</OwnerB>
 						</OwnerA>
 					</UnrestoredVarLinks>
-					<UnrestoredVarLinks ImportTime="2023-02-27T10:38:48">
-						<OwnerA Name="OutputSrc" Prefix="TIPC^HAWino^HAWino Instance" Type="2">
-							<OwnerB Name="TIPC^HAWino^HAWino Instance">
-								<Link VarA="TrackingController.yUintWaypointIndex" TypeA="UINT" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="PlcTask Inputs^GW2DummyPRG.roboter.yUintWaypointIndex" RestoreInfo="TypeMismatch" OldTypeA="UINT" OldGuidA="{18071995-0000-0000-0000-000000000005}" NewTypeA="INT" NewGuidA="{18071995-0000-0000-0000-000000000006}"/>
-							</OwnerB>
-						</OwnerA>
-					</UnrestoredVarLinks>
 					<Contexts>
 						<Context>
 							<Id NeedCalleeCall="true">0</Id>
@@ -7226,6 +7219,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yBoArrivedAtDestination" VarB="ControlTask Outputs^TrackingController.yBoArrivedAtDestination"/>
 				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yBoDriving" VarB="ControlTask Outputs^TrackingController.yBoDriving"/>
 				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yRPposition" VarB="ControlTask Outputs^TrackingController.yRPposition"/>
+				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yUintWaypointIndex" VarB="ControlTask Outputs^TrackingController.yUintWaypointIndex"/>
 				<Link VarA="PlcTask Inputs^TrackingController.xIntMoveToEndPosition" VarB="PlcTask Outputs^GW2DummyPRG.roboter.xIntMoveToEndPosition"/>
 			</OwnerB>
 			<OwnerB Name="TIRC^TcCOM Objects^Object2 (SoC_Model_Data_Aquisition_2022)">
