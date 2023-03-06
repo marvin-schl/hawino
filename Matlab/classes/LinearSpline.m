@@ -4,6 +4,7 @@ classdef LinearSpline < Spline
        startPoint
        endPoint 
        phi
+       maxAbsCurvature
     end
     
     properties (Access = private)
@@ -12,10 +13,11 @@ classdef LinearSpline < Spline
 
     methods 
         function obj = LinearSpline(x,y)
-            obj.startPoint = struct("x", x(1), "y", y(1));
-            obj.endPoint   = struct("x", x(2), "y", y(2));
-            obj.phi        = atan2(obj.endPoint.y-obj.startPoint.y, obj.endPoint.x-obj.startPoint.x);
-            obj.length     = obj.calculateLength();
+            obj.startPoint      = struct("x", x(1), "y", y(1));
+            obj.endPoint        = struct("x", x(2), "y", y(2));
+            obj.phi             = atan2(obj.endPoint.y-obj.startPoint.y, obj.endPoint.x-obj.startPoint.x);
+            obj.length          = obj.calculateLength();
+            obj.maxAbsCurvature = struct("x", 0, "y", 0);
         end
         
         function [x,y] = getPoint(obj, s)

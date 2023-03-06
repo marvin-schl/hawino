@@ -4,6 +4,7 @@ classdef Path < Spline
         endPoint
         transitions
         subsplines
+        maxAbsCurvature
     end
     
     methods 
@@ -40,6 +41,12 @@ classdef Path < Spline
            obj.transitions = obj.calculateTransitions();
            obj.startPoint = struct("x", x(1), "y", y(1));
            obj.endPoint =  struct("x", x(length(x)), "y", y(length(y)));      
+           
+           obj.maxAbsCurvature = struct("x",0,"y",0)
+%            for spline=obj.subsplines
+%                obj.maxAbsCurvature.x = max(obj.maxAbsCurvature.x,  spline.maxAbsCurvature.x);
+%                obj.maxAbsCurvature.y = max(obj.maxAbsCurvature.y,  spline.maxAbsCurvature.y);
+%            end
         end
         
         function [x,y] = getPoint(obj, s)
@@ -48,6 +55,20 @@ classdef Path < Spline
             y = zeros(length(s),1);
             for i = 1:length(idx)
                 [x(i),y(i)] = obj.subsplines(idx(i)).getPoint(s_offset(i));
+            end
+        end
+        
+        function [kx, ky] = getMaxSegmentCurvature(obj, s, ds);
+            if ~exist("ds","var")
+                ds = 1e-3;
+            end
+            
+            [idx, s_offset] = obj.getSubsplineToPoint(s);
+            kx = zeros(length(s),1);            
+            ky = zeros(length(s),1);
+            for i = 1:length(idx)
+                kx(i) = obj.subsplines(idx(i)).maxAbsCurvature.x;
+                ky(i) = obj.subsplines(idx(i)).maxAbsCurvature.y;
             end
         end
         
@@ -63,20 +84,11 @@ classdef Path < Spline
             for i = 1:length(idx)                 
                 [x(i),y(i)] = obj.subsplines(idx(i)).diff(s_offset(i), order);
             end
-            
         end
     end
     
     methods (Access = private)
         function [idx, s_offset] = getSubsplineToPoint(obj, s)
-%           splineIdx = zeros(length(s),1);
-%             for i = 1:length(s)
-%                 idx = find((obj.transitions < s(i)) == 1,1,"last");
-%                 if isempty(idx)
-%                     idx = length(obj.transitions);
-%                 end
-%                 splineIdx(i,1) = idx-1;
-%             end
             idx = zeros(length(s),1);
             s_offset = zeros(length(s),1);
             for i=1:length(s)

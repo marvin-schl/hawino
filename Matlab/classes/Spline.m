@@ -1,12 +1,12 @@
 classdef Spline <  matlab.mixin.Heterogeneous
     properties (Abstract)
        startPoint
-       endPoint 
+       endPoint
+       maxAbsCurvature
     end
     
     properties
-       
-      length
+      length 
     end
     
    methods (Static, Sealed, Access = protected)
@@ -23,6 +23,7 @@ classdef Spline <  matlab.mixin.Heterogeneous
     methods ( Access=protected, Abstract)
        calculateLength
     end
+            
     
     methods
         function obj = Spline()
@@ -33,5 +34,6 @@ classdef Spline <  matlab.mixin.Heterogeneous
         end
         
     end
+    
 end
 

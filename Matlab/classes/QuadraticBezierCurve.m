@@ -8,6 +8,7 @@ classdef QuadraticBezierCurve < BezierCurve
         ay, by, cy
         r                   % Radius of Bezier curve
         dt                  % Sampling distance for only length calculation
+        maxAbsCurvature
     end
     
     methods
@@ -33,7 +34,9 @@ classdef QuadraticBezierCurve < BezierCurve
             
             % 3.) Calculate length of curve
             obj = obj.calculateLength();
-           
+            
+            %[ddx, ddy] = obj.diff([0:dt:obj.length],2);
+            %obj.maxAbsCurvature = struct("x", max(abs(ddx)), "y", max(abs(ddy)));
         end
     end
     
@@ -140,13 +143,13 @@ classdef QuadraticBezierCurve < BezierCurve
           end
     % -----------------------------------------------------------------
         function [ax, bx, cx, ay, by, cy] = calculateCoefficients(obj)
-            ax = (obj.startPoint.x - 2*obj.controlPoint.x + obj.endPoint.x)
-            bx = (2*obj.controlPoint.x - 2*obj.startPoint.x)
-            cx = obj.startPoint.x
+            ax = (obj.startPoint.x - 2*obj.controlPoint.x + obj.endPoint.x);
+            bx = (2*obj.controlPoint.x - 2*obj.startPoint.x);
+            cx = obj.startPoint.x;
             
-            ay = (obj.startPoint.y - 2*obj.controlPoint.y + obj.endPoint.y)
-            by = (2*obj.controlPoint.y - 2*obj.startPoint.y)
-            cy = obj.startPoint.y
+            ay = (obj.startPoint.y - 2*obj.controlPoint.y + obj.endPoint.y);
+            by = (2*obj.controlPoint.y - 2*obj.startPoint.y);
+            cy = obj.startPoint.y;
            
        end   
     
