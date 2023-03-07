@@ -37,9 +37,9 @@ END_VAR
 		Camera();
 		PowerManager();
 		Gripper();
-		GW2DummyPRG();
+		//GW2DummyPRG();
 		//ParameterEstimation();
-		//MeasureVariance();
+		MeasureVariance();
 		//Sinusfahrt();
 		//CameraNoise();
 		//ParameterEstimation_1();
