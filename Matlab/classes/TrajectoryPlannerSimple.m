@@ -63,19 +63,15 @@ classdef TrajectoryPlannerSimple
                 case 4
                     obj = obj.step4();
                 case 5
-          %          try
-                        obj = obj.step5();
-           %          catch
-            %             break;
-            %        end
+                    obj = obj.step5();
                 otherwise
                     throw(MException("TrajectoryPlanner:InvalidState","Entered an invalid state"));
             end
             
             if (obj.k > 10000)
-                disp(sprintf("Run out of array elemets"))
+                disp("Run out of array elemets")
                 break
-            end
+           end
            end
         
            idx = find(obj.pos ,1,"last")-1; 
@@ -86,8 +82,6 @@ classdef TrajectoryPlannerSimple
         %velocity limit and its derivative, eq. (36), (37), (31)
         function [velMax, dvelMax, velMaxAcc] = velMax(obj, s) 
             [ddx,ddy]    = obj.path.diff(s,2);
-            %[ddx, ddy]     = obj.path.getMaxSegmentCurvature(s);
-            hold on;
             velMax       = obj.qVelMax*ones(length(s),1);
             dvelMax      = zeros(length(s),1);
             velMaxAcc    = zeros(length(s),1);
@@ -117,7 +111,6 @@ classdef TrajectoryPlannerSimple
                         accMin(i) = -sqrt(accMaxSquare);
                         accMax(i) = sqrt(accMaxSquare);
                     else
-                        accMaxSquare
                         throw(MException("TrajectoryPlannerSimple:ConstraintViolation","Violated velocity constraint caused by acceleration limit."));
                     end
                end
@@ -168,14 +161,15 @@ classdef TrajectoryPlannerSimple
         end    
         
         function obj = step3(obj)
-            [velMax, ~, ~] = obj.velMax([obj.pos(obj.k-2), obj.pos(obj.k-1)]);
-            [accMin, accMax]  = obj.accLim(obj.pos(obj.k-1), velMax(2));
+            [velMax, ~, velMaxAcc] = obj.velMax(obj.pos(obj.k-1));
+            vel = min(velMax, velMaxAcc);
+            
+            [accMin, accMax]  = obj.accLim(obj.pos(obj.k-1), vel);
              %following limit curve
             if obj.k > 1    
                 obj.pos(obj.k) = obj.pos(obj.k-1) + obj.vel(obj.k-1)*obj.dt;
-                obj.vel(obj.k) = velMax(2);
+                obj.vel(obj.k) = vel;
             end
-            
             dvelMaxAcc = obj.dvelMaxAcc(obj.pos(obj.k));
             
             if obj.pos(obj.k) > obj.path.length
@@ -237,7 +231,7 @@ classdef TrajectoryPlannerSimple
                 
                 obj.currentStep = 2;
                 
-             elseif  (abs(obj.velBackward(obj.k)-velMax) < 1e-6) ||  (abs(obj.velBackward(obj.k) - velMaxAcc) < 1e-6) 
+             elseif  (abs(obj.velBackward(obj.k)-velMax) < 1e-16) ||  (abs(obj.velBackward(obj.k) - velMaxAcc) < 1e-16) 
                  abs(obj.velBackward(obj.k)-velMax)
                  abs(obj.velBackward(obj.k) - velMaxAcc)
                  throw(MException("TrajectoryPlanner:InfeasibleTrajectory","Step 5: Crossed Limit Curves while integrating backward."));
@@ -280,10 +274,9 @@ classdef TrajectoryPlannerSimple
                 end
             end
           swp = sort(swp);
-        end
+        end     
         
-        
-        function plotVelLim(obj, trajectory)
+        function plotVelLimPhasePlane(obj, trajectory)
             if ~exist("trajectory","var")
                 trajectory = false;
             end
@@ -311,6 +304,41 @@ classdef TrajectoryPlannerSimple
             end
         end
         
+        function plotTrajectoryOverTime(obj)
+
+        figure()
+        t = [0:length(obj.pos)-1]*obj.dt;
+
+        subplot(3,1,1);
+        plot(t,obj.pos,":x")
+        hold on;
+        grid minor;
+        title("Trajectory over time","interpreter","latex", "fontsize", 24)
+
+        xlim([min(t) max(t)])
+        ylabel("$s(t)$","interpreter","latex", "fontsize", 18);
+
+        
+        
+        subplot(3,1,2);
+        plot(t,obj.vel,":x")
+        hold on;
+        grid minor;
+        xlim([min(t) max(t)])
+        ylabel("$\dot{s}(t)$","interpreter","latex", "fontsize", 18);
+
+                
+        subplot(3,1,3);
+        plot(t, diff([0;obj.vel])/obj.dt,":x")
+        hold on;
+        grid minor;
+        xlim([min(t) max(t)])
+        xlabel("$t$","interpreter","latex", "fontsize", 18);
+        ylabel("$\ddot{s}(t)$","interpreter","latex", "fontsize", 18);
+
+
+
+        end
     end
 end
 
