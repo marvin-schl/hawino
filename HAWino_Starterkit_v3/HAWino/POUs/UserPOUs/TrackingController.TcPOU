@@ -22,6 +22,8 @@ VAR
 	
 	state : ControllerState := ControllerState.init;//sets controller state
 	
+	CONTROL_ERROR_THRESH : LREAL := ;
+	
 	///////////////////////////////////////////////
 	///////////// LINKS TO GW2  ///////////////////
 	///////////////////////////////////////////////
@@ -125,6 +127,15 @@ trajectory(
 	referencePose 	=> controller.xRobotPoseRef					//outputs reference pose to controller
 );
 
+
+// to do:
+IF trajectory.finished AND controller.reachedReference THEN
+	yBoArrivedAtDestination := TRUE;
+END_IF
+
+
+
+
 //needs to be called so that the velocities will be written to motor drives
 robot(); 
 
@@ -217,6 +228,13 @@ END_VAR]]></Declaration>
       <LineId Id="454" Count="0" />
       <LineId Id="457" Count="0" />
       <LineId Id="455" Count="0" />
+      <LineId Id="558" Count="1" />
+      <LineId Id="557" Count="0" />
+      <LineId Id="560" Count="0" />
+      <LineId Id="562" Count="1" />
+      <LineId Id="561" Count="0" />
+      <LineId Id="556" Count="0" />
+      <LineId Id="555" Count="0" />
       <LineId Id="478" Count="0" />
       <LineId Id="477" Count="0" />
       <LineId Id="447" Count="0" />

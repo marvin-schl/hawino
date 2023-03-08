@@ -16,6 +16,7 @@ VAR_OUTPUT
 	vXrobot:			LREAL;
 	vYrobot:			LREAL;
 	omegaRobot:			LREAL;
+	reachedReference:	BOOL;
 END_VAR
 
 VAR
