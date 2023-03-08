@@ -26,6 +26,7 @@ classdef TrajectoryPlanner
     end
     
     methods
+        
         function obj = TrajectoryPlanner(path, qAccMax, qVelMax)
             obj.path = path;
             obj.qAccMax = struct("x", qAccMax(1), "y", qAccMax(2));
@@ -42,8 +43,7 @@ classdef TrajectoryPlanner
             obj.acc            = zeros(1000,1);
             obj.dt             = [];
         end
-                
-        
+                      
         function obj = generateTrajectory(obj, dt)
         obj.k = 1;
         obj.currentStep = 1;
@@ -92,7 +92,6 @@ classdef TrajectoryPlanner
                     dvelMax(i) = -obj.qVelMax.y*ddy(i)/(dy(i)*abs(dy(i))); 
                     
                     if ddx(i) ~= 0
-                        %velMaxAcc(i) = sqrt(obj.qAccMax.x/abs(ddx(i)));
                         velMaxAcc(i) = sqrt(obj.qAccMax.x/abs(ddx(i)));
                     else   
                         velMaxAcc(i) = velMax(i);
@@ -103,7 +102,6 @@ classdef TrajectoryPlanner
                    dvelMax(i) =  -obj.qVelMax.x*ddy(i)/(dx(i)*abs(dx(i)));
                    
                     if ddy ~= 0
-                        %velMaxAcc(i) = sqrt(obj.qAccMax.y/abs(ddy(i)));
                         velMaxAcc(i) = sqrt(obj.qAccMax.y/abs(ddy(i)));
 
                     else                        
@@ -124,8 +122,7 @@ classdef TrajectoryPlanner
                    ddydy = ddy(i)/dy(i);
                    velAccLimCandidate1 = velMax(i);
                   if (abs(ddxdx-ddydy) > 1e-6) 
-                       velAccLimCandidate1 = sqrt((obj.qAccMax.x/abs(dx(i))+ obj.qAccMax.y/(abs(dy(i))))/abs(ddxdx-ddydy));
-                  
+                       velAccLimCandidate1 = sqrt((obj.qAccMax.x/abs(dx(i))+ obj.qAccMax.y/(abs(dy(i))))/abs(ddxdx-ddydy));     
                   end
                   
                    if ddx(i) < 1e-6 && ddy(i) > 1e-6
@@ -137,6 +134,7 @@ classdef TrajectoryPlanner
                    else
                        velAccLimCandidate2 = velMax(i);
                    end
+                   
                    velMaxAcc(i) = min(velAccLimCandidate1, velAccLimCandidate2);
                end
               end
@@ -152,11 +150,11 @@ classdef TrajectoryPlanner
             accMax          = zeros(length(dx),1);
            
             for i=1:length(dx)
-               if dx(i) < 1e-6
+               if dx(i) < 1e-6 && dy(i) > 1e-6 
                     accMin(i) = (-obj.qAccMax.y/abs(dy(i)) - ddy(i)*vel(i)^2/dy(i));               
                     accMax(i) = (obj.qAccMax.y/abs(dy(i))  - ddy(i)*vel(i)^2/dy(i));   
 
-               elseif dy(i) < 1e-6
+               elseif dy(i) < 1e-6 && dx(i) > 1e-6
                    accMin(i) = (-obj.qAccMax.x/abs(dx(i))-ddx(i)*vel(i)^2/dx(i));
                    accMax(i) = (obj.qAccMax.x/abs(dx(i))-ddx(i)*vel(i)^2/dx(i));
                else
@@ -366,14 +364,135 @@ classdef TrajectoryPlanner
              [x, ~] = obj.path.diff(s);
         end
 
-        function swPointContVel = swPointContVel(obj, s)
-            [valMax, ~, velMaxAcc] = obj.velMax(s);
-            [accMin, ~]  = obj.accLim(s, valMax);
-            dvelMaxAcc  = diff([0; velMaxAcc]);
-            swPointContVel  = accMin -dvelMaxAcc;       
+        function s = getContinuousVelocitySwitchingPoints(obj, ds)
+            if ~exist("ds","var")
+                ds = 0.01;
+            end
+            
+            sPath = [0:ds:obj.path.length];
+            swPointContVel = zeros(length(sPath),1);
+            for i=1:length(sPath)
+                swPointContVel(i) =obj.swPointContVel(sPath(i),1e-2);
+            end
+            idx = find((diff(sign(swPointContVel)) ~= 0) == 1);
+
+            s = [];
+            if ~isempty(idx)
+                for i=1:length(idx)
+                 sm = sPath(idx(i))-2*ds;
+                 sp = sPath(idx(i))+2*ds;
+                 obj.swPointContVel(sm, 1e-5);
+                 obj.swPointContVel(sp, 1e-5)
+                 s0 = fzero(@(s)(obj.swPointContVel(s,1e-5)), [sm sp]);
+                 if ~isempty(s0)
+                     s = [s;s0];
+                 end
+                end
+            end
         end
         
+        function swPointContVel = swPointContVel(obj, s, ds)
+            if ~exist("ds","var")
+                ds = 0.01;
+            end
+            [~, ~, velMaxAcc] = obj.velMax([s-ds/2, s+ds/2]);
+            [velMax, ~, ~] = obj.velMax(s);
+            [accMin, ~]  = obj.accLim(s, velMax); 
+            dvelMaxAcc  = diff(velMaxAcc)/(ds);
+            swPointContVel  = accMin - dvelMaxAcc;       
+        end
+        
+        function swp = checkForDiscontAccSP(obj, s0) 
+            swp = [];
+            if ~isempty(s0)
+                for i=1:length(s0)
+                        ds = 1e-4;
+                        sw = s0(i);
+                        sm = sw-ds;
+                        sp = sw+ds;
 
+                        [velMax, ~, velMaxAcc]  = planner.velMax([sm sw sp]);
+                        dvelMaxAcc = diff(velMaxAcc)/ds;
+
+                        velMaxM = velMax(1);
+                        velMaxP = velMax(3);
+                        velMaxAccM = velMaxAcc(1);
+                        velMaxAccP = velMaxAcc(3);
+                        dvelMaxAccM = dvelMaxAcc(1);
+                        dvelMaxAccP = dvelMaxAcc(2);
+
+                        [~, accMax] = planner.accLim([sm sp], [velMaxM velMaxP]) ;
+                        accMaxM = accMax(1);
+                        accMaxP = accMax(2);
+
+                        %eq (38)
+                        foundSWPm = (velMaxAccM > velMaxAccP && accMaxM >= dvelMaxAccM);
+                        foundSWPp = (velMaxAccM > velMaxAccP && accMaxP <= dvelMaxAccP);
+                    
+                        if foundSWPm
+                            swp = [swp, sm];
+                        elseif foundSWPp
+                            swp = [swp, sp];
+                        end
+                end
+            end
+        end
+        
+        function sp = checkForContAccSP(obj, s0)
+            sp = []
+            if ~isempty(s0)
+                for i=1:length(s0)
+                    ds = 1e-4;
+                    sw = s0(1);
+                    sm = sw-ds;
+                    sp = sw+ds;
+                    [~, ~, velMaxAcc]  = planner.velMax([sm sw sp]);
+                    dvelMaxAcc = diff(velMaxAcc)/ds;
+                    dvelMaxAccM = dvelMaxAcc(1);
+                    dvelMaxAccP = dvelMaxAcc(2);
+
+                    foundSWP = dvelMaxAccM < 0 && dvelMaxAccP > 0;
+                    if foundSWP
+                        sp = [sp, sw];
+                    end                   
+                end
+            end
+        end
+        
+        function sp = checkForDiscVelSP(obj,s0)
+        end
+        
+        function sp =checkForContVelSP(obj,s0)
+        end
+        
+        function plotVelLim(obj, trjaectory)
+            if ~exist("trajectory","var")
+                trajectory = false;
+            end
+            
+            s = [0:.01:obj.path.length];
+            [vel, ~, velAcc] = obj.velMax(s);
+            
+            figure()
+            plot(s, vel);
+            hold on;
+            grid minor;
+            plot(s, velAcc);
+            
+            if trajectory
+                plot(obj.pos, obj.vel);
+            end
+            title("$s$-$\dot{s}$ Phase Portrait","interpreter", "latex")
+            xlabel("$s$","interpreter","latex", "fontsize", 18);
+            ylabel("$\dot{s}$","interpreter","latex","fontsize", 18);
+            
+            if trajectory
+                legend(["Vel. Lim", "Acc. Lim", "Vel."],"interpreter","latex");
+            else
+                legend(["Vel. Lim", "Acc. Lim"],"interpreter","latex");
+            end
+        end
+        
     end
 end
 

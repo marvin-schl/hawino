@@ -16,7 +16,7 @@ classdef Path < Spline
            
            %generate bezier curves
            for i = 2:2:nmbSubSplines-1
-               subsplines(i) = QuadraticBezierCurve(x(i/2:i/2+2),y(i/2:i/2+2),r);
+               subsplines(i) = BezierCurve(x(i/2:i/2+2),y(i/2:i/2+2),r);
            end
            
            %generate first linear
@@ -85,6 +85,47 @@ classdef Path < Spline
                 [x(i),y(i)] = obj.subsplines(idx(i)).diff(s_offset(i), order);
             end
         end
+        
+        function s = getDiscontinuousSwitchtingPointCandidate(obj)
+            s = obj.transitions(2:length(obj.transitions)-1);
+        end
+        
+        function s = getContinousSwitchingPointCandiate(obj, ds)
+            if ~exist("ds","var")
+                ds = 0.1;
+            end
+            
+            sPath = [0:ds:obj.length];
+            
+            %search f
+            idxY = find((diff(sign(obj.dfy(sPath))) ~= 0) == 1);
+            idxX = find((diff(sign(obj.dfx(sPath))) ~= 0) == 1);
+            
+            s = [];
+            if ~isempty(idxX)
+                for idx = idxX
+                   sm = sPath(idx)-2*ds;
+                   sp = sPath(idx)+2*ds;
+                   s0 = fzero(@(s) obj.dfx(s), [sm sp]); 
+                   if ~isempty(s0)
+                       s = [s;s0];
+                   end
+                end
+            end
+            
+            if ~isempty(idxY) 
+               for idx = idxY
+                   sm = sPath(idx)-2*ds;
+                   sp = sPath(idx)+2*ds;
+                   s0 = fzero(@(s) obj.dfy(s), [sm sp]); 
+                   if ~isempty(s0) ~= 0
+                       s = [s;s0];
+                   end
+                end
+            end
+
+
+        end
     end
     
     methods (Access = private)
@@ -110,7 +151,14 @@ classdef Path < Spline
             end
         end
         
-        
+        function y = dfy(obj,s)
+            [~, y] = obj.diff(s, 1);
+        end
+
+        function x = dfx(obj, s)
+             [x, ~] = obj.diff(s, 1);
+        end
+             
     end
     
     methods (Access = protected)
@@ -121,5 +169,8 @@ classdef Path < Spline
             end
         end
     end
+    
+                
+         
     
 end
