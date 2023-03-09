@@ -1,8 +1,8 @@
 classdef BezierCurve < Spline
     % P U B L I C  P R O P E R T I E S ====================================
     properties
-        %startPoint          % Entry point of the Bezier curve [x, y]
-        %endPoint            % Exit point of the Bezier curve [x, y]
+        startPoint          % Entry point of the Bezier curve [x, y]
+        endPoint            % Exit point of the Bezier curve [x, y]
         controlPoint        % Control point of the Bezier curve [x, y]
         ax, bx, cx
         ay, by, cy

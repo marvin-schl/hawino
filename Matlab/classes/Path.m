@@ -1,7 +1,7 @@
 classdef Path < Spline
     properties
-        %startPoint
-        %endPoint
+        startPoint
+        endPoint
         transitions
         subsplines
     end
