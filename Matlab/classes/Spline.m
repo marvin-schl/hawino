@@ -19,7 +19,8 @@ classdef Spline <  matlab.mixin.Heterogeneous
        diff
     end
     
-    methods ( Access=protected, Abstract)
+
+    methods ( Access=protected,Abstract)
        calculateLength
     end
             
