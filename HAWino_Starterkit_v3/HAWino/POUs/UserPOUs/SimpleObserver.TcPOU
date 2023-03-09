@@ -13,6 +13,9 @@ VAR_INPUT
 	xVxRobot: 		LREAL;
 	xVyRobot: 		LREAL;
 	xOmegaRobot: 	LREAL;
+	xVxToRobot:		LREAL;
+	xVyToRobot:		LREAL;
+	xOmegaToRobot:	LREAL;
 END_VAR
 
 VAR_OUTPUT
@@ -25,6 +28,9 @@ VAR
 	vXworldToSimulink 		AT%Q*	: LREAL;
 	vYworldToSimulink 		AT%Q*	: LREAL;
 	omegaWorldToSimulink 	AT%Q*	: LREAL;
+	vXtoRobotWorldToSimulink 		AT%Q*	: LREAL;
+	vYtoRobotWorldToSimulink 		AT%Q*	: LREAL;
+	omegaToRobotWorldToSimulink 	AT%Q*	: LREAL;
 	
 	//from Simulink
 	estimatedPoseFromSimlink AT%I* 	: ARRAY [0..2] OF LREAL;
@@ -43,6 +49,10 @@ Robot2World(
 
 cameraPoseToSimulink := RPS2ARRAY(xCameraPose);
 
+vXtoRobotWorldToSimulink :=xVxToRobot;
+vYtoRobotWorldToSimulink :=xVyToRobot;
+omegaToRobotWorldToSimulink := xOmegaToRobot;
+
 yObserverdPose.x := estimatedPoseFromSimlink[0];
 yObserverdPose.y := estimatedPoseFromSimlink[1];			
 yObserverdPose.theta := estimatedPoseFromSimlink[2];
@@ -58,7 +68,11 @@ yObserverdPose.theta := estimatedPoseFromSimlink[2];
       <LineId Id="61" Count="6" />
       <LineId Id="94" Count="0" />
       <LineId Id="93" Count="0" />
-      <LineId Id="69" Count="1" />
+      <LineId Id="130" Count="1" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="132" Count="0" />
+      <LineId Id="70" Count="0" />
       <LineId Id="60" Count="0" />
       <LineId Id="53" Count="4" />
       <LineId Id="14" Count="0" />

@@ -41,7 +41,7 @@ IF cnt = 5 AND NOT finished THEN
 	cnt := 0;
 END_IF
 
-IF WPLIdx = 433 THEN
+IF WPLIdx = 432 THEN
 	finished := TRUE;
 END_IF
 
@@ -51,7 +51,7 @@ referencePose.x        := x[WPLidx];
 xRef 				   := referencePose.x;
 yRef                   := referencePose.y;
 
-IF drive THEN
+IF drive AND NOT finished THEN
 	cnt := cnt +1;	
 END_IF
 ]]></ST>

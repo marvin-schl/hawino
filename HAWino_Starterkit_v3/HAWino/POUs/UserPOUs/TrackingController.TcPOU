@@ -102,7 +102,10 @@ END_CASE
 observer(xCameraPose := robotPoses[Var_HAWIno.Robot_Number],	//extraxt roboter coordinates based on roboter number
 		 xVxRobot    := robot.vXfromRobot,						//link x-velocity with measured velocity
 		 xVyRobot    := robot.vYfromRobot,						//link y-velocity with measured velocity
-		 xOmegaRobot    := robot.vThetaFromRobot);				//link theta-velocity with measured velocity
+		 xOmegaRobot    := robot.vThetaFromRobot,
+ 		 xVxToRobot		:= controller.vXrobot,
+		 xVyToRobot		:= controller.vYrobot,
+		 xOmegaToRobot		:= controller.omegaRobot);				//link theta-velocity with measured velocity
 
 
 //trajectory object
@@ -221,6 +224,7 @@ END_VAR]]></Declaration>
       <LineId Id="320" Count="0" />
       <LineId Id="475" Count="1" />
       <LineId Id="390" Count="4" />
+      <LineId Id="651" Count="2" />
       <LineId Id="603" Count="0" />
       <LineId Id="605" Count="2" />
       <LineId Id="611" Count="0" />

@@ -278,8 +278,17 @@
 			</Method>
 		</DataType>
 		<DataType>
-			<Name GUID="{009AB79F-853F-30BE-51E0-69FB8CF7E8C4}">P_simpleObserver_T</Name>
-			<BitSize>256</BitSize>
+			<Name GUID="{72A91784-953A-FD09-4E66-5B1F6549B49B}">matrix_9_real_T</Name>
+			<BitSize>576</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>9</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{0BACD104-E5F9-CCF2-8797-9495C4BBAEBD}">P_simpleObserver_T</Name>
+			<BitSize>896</BitSize>
 			<SubItem>
 				<Name>Constant_Value</Name>
 				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
@@ -303,6 +312,18 @@
 				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
 				<BitSize>64</BitSize>
 				<BitOffs>192</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Integrator_IC_i</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>256</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Gain_Gain</Name>
+				<Type GUID="{72A91784-953A-FD09-4E66-5B1F6549B49B}">matrix_9_real_T</Type>
+				<BitSize>576</BitSize>
+				<BitOffs>320</BitOffs>
 			</SubItem>
 		</DataType>
 		<DataType>
@@ -3176,7 +3197,7 @@
 						</ParameterValues>
 					</TmcDesc>
 				</Module>
-				<Module Id="#x01010040" KeepUnrestoredLinks="2" ClassFactoryId="TE140x Module Vendor|simpleObserver|0.0.0.15">
+				<Module Id="#x01010040" KeepUnrestoredLinks="2" ClassFactoryId="TE140x Module Vendor|simpleObserver|0.0.0.16">
 					<Name>Object3 (simpleObserver)</Name>
 					<ImageId>1000</ImageId>
 					<TmcDesc GUID="{7AF170C5-4C89-043A-5FA2-5E2CF044C0E3}">
@@ -3364,12 +3385,12 @@
 							</Parameter>
 							<Parameter CreateSymbol="true">
 								<Name>simpleObserver_P</Name>
-								<BitSize>256</BitSize>
-								<BaseType GUID="{009AB79F-853F-30BE-51E0-69FB8CF7E8C4}">P_simpleObserver_T</BaseType>
+								<BitSize>896</BitSize>
+								<BaseType GUID="{0BACD104-E5F9-CCF2-8797-9495C4BBAEBD}">P_simpleObserver_T</BaseType>
 								<Default>
 									<SubItem>
 										<Name>.Constant_Value</Name>
-										<Value>0.5</Value>
+										<Value>0.6</Value>
 									</SubItem>
 									<SubItem>
 										<Name>.CameraDelay_InitialCondition</Name>
@@ -3382,6 +3403,14 @@
 									<SubItem>
 										<Name>.Integrator_IC</Name>
 										<Value>0</Value>
+									</SubItem>
+									<SubItem>
+										<Name>.Integrator_IC_i</Name>
+										<Value>0</Value>
+									</SubItem>
+									<SubItem>
+										<Name>.Gain_Gain</Name>
+										<Data>000000000000224000000000000000000000000000000000000000000000000000000000000022400000000000000000000000000000000000000000000000000000000000002240</Data>
 									</SubItem>
 								</Default>
 								<PTCID>#x82000000</PTCID>
@@ -3416,7 +3445,7 @@
 								<AreaNo AreaType="InputDst" CreateSymbols="true">0</AreaNo>
 								<Name>AdditionalInports</Name>
 								<ContextId>0</ContextId>
-								<ByteSize>48</ByteSize>
+								<ByteSize>72</ByteSize>
 								<Symbol>
 									<Name>TcModuleInput_InCameraPose</Name>
 									<BitSize>192</BitSize>
@@ -3445,12 +3474,33 @@
 									<PTCID>#x80000028</PTCID>
 									<BitOffs>320</BitOffs>
 								</Symbol>
+								<Symbol>
+									<Name>TcModuleInput_omegaToRobot</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<PTCID>#x80000030</PTCID>
+									<BitOffs>384</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>TcModuleInput_vxToRobot</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<PTCID>#x80000038</PTCID>
+									<BitOffs>448</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>TcModuleInput_vyToRobot</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<PTCID>#x80000040</PTCID>
+									<BitOffs>512</BitOffs>
+								</Symbol>
 							</DataArea>
 							<DataArea>
 								<AreaNo AreaType="OutputSrc" CreateSymbols="true">1</AreaNo>
 								<Name>AdditionalOutports</Name>
 								<ContextId>0</ContextId>
-								<ByteSize>64</ByteSize>
+								<ByteSize>40</ByteSize>
 								<Symbol>
 									<Name>TcModuleOutput_DEBUG</Name>
 									<BitSize>64</BitSize>
@@ -3466,25 +3516,18 @@
 									<BitOffs>64</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>TcModuleOutput_OutEstimatedPose1</Name>
-									<BitSize>192</BitSize>
-									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
-									<PTCID>#x81000020</PTCID>
-									<BitOffs>256</BitOffs>
-								</Symbol>
-								<Symbol>
 									<Name>TcModuleOutput_version</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x81000038</PTCID>
-									<BitOffs>448</BitOffs>
+									<PTCID>#x81000020</PTCID>
+									<BitOffs>256</BitOffs>
 								</Symbol>
 							</DataArea>
 							<DataArea>
 								<AreaNo AreaType="Internal" CreateSymbols="true">2</AreaNo>
 								<Name>simpleObserver_P</Name>
 								<ContextId>0</ContextId>
-								<ByteSize>32</ByteSize>
+								<ByteSize>112</ByteSize>
 								<Symbol>
 									<Name>Constant_Value</Name>
 									<BitSize>64</BitSize>
@@ -3512,6 +3555,20 @@
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 									<PTCID>#x82000018</PTCID>
 									<BitOffs>192</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>Integrator_IC_i</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<PTCID>#x82000020</PTCID>
+									<BitOffs>256</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>Gain_Gain</Name>
+									<BitSize>576</BitSize>
+									<BaseType GUID="{72A91784-953A-FD09-4E66-5B1F6549B49B}">matrix_9_real_T</BaseType>
+									<PTCID>#x82000028</PTCID>
+									<BitOffs>320</BitOffs>
 								</Symbol>
 							</DataArea>
 							<DataArea>
@@ -3641,7 +3698,7 @@
 							</Value>
 							<Value>
 								<Name>simpleObserver_P.Constant_Value</Name>
-								<Value>0.5</Value>
+								<Value>0.6</Value>
 							</Value>
 							<Value>
 								<Name>simpleObserver_P.CameraDelay_InitialCondition</Name>
@@ -3654,6 +3711,46 @@
 							<Value>
 								<Name>simpleObserver_P.Integrator_IC</Name>
 								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>simpleObserver_P.Integrator_IC_i</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>simpleObserver_P.Gain_Gain[0]</Name>
+								<Value>9</Value>
+							</Value>
+							<Value>
+								<Name>simpleObserver_P.Gain_Gain[1]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>simpleObserver_P.Gain_Gain[2]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>simpleObserver_P.Gain_Gain[3]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>simpleObserver_P.Gain_Gain[4]</Name>
+								<Value>9</Value>
+							</Value>
+							<Value>
+								<Name>simpleObserver_P.Gain_Gain[5]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>simpleObserver_P.Gain_Gain[6]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>simpleObserver_P.Gain_Gain[7]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>simpleObserver_P.Gain_Gain[8]</Name>
+								<Value>9</Value>
 							</Value>
 							<Value>
 								<Name>InitExceptionInfo.ExceptionCode</Name>
@@ -3901,6 +3998,18 @@
 						</Var>
 						<Var>
 							<Name>TrackingController.observer.omegaWorldToSimulink</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>TrackingController.observer.vXtoRobotWorldToSimulink</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>TrackingController.observer.vYtoRobotWorldToSimulink</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>TrackingController.observer.omegaToRobotWorldToSimulink</Name>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
@@ -7245,8 +7354,11 @@ Bit1: Value smaller than Limit2]]></Comment>
 			<OwnerB Name="TIRC^TcCOM Objects^Object3 (simpleObserver)">
 				<Link VarA="ControlTask Inputs^TrackingController.observer.estimatedPoseFromSimlink" VarB="AdditionalOutports^TcModuleOutput_OutEstimatedPose"/>
 				<Link VarA="ControlTask Outputs^TrackingController.observer.cameraPoseToSimulink" VarB="AdditionalInports^TcModuleInput_InCameraPose"/>
+				<Link VarA="ControlTask Outputs^TrackingController.observer.omegaToRobotWorldToSimulink" VarB="AdditionalInports^TcModuleInput_omegaToRobot"/>
 				<Link VarA="ControlTask Outputs^TrackingController.observer.omegaWorldToSimulink" VarB="AdditionalInports^TcModuleInput_InVThetaworld"/>
+				<Link VarA="ControlTask Outputs^TrackingController.observer.vXtoRobotWorldToSimulink" VarB="AdditionalInports^TcModuleInput_vxToRobot"/>
 				<Link VarA="ControlTask Outputs^TrackingController.observer.vXworldToSimulink" VarB="AdditionalInports^TcModuleInput_InVXworld"/>
+				<Link VarA="ControlTask Outputs^TrackingController.observer.vYtoRobotWorldToSimulink" VarB="AdditionalInports^TcModuleInput_vyToRobot"/>
 				<Link VarA="ControlTask Outputs^TrackingController.observer.vYworldToSimulink" VarB="AdditionalInports^TcModuleInput_InVYworld"/>
 			</OwnerB>
 		</OwnerA>

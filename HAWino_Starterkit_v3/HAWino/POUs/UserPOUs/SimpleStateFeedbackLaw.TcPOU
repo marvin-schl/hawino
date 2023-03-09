@@ -39,7 +39,7 @@ poseError.x 	:= xRobotPoseRef.x 		- xRobotPose.x;
 poseError.y 	:= xRobotPoseRef.y 		- xRobotPose.y;
 poseError.theta := xRobotPoseRef.theta 	- xRobotPose.theta;
 
-IF poseError.x < accuracyXY AND poseError.y < accuracyXY AND poseError.theta < accuracyTheta THEN
+IF ABS(poseError.x) < accuracyXY AND ABS(poseError.y) < accuracyXY AND ABS(poseError.theta) < accuracyTheta THEN
 	reachedReference := TRUE;
 END_IF
 
