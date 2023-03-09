@@ -1,5 +1,5 @@
-classdef Spline %<  matlab.mixin.Heterogeneous
-    properties %(Abstract)
+classdef Spline <  matlab.mixin.Heterogeneous
+    properties (Abstract)
        startPoint
        endPoint
     end
@@ -14,12 +14,12 @@ classdef Spline %<  matlab.mixin.Heterogeneous
       end
    end
     
-    methods %(Abstract)
+    methods (Abstract)
        getPoint(obj, s)   
        diff
     end
     
-    methods ( Access=protected)%,Abstract)
+    methods ( Access=protected, Abstract)
        calculateLength
     end
             

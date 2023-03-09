@@ -121,7 +121,7 @@ classdef TrajectoryPlannerSimple
                         accMin(i) = -sqrt(accMaxSquare);
                         accMax(i) = sqrt(accMaxSquare);
                     else
-                        throw(MException("TrajectoryPlannerSimple:ConstraintViolation","Violated velocity constraint caused by acceleration limit."));
+                        %throw(MException("TrajectoryPlannerSimple:ConstraintViolation","Violated velocity constraint caused by acceleration limit."));
                     end
                end
                

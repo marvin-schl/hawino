@@ -129,7 +129,7 @@ classdef TrajectoryPlanner
                        velAccLimCandidate2 = sqrt(obj.qAccMax.y/abs(ddy(i)));
                    elseif ddx(i) > 1e-6 && ddy(i) < 1e-6
                        velAccLimCandidate2 = sqrt(obj.qAccMax.x/abs(ddx(i)));
-                   elseif ddx(i) > 1e-6 && ddx(i) > 1e-6
+                   elseif ddx(i) > 1e-6 && ddy(i) > 1e-6
                        velAccLimCandidate2 = min(sqrt(obj.qAccMax.y/abs(ddy(i))), sqrt(obj.qAccMax.x/abs(ddx(i))));
                    else
                        velAccLimCandidate2 = velMax(i);
