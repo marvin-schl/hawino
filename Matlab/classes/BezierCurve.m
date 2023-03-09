@@ -3,7 +3,6 @@ classdef BezierCurve < Spline
     properties
         startPoint          % Entry point of the Bezier curve [x, y]
         endPoint            % Exit point of the Bezier curve [x, y]
-        maxAbsCurvature
         controlPoint        % Control point of the Bezier curve [x, y]
         ax, bx, cx
         ay, by, cy
@@ -47,9 +46,6 @@ classdef BezierCurve < Spline
             
             % 3.) Calculate length of curve
             obj = obj.calculateLength();
-            
-            [ddx, ddy] = obj.diff([0:dt:obj.length],2);
-            obj.maxAbsCurvature = struct("x", max(abs(ddx)), "y", max(abs(ddy)));
         end
         % -----------------------------------------------------------------
 
@@ -150,7 +146,7 @@ classdef BezierCurve < Spline
             end
         end
         
-                function [startPoint, endPoint] = getStartEndPoint(obj, prevWP, nextWP)
+        function [startPoint, endPoint] = getStartEndPoint(obj, prevWP, nextWP)
             % Start point:
             % - angle of incidence of former linear part
             phi1 = atan2(prevWP.y - obj.controlPoint.y, prevWP.x - obj.controlPoint.x);
@@ -203,8 +199,10 @@ classdef BezierCurve < Spline
 
             startPoint.x = zpx1;
             startPoint.y = zpy1;
+            startPoint.phi = phi1;
             endPoint.x = zpx2;
             endPoint.y = zpy2;
+            endPoint.phi = phi2;
           end
     % -----------------------------------------------------------------
         function [ax, bx, cx, ay, by, cy] = calculateCoefficients(obj)
@@ -236,9 +234,9 @@ classdef BezierCurve < Spline
         
        function [x,y] = getPointNorm(obj, t)
             % calculate corresponding point(s) (hard-coded for 3rd order Bezier curve)
-            x = obj.ax*t.^2 + obj.bx * t + obj.cx;
-            y = obj.ay*t.^2 + obj.by * t + obj.cy;
-        end
+            x   = obj.ax*t.^2 + obj.bx * t + obj.cx;
+            y   = obj.ay*t.^2 + obj.by * t + obj.cy;
+       end
         
         
         function [dx,dy] = diffNorm(obj,t)

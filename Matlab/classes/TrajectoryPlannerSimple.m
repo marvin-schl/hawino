@@ -6,6 +6,8 @@ classdef TrajectoryPlannerSimple
         path
         qAccMax
         qVelMax
+        phiVelMax
+        phiAccMax
         
         lastPos
         searchPos
@@ -28,10 +30,13 @@ classdef TrajectoryPlannerSimple
     
     methods
         
-        function obj = TrajectoryPlannerSimple(path, qAccMax, qVelMax)
+        function obj = TrajectoryPlannerSimple(path, qAccMax, qVelMax, phiAccMax, phiVelMax)
             obj.path = path;
             obj.qAccMax = qAccMax;
             obj.qVelMax = qVelMax;
+            obj.phiVelMax    = phiVelMax;
+            obj.phiAccMax    = phiAccMax;
+
             
             obj.searchTol       = 0.2;
             obj.searchStepWidth = 1e-3;
@@ -81,25 +86,30 @@ classdef TrajectoryPlannerSimple
         
         %velocity limit and its derivative, eq. (36), (37), (31)
         function [velMax, dvelMax, velMaxAcc] = velMax(obj, s) 
-            [ddx,ddy]    = obj.path.diff(s,2);
+            [~,~, dphi]    = obj.path.diff(s,1);
+            [ddx,ddy, ddphi]    = obj.path.diff(s,2);
             velMax       = obj.qVelMax*ones(length(s),1);
             dvelMax      = zeros(length(s),1);
             velMaxAcc    = zeros(length(s),1);
-
-
+            
             for i=1:length(s)
+                
+                if abs(dphi(i)) > 1e-2
+                    velMax(i) = obj.qVelMax;
+                    %velMax(i) = min(obj.qVelMax, obj.phiVelMax/abs(dphi(i)));
+                end
+                 
                 if (ddx(i)^2+ddy(i)^2) ~= 0
-                    velMaxAcc(i) = min(obj.qVelMax, sqrt(obj.qAccMax/sqrt(ddx(i)^2+ddy(i)^2)));
+                    velMaxAcc(i) = min(velMax(i), sqrt(obj.qAccMax/sqrt(ddx(i)^2+ddy(i)^2)));
                 else
-
-                    velMaxAcc(i) = obj.qVelMax;
+                    velMaxAcc(i) = velMax(i);
                 end
             end
         end
         
         %upper and lower acceleration limit eq. (22), (23)
         function [accMin, accMax] = accLim(obj, s, vel)
-               [ddx,ddy]    = obj.path.diff(s,2);
+               [ddx,ddy,ddphi]    = obj.path.diff(s,2);
                
                accMin = zeros(length(s),1);
                accMax = zeros(length(s),1);
@@ -241,11 +251,11 @@ classdef TrajectoryPlannerSimple
         end
         
         function y = dfy(obj, s)
-            [~, y] = obj.path.diff(s);
+            [~, y, ~] = obj.path.diff(s);
         end
 
         function x = dfx(obj, s)
-             [x, ~] = obj.path.diff(s);
+             [x, ~, ~] = obj.path.diff(s);
         end
       
         function dvelMaxAcc = dvelMaxAcc(obj, s, order)
@@ -267,9 +277,9 @@ classdef TrajectoryPlannerSimple
         t  = obj.path.getDiscontinuousSwitchtingPointCandidate();
         swp = [];
             for i = 1:2:length(t)
-                ds = diff(t(i:i+1))*0.45;
+                ds = diff(t(i:i+1))*0.3;
                 s0 = fzero(@(s)obj.dvelMaxAcc(s,1), [t(i)+ds, t(i+1)-ds]);
-                if abs(obj.dvelMaxAcc(s0,2)) > 1e-6
+                if abs(obj.dvelMaxAcc(s0,2)) > 1e-6;
                     swp = [swp;s0];
                 end
             end

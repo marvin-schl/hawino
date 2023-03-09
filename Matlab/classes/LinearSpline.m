@@ -3,8 +3,6 @@ classdef LinearSpline < Spline
     properties
        startPoint
        endPoint 
-       phi
-       maxAbsCurvature
     end
     
     properties (Access = private)
@@ -15,15 +13,16 @@ classdef LinearSpline < Spline
         function obj = LinearSpline(x,y)
             obj.startPoint      = struct("x", x(1), "y", y(1));
             obj.endPoint        = struct("x", x(2), "y", y(2));
-            obj.phi             = atan2(obj.endPoint.y-obj.startPoint.y, obj.endPoint.x-obj.startPoint.x);
+            phi             = atan2(obj.endPoint.y-obj.startPoint.y, obj.endPoint.x-obj.startPoint.x);
+            obj.startPoint.phi = phi;
+            obj.endPoint.phi = phi;
             obj.length          = obj.calculateLength();
-            obj.maxAbsCurvature = struct("x", 0, "y", 0);
         end
         
         function [x,y] = getPoint(obj, s)
          
-            dx = cos(obj.phi).*s;
-            dy = sin(obj.phi).*s;
+            dx = cos(obj.startPoint.phi).*s;
+            dy = sin(obj.startPoint.phi).*s;
             
             y = obj.startPoint.y + dy;
             x = obj.startPoint.x + dx;
@@ -35,8 +34,8 @@ classdef LinearSpline < Spline
            end
            switch order
                case 1
-                   x = cos(obj.phi);
-                   y = sin(obj.phi);
+                   x = cos(obj.startPoint.phi);
+                   y = sin(obj.startPoint.phi);
              otherwise   
                    x = 0;
                    y = 0;           

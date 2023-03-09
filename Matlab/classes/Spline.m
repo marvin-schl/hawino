@@ -2,7 +2,7 @@ classdef Spline <  matlab.mixin.Heterogeneous
     properties (Abstract)
        startPoint
        endPoint
-       maxAbsCurvature
+
     end
     
     properties
