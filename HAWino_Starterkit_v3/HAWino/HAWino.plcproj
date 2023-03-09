@@ -111,6 +111,9 @@
     <Compile Include="POUs\UserPOUs\SimpleTrajectory.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\TestTrajectory.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\TestAndMeasurement\CameraNoise.TcPOU">
       <SubType>Code</SubType>
     </Compile>

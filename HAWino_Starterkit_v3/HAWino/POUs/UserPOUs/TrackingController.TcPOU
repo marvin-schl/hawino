@@ -16,13 +16,13 @@ VAR
 	//declare objects
 	observer 	: SimpleObserver;//Observer object
 	controller	: SimpleStateFeedbackLaw;			//Control law object
-	trajectory	: SimpleTrajectory;					//Trajectory Object
+	trajectory	: TestTrajectory;					//Trajectory Object
 	robot		: Robot;							//link to physical I/O of roboter or simulation model of the roboter
 	robotPoses 	AT%I*: ARRAY [1..8] OF RobotPose;	//input from camera
 	
 	state : ControllerState := ControllerState.init;//sets controller state
 	
-	CONTROL_ERROR_THRESH : LREAL := ;
+	CONTROL_ERROR_THRESH : LREAL := 5;
 	
 	///////////////////////////////////////////////
 	///////////// LINKS TO GW2  ///////////////////
@@ -85,9 +85,8 @@ CASE state OF
 		IF newWaypointListAvailable THEN
 			//stop and calculate new trajectory
 			state := ControllerState.calcTrajectory;
-		ELSIF trajectory.finished THEN
+		ELSIF yBoArrivedAtDestination THEN
 			//got back to idle and set arrived falg for GW2, method needed?
-			yBoArrivedAtDestination := TRUE;
 			state := ControllerState.idle;
 		ELSIF xBoEnable THEN
 			//do the driving
@@ -105,6 +104,14 @@ observer(xCameraPose := robotPoses[Var_HAWIno.Robot_Number],	//extraxt roboter c
 		 xVyRobot    := robot.vYfromRobot,						//link y-velocity with measured velocity
 		 xOmegaRobot    := robot.vThetaFromRobot);				//link theta-velocity with measured velocity
 
+
+//trajectory object
+trajectory(
+	drive := robot.enable,
+	currentPose 	:= observer.yObserverdPose,					//Current implementation needs observed pose for distance calculation, TODO: check if needed for final implemenation
+	referencePose 	=> controller.xRobotPoseRef					//outputs reference pose to controller
+);
+
 //init controller and link to observer
 controller(xRobotPose 		:= observer.yObserverdPose,			//pass controller the observerd roboter pose
 		   xRobotPoseRef	:= trajectory.referencePose);		//pass controller the reference position for the next cycle comming from the trajectory
@@ -119,12 +126,6 @@ World2Robot(
 			vx_robot => robot.vXref,							//vXref in robot coordinates are passed to robot as control output
 			vy_robot => robot.vYref,							//vYref in robot coordinates are passed to robot as control output
 			omega_robot => robot.vThetaRef						//vThetaref in robot coordinates are passed to robot as control output
-);
-
-//trajectory object
-trajectory(
-	currentPose 	:= observer.yObserverdPose,					//Current implementation needs observed pose for distance calculation, TODO: check if needed for final implemenation
-	referencePose 	=> controller.xRobotPoseRef					//outputs reference pose to controller
 );
 
 
@@ -210,7 +211,6 @@ END_VAR]]></Declaration>
       <LineId Id="353" Count="0" />
       <LineId Id="356" Count="0" />
       <LineId Id="374" Count="0" />
-      <LineId Id="370" Count="0" />
       <LineId Id="357" Count="0" />
       <LineId Id="359" Count="0" />
       <LineId Id="375" Count="0" />
@@ -220,14 +220,13 @@ END_VAR]]></Declaration>
       <LineId Id="354" Count="0" />
       <LineId Id="320" Count="0" />
       <LineId Id="475" Count="1" />
-      <LineId Id="390" Count="19" />
+      <LineId Id="390" Count="4" />
+      <LineId Id="603" Count="0" />
+      <LineId Id="605" Count="2" />
+      <LineId Id="611" Count="0" />
+      <LineId Id="608" Count="2" />
+      <LineId Id="395" Count="14" />
       <LineId Id="388" Count="0" />
-      <LineId Id="479" Count="0" />
-      <LineId Id="450" Count="0" />
-      <LineId Id="449" Count="0" />
-      <LineId Id="454" Count="0" />
-      <LineId Id="457" Count="0" />
-      <LineId Id="455" Count="0" />
       <LineId Id="558" Count="1" />
       <LineId Id="557" Count="0" />
       <LineId Id="560" Count="0" />

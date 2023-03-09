@@ -21,14 +21,16 @@ END_VAR
 
 VAR
 	//static control parameters
-	K: ARRAY [0..2,0..2] OF LREAL := [1,0,0,
-									  0,1,0,
-									  0,0,1];
+	K: ARRAY [0..2,0..2] OF LREAL := [3,0,0,
+									  0,3,0,
+									  0,0,3];
 	poseError: RobotPoseSimple;
-	vtrans_max: LREAL := 500; //vY,vY
+	vtrans_max: LREAL := 600; //vY,vY
 	vrot_max: LREAL   := 1.5; //vTheta
 	u: ARRAY[0..2] OF LREAL;
 	i: INT;
+	accuracyXY: LREAL := 5;
+	accuracyTheta: LREAL := 0.01;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -36,6 +38,10 @@ END_VAR
 poseError.x 	:= xRobotPoseRef.x 		- xRobotPose.x;
 poseError.y 	:= xRobotPoseRef.y 		- xRobotPose.y;
 poseError.theta := xRobotPoseRef.theta 	- xRobotPose.theta;
+
+IF poseError.x < accuracyXY AND poseError.y < accuracyXY AND poseError.theta < accuracyTheta THEN
+	reachedReference := TRUE;
+END_IF
 
 //2.) apply gain on errors
 FOR i := 0 TO 2 DO
@@ -62,13 +68,17 @@ vXrobot 	:= u[0];
 vYrobot 	:= u[1];
 omegaRobot	:= u[2];
 
+
 ]]></ST>
     </Implementation>
     <LineIds Name="SimpleStateFeedbackLaw">
       <LineId Id="9" Count="0" />
       <LineId Id="19" Count="0" />
       <LineId Id="22" Count="0" />
-      <LineId Id="36" Count="1" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="155" Count="1" />
+      <LineId Id="162" Count="1" />
+      <LineId Id="37" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="41" Count="0" />
       <LineId Id="38" Count="0" />
@@ -87,6 +97,7 @@ omegaRobot	:= u[2];
       <LineId Id="24" Count="0" />
       <LineId Id="74" Count="1" />
       <LineId Id="72" Count="1" />
+      <LineId Id="154" Count="0" />
       <LineId Id="46" Count="0" />
     </LineIds>
   </POU>
