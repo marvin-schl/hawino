@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="LinearSpline" Id="{ee8a5752-8731-4d20-b9ec-42a2604040d7}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK LinearSpline EXTENDS Spline
+VAR_INPUT
+	x: ARRAY [0..1] OF LREAL;
+	y: ARRAY [0..1] OF LREAL;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	init : BOOL := FALSE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[startPoint.x 	:= x[0];
+startPoint.y 	:= y[0];
+
+endPoint.x		:= x[1];
+endPoint.y     	:= y[1];
+
+startPoint.theta	:= ATAN2(endPoint.y-startPoint.y, endPoint.x-startPoint.x); 
+lengthVar := calculateLength();]]></ST>
+    </Implementation>
+    <Method Name="calculateLength" Id="{b557106d-f894-499c-b93e-4ca33bd951b4}">
+      <Declaration><![CDATA[METHOD PROTECTED  calculateLength : LREAL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[calculateLength := SQRT(EXPT(startPoint.x - endPoint.x,2) + EXPT(startPoint.y - endPoint.y, 2))]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="diff" Id="{b27160dd-5577-4e29-b3d1-95343ea264e1}">
+      <Declaration><![CDATA[METHOD  diff : RobotPoseSimple
+VAR_INPUT
+	arcLength: LREAL;
+	order: INT := 1;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF order = 1 THEN
+	RobotPoseSimple.x 		:= COS(startPoint.theta);
+	RobotPoseSimple.y 		:= SIN(startPoint.theta);
+	RobotPoseSimple.theta   := -1; //not used
+ELSIF order = 2 THEN
+	RobotPoseSimple.x 		:= 0;
+	RobotPoseSimple.y 		:= 0;
+	RobotPoseSimple.theta   := -1; //not used
+ELSE
+	//invalid input
+	RobotPoseSimple.x 		:= -1; 
+	RobotPoseSimple.y 		:= -1;
+	RobotPoseSimple.theta   := -1; //not used
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="getPoint" Id="{2d494b1b-e161-44ef-b005-acd30148114d}">
+      <Declaration><![CDATA[METHOD PUBLIC  getPoint : RobotPoseSimple
+VAR_INPUT
+	arcLength: LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[getPoint.x		:= COS(startPoint.theta)*arcLength;
+getPoint.y		:= SIN(startPoint.theta)*arcLength;
+getPoint.theta  := -1; //not used]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="LinearSpline">
+      <LineId Id="30" Count="6" />
+      <LineId Id="21" Count="0" />
+    </LineIds>
+    <LineIds Name="LinearSpline.calculateLength">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="LinearSpline.diff">
+      <LineId Id="7" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="16" Count="1" />
+      <LineId Id="12" Count="1" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="19" Count="1" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="LinearSpline.getPoint">
+      <LineId Id="6" Count="2" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
