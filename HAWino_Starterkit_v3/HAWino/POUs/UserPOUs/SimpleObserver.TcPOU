@@ -32,8 +32,14 @@ VAR
 	vYtoRobotWorldToSimulink 		AT%Q*	: LREAL;
 	omegaToRobotWorldToSimulink 	AT%Q*	: LREAL;
 	
+	K AT%Q*: ARRAY [0..2,0..2] OF LREAL := [18, 0 ,0,
+									  		0, 18, 0,
+									  		0, 0, 18];
+	
 	//from Simulink
 	estimatedPoseFromSimlink AT%I* 	: ARRAY [0..2] OF LREAL;
+	
+	
 END_VAR
 ]]></Declaration>
     <Implementation>

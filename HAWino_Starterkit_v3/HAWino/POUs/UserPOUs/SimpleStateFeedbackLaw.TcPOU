@@ -25,7 +25,7 @@ VAR
 									  0,3,0,
 									  0,0,3];
 	poseError: RobotPoseSimple;
-	vtrans_max: LREAL := 600; //vY,vY
+	vtrans_max: LREAL := 750; //vY,vY
 	vrot_max: LREAL   := 1.5; //vTheta
 	u: ARRAY[0..2] OF LREAL;
 	i: INT;
