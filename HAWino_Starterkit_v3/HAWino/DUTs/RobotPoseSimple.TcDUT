@@ -3,7 +3,9 @@
   <DUT Name="RobotPoseSimple" Id="{79adddee-a2aa-4bdd-85a1-2a263560f31d}">
     <Declaration><![CDATA[TYPE RobotPoseSimple:
 STRUCT
-	x, y, theta : LREAL;
+	x : LREAL;
+	y : LREAL;
+	theta : LREAL;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

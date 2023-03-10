@@ -129,6 +129,9 @@
     <Compile Include="POUs\UserPOUs\TestAndMeasurement\Sinusfahrt.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\RPSARRAY2XYTARRAY.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\Robot2World.TcPOU">
       <SubType>Code</SubType>
     </Compile>

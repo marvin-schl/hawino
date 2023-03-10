@@ -19,6 +19,7 @@ VAR
 	initMQTT : BOOL := FALSE;
 	sTopicPubToPowerMgmt : STRING(255); //:= CONCAT('Robots/PowerMgmt/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number)); 	// ToDo: Bisher ist die Nummer des HAWino fest kodiert
 	sTopicPubToPowerMgmt_SOC : STRING(255);// := CONCAT('Robots/PowerMgmt/SoC_Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number)); 
+	sTopicPubWaypointlist : STRING(255);
 	sPayloadPub : STRING(2000);	
 	fbTimerPub 	: TON := (PT:=T#500MS);									// Intervall für das Senden des Akku-Status
 	
@@ -31,10 +32,15 @@ VAR
     fbMessage      : FB_IotMqttMessage;
 	hrErrorOccurred : HRESULT; 			// Enthlt dern letzten augetretenen Fehler
 	
+	sTopicSubTrajectory :STRING(255);
+	sPayloadTrajectory : STRING(255);
+	
 // Variables for JSON
 	fbJson			: FB_JsonSaxWriter;
 	fbJsonDataType 	: FB_JsonReadWriteDataType;
 	sJsonDoc       	: STRING(2000); 
+	
+	fbJsonParser	: FB_JsonDynDomParser;
 	
 // Local Variables for TwinCAT IoT Communication (TF6701) with direct link to EK1200 and TcCom
 	//stMqtt_HAWino_In	AT%I*	: ST_PwrMgmt_HAWino_In;		// Attention! Don't link TIME Variables, otherwise we get an error!
@@ -62,8 +68,28 @@ VAR
 	sTopicSubToFleetMgmt: STRING;
 	Reset1: BOOL;
 	//Input synccheck. robotdata has been read and can be used.
-	txtReadInit AT%I* : BOOL := false;
+	txtReadInit AT%I* : BOOL := FALSE;
+	
+	
+	
+	// Check whether connected to Topic sTobicSubTrajectory
+	bSubcribedTrajectory: BOOL;
+	
+	//Flag from GW2 when new Waypointlist
+	inNewWpl AT%I* : BOOL := FALSE;
+	// Waypointlist from GW2
+	//inWaypointList AT%Q*: ARRAY[0..100] OF RobotPoseSimple;	// Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)
+	xWPL, yWPL, thetaWPL : ARRAY [0..2] OF LREAL;
+	//TESTWPL : LREAL := 1.234;
+	TESTWPL : ARRAY [0..2] OF RobotPoseSimple  := [(x:=1, y:=2, theta:=3), (x:=4, y:=5, theta:=6), (x:=7, y:=8, theta:=9)];
+	TESTTRAJECTORY : STRING;
+	
+	//counter variable
+	cnt : INT := 0;
+	jsonDoc: Tc3_JsonXml.PVOID;
 END_VAR
+
+
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//Case machen! preop op
@@ -71,8 +97,10 @@ END_VAR
 IF txtReadInit THEN
 	IF NOT initMQTT THEN
 		sTopicPubToPowerMgmt  := CONCAT('Robots/PowerMgmt/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number)); 	
-		sTopicPubToPowerMgmt_SOC  := CONCAT('Robots/PowerMgmt/SoC_Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number)); 
+		sTopicPubToPowerMgmt_SOC  := CONCAT('Robots/PowerMgmt/SoC_Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
+		sTopicPubWaypointlist := CONCAT('Robots/Waypointlist/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
 		sTopicSubToPowerMgmt  := CONCAT('PowerMgmt/Robots/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
+		sTopicSubTrajectory := CONCAT('Robots/Trajectory/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
 		initMQTT:= TRUE;
 	END_IF
 	
@@ -166,6 +194,11 @@ IF txtReadInit THEN
 			//END_IF
 			
 		END_IF
+		
+		// Subscribe to Trajectory-Topic if not already connected
+		IF NOT bSubcribedTrajectory THEN
+			bSubcribedTrajectory := fbIotMqttClient.Subscribe(sTopic:=sTopicSubTrajectory, eQoS:=TcIotMqttQos.AtMostOnceDelivery);
+		END_IF
 	END_IF	
 	
 	
@@ -225,6 +258,77 @@ IF txtReadInit THEN
 			// ...
 			//	
 		END_IF
+		
+		//publish new Waypointlist, if GW set Flag
+		IF inNewWpl THEN
+			// TODO WPL array in json umwandeln zum versenden
+			
+			//Convert WPL Array of type RobotPoseSimple to 3 seperate arrays
+			RPSARRAY2XYTARRAY(RobPosSimArr:=TESTWPL,
+								x=>xWPL,
+								y=>yWPL,
+								theta=>thetaWPL);
+								
+			fbJson.ResetDocument();
+			jsonDoc := fbJsonParser.NewDocument();
+			jsonDoc := fbJsonParser.AddJsonMember(jsonDoc, '
+	(*		fbJson.StartObject(); // entspricht { in Json File
+			
+			// Add xWPL Array to JSON Document
+			fbJson.AddKey('x');
+			fbJson.AddString('[');
+			FOR cnt:=0 TO 2 DO
+				fbJson.AddLreal(xWPL[cnt]);
+			END_FOR
+			fbJson.AddString(']');
+			
+			// Add yWPL Array to JSON Document
+			fbJson.AddKey('y');
+			FOR cnt:=0 TO 2 DO
+				fbJson.AddLreal(yWPL[cnt]);
+			END_FOR
+			
+			// Add thetaWPL Array to JSON Document
+			fbJson.AddKey('theta');
+			FOR cnt:=0 TO 2 DO
+				fbJson.AddLreal(thetaWPL[cnt]);
+			END_FOR
+			
+			fbJson.EndObject(); // entspricht } in JSON file
+			sJsonDoc := fbJson.GetDocument();
+			*)
+		//	sPayloadTrajectory :=sJsonDoc;// fbJson.GetDocument();// 
+		
+	(*		sPayloadTrajectory := '{"x":[';
+			FOR cnt:=0 TO 2 DO
+				sPayloadTrajectory := CONCAT(sPayloadTrajectory, LREAL_TO_STRING(xWPL[cnt]));
+				sPayloadTrajectory := CONCAT(sPayloadTrajectory, ',');
+			END_FOR
+			sPayloadTrajectory := CONCAT(sPayloadTrajectory, ']');
+			
+			sPayloadTrajectory := '"y":[';
+			FOR cnt:=0 TO 2 DO
+				sPayloadTrajectory := CONCAT(sPayloadTrajectory, LREAL_TO_STRING(yWPL[cnt]));
+				sPayloadTrajectory := CONCAT(sPayloadTrajectory, ',');
+			END_FOR
+			sPayloadTrajectory := CONCAT(sPayloadTrajectory, ']');	
+
+			sPayloadTrajectory := '"theta":[';
+			FOR cnt:=0 TO 2 DO
+				sPayloadTrajectory := CONCAT(sPayloadTrajectory, LREAL_TO_STRING(thetaWPL[cnt]));
+				sPayloadTrajectory := CONCAT(sPayloadTrajectory, ',');
+			END_FOR
+			sPayloadTrajectory := CONCAT(sPayloadTrajectory, ']}');		*)
+			// -------------
+			// hardcoded test
+			//sPayloadTrajectory := TO_STRING(TESTWPL);
+			fbIotMqttClient.Publish(sTopic:= sTopicPubWaypointlist, 
+										pPayload:= ADR(sPayloadTrajectory), 
+										nPayloadSize:= LEN2(ADR(sPayloadTrajectory))+1, 										
+										eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+										bRetain:= FALSE, 
+										bQueue:= FALSE);
+		END_IF
 	END_IF
 	
 	
@@ -246,6 +350,12 @@ IF txtReadInit THEN
 				fbJsonDataType.SetSymbolFromJson(sPayloadRcv,'ST_PwrMgmt_HAWino_Out',SIZEOF(stMqtt_HAWinoValues.Input),ADR(stMqtt_HAWinoValues.Input));
 			END_IF
 		
+			//
+			// Message from Trajectory Generator
+			//
+			IF fbMessage.CompareTopic(sTopic:=sTopicSubTrajectory) THEN
+				fbJsonDataType.SetSymbolFromJson(sPayloadRcv,'RobotPoseSimple',SIZEOF(TESTTRAJECTORY),ADR(TESTTRAJECTORY));
+			END_IF
 			//
 			// Hier werden weitere Topics verarbeitet
 			//
@@ -278,88 +388,38 @@ IF txtReadInit THEN
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="MQTT">
-      <LineId Id="889" Count="1" />
-      <LineId Id="189" Count="0" />
-      <LineId Id="756" Count="0" />
-      <LineId Id="821" Count="0" />
-      <LineId Id="823" Count="2" />
-      <LineId Id="822" Count="0" />
-      <LineId Id="757" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="191" Count="0" />
-      <LineId Id="190" Count="0" />
-      <LineId Id="193" Count="0" />
-      <LineId Id="192" Count="0" />
-      <LineId Id="195" Count="1" />
-      <LineId Id="194" Count="0" />
-      <LineId Id="442" Count="0" />
-      <LineId Id="444" Count="2" />
-      <LineId Id="443" Count="0" />
-      <LineId Id="198" Count="6" />
-      <LineId Id="197" Count="0" />
-      <LineId Id="205" Count="0" />
-      <LineId Id="210" Count="2" />
-      <LineId Id="215" Count="0" />
-      <LineId Id="218" Count="0" />
-      <LineId Id="216" Count="1" />
-      <LineId Id="213" Count="0" />
-      <LineId Id="219" Count="0" />
-      <LineId Id="214" Count="0" />
-      <LineId Id="209" Count="0" />
-      <LineId Id="221" Count="10" />
-      <LineId Id="693" Count="0" />
-      <LineId Id="232" Count="8" />
-      <LineId Id="220" Count="0" />
-      <LineId Id="242" Count="5" />
-      <LineId Id="253" Count="0" />
-      <LineId Id="248" Count="2" />
-      <LineId Id="241" Count="0" />
-      <LineId Id="252" Count="0" />
-      <LineId Id="251" Count="0" />
-      <LineId Id="280" Count="14" />
-      <LineId Id="300" Count="0" />
-      <LineId Id="295" Count="3" />
-      <LineId Id="301" Count="0" />
-      <LineId Id="299" Count="0" />
-      <LineId Id="278" Count="0" />
-      <LineId Id="303" Count="2" />
-      <LineId Id="302" Count="0" />
-      <LineId Id="307" Count="0" />
-      <LineId Id="310" Count="25" />
-      <LineId Id="620" Count="1" />
-      <LineId Id="629" Count="1" />
-      <LineId Id="627" Count="1" />
-      <LineId Id="626" Count="0" />
-      <LineId Id="622" Count="0" />
-      <LineId Id="625" Count="0" />
-      <LineId Id="623" Count="0" />
-      <LineId Id="612" Count="1" />
-      <LineId Id="618" Count="0" />
-      <LineId Id="615" Count="1" />
-      <LineId Id="614" Count="0" />
-      <LineId Id="619" Count="0" />
-      <LineId Id="617" Count="0" />
-      <LineId Id="336" Count="8" />
-      <LineId Id="308" Count="0" />
-      <LineId Id="347" Count="2" />
-      <LineId Id="306" Count="0" />
-      <LineId Id="399" Count="10" />
-      <LineId Id="421" Count="1" />
-      <LineId Id="410" Count="7" />
-      <LineId Id="350" Count="0" />
-      <LineId Id="499" Count="0" />
-      <LineId Id="419" Count="0" />
-      <LineId Id="423" Count="1" />
-      <LineId Id="420" Count="0" />
-      <LineId Id="426" Count="3" />
-      <LineId Id="425" Count="0" />
-      <LineId Id="431" Count="2" />
-      <LineId Id="430" Count="0" />
-      <LineId Id="434" Count="0" />
-      <LineId Id="440" Count="1" />
-      <LineId Id="435" Count="2" />
-      <LineId Id="418" Count="0" />
-      <LineId Id="552" Count="1" />
+      <LineId Id="1287" Count="172" />
+      <LineId Id="1532" Count="2" />
+      <LineId Id="1460" Count="1" />
+      <LineId Id="1604" Count="0" />
+      <LineId Id="1606" Count="0" />
+      <LineId Id="1556" Count="0" />
+      <LineId Id="1565" Count="0" />
+      <LineId Id="1542" Count="0" />
+      <LineId Id="1535" Count="0" />
+      <LineId Id="1560" Count="0" />
+      <LineId Id="1540" Count="0" />
+      <LineId Id="1536" Count="0" />
+      <LineId Id="1541" Count="0" />
+      <LineId Id="1561" Count="0" />
+      <LineId Id="1548" Count="0" />
+      <LineId Id="1547" Count="0" />
+      <LineId Id="1544" Count="2" />
+      <LineId Id="1543" Count="0" />
+      <LineId Id="1549" Count="4" />
+      <LineId Id="1462" Count="0" />
+      <LineId Id="1557" Count="2" />
+      <LineId Id="1464" Count="1" />
+      <LineId Id="1567" Count="0" />
+      <LineId Id="1569" Count="0" />
+      <LineId Id="1571" Count="1" />
+      <LineId Id="1586" Count="0" />
+      <LineId Id="1573" Count="2" />
+      <LineId Id="1592" Count="4" />
+      <LineId Id="1587" Count="0" />
+      <LineId Id="1598" Count="5" />
+      <LineId Id="1597" Count="0" />
+      <LineId Id="1466" Count="65" />
       <LineId Id="438" Count="0" />
     </LineIds>
   </POU>

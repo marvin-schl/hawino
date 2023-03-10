@@ -3888,11 +3888,6 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.observer.estimatedPoseFromSimlink</Name>
-							<Comment><![CDATA[from Simulink]]></Comment>
-							<Type GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}">ARRAY [0..2] OF LREAL</Type>
-						</Var>
-						<Var>
 							<Name>TrackingController.robot.vXfromRobot</Name>
 							<Comment><![CDATA[outputs from robot]]></Comment>
 							<Type>LREAL</Type>
@@ -3906,14 +3901,19 @@
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.robotPoses</Name>
-							<Comment><![CDATA[input from camera]]></Comment>
-							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
-						</Var>
-						<Var>
 							<Name>TrackingController.newWaypointListAvailable</Name>
 							<Comment><![CDATA[ implemented, Status-Bit zur Signalisierung einer neuen WP-Liste]]></Comment>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>TrackingController.observer.estimatedPoseFromSimlink</Name>
+							<Comment><![CDATA[from Simulink]]></Comment>
+							<Type GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}">ARRAY [0..2] OF LREAL</Type>
+						</Var>
+						<Var>
+							<Name>TrackingController.robotPoses</Name>
+							<Comment><![CDATA[input from camera]]></Comment>
+							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
 						</Var>
 						<Var>
 							<Name>TrackingController.waypointList</Name>
@@ -3962,6 +3962,39 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
+							<Name>TrackingController.robot.vXtoRobot</Name>
+							<Comment><![CDATA[inputs to robot]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>TrackingController.robot.vYtoRobot</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>TrackingController.robot.vThetaToRobot</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>TrackingController.yBoDriving</Name>
+							<Comment><![CDATA[ implemented, TRUE, wenn Roboter fährt				]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>TrackingController.yBoArrivedAtDestination</Name>
+							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>TrackingController.yUintWaypointIndex</Name>
+							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>TrackingController.yRPposition</Name>
+							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
+							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
+						</Var>
+						<Var>
 							<Name>TrackingController.observer.cameraPoseToSimulink</Name>
 							<Comment><![CDATA[to Simulink]]></Comment>
 							<Type GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}">ARRAY [0..2] OF LREAL</Type>
@@ -4002,39 +4035,6 @@
 							<Name>TrackingController.trajectory.yRef</Name>
 							<Type>LREAL</Type>
 						</Var>
-						<Var>
-							<Name>TrackingController.robot.vXtoRobot</Name>
-							<Comment><![CDATA[inputs to robot]]></Comment>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>TrackingController.robot.vYtoRobot</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>TrackingController.robot.vThetaToRobot</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>TrackingController.yBoDriving</Name>
-							<Comment><![CDATA[ implemented, TRUE, wenn Roboter fährt				]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>TrackingController.yBoArrivedAtDestination</Name>
-							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>TrackingController.yUintWaypointIndex</Name>
-							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>TrackingController.yRPposition</Name>
-							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
-							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
-						</Var>
 					</Vars>
 					<Vars VarGrpType="1" ContextId="1" AreaNo="16">
 						<Name>MQTT_1 Inputs</Name>
@@ -4051,6 +4051,11 @@
 							<Name>MQTT.stMqtt_HAWino_In</Name>
 							<Comment><![CDATA[ Attention! Don't link TIME Variables, otherwise we get an error!]]></Comment>
 							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
+						</Var>
+						<Var>
+							<Name>MQTT.inNewWpl</Name>
+							<Comment><![CDATA[Flag from GW2 when new Waypointlist]]></Comment>
+							<Type>BOOL</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
@@ -4152,22 +4157,6 @@
 							<Type GUID="{E653CDAE-1A31-0819-E492-0347803C1564}">ARRAY [1..9] OF REAL</Type>
 						</Var>
 						<Var>
-							<Name>Camera.cameraData.robotPosition</Name>
-							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
-						</Var>
-						<Var>
-							<Name>Camera.cameraData.HH</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>Camera.cameraData.MM</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>Camera.cameraData.SS</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
 							<Name>PowerManager.batteryVoltage_V</Name>
 							<Type>REAL</Type>
 						</Var>
@@ -4194,6 +4183,22 @@
 						</Var>
 						<Var>
 							<Name>Gripper.partInGripperToSimulink</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Camera.cameraData.robotPosition</Name>
+							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
+						</Var>
+						<Var>
+							<Name>Camera.cameraData.HH</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Camera.cameraData.MM</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Camera.cameraData.SS</Name>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="RPSARRAY2XYTARRAY" Id="{12162ff2-c855-4c1e-afb4-b4a26c80fe5c}" SpecialFunc="None">
+    <Declaration><![CDATA[// This function splits an Array of RobotPoseSimple into 3 separate arrays of x,y,theta
+FUNCTION RPSARRAY2XYTARRAY
+VAR_INPUT
+	RobPosSimArr : ARRAY [0..2] OF RobotPoseSimple;
+
+END_VAR
+VAR
+	// counter variable
+	cnt: INT;
+END_VAR
+VAR_OUTPUT
+	x,y,theta : ARRAY [0..2] OF LREAL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[FOR cnt := 0 TO 2 BY 1 DO
+	x[cnt] := RobPosSimArr[cnt].x;
+	y[cnt] := RobPosSimArr[cnt].y;
+	theta[cnt] := RobPosSimArr[cnt].theta;
+END_FOR]]></ST>
+    </Implementation>
+    <LineIds Name="RPSARRAY2XYTARRAY">
+      <LineId Id="7" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="20" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
