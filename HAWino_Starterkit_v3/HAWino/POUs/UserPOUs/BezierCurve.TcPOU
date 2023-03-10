@@ -105,9 +105,9 @@ CASE order OF
 		diff.y := ddPos.y*EXPT(dsVal,-2) - dPos.y*EXPT(dsVal, -3) *ddsVal;
 
 ELSE
-	diff := -1;
-	diff := -1;
-	diff := -1;
+	diff.x := -1.0;
+	diff.y := -1.0;
+	diff.theta := -1.0;
 END_CASE;  ]]></ST>
       </Implementation>
     </Method>
@@ -146,7 +146,7 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[dPos := diffNorm(t);
-ds := sqrt(EXPT(dPos.x,2) + EXPT(dPos.y,2))]]></ST>
+ds := sqrt(EXPT(dPos.x,2) + EXPT(dPos.y,2));]]></ST>
       </Implementation>
     </Method>
     <Method Name="getPoint" Id="{57091a75-4f60-4339-af74-b7d910e12667}">
@@ -187,7 +187,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[//Start point:
 // - angle of incidence of former linear part
-phi1 := ATAN2(prevWP.y - controlPoint.y, prevWP.x - controlPoint.x);
+phi1 := ATAN2(prevWP.y - controlPoint.y,prevWP.x - controlPoint.x);
 
 // - x-coordinates where former linear part intersects with circle
 zpx11 := controlPoint.x - radius*COS(phi1);

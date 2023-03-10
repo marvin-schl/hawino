@@ -12,6 +12,8 @@ VAR
 	y: 					ARRAY [0..100] OF LREAL; // preprocessed x data
 	transitions: 		ARRAY [0..99] OF LREAL;
 	subsplines: 		ARRAY [0..99] OF Spline;
+	linearSplines:		ARRAY [0..50] OF LinearSpline;
+	bezierCurves:		ARRAY [0..49] OF BezierCurve;
 	nmbOfSubsplines, nmbOfPreprocessedWaypoints:	INT;
 	i, j, k: INT;
 	
@@ -33,7 +35,8 @@ FOR i := 1 TO nmbOfSubsplines BY 2 DO
 		yTmpBezier[k] := y[j];
 		k := k + 1;
 	END_FOR  
-	subsplines[i]:= BezierCurve(x:=xTmpBezier, y:=yTmpBezier, radius:=radius);
+	bezierCurves[(i-1)/2](x:=xTmpBezier, y:=yTmpBezier, radius:=radius);
+	subsplines[i]:= bezierCurves[(i-1)/2];
 END_FOR
 
 //last Segment is always linear
@@ -41,14 +44,16 @@ xTmpLinear[0] := x[0];
 xTmpLinear[1] := x[1];
 yTmpLinear[0] := y[0];
 yTmpLinear[1] := y[1];
-subsplines[0] := LinearSpline(x := xTmpLinear, y := yTmpLinear);
+linearSplines[0](x := xTmpLinear, y := yTmpLinear);
+subsplines[0] := linearSplines[0];
 
 //last Segment is always linear
 xTmpLinear[0] := x[nmbOfPreprocessedWaypoints-2];
 xTmpLinear[1] := x[nmbOfPreprocessedWaypoints-1];
 yTmpLinear[0] := y[nmbOfPreprocessedWaypoints-2];
 yTmpLinear[1] := y[nmbOfPreprocessedWaypoints-1];
-subsplines[nmbOfSubsplines-1] := LinearSpline(x := xTmpLinear, y := yTmpLinear);
+linearSplines[(nmbOfSubsplines+1)/2](x := xTmpLinear, y := yTmpLinear);
+subsplines[nmbOfSubsplines-1] := linearSplines[(nmbOfSubsplines+1)/2];
 
 //generate the linear segments in between
 FOR i := 2 TO nmbOfSubsplines-2 BY 2 DO
@@ -59,7 +64,8 @@ FOR i := 2 TO nmbOfSubsplines-2 BY 2 DO
 	xTmpLinear[1] := end.x;
 	yTmpLinear[0] := start.y;
 	yTmpLinear[1] := end.y;
-	subsplines[i] := LinearSpline(x:=xTmpLinear, y:= yTmpLinear);
+	linearSplines[i/2](x:=xTmpLinear, y:= yTmpLinear);
+	subsplines[i] := linearSplines[i/2];
 END_FOR
 
 calculateLength();
@@ -247,11 +253,14 @@ nmbOfPreprocessedWaypoints := nextIDX +1;]]></ST>
       <LineId Id="52" Count="0" />
       <LineId Id="51" Count="0" />
       <LineId Id="49" Count="0" />
+      <LineId Id="119" Count="0" />
       <LineId Id="40" Count="1" />
       <LineId Id="60" Count="0" />
       <LineId Id="64" Count="4" />
+      <LineId Id="120" Count="0" />
       <LineId Id="62" Count="0" />
       <LineId Id="70" Count="5" />
+      <LineId Id="118" Count="0" />
       <LineId Id="69" Count="0" />
       <LineId Id="77" Count="0" />
       <LineId Id="76" Count="0" />
@@ -260,6 +269,7 @@ nmbOfPreprocessedWaypoints := nextIDX +1;]]></ST>
       <LineId Id="88" Count="1" />
       <LineId Id="82" Count="2" />
       <LineId Id="79" Count="0" />
+      <LineId Id="117" Count="0" />
       <LineId Id="86" Count="0" />
       <LineId Id="80" Count="0" />
       <LineId Id="92" Count="0" />

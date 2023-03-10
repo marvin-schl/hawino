@@ -28,7 +28,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[calculateLength := SQRT(EXPT(startPoint.x - endPoint.x,2) + EXPT(startPoint.y - endPoint.y, 2))]]></ST>
+        <ST><![CDATA[calculateLength := SQRT(EXPT(startPoint.x - endPoint.x,2) + EXPT(startPoint.y - endPoint.y, 2));]]></ST>
       </Implementation>
     </Method>
     <Method Name="diff" Id="{b27160dd-5577-4e29-b3d1-95343ea264e1}">
@@ -40,18 +40,18 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF order = 1 THEN
-	RobotPoseSimple.x 		:= COS(startPoint.theta);
-	RobotPoseSimple.y 		:= SIN(startPoint.theta);
-	RobotPoseSimple.theta   := -1; //not used
+	diff.x 		:= COS(startPoint.theta);
+	diff.y 		:= SIN(startPoint.theta);
+	diff.theta   := -1; //not used
 ELSIF order = 2 THEN
-	RobotPoseSimple.x 		:= 0;
-	RobotPoseSimple.y 		:= 0;
-	RobotPoseSimple.theta   := -1; //not used
+	diff.x 		:= 0;
+	diff.y 		:= 0;
+	diff.theta   := -1; //not used
 ELSE
 	//invalid input
-	RobotPoseSimple.x 		:= -1; 
-	RobotPoseSimple.y 		:= -1;
-	RobotPoseSimple.theta   := -1; //not used
+	diff.x 		:= -1; 
+	diff.y 		:= -1;
+	diff.theta   := -1; //not used
 END_IF]]></ST>
       </Implementation>
     </Method>

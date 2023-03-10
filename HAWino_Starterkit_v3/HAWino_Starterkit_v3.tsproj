@@ -4080,36 +4080,36 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.requestShutdown</Name>
-							<Type>BOOL</Type>
+							<Name>PowerManager.supplyCurrentRaw</Name>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>IrDistanceSensors.distanceRaw</Name>
 							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.supplyCurrentRaw</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.SOC</Name>
-							<Type>REAL</Type>
+							<Name>PowerManager.requestShutdown</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.closeGripperCommand</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.SOC</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
 							<Name>Gripper.slider</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.partGripped</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.closeGripperFromSimulink</Name>
 							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.partGripped</Name>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>GW2DummyPRG.roboter.yBoDriving</Name>
@@ -4148,6 +4148,10 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.batteryVoltage_V</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
 							<Name>IrDistanceSensors.distance_mm</Name>
 							<Type GUID="{E653CDAE-1A31-0819-E492-0347803C1564}">ARRAY [1..9] OF REAL</Type>
 						</Var>
@@ -4166,10 +4170,6 @@
 						<Var>
 							<Name>Camera.cameraData.SS</Name>
 							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.batteryVoltage_V</Name>
-							<Type>REAL</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.supplyCurrent_A</Name>
