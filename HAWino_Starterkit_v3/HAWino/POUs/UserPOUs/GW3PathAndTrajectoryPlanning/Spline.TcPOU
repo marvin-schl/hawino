@@ -1,31 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="Spline" Id="{962108ba-b764-4703-887f-44bc4cb4c5ee}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Spline
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT Spline
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
 	lengthVar     :LREAL;
-	startPoint : RobotPoseSimple;
-	endPoint   : RobotPoseSimple;
+	startPoint 	  : RobotPoseSimple;
+	endPoint      : RobotPoseSimple;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="calculateLength" Id="{4c02d6a5-f067-4f4f-86c9-78561224f2c0}">
-      <Declaration><![CDATA[METHOD PROTECTED  calculateLength : LREAL
+      <Declaration><![CDATA[METHOD PROTECTED ABSTRACT calculateLength : LREAL
 VAR_INPUT
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Method Name="diff" Id="{abb1aec0-c192-43c2-a1a2-b654a47047f5}">
-      <Declaration><![CDATA[METHOD diff : RobotPoseSimple
+      <Declaration><![CDATA[METHOD ABSTRACT diff : RobotPoseSimple
 VAR_INPUT
 	arcLength: LREAL;
 	order: INT := 1;
@@ -55,7 +54,7 @@ END_VAR
       </Set>
     </Property>
     <Method Name="getPoint" Id="{e1cf1b15-c371-4375-8f5b-cd02de7ff7af}">
-      <Declaration><![CDATA[METHOD PUBLIC  getPoint : RobotPoseSimple
+      <Declaration><![CDATA[METHOD PUBLIC ABSTRACT getPoint : RobotPoseSimple
 VAR_INPUT
 	arcLength: LREAL;
 END_VAR

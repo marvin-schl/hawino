@@ -159,8 +159,8 @@ classdef TrajectoryPlannerSimple
                 obj.acc(1) = accMin;
                 obj.k = 1;
             elseif obj.vel(obj.k) > velMax
-                 obj.k = obj.k - 1;
-                 obj.currentStep = 3;
+                 obj.k              = obj.k - 1;
+                 obj.currentStep    = 3;
             elseif obj.vel(obj.k) > velMaxAcc
                 obj.searchPos = obj.pos(obj.k-2);
                 obj.lastPos   = obj.pos(obj.k-2);
@@ -171,15 +171,18 @@ classdef TrajectoryPlannerSimple
         end    
         
         function obj = step3(obj)
-            [velMax, ~, velMaxAcc] = obj.velMax(obj.pos(obj.k-1));
-            vel = min(velMax, velMaxAcc);
+
             
-            [accMin, accMax]  = obj.accLim(obj.pos(obj.k-1), vel);
+            
              %following limit curve
-            if obj.k > 1    
+            %if obj.k > 1    
                 obj.pos(obj.k) = obj.pos(obj.k-1) + obj.vel(obj.k-1)*obj.dt;
+                [velMax, ~, velMaxAcc] = obj.velMax(obj.pos(obj.k));
+                vel = min(velMax, velMaxAcc);
                 obj.vel(obj.k) = vel;
-            end
+            %end
+            
+            [accMin, accMax]  = obj.accLim(obj.pos(obj.k), vel);
             dvelMaxAcc = obj.dvelMaxAcc(obj.pos(obj.k));
             
             if obj.pos(obj.k) > obj.path.length
@@ -295,13 +298,13 @@ classdef TrajectoryPlannerSimple
             [velMax, ~, velMaxAcc] = obj.velMax(s);
             
             figure()
-            plot(s, velMax);
+            plot(s, velMax, ":x");
             hold on;
             grid minor;
-            plot(s, velMaxAcc);
+            plot(s, velMaxAcc, ":x");
             
             if trajectory
-                plot(obj.pos, obj.vel);
+                plot(obj.pos, obj.vel, ":x");
             end
             title("$s$-$\dot{s}$ Phase Portrait","interpreter", "latex")
             xlabel("$s$","interpreter","latex", "fontsize", 18);
@@ -320,29 +323,32 @@ classdef TrajectoryPlannerSimple
         t = [0:length(obj.pos)-1]*obj.dt;
 
         subplot(3,1,1);
-        plot(t,obj.pos,":x")
+        %plot(t,obj.pos,":x")
+        plot(obj.pos,":x")
         hold on;
         grid minor;
         title("Trajectory over time","interpreter","latex", "fontsize", 24)
 
-        xlim([min(t) max(t)])
+        %xlim([min(t) max(t)])
         ylabel("$s(t)$","interpreter","latex", "fontsize", 18);
 
         
         
         subplot(3,1,2);
-        plot(t,obj.vel,":x")
+        %plot(t,obj.vel,":x")
+        plot(obj.vel,":x")
         hold on;
         grid minor;
-        xlim([min(t) max(t)])
+        %xlim([min(t) max(t)])
         ylabel("$\dot{s}(t)$","interpreter","latex", "fontsize", 18);
 
                 
         subplot(3,1,3);
-        plot(t, diff([0;obj.vel])/obj.dt,":x")
+        %plot(t, diff([0;obj.vel])/obj.dt,":x")
+        plot(diff([0;obj.vel])/obj.dt,":x")
         hold on;
         grid minor;
-        xlim([min(t) max(t)])
+       % xlim([min(t) max(t)])
         xlabel("$t$","interpreter","latex", "fontsize", 18);
         ylabel("$\ddot{s}(t)$","interpreter","latex", "fontsize", 18);
 

@@ -3,8 +3,7 @@
   <POU Name="BezierCurve" Id="{e77832cf-db41-4e37-bb04-ef53ff8726aa}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK BezierCurve EXTENDS Spline
 VAR_INPUT
-	x: 		ARRAY [0..2] OF LREAL;
-	y: 		ARRAY [0..2] OF LREAL;
+	waypoints: ARRAY[0..2] OF RobotPoseSimple;
 	radius: LREAL;
 	deltaT: LREAL := 1E-3; //only for inital length calculation
 END_VAR
@@ -16,24 +15,16 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[controlPoint.x 		:= x[1];
-controlPoint.y 		:= y[1];
-controlPoint.theta	:= -1; //not used
-
-prevWP.x 		:= x[0];
-prevWP.y 		:= y[1];
-prevWP.theta	:= -1; //not used
-
-nextWP.x		:= x[2];
-nextWP.y		:= y[2];
-nextWP.theta	:= -1; //not used
+      <ST><![CDATA[controlPoint := waypoints[1];
+prevWP := waypoints[0];
+nextWP := waypoints[2];
 
 getStartEndPoint();
 calculateCoefficients();
-calculateLength();]]></ST>
+lengthVar := calculateLength();]]></ST>
     </Implementation>
     <Method Name="calculateCoefficients" Id="{358aa45f-b3d6-4b2a-8e91-98e0c973e800}">
-      <Declaration><![CDATA[METHOD calculateCoefficients : RobotPoseSimple
+      <Declaration><![CDATA[METHOD PRIVATE calculateCoefficients 
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -55,17 +46,18 @@ END_VAR
 VAR
 	i : INT;
 	t : LREAL;
-END_VAR]]></Declaration>
+END_VAR
+]]></Declaration>
       <Implementation>
         <ST><![CDATA[calculateLength := 0;
-FOR i := 0 TO LREAL_TO_INT(1/deltaT) DO
+FOR i := 0 TO LREAL_TO_INT(1/deltaT)-1 DO
 	t := i*deltaT;
 	calculateLength := calculateLength + ds(t)*deltaT;
 END_FOR]]></ST>
       </Implementation>
     </Method>
     <Method Name="dds" Id="{6ecd8f45-18bb-42aa-9825-094704a154e9}">
-      <Declaration><![CDATA[METHOD dds : LREAL
+      <Declaration><![CDATA[METHOD PRIVATE dds : LREAL
 VAR_INPUT
 	t, dsVal: LREAL;
 END_VAR
@@ -75,7 +67,7 @@ END_VAR
       </Implementation>
     </Method>
     <Method Name="diff" Id="{77e3fbe0-c097-4aa1-89b4-63503c3b240c}">
-      <Declaration><![CDATA[METHOD  diff : RobotPoseSimple
+      <Declaration><![CDATA[METHOD PUBLIC diff : RobotPoseSimple
 VAR_INPUT
 	arcLength: LREAL;
 	order: INT := 1;
@@ -112,7 +104,7 @@ END_CASE;  ]]></ST>
       </Implementation>
     </Method>
     <Method Name="diff2Norm" Id="{a87920c3-fb56-49d7-9c6d-2ae3c7511236}">
-      <Declaration><![CDATA[METHOD diff2Norm : RobotPoseSimple
+      <Declaration><![CDATA[METHOD PRIVATE diff2Norm : RobotPoseSimple
 VAR_INPUT
 	t: LREAL;
 END_VAR
@@ -124,9 +116,7 @@ diff2Norm.theta		:= -1; //unused ]]></ST>
       </Implementation>
     </Method>
     <Method Name="diffNorm" Id="{3ae2bbde-fdd7-43b3-9729-e14fa3e8ab1e}">
-      <Declaration><![CDATA[//return value isnt a euclidian pose anymore, 
-//it represents the first order derivate of the Bezier Curve after t at input value of t
-METHOD diffNorm : RobotPoseSimple 
+      <Declaration><![CDATA[METHOD PRIVATE diffNorm : RobotPoseSimple
 VAR_INPUT
 	t: LREAL;
 END_VAR
@@ -137,7 +127,7 @@ diffNorm.y := 2*b2*t + b1;]]></ST>
       </Implementation>
     </Method>
     <Method Name="ds" Id="{3d2a4728-15f9-4cb9-b2e5-b0a48c0c390b}">
-      <Declaration><![CDATA[METHOD ds : LREAL
+      <Declaration><![CDATA[METHOD PRIVATE ds : LREAL
 VAR_INPUT
 	t: LREAL;
 END_VAR
@@ -150,7 +140,7 @@ ds := sqrt(EXPT(dPos.x,2) + EXPT(dPos.y,2));]]></ST>
       </Implementation>
     </Method>
     <Method Name="getPoint" Id="{57091a75-4f60-4339-af74-b7d910e12667}">
-      <Declaration><![CDATA[METHOD PUBLIC  getPoint : RobotPoseSimple
+      <Declaration><![CDATA[METHOD PUBLIC getPoint : RobotPoseSimple
 VAR_INPUT
 	arcLength: LREAL; //corresponds to 's' in MATLAB
 END_VAR
@@ -164,7 +154,7 @@ getPoint := getPointNorm(t);]]></ST>
       </Implementation>
     </Method>
     <Method Name="getPointNorm" Id="{49f32db8-2f61-495e-a08a-ce60065a3eb6}">
-      <Declaration><![CDATA[METHOD getPointNorm : RobotPoseSimple
+      <Declaration><![CDATA[METHOD PRIVATE getPointNorm : RobotPoseSimple
 VAR_INPUT
 	t: LREAL;
 END_VAR
@@ -176,7 +166,7 @@ getPointNorm.theta := -1; //unused]]></ST>
       </Implementation>
     </Method>
     <Method Name="getStartEndPoint" Id="{2a56e530-9f6d-479f-a020-5589e1799307}">
-      <Declaration><![CDATA[METHOD getStartEndPoint : RobotPoseSimple
+      <Declaration><![CDATA[METHOD PRIVATE getStartEndPoint : RobotPoseSimple
 VAR_INPUT
 END_VAR
 
@@ -187,7 +177,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[//Start point:
 // - angle of incidence of former linear part
-phi1 := ATAN2(prevWP.y - controlPoint.y,prevWP.x - controlPoint.x);
+phi1 := ATAN2(prevWP.y - controlPoint.y, prevWP.x - controlPoint.x);
 
 // - x-coordinates where former linear part intersects with circle
 zpx11 := controlPoint.x - radius*COS(phi1);
@@ -250,7 +240,7 @@ endPoint.theta := phi2;
       </Implementation>
     </Method>
     <Method Name="normalize" Id="{c3312aa7-eada-49a4-95d3-f62358222036}">
-      <Declaration><![CDATA[METHOD normalize : LREAL
+      <Declaration><![CDATA[METHOD PRIVATE normalize : LREAL
 VAR_INPUT
 	arcLength: LREAL; //corresponds to 's' in MATLAB
 END_VAR
@@ -262,7 +252,7 @@ VAR
 	t: LREAL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[t_prev := 1;
+        <ST><![CDATA[t_prev := 2;
 WHILE ABS(t-t_prev) > tol AND i < 100 DO
 	t_prev := t;
 	t := t - (tToArcLength(t) - arcLength) / ds(t);
@@ -272,7 +262,7 @@ normalize := t;]]></ST>
       </Implementation>
     </Method>
     <Method Name="tToArcLength" Id="{d62a1d20-fa3f-41cc-b82f-8c6498fcbcf3}">
-      <Declaration><![CDATA[METHOD tToArcLength : LREAL //s(t), corresponds to MATLAB method s in BezierCurve
+      <Declaration><![CDATA[METHOD PRIVATE tToArcLength : LREAL //s(t), corresponds to MATLAB method s in BezierCurve
 VAR_INPUT
 	t: LREAL;
 END_VAR
@@ -284,132 +274,81 @@ END_VAR]]></Declaration>
       </Implementation>
     </Method>
     <Method Name="tToArcLengthIntegral" Id="{3ba382f4-0e5a-4c07-b8df-241d7bde34f7}">
-      <Declaration><![CDATA[METHOD tToArcLengthIntegral : LREAL
+      <Declaration><![CDATA[METHOD PRIVATE tToArcLengthIntegral : LREAL
 VAR_INPUT
 	t: LREAL;
 END_VAR
+VAR
+	z1,z2,z3,z4,z5,z6:LREAL;
+END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[tToArcLengthIntegral := (4*a2*a1 + 4*b2*b1)/(4*(4*EXPT(a2,2) + 4*EXPT(b2,2)))*(t*(4*a2*a1 + 4*b2*b1) + EXPT(a1,2) + EXPT(b1,2) + EXPT(t,2)*EXPT((4*EXPT(a2,2) + 4*EXPT(b2,2)),(1/2))- 
-(LOG((2*a2*a1 + 2*b2*b1 + t*(4*EXPT(a2,2) + 4*EXPT(b2,2)))/EXPT(4*EXPT(a2,2) 
-+ 4*EXPT(b2,2),(1/2)) + SQRT(t*(4*a2*a1 + 4*b2*b1) + EXPT(a1,2) + EXPT(b1,2) + EXPT(t,2)*(4*EXPT(a2,2) + 4*EXPT(b2,2))))*(EXPT(4*a2*a1 + 4*b2*b1,2)/4
-- (4*EXPT(a2,2) + 4*EXPT(b2,2))*(EXPT(a1,2) + EXPT(b1,2)))) / (2*EXPT(4*EXPT(a2,2) + 4*EXPT(b2,2),(3/2))));]]></ST>
+        <ST><![CDATA[z2 :=4*a2*a1+4*b1*b2;
+z3 := 4*EXPT(a2,2)+4*EXPT(b2,2);
+z6 := EXPT(a1,2)+EXPT(b1,2);
+z1 := t*z2+z6+EXPT(t,2)*z3;
+z4 :=(z2/2+t*z3)/SQRT(z3)+ SQRT((t*z2+z6+EXPT(t,2)*z3));
+z5 := LN(z4);
+tToArcLengthIntegral := (t/2 + z2 / (4*z3)) * SQRT(z1) - (z5* ((EXPT(z2,2) / 4-z3*z6))) / (2*SQRT(EXPT(z3,3) ));
+
+
+]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="BezierCurve">
-      <LineId Id="9" Count="0" />
-      <LineId Id="21" Count="1" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="27" Count="1" />
-      <LineId Id="30" Count="0" />
-      <LineId Id="32" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="33" Count="1" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="35" Count="1" />
+      <LineId Id="78" Count="1" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="87" Count="2" />
+      <LineId Id="36" Count="0" />
     </LineIds>
     <LineIds Name="BezierCurve.calculateCoefficients">
-      <LineId Id="6" Count="5" />
+      <LineId Id="18" Count="5" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="BezierCurve.calculateLength">
-      <LineId Id="13" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="11" Count="0" />
+      <LineId Id="29" Count="3" />
       <LineId Id="10" Count="0" />
     </LineIds>
     <LineIds Name="BezierCurve.dds">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="BezierCurve.diff">
-      <LineId Id="9" Count="1" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="35" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="37" Count="1" />
-      <LineId Id="23" Count="1" />
-      <LineId Id="36" Count="0" />
-      <LineId Id="31" Count="3" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="26" Count="2" />
+      <LineId Id="55" Count="22" />
       <LineId Id="25" Count="0" />
     </LineIds>
     <LineIds Name="BezierCurve.diff2Norm">
-      <LineId Id="5" Count="0" />
-      <LineId Id="7" Count="1" />
+      <LineId Id="17" Count="1" />
+      <LineId Id="8" Count="0" />
     </LineIds>
     <LineIds Name="BezierCurve.diffNorm">
-      <LineId Id="5" Count="0" />
+      <LineId Id="20" Count="0" />
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="BezierCurve.ds">
-      <LineId Id="9" Count="0" />
+      <LineId Id="22" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="BezierCurve.getPoint">
-      <LineId Id="6" Count="0" />
+      <LineId Id="23" Count="0" />
       <LineId Id="8" Count="0" />
     </LineIds>
     <LineIds Name="BezierCurve.getPointNorm">
-      <LineId Id="7" Count="0" />
-      <LineId Id="5" Count="0" />
+      <LineId Id="17" Count="1" />
       <LineId Id="8" Count="0" />
     </LineIds>
     <LineIds Name="BezierCurve.getStartEndPoint">
-      <LineId Id="21" Count="1" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="27" Count="1" />
-      <LineId Id="36" Count="0" />
-      <LineId Id="30" Count="0" />
-      <LineId Id="37" Count="0" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="33" Count="1" />
-      <LineId Id="32" Count="0" />
-      <LineId Id="45" Count="0" />
-      <LineId Id="39" Count="0" />
-      <LineId Id="46" Count="0" />
-      <LineId Id="38" Count="0" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="40" Count="0" />
-      <LineId Id="43" Count="0" />
-      <LineId Id="41" Count="0" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="47" Count="0" />
-      <LineId Id="49" Count="0" />
-      <LineId Id="51" Count="3" />
-      <LineId Id="50" Count="0" />
-      <LineId Id="56" Count="2" />
-      <LineId Id="55" Count="0" />
-      <LineId Id="60" Count="13" />
-      <LineId Id="75" Count="6" />
-      <LineId Id="74" Count="0" />
+      <LineId Id="96" Count="60" />
       <LineId Id="59" Count="0" />
     </LineIds>
     <LineIds Name="BezierCurve.normalize">
-      <LineId Id="7" Count="3" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="5" Count="0" />
+      <LineId Id="39" Count="5" />
       <LineId Id="18" Count="0" />
     </LineIds>
     <LineIds Name="BezierCurve.tToArcLength">
       <LineId Id="15" Count="0" />
     </LineIds>
     <LineIds Name="BezierCurve.tToArcLengthIntegral">
-      <LineId Id="7" Count="2" />
+      <LineId Id="21" Count="8" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>

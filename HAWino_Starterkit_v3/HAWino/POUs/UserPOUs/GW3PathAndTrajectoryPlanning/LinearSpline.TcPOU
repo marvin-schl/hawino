@@ -3,24 +3,22 @@
   <POU Name="LinearSpline" Id="{ee8a5752-8731-4d20-b9ec-42a2604040d7}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK LinearSpline EXTENDS Spline
 VAR_INPUT
-	x: ARRAY [0..1] OF LREAL;
-	y: ARRAY [0..1] OF LREAL;
+	wayPoints: ARRAY[0..1] OF RobotPoseSimple;
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
 	init : BOOL := FALSE;
 END_VAR
+
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[startPoint.x 	:= x[0];
-startPoint.y 	:= y[0];
-
-endPoint.x		:= x[1];
-endPoint.y     	:= y[1];
+      <ST><![CDATA[startPoint := wayPoints[0];
+endPoint   := wayPoints[1];
 
 startPoint.theta	:= ATAN2(endPoint.y-startPoint.y, endPoint.x-startPoint.x); 
-lengthVar := calculateLength();]]></ST>
+endPoint.theta		:= startPoint.theta;
+lengthVar 			:= calculateLength();]]></ST>
     </Implementation>
     <Method Name="calculateLength" Id="{b557106d-f894-499c-b93e-4ca33bd951b4}">
       <Declaration><![CDATA[METHOD PROTECTED  calculateLength : LREAL
@@ -56,39 +54,32 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="getPoint" Id="{2d494b1b-e161-44ef-b005-acd30148114d}">
-      <Declaration><![CDATA[METHOD PUBLIC  getPoint : RobotPoseSimple
+      <Declaration><![CDATA[METHOD getPoint : RobotPoseSimple
 VAR_INPUT
-	arcLength: LREAL;
+	arcLength	: LREAL;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[getPoint.x		:= COS(startPoint.theta)*arcLength;
-getPoint.y		:= SIN(startPoint.theta)*arcLength;
+        <ST><![CDATA[getPoint.x		:= COS(startPoint.theta)*arcLength + startPoint.x;
+getPoint.y		:= SIN(startPoint.theta)*arcLength + startPoint.y;
 getPoint.theta  := -1; //not used]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="LinearSpline">
-      <LineId Id="30" Count="6" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="61" Count="3" />
       <LineId Id="21" Count="0" />
     </LineIds>
     <LineIds Name="LinearSpline.calculateLength">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="LinearSpline.diff">
-      <LineId Id="7" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="16" Count="1" />
-      <LineId Id="12" Count="1" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="19" Count="1" />
-      <LineId Id="18" Count="0" />
+      <LineId Id="32" Count="12" />
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="LinearSpline.getPoint">
-      <LineId Id="6" Count="2" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="8" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
