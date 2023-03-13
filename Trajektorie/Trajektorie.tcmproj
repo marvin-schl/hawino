@@ -10,8 +10,5 @@
     <Content Include="XY Scope Project.tcscopex">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="XY Scope Project_1.tcscopex">
-      <SubType>Content</SubType>
-    </Content>
   </ItemGroup>
 </Project>

@@ -161,7 +161,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[arcOffset := arcLength;
-IF arcLength > length THEN
+IF arcLength >= length THEN
 	arcOffset := arcLength - transitions[nmbOfSubsplines-2];
 	subspline := subsplines[nmbOfSubsplines-1];
 	RETURN;
@@ -201,20 +201,26 @@ VAR
 	phi1, phi2: 		LREAL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[waypointList[0] := waypointListRaw[0];
+        <ST><![CDATA[waypointList[0].theta := waypointListRaw[0].theta;	
+waypointList[0].y := waypointListRaw[0].y/1000;	
+waypointList[0].x := waypointListRaw[0].x/1000;	
 nextIDX := 1;
 
 FOR i := 1 TO 99 DO
 	//exit if last point is reached, last valid point is last point in preprocessed list
 	IF waypointListRaw[i+1].x = -1 AND waypointListRaw[i+1].y = -1 THEN
-		waypointList[nextIDX] := waypointListRaw[i];
+		waypointList[nextIDX].theta := waypointListRaw[i].theta;	
+		waypointList[nextIDX].y := waypointListRaw[i].y/1000;	
+		waypointList[nextIDX].x := waypointListRaw[i].x/1000;	
 		EXIT;
 	END_IF	
 
 	phi1 := ATAN2(waypointListRaw[i].y-waypointListRaw[i-1].y,waypointListRaw[i].x-waypointListRaw[i-1].x);
 	phi2 := ATAN2(waypointListRaw[i+1].y-waypointListRaw[i].y,waypointListRaw[i+1].x-waypointListRaw[i].x);
 	IF phi1 <> phi2 THEN
-		waypointList[nextIDX] := waypointListRaw[i];	
+		waypointList[nextIDX].theta := waypointListRaw[i].theta;	
+		waypointList[nextIDX].y := waypointListRaw[i].y/1000;	
+		waypointList[nextIDX].x := waypointListRaw[i].x/1000;	
 		nextIDX := nextIDX +1;
 	END_IF
 END_FOR
@@ -253,12 +259,15 @@ nmbOfPreprocessedWaypoints := nextIDX +1;]]></ST>
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="Path.preprocessWaypointlist">
+      <LineId Id="95" Count="1" />
       <LineId Id="79" Count="0" />
       <LineId Id="60" Count="3" />
       <LineId Id="82" Count="0" />
+      <LineId Id="93" Count="1" />
       <LineId Id="81" Count="0" />
       <LineId Id="67" Count="5" />
       <LineId Id="83" Count="0" />
+      <LineId Id="91" Count="1" />
       <LineId Id="75" Count="2" />
       <LineId Id="43" Count="0" />
     </LineIds>

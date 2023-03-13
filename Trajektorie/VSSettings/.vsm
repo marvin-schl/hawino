@@ -6,33 +6,57 @@
     <Node>
       <Title>XY Scope Project</Title>
       <Expanded>True</Expanded>
-      <FileName>C:\Users\Marvin\MySafeCloud\Documents\Uni\Master\VPJ\hawino\Trajektorie\XY Scope Project.tcscopex</FileName>
+      <FileName>E:\hawino\Trajektorie\XY Scope Project.tcscopex</FileName>
       <Children>
         <Node>
           <Title>DataPool</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
-              <Title>e</Title>
+              <Title>thetaCam</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
             </Node>
             <Node>
-              <Title>vXworldToSimulink</Title>
+              <Title>thetaObs</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
             </Node>
             <Node>
-              <Title>vYworldToSimulink</Title>
+              <Title>thetaRef</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
             </Node>
             <Node>
-              <Title>x</Title>
+              <Title>vXCartesianFromMotors</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>vXCartesianToMotors</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>vYCartesianFromMotors</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>vYCartesianToMotors</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>xCam</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -50,7 +74,7 @@
               <Children />
             </Node>
             <Node>
-              <Title>y</Title>
+              <Title>yCam</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -71,7 +95,7 @@
         </Node>
         <Node>
           <Title>XY Chart</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
@@ -80,37 +104,18 @@
               <FileName></FileName>
               <Children>
                 <Node>
-                  <Title>x, y</Title>
+                  <Title>xCam, yCam</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children>
                     <Node>
-                      <Title>X: x</Title>
+                      <Title>X: xCam</Title>
                       <Expanded>False</Expanded>
                       <FileName></FileName>
                       <Children />
                     </Node>
                     <Node>
-                      <Title>Y: y</Title>
-                      <Expanded>False</Expanded>
-                      <FileName></FileName>
-                      <Children />
-                    </Node>
-                  </Children>
-                </Node>
-                <Node>
-                  <Title>xRef, yRef</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children>
-                    <Node>
-                      <Title>X: xRef</Title>
-                      <Expanded>False</Expanded>
-                      <FileName></FileName>
-                      <Children />
-                    </Node>
-                    <Node>
-                      <Title>Y: yRef</Title>
+                      <Title>Y: yCam</Title>
                       <Expanded>False</Expanded>
                       <FileName></FileName>
                       <Children />
@@ -136,153 +141,6 @@
                     </Node>
                   </Children>
                 </Node>
-              </Children>
-            </Node>
-          </Children>
-        </Node>
-        <Node>
-          <Title>YT Chart</Title>
-          <Expanded>False</Expanded>
-          <FileName></FileName>
-          <Children>
-            <Node>
-              <Title>Axis Group (1)</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children>
-                <Node>
-                  <Title>vYworldToSimulink</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>vXworldToSimulink</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-              </Children>
-            </Node>
-          </Children>
-        </Node>
-        <Node>
-          <Title>YT Chart (1)</Title>
-          <Expanded>False</Expanded>
-          <FileName></FileName>
-          <Children>
-            <Node>
-              <Title>Axis Group (2)</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children>
-                <Node>
-                  <Title>e</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-              </Children>
-            </Node>
-          </Children>
-        </Node>
-        <Node>
-          <Title>Trigger</Title>
-          <Expanded>False</Expanded>
-          <FileName></FileName>
-          <Children />
-        </Node>
-      </Children>
-    </Node>
-    <Node>
-      <Title>XY Scope Project_1</Title>
-      <Expanded>False</Expanded>
-      <FileName>C:\Users\Marvin\MySafeCloud\Documents\Uni\Master\VPJ\hawino\Trajektorie\XY Scope Project_1.tcscopex</FileName>
-      <Children>
-        <Node>
-          <Title>DataPool</Title>
-          <Expanded>False</Expanded>
-          <FileName></FileName>
-          <Children>
-            <Node>
-              <Title>vXworldToSimulink</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>vYworldToSimulink</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>x</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>xObs</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>xRef</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>y</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>yObs</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>yRef</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-          </Children>
-        </Node>
-        <Node>
-          <Title>XY Chart</Title>
-          <Expanded>False</Expanded>
-          <FileName></FileName>
-          <Children>
-            <Node>
-              <Title>Axis Group</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children>
-                <Node>
-                  <Title>x, y</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children>
-                    <Node>
-                      <Title>X: x</Title>
-                      <Expanded>False</Expanded>
-                      <FileName></FileName>
-                      <Children />
-                    </Node>
-                    <Node>
-                      <Title>Y: y</Title>
-                      <Expanded>False</Expanded>
-                      <FileName></FileName>
-                      <Children />
-                    </Node>
-                  </Children>
-                </Node>
                 <Node>
                   <Title>xRef, yRef</Title>
                   <Expanded>False</Expanded>
@@ -302,25 +160,6 @@
                     </Node>
                   </Children>
                 </Node>
-                <Node>
-                  <Title>xObs, yObs</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children>
-                    <Node>
-                      <Title>X: xObs</Title>
-                      <Expanded>False</Expanded>
-                      <FileName></FileName>
-                      <Children />
-                    </Node>
-                    <Node>
-                      <Title>Y: yObs</Title>
-                      <Expanded>False</Expanded>
-                      <FileName></FileName>
-                      <Children />
-                    </Node>
-                  </Children>
-                </Node>
               </Children>
             </Node>
           </Children>
@@ -331,18 +170,62 @@
           <FileName></FileName>
           <Children>
             <Node>
-              <Title>Axis Group (1)</Title>
+              <Title>Axis Group (3)</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
-                  <Title>vYworldToSimulink</Title>
+                  <Title>vYCartesianToMotors</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
                 </Node>
                 <Node>
-                  <Title>vXworldToSimulink</Title>
+                  <Title>vYCartesianFromMotors</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+              </Children>
+            </Node>
+            <Node>
+              <Title>Axis Group (4)</Title>
+              <Expanded>True</Expanded>
+              <FileName></FileName>
+              <Children>
+                <Node>
+                  <Title>vXCartesianToMotors</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>vXCartesianFromMotors</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+              </Children>
+            </Node>
+            <Node>
+              <Title>Axis Group (1)</Title>
+              <Expanded>True</Expanded>
+              <FileName></FileName>
+              <Children>
+                <Node>
+                  <Title>thetaObs</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>thetaCam</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>thetaRef</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
@@ -350,12 +233,6 @@
               </Children>
             </Node>
           </Children>
-        </Node>
-        <Node>
-          <Title>Trigger</Title>
-          <Expanded>False</Expanded>
-          <FileName></FileName>
-          <Children />
         </Node>
       </Children>
     </Node>
