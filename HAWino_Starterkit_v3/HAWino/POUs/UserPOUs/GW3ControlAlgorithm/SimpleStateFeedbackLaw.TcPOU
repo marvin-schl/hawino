@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="SimpleStateFeedbackLaw" Id="{b6b00111-b334-4516-8a6e-fa6dcb5c765f}" SpecialFunc="None">
-    <Declaration><![CDATA[//SimpleStateFeedbackLaw:
-//Implements a simple state feedback law with a 3x3 control gain matrix 'K', 
-//a translation speed limit 'vtrans_max' (x- and y-axis) and a rotational speed 
-//limit 'vrot_max'.
+    <Declaration><![CDATA[(*SimpleStateFeedbackLaw:
+Implements a simple state feedback law with a 3x3 control gain matrix 'K', 
+a translation speed limit 'vtrans_max' (x- and y-axis) and a rotational speed 
+limit 'vrot_max'.
+*)
 FUNCTION_BLOCK SimpleStateFeedbackLaw
 VAR_INPUT
 	xRobotPose: 		RobotPoseSimple; 				//current pose
@@ -71,6 +72,15 @@ omegaRobot	:= u[2];
 
 ]]></ST>
     </Implementation>
+    <Method Name="resetReachedReference" Id="{abf3cfa0-3136-4152-8add-0d4168a8fd70}">
+      <Declaration><![CDATA[METHOD resetReachedReference : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[reachedReference := FALSE;]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="SimpleStateFeedbackLaw">
       <LineId Id="9" Count="0" />
       <LineId Id="19" Count="0" />
@@ -99,6 +109,9 @@ omegaRobot	:= u[2];
       <LineId Id="72" Count="1" />
       <LineId Id="154" Count="0" />
       <LineId Id="46" Count="0" />
+    </LineIds>
+    <LineIds Name="SimpleStateFeedbackLaw.resetReachedReference">
+      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

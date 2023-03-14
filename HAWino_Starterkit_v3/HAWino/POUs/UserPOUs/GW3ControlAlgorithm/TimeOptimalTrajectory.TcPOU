@@ -35,7 +35,6 @@ END_IF
 
 IF  trajectoryPlanner.posTrajectory[WPLidx].x = -1 AND trajectoryPlanner.posTrajectory[WPLidx].y = -1  AND trajectoryPlanner.posTrajectory[WPLidx].theta = -1 THEN
 	finished := TRUE;
-	trajectoryPlanner.resetTrajectoryFlags();
 END_IF
 
 IF drive AND NOT finished AND ready THEN
@@ -77,15 +76,8 @@ trajectoryPlanner.generateTrajectory();]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="TimeOptimalTrajectory">
-      <LineId Id="37" Count="7" />
-      <LineId Id="99" Count="0" />
-      <LineId Id="45" Count="0" />
-      <LineId Id="48" Count="1" />
-      <LineId Id="54" Count="0" />
-      <LineId Id="97" Count="1" />
-      <LineId Id="56" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="72" Count="0" />
+      <LineId Id="124" Count="7" />
+      <LineId Id="133" Count="8" />
       <LineId Id="71" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.setRobotPose">

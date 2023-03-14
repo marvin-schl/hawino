@@ -111,7 +111,7 @@
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\TimeOptimalTrajectory.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\TrackingController.TcPOU">
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\ControlPRG.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\FKT_Scale.TcPOU">
