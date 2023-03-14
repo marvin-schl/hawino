@@ -95,8 +95,8 @@ classdef TrajectoryPlannerSimple
             for i=1:length(s)
                 
                 if abs(dphi(i)) > 1e-2
-                    velMax(i) = obj.qVelMax;
-                    %velMax(i) = min(obj.qVelMax, obj.phiVelMax/abs(dphi(i)));
+                    %velMax(i) = obj.qVelMax;
+                    velMax(i) = min(obj.qVelMax, obj.phiVelMax/abs(dphi(i)));
                 end
                  
                 if (ddx(i)^2+ddy(i)^2) ~= 0

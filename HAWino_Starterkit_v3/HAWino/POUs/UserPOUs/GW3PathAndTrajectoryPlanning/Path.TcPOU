@@ -3,25 +3,14 @@
   <POU Name="Path" Id="{95fe6ec8-af15-4fc0-b4c5-550c7aba9b73}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Path EXTENDS Spline
 VAR_INPUT
-	waypointListRaw: 	ARRAY [0..100] OF RobotPoseSimple; //raw input waypoint list, Caution: in METER! 
-	radius: LREAL;
+	waypointListRaw: 	ARRAY [0..100] OF RobotPoseSimple;
+	radius: 			LREAL;
 END_VAR
 VAR
-	waypointList: 		ARRAY [0..100] OF RobotPoseSimple;
-
-	transitions: 		ARRAY [0..99] OF LREAL;
-	subsplines: 		ARRAY [0..99] OF  POINTER TO Spline;
-	
-	wplTmpLinear:		ARRAY [0..1] OF RobotPoseSimple;
-	linearSplines:		ARRAY [0..50] OF LinearSpline;
-	
-	wplTmpBezier:		ARRAY [0..2] OF RobotPoseSimple;
-	bezierCurves:		ARRAY [0..49] OF BezierCurve;
-	
+	waypointList: 		ARRAY [0..100] 	OF 	RobotPoseSimple;		
+	subsplines: 		ARRAY [0..99] 	OF  POINTER TO Spline;
+	transitions: 		ARRAY [0..99] 	OF LREAL;
 	nmbOfSubsplines, nmbOfPreprocessedWaypoints:	INT;
-	i, j, k: INT;
-	
-	start, end:						RobotPoseSimple;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -29,39 +18,7 @@ END_VAR
 
 nmbOfSubsplines := 2*nmbOfPreprocessedWaypoints-3;
 
-FOR i := 1 TO nmbOfSubsplines BY 2 DO
-	k := 0;
-	//extract relevant points for bezier curve creation
-	FOR j := (i-1)/2 TO (i-1)/2+2 BY 1 DO
-		wplTmpBezier[k] := waypointList[j];
-		k := k + 1;
-	END_FOR  
-	bezierCurves[(i-1)/2](waypoints:=wplTmpBezier, radius:=radius);
-	subsplines[i]:= ADR(bezierCurves[(i-1)/2]);
-END_FOR
-
-//first Segment is always linear
-wplTmpLinear[0] := waypointList[0];
-wplTmpLinear[1] := subsplines[1]^.startPointVal;
-linearSplines[0](wayPoints := wplTmpLinear);
-subsplines[0] := ADR(linearSplines[0]);
-
-
-//last Segment is always linear
-wplTmpLinear[0] := subsplines[nmbOfSubsplines-2]^.endPointVal;
-wplTmpLinear[1] := waypointList[nmbOfPreprocessedWaypoints-1];
-linearSplines[(nmbOfSubsplines+1)/2](wayPoints := wplTmpLinear);
-subsplines[nmbOfSubsplines-1] := ADR(linearSplines[(nmbOfSubsplines+1)/2]);
-
-
-//generate the linear segments in between
-FOR i := 2 TO nmbOfSubsplines-2 BY 2 DO
-	wplTmpLinear[0] := subsplines[i-1]^.endPointVal;
-	wplTmpLinear[1] := subsplines[i+1]^.startPointVal;
-	linearSplines[i/2](wayPoints := wplTmpLinear);
-	subsplines[i] := ADR(linearSplines[i/2]);
-END_FOR
-
+generateSubsplines();
 lengthVar := calculateLength();
 calculateTransitions();
 
@@ -127,6 +84,67 @@ ELSE
 END_CASE]]></ST>
       </Implementation>
     </Method>
+    <Method Name="generateSubsplines" Id="{64c26576-c972-4416-a2f8-ea26c3f38e4d}">
+      <Declaration><![CDATA[METHOD generateSubsplines : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	linearSplines:		ARRAY [0..50] OF LinearSpline;
+	bezierCurves:		ARRAY [0..49] OF BezierCurve;
+		
+	//xTmpLinear,yTmpLinear:    		ARRAY [0..1] OF LREAL;
+	wplTmpLinear:					ARRAY [0..1] OF RobotPoseSimple;
+	linearSpline: LinearSpline;
+	
+	//xTmpBezier,yTmpBezier:    		ARRAY [0..2] OF LREAL;
+	wplTmpBezier:					ARRAY [0..2] OF RobotPoseSimple;
+	bezierCurve: BezierCurve;
+	
+	i,j,k: INT := 0;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF nmbOfSubsplines <> 1 THEN 
+	FOR i := 1 TO nmbOfSubsplines BY 2 DO
+	k := 0;
+	//extract relevant points for bezier curve creation
+	FOR j := (i-1)/2 TO (i-1)/2+2 BY 1 DO
+		wplTmpBezier[k] := waypointList[j];
+		k := k + 1;
+	END_FOR  
+	bezierCurves[(i-1)/2](waypoints:=wplTmpBezier, radius:=radius);
+	subsplines[i]:= ADR(bezierCurves[(i-1)/2]);
+	END_FOR
+	
+	//first Segment is always linear
+	wplTmpLinear[0] := waypointList[0];
+	wplTmpLinear[1] := subsplines[1]^.startPointVal;
+	linearSplines[0](wayPoints := wplTmpLinear);
+	subsplines[0] := ADR(linearSplines[0]);
+	
+	
+	//last Segment is always linear
+	wplTmpLinear[0] := subsplines[nmbOfSubsplines-2]^.endPointVal;
+	wplTmpLinear[1] := waypointList[nmbOfPreprocessedWaypoints-1];
+	linearSplines[(nmbOfSubsplines+1)/2](wayPoints := wplTmpLinear);
+	subsplines[nmbOfSubsplines-1] := ADR(linearSplines[(nmbOfSubsplines+1)/2]);
+	
+	
+	//generate the linear segments in between
+	FOR i := 2 TO nmbOfSubsplines-2 BY 2 DO
+	wplTmpLinear[0] := subsplines[i-1]^.endPointVal;
+	wplTmpLinear[1] := subsplines[i+1]^.startPointVal;
+	linearSplines[i/2](wayPoints := wplTmpLinear);
+	subsplines[i] := ADR(linearSplines[i/2]);
+	END_FOR
+ELSE  //nmbOfSubsplines = 1  => only one linear Segment
+	
+	wplTmpLinear[0] := waypointList[0];
+	wplTmpLinear[1] := waypointList[1];;
+	linearSplines[0](wayPoints := wplTmpLinear);
+	subsplines[0] := ADR(linearSplines[0]);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="getPoint" Id="{edc81ff7-b7ad-4aac-a526-a3258fc65de9}">
       <Declaration><![CDATA[METHOD PUBLIC  getPoint : RobotPoseSimple
 VAR_INPUT
@@ -145,7 +163,7 @@ END_VAR
 getPoint := subspline^.getPoint(arcLength:= arcOffset);
 
 deltaTheta 		:= endPoint.theta - startPoint.theta;
-getPoint.theta	:= start.theta + deltaTheta/2*(1-COS(pi/lengthVar*arcLength));]]></ST>
+getPoint.theta	:= startPoint.theta + deltaTheta/2*(1-COS(pi/lengthVar*arcLength));]]></ST>
       </Implementation>
     </Method>
     <Method Name="getSubsplineToPoint" Id="{d9693a58-8dc8-4612-b85b-8d181f60b2f3}">
@@ -155,14 +173,15 @@ VAR_INPUT
 END_VAR
 
 VAR_OUTPUT
-	subspline: POINTER TO Spline;
-	arcOffset: LREAL;
+	subspline: 	POINTER TO Spline;
+	arcOffset: 	LREAL;
+	i: 			INT := 0;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[arcOffset := arcLength;
-IF arcLength > length THEN
-	arcOffset := arcLength - transitions[nmbOfSubsplines-2];
+IF arcLength >= length THEN
+	arcOffset := arcLength - transitions[nmbOfSubsplines-1];
 	subspline := subsplines[nmbOfSubsplines-1];
 	RETURN;
 END_IF
@@ -222,7 +241,10 @@ nmbOfPreprocessedWaypoints := nextIDX +1;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="Path">
-      <LineId Id="237" Count="40" />
+      <LineId Id="311" Count="2" />
+      <LineId Id="322" Count="0" />
+      <LineId Id="315" Count="0" />
+      <LineId Id="317" Count="3" />
       <LineId Id="96" Count="0" />
     </LineIds>
     <LineIds Name="Path.calculateLength">
@@ -236,6 +258,10 @@ nmbOfPreprocessedWaypoints := nextIDX +1;]]></ST>
     <LineIds Name="Path.diff">
       <LineId Id="57" Count="14" />
       <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="Path.generateSubsplines">
+      <LineId Id="22" Count="38" />
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="Path.getPoint">
       <LineId Id="30" Count="2" />
