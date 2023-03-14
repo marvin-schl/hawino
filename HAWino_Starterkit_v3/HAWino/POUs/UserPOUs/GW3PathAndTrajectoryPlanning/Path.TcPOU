@@ -291,11 +291,12 @@ nmbOfPreprocessedWaypoints := nextIDX +1;]]></ST>
     </LineIds>
     <LineIds Name="Path.getSubsplineToPoint">
       <LineId Id="39" Count="1" />
-      <LineId Id="42" Count="0" />
-      <LineId Id="46" Count="6" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="50" Count="2" />
       <LineId Id="13" Count="0" />
       <LineId Id="18" Count="2" />
       <LineId Id="2" Count="0" />
+      <LineId Id="53" Count="3" />
     </LineIds>
     <LineIds Name="Path.getSwitchingPointIntervals">
       <LineId Id="27" Count="2" />
