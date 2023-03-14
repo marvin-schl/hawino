@@ -405,6 +405,46 @@
 			</ArrayInfo>
 		</DataType>
 		<DataType>
+			<Name GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}" AutoDeleteType="true">ControllerState</Name>
+			<BitSize>16</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
+			<EnumInfo>
+				<Text><![CDATA[init]]></Text>
+				<Enum>0</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[idle]]></Text>
+				<Enum>1</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[calcTrajectory]]></Text>
+				<Enum>2</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[setTrajectory]]></Text>
+				<Enum>3</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[ready]]></Text>
+				<Enum>4</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[driving]]></Text>
+				<Enum>5</Enum>
+			</EnumInfo>
+			<Properties>
+				<Property>
+					<Name>qualified_only</Name>
+				</Property>
+				<Property>
+					<Name>strict</Name>
+				</Property>
+				<Property>
+					<Name>generate_implicit_init_function</Name>
+				</Property>
+			</Properties>
+		</DataType>
+		<DataType>
 			<Name GUID="{48A9867C-4E1C-5C48-972D-E35D946F6489}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..2,0..2] OF LREAL</Name>
 			<BitSize>576</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
@@ -1299,7 +1339,7 @@
 		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1006">424de6000000000000007600000028000000100000000e000000010004000000000070000000000000000000000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffff788833338887ffff78883bb38887ffffffff3bb3ffffffffffff8778fffffffffffffffffffffffffffffffff999ffff78f78fffffffffff78f78ffff999ffff78f7888fffffffff78f78f78f999ffff78f78f78ffffffff78f7888ff999ffffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.214.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.207.184.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="2">
 				<Cpu BaseTime="1000"/>
@@ -3888,11 +3928,6 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>ControlPRG.newWaypointListAvailable</Name>
-							<Comment><![CDATA[ implemented, Status-Bit zur Signalisierung einer neuen WP-Liste]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>ControlPRG.observer.estimatedPoseFromSimlink</Name>
 							<Comment><![CDATA[from Simulink]]></Comment>
 							<Type GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}">ARRAY [0..2] OF LREAL</Type>
@@ -3914,6 +3949,11 @@
 							<Name>ControlPRG.robotPoses</Name>
 							<Comment><![CDATA[input from camera]]></Comment>
 							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.newWaypointListAvailable</Name>
+							<Comment><![CDATA[ implemented, Status-Bit zur Signalisierung einer neuen WP-Liste]]></Comment>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>ControlPRG.waypointList</Name>
@@ -3962,19 +4002,9 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>ControlPRG.yBoDriving</Name>
-							<Comment><![CDATA[ implemented, TRUE, wenn Roboter fährt				]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yBoArrivedAtDestination</Name>
-							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yUintWaypointIndex</Name>
-							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
-							<Type>INT</Type>
+							<Name>ControlPRG.state</Name>
+							<Comment><![CDATA[sets controller state]]></Comment>
+							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
 						</Var>
 						<Var>
 							<Name>ControlPRG.observer.cameraPoseToSimulink</Name>
@@ -4023,6 +4053,21 @@
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.yBoDriving</Name>
+							<Comment><![CDATA[ implemented, TRUE, wenn Roboter fährt				]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yBoArrivedAtDestination</Name>
+							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yUintWaypointIndex</Name>
+							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
 							<Name>ControlPRG.yRPposition</Name>
 							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
 							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
@@ -4058,6 +4103,11 @@
 					</Vars>
 					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
 						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>ControlPRG.xIntMoveToEndPosition</Name>
+							<Comment><![CDATA[ unused,		Anfahrt (in Sperrzone vor Tasche oder Ladestation) = 1, Fahrt = 0]]></Comment>
+							<Type>INT</Type>
+						</Var>
 						<Var>
 							<Name>PowerManager.shutdownButton</Name>
 							<Type>BOOL</Type>
@@ -4119,9 +4169,8 @@
 							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
 						</Var>
 						<Var>
-							<Name>ControlPRG.xIntMoveToEndPosition</Name>
-							<Comment><![CDATA[ unused,		Anfahrt (in Sperrzone vor Tasche oder Ladestation) = 1, Fahrt = 0]]></Comment>
-							<Type>INT</Type>
+							<Name>GW2DummyPRG.roboter.yControllerState</Name>
+							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" ContextId="2" AreaNo="33">
@@ -4392,7 +4441,7 @@
 			<PlcAuxTask Affinity="#x00000002"/>
 		</Plc>
 		<Io>
-			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="5.53.205.214.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
+			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="5.53.207.184.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
 				<Name>Gerät 1 (EtherCAT)</Name>
 				<AddressInfo>
 					<Ccat>
@@ -7310,6 +7359,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^ControlPRG.xIntMoveToEndPosition" VarB="PlcTask Outputs^GW2DummyPRG.roboter.xIntMoveToEndPosition"/>
 				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yBoArrivedAtDestination" VarB="ControlTask Outputs^ControlPRG.yBoArrivedAtDestination"/>
 				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yBoDriving" VarB="ControlTask Outputs^ControlPRG.yBoDriving"/>
+				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yControllerState" VarB="ControlTask Outputs^ControlPRG.state"/>
 				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yRPposition" VarB="ControlTask Outputs^ControlPRG.yRPposition"/>
 				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yUintWaypointIndex" VarB="ControlTask Outputs^ControlPRG.yUintWaypointIndex"/>
 			</OwnerB>

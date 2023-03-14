@@ -20,7 +20,7 @@ VAR
 	robot		: Robot;							//link to physical I/O of roboter or simulation model of the roboter
 	robotPoses 	AT%I*: ARRAY [1..8] OF RobotPose;	//input from camera
 	
-	state : ControllerState := ControllerState.init;//sets controller state
+	state AT%Q*: ControllerState := ControllerState.init;//sets controller state
 	
 	CONTROL_ERROR_THRESH : LREAL := 5;
 	
@@ -73,6 +73,7 @@ CASE state OF
 		state := ControllerState.calcTrajectory;
 		
 	 ControllerState.calcTrajectory:
+	 trajectory.generateTrajectory();
 	 	IF trajectory.ready THEN
 			state := ControllerState.ready;
 		END_IF
@@ -81,7 +82,7 @@ CASE state OF
 	ControllerState.ready:
 		IF newWaypointListAvailable THEN
 			//stop and calculate new trajectory
-			state := ControllerState.calcTrajectory;
+			state := ControllerState.setTrajectory;
 		ELSIF xBoEnable THEN
 			state := ControllerState.driving;
 		END_IF
@@ -94,7 +95,7 @@ CASE state OF
 			//got back to idle and set arrived flag for GW2, method needed?
 			state := ControllerState.idle;
 			controller.resetReachedReference();
-			trajectory.reset
+			// TODO: trajectory.reset(...);
 		ELSIF xBoEnable THEN
 			//do the driving
 			drive();
@@ -210,7 +211,9 @@ END_VAR]]></Declaration>
       <LineId Id="735" Count="0" />
       <LineId Id="345" Count="0" />
       <LineId Id="340" Count="0" />
-      <LineId Id="736" Count="4" />
+      <LineId Id="736" Count="1" />
+      <LineId Id="781" Count="0" />
+      <LineId Id="738" Count="2" />
       <LineId Id="517" Count="0" />
       <LineId Id="341" Count="1" />
       <LineId Id="445" Count="1" />

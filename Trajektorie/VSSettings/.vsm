@@ -14,48 +14,6 @@
           <FileName></FileName>
           <Children>
             <Node>
-              <Title>thetaCam</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>thetaObs</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>thetaRef</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>vXCartesianFromMotors</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>vXCartesianToMotors</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>vYCartesianFromMotors</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>vYCartesianToMotors</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
               <Title>xCam</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
@@ -104,18 +62,18 @@
               <FileName></FileName>
               <Children>
                 <Node>
-                  <Title>xCam, yCam</Title>
+                  <Title>yCam, xCam</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children>
                     <Node>
-                      <Title>X: xCam</Title>
+                      <Title>X: yCam</Title>
                       <Expanded>False</Expanded>
                       <FileName></FileName>
                       <Children />
                     </Node>
                     <Node>
-                      <Title>Y: yCam</Title>
+                      <Title>Y: xCam</Title>
                       <Expanded>False</Expanded>
                       <FileName></FileName>
                       <Children />
@@ -123,18 +81,18 @@
                   </Children>
                 </Node>
                 <Node>
-                  <Title>xObs, yObs</Title>
+                  <Title>yObs, xObs</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children>
                     <Node>
-                      <Title>X: xObs</Title>
+                      <Title>X: yObs</Title>
                       <Expanded>False</Expanded>
                       <FileName></FileName>
                       <Children />
                     </Node>
                     <Node>
-                      <Title>Y: yObs</Title>
+                      <Title>Y: xObs</Title>
                       <Expanded>False</Expanded>
                       <FileName></FileName>
                       <Children />
@@ -173,64 +131,19 @@
               <Title>Axis Group (3)</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
-              <Children>
-                <Node>
-                  <Title>vYCartesianToMotors</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>vYCartesianFromMotors</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-              </Children>
+              <Children />
             </Node>
             <Node>
               <Title>Axis Group (4)</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
-              <Children>
-                <Node>
-                  <Title>vXCartesianToMotors</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>vXCartesianFromMotors</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-              </Children>
+              <Children />
             </Node>
             <Node>
               <Title>Axis Group (1)</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
-              <Children>
-                <Node>
-                  <Title>thetaObs</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>thetaCam</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>thetaRef</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-              </Children>
+              <Children />
             </Node>
           </Children>
         </Node>
