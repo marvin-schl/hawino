@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="TimeOptimalTrajectory" Id="{c9d800de-1da9-4b82-a21b-c146282eb721}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TimeOptimalTrajectory
+VAR_INPUT
+	currentPose			: RobotPoseSimple;
+	drive				: BOOL 				:= FALSE;
+END_VAR
+VAR_OUTPUT
+	finished			: BOOL 				:= FALSE;
+	ready				: BOOL				:= FALSE;
+	referencePose		: RobotPoseSimple;
+	WPLidx 				: INT 				:= 0;
+END_VAR
+VAR
+	path				: Path;
+	trajectoryPlanner	: TrajectoryPlanner;
+	wayPointListRaw		: ARRAY [0..100] OF RobotPoseSimple;
+	cnt					: INT 				:= 0;
+	
+	samplingTime		: LREAL				:= 0.05;
+	radius				: LREAL				:= 0.2;
+	maxVel				: LREAL				:= 0.7;
+	maxAcc				: LREAL				:= 0.9;
+	maxRotVel			: LREAL				:= 100;
+	maxRotAcc			: LREAL				:= 100;	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[ready := trajectoryPlanner.trajectoriesReady;
+IF cnt = 5 AND NOT finished THEN
+	WPLidx := WPLidx +1;
+	cnt := 0;
+END_IF
+
+IF  trajectoryPlanner.posTrajectory[WPLidx].x = -1 AND trajectoryPlanner.posTrajectory[WPLidx].y = -1  AND trajectoryPlanner.posTrajectory[WPLidx].theta = -1 THEN
+	finished := TRUE;
+	trajectoryPlanner.resetTrajectoryFlags();
+END_IF
+
+IF drive AND NOT finished AND ready THEN
+	referencePose.y := trajectoryPlanner.posTrajectory[WPLidx].y;
+	referencePose.x := trajectoryPlanner.posTrajectory[WPLidx].x;
+	referencePose.theta := trajectoryPlanner.posTrajectory[WPLidx].theta;
+	cnt := cnt +1;	
+END_IF
+
+]]></ST>
+    </Implementation>
+    <Method Name="setRobotPose" Id="{612c742a-1fe7-4003-9836-d6bbc0467a35}">
+      <Declaration><![CDATA[METHOD setRobotPose : RobotPoseSimple
+VAR_INPUT
+	newPose: RobotPoseSimple;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="setWaypointList" Id="{e85e045f-80a3-4da6-9e39-79af30febaa9}">
+      <Declaration><![CDATA[METHOD setWaypointList : ARRAY [0..100] OF RobotPoseSimple
+VAR_INPUT
+	newWayPointList	: ARRAY [0..100]  OF RobotPoseSimple;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[WPLidx 			:= 0; 						//reset
+finished 		:= FALSE;
+
+path(waypointListRaw := newWayPointList, radius := radius);
+trajectoryPlanner(path := path, 
+				  qAccMax := maxAcc, 
+				  qVelMax := maxVel, 
+				  thetaAccMax := maxRotAcc,
+				  thetaVelMax := maxRotVel);
+				  
+trajectoryPlanner.generateTrajectory();]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="TimeOptimalTrajectory">
+      <LineId Id="37" Count="7" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="97" Count="1" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="71" Count="0" />
+    </LineIds>
+    <LineIds Name="TimeOptimalTrajectory.setRobotPose">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="TimeOptimalTrajectory.setWaypointList">
+      <LineId Id="7" Count="1" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="24" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

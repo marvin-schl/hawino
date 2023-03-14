@@ -14,12 +14,6 @@
           <FileName></FileName>
           <Children>
             <Node>
-              <Title>e</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
               <Title>vXworldToSimulink</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
@@ -70,6 +64,91 @@
           </Children>
         </Node>
         <Node>
+          <Title>DataPool</Title>
+          <Expanded>False</Expanded>
+          <FileName></FileName>
+          <Children>
+            <Node>
+              <Title>thetaCam</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>thetaObs</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>thetaRef</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>vXCartesianFromMotors</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>vXCartesianToMotors</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>vYCartesianFromMotors</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>vYCartesianToMotors</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>xCam</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>xObs</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>xRef</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>yCam</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>yObs</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>yRef</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+          </Children>
+        </Node>
+        <Node>
           <Title>XY Chart</Title>
           <Expanded>False</Expanded>
           <FileName></FileName>
@@ -80,18 +159,18 @@
               <FileName></FileName>
               <Children>
                 <Node>
-                  <Title>x, y</Title>
+                  <Title>Channel</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children>
                     <Node>
-                      <Title>X: x</Title>
+                      <Title>X: Empty</Title>
                       <Expanded>False</Expanded>
                       <FileName></FileName>
                       <Children />
                     </Node>
                     <Node>
-                      <Title>Y: y</Title>
+                      <Title>Y: Empty</Title>
                       <Expanded>False</Expanded>
                       <FileName></FileName>
                       <Children />
@@ -99,18 +178,70 @@
                   </Children>
                 </Node>
                 <Node>
-                  <Title>xRef, yRef</Title>
+                  <Title>Channel</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children>
                     <Node>
-                      <Title>X: xRef</Title>
+                      <Title>X: Empty</Title>
                       <Expanded>False</Expanded>
                       <FileName></FileName>
                       <Children />
                     </Node>
                     <Node>
-                      <Title>Y: yRef</Title>
+                      <Title>Y: Empty</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                  </Children>
+                </Node>
+                <Node>
+                  <Title>Channel</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children>
+                    <Node>
+                      <Title>X: Empty</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                    <Node>
+                      <Title>Y: Empty</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                  </Children>
+                </Node>
+              </Children>
+            </Node>
+          </Children>
+        </Node>
+        <Node>
+          <Title>XY Chart</Title>
+          <Expanded>False</Expanded>
+          <FileName></FileName>
+          <Children>
+            <Node>
+              <Title>Axis Group</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children>
+                <Node>
+                  <Title>xCam, yCam</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children>
+                    <Node>
+                      <Title>X: xCam</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                    <Node>
+                      <Title>Y: yCam</Title>
                       <Expanded>False</Expanded>
                       <FileName></FileName>
                       <Children />
@@ -136,6 +267,25 @@
                     </Node>
                   </Children>
                 </Node>
+                <Node>
+                  <Title>xRef, yRef</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children>
+                    <Node>
+                      <Title>X: xRef</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                    <Node>
+                      <Title>Y: yRef</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                  </Children>
+                </Node>
               </Children>
             </Node>
           </Children>
@@ -151,13 +301,83 @@
               <FileName></FileName>
               <Children>
                 <Node>
-                  <Title>vYworldToSimulink</Title>
+                  <Title>Channel</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
                 </Node>
                 <Node>
-                  <Title>vXworldToSimulink</Title>
+                  <Title>Channel</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+              </Children>
+            </Node>
+          </Children>
+        </Node>
+        <Node>
+          <Title>YT Chart</Title>
+          <Expanded>False</Expanded>
+          <FileName></FileName>
+          <Children>
+            <Node>
+              <Title>Axis Group (3)</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children>
+                <Node>
+                  <Title>vYCartesianToMotors</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>vYCartesianFromMotors</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+              </Children>
+            </Node>
+            <Node>
+              <Title>Axis Group (4)</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children>
+                <Node>
+                  <Title>vXCartesianToMotors</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>vXCartesianFromMotors</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+              </Children>
+            </Node>
+            <Node>
+              <Title>Axis Group (1)</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children>
+                <Node>
+                  <Title>thetaObs</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>thetaCam</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>thetaRef</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
@@ -177,7 +397,7 @@
               <FileName></FileName>
               <Children>
                 <Node>
-                  <Title>e</Title>
+                  <Title>Channel</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
@@ -284,25 +504,6 @@
                   </Children>
                 </Node>
                 <Node>
-                  <Title>xRef, yRef</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children>
-                    <Node>
-                      <Title>X: xRef</Title>
-                      <Expanded>False</Expanded>
-                      <FileName></FileName>
-                      <Children />
-                    </Node>
-                    <Node>
-                      <Title>Y: yRef</Title>
-                      <Expanded>False</Expanded>
-                      <FileName></FileName>
-                      <Children />
-                    </Node>
-                  </Children>
-                </Node>
-                <Node>
                   <Title>xObs, yObs</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
@@ -315,6 +516,25 @@
                     </Node>
                     <Node>
                       <Title>Y: yObs</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                  </Children>
+                </Node>
+                <Node>
+                  <Title>xRef, yRef</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children>
+                    <Node>
+                      <Title>X: xRef</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                    <Node>
+                      <Title>Y: yRef</Title>
                       <Expanded>False</Expanded>
                       <FileName></FileName>
                       <Children />

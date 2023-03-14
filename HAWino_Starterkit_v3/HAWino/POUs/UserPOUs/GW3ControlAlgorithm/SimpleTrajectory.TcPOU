@@ -9,7 +9,7 @@
 //as finished.
 FUNCTION_BLOCK SimpleTrajectory
 VAR_INPUT
-	currentPose			: RobotPoseSimple;
+	currentPose			: RobotPoseSimple; 
 END_VAR
 VAR_OUTPUT
 	finished			: BOOL 				:= FALSE;
@@ -39,7 +39,7 @@ END_IF
 
 referencePose := wayPointList[WPLidx];]]></ST>
     </Implementation>
-    <Method Name="setRobotPose" Id="{612c742a-1fe7-4003-9836-d6bbc0467a35}">
+    <Method Name="setRobotPose" Id="{4777862b-7963-45f3-a596-7175f7be0572}">
       <Declaration><![CDATA[METHOD setRobotPose : RobotPoseSimple
 VAR_INPUT
 	newPose: RobotPoseSimple;
@@ -49,7 +49,7 @@ END_VAR
         <ST><![CDATA[setRobotPose := newPose;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="setWaypointList" Id="{e85e045f-80a3-4da6-9e39-79af30febaa9}">
+    <Method Name="setWaypointList" Id="{b92db38b-8bc0-4377-9472-6948116595c2}">
       <Declaration><![CDATA[METHOD setWaypointList : ARRAY [0..100] OF RobotPoseSimple
 VAR_INPUT
 	newWayPointList	: ARRAY [0..100]  OF RobotPoseSimple;

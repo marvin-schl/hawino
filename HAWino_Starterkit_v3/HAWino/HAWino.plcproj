@@ -108,6 +108,9 @@
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\SimpleTrajectory.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\TimeOptimalTrajectory.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\TrackingController.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -130,9 +133,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning\TrajectoryPlanner.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\UserPOUs\TestAndMeasurement\PathTest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\TestTrajectory.TcPOU">

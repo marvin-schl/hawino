@@ -121,7 +121,7 @@ FOR i := 0 TO maxIdx BY 2 DO
 	k := 0;
 	WHILE ABS(right-left) > searchTol AND k <= maxIter DO
 		center 	:= (left+right)/2;
-		IF dVelMaxAcc(left)*dVelMaxAcc(center) < 0 THEN
+		IF dVelMaxAcc(left,1)*dVelMaxAcc(center,1) < 0 THEN
 			right := center;
 		ELSE
 			left := center;
@@ -139,7 +139,7 @@ END_FOR
       <Declaration><![CDATA[METHOD PRIVATE dVelMaxAcc : LREAL
 VAR_INPUT
 	arcLength	: LREAL;
-	order		: INT := 1;
+	order		: INT 		:= 1;
 END_VAR
 VAR
 	velMaxAccM, velMaxAccP, velMaxAccVal: LREAL;
@@ -166,15 +166,18 @@ VAR_INPUT
 END_VAR
 VAR
 	i: INT := 0;
-	dPos: RobotPoseSimple;
+	tmpPos, dPos: RobotPoseSimple;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[FOR i := 0 TO idxForward-1 BY 1 DO
-	posTrajectory[i] 		:= path.getPoint(arcLength := pos[i]);
+	tmpPos 					:= path.getPoint(arcLength := pos[i]);
+	posTrajectory[i].x		:= tmpPos.x*1000;
+	posTrajectory[i].y		:= tmpPos.y*1000;
+	posTrajectory[i].theta	:= tmpPos.theta;
 	dPos 					:= path.diff(arcLength := pos[i], 1);
 	
-	velTrajectory[i].x 		:= vel[i]*dPos.x; 
-	velTrajectory[i].y  	:= vel[i]*dPos.y;
+	velTrajectory[i].x 		:= vel[i]*dPos.x*1000; 
+	velTrajectory[i].y  	:= vel[i]*dPos.y*1000;
 	velTrajectory[i].theta	:= vel[i]*dPos.theta;
 END_FOR
 
@@ -221,8 +224,9 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[trajectoryGenerationFailed := FALSE;
-trajectoryGenerationFinished := FALSE;]]></ST>
+        <ST><![CDATA[trajectoryGenerationFailed 		:= FALSE;
+trajectoryGenerationFinished 	:= FALSE;
+trajectoriesReady 				:= FALSE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="step1" Id="{772b0480-83fa-4035-ba7a-a9a78d2f8302}">
@@ -311,7 +315,7 @@ vel[idxForward] := MIN(currVelMax, currVelMaxAcc);
 
 currAccMin		   := accMin(pos[idxForward], vel[idxForward]);
 currAccMax		   := accMax(pos[idxForward], vel[idxForward]);
-currdVelMaxAcc 	   := dVelMaxAcc(pos[idxForward]);
+currdVelMaxAcc 	   := dVelMaxAcc(pos[idxForward],1);
 
 //transitions
 IF pos[idxForward] > path.length THEN
@@ -495,7 +499,11 @@ END_IF]]></ST>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TrajectoryPlanner.generateOutputTrajectories">
-      <LineId Id="12" Count="15" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="34" Count="1" />
+      <LineId Id="14" Count="13" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TrajectoryPlanner.generateTrajectory">
@@ -507,6 +515,7 @@ END_IF]]></ST>
     <LineIds Name="TrajectoryPlanner.resetTrajectoryFlags">
       <LineId Id="10" Count="0" />
       <LineId Id="5" Count="0" />
+      <LineId Id="14" Count="0" />
     </LineIds>
     <LineIds Name="TrajectoryPlanner.step1">
       <LineId Id="11" Count="4" />
