@@ -26,7 +26,11 @@ startPoint := subsplines[0]^.startPointVal;
 endPoint   := subsplines[nmbOfSubsplines-1]^.endPointVal;]]></ST>
     </Implementation>
     <Method Name="calculateLength" Id="{fa9150c3-1548-4fad-bc03-2a7bdbb95fff}">
-      <Declaration><![CDATA[METHOD PROTECTED  calculateLength : LREAL
+      <Declaration><![CDATA[(* 
+Implementation of abstract Spline method.
+For internal inital length calculation, should be called in the constructor => protected
+*)
+METHOD PROTECTED  calculateLength : LREAL
 VAR_INPUT
 END_VAR
 VAR
@@ -54,10 +58,15 @@ END_FOR]]></ST>
       </Implementation>
     </Method>
     <Method Name="diff" Id="{c435850d-099e-4883-9ebf-b0187bee6499}">
-      <Declaration><![CDATA[METHOD  PUBLIC diff : RobotPoseSimple
+      <Declaration><![CDATA[(* 
+Implementation of abstract Spline method.
+Calculates the derivate of the spline at an arbitrary arcLength. Should be implmented for order one and two. Invalid 
+orders should write a -1 in every component of the return value.
+*)
+METHOD  PUBLIC diff : RobotPoseSimple
 VAR_INPUT
-	arcLength: LREAL;
-	order: INT := 1;
+	arcLength: LREAL; //arcLength at which the corresponding derivative should be calculated
+	order: INT := 1;  //optional: order of the derivate, should be implemented for 1 and 2, default: 1
 END_VAR
 VAR
 	subspline: 				POINTER TO Spline;
@@ -146,9 +155,13 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="getPoint" Id="{edc81ff7-b7ad-4aac-a526-a3258fc65de9}">
-      <Declaration><![CDATA[METHOD PUBLIC  getPoint : RobotPoseSimple
+      <Declaration><![CDATA[(*
+Implementation of abstract Spline method.
+Gets the configuration of the Spline at any given arcLength. 
+*)
+METHOD PUBLIC  getPoint : RobotPoseSimple
 VAR_INPUT
-	arcLength: LREAL;
+	arcLength: LREAL; //arcLength at which the Splines configuration shall be calculated.
 END_VAR
 VAR
 	subspline: POINTER TO Spline;

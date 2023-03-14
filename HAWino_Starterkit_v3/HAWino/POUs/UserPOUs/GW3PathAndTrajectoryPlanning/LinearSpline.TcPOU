@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="LinearSpline" Id="{ee8a5752-8731-4d20-b9ec-42a2604040d7}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK LinearSpline EXTENDS Spline
+    <Declaration><![CDATA[(*Class: Linear Spline
+Implementation of a linear Curve. The linear Spline is defined uniquely by two waypoints.
+*)
+FUNCTION_BLOCK LinearSpline EXTENDS Spline
 VAR_INPUT
-	wayPoints: ARRAY[0..1] OF RobotPoseSimple;
+	wayPoints: ARRAY[0..1] OF RobotPoseSimple; //Input waypoints for creation of the linear Spline. First element should be startPoint and 
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -21,7 +24,11 @@ endPoint.theta		:= startPoint.theta;
 lengthVar 			:= calculateLength();]]></ST>
     </Implementation>
     <Method Name="calculateLength" Id="{b557106d-f894-499c-b93e-4ca33bd951b4}">
-      <Declaration><![CDATA[METHOD PROTECTED  calculateLength : LREAL
+      <Declaration><![CDATA[(* 
+Implementation of abstract Spline method.
+For internal inital length calculation, should be called in the constructor => protected
+*)
+METHOD PROTECTED  calculateLength : LREAL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -30,10 +37,15 @@ END_VAR
       </Implementation>
     </Method>
     <Method Name="diff" Id="{b27160dd-5577-4e29-b3d1-95343ea264e1}">
-      <Declaration><![CDATA[METHOD  diff : RobotPoseSimple
+      <Declaration><![CDATA[(* 
+Implementation of abstract Spline method.
+Calculates the derivate of the spline at an arbitrary arcLength. Should be implmented for order one and two. Invalid 
+orders should write a -1 in every component of the return value.
+*)
+METHOD  diff : RobotPoseSimple
 VAR_INPUT
-	arcLength: LREAL;
-	order: INT := 1;
+	arcLength: LREAL; //arcLength at which the corresponding derivative should be calculated
+	order: INT := 1;  //optional: order of the derivate, should be implemented for 1 and 2, default: 1
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -54,7 +66,11 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="getPoint" Id="{2d494b1b-e161-44ef-b005-acd30148114d}">
-      <Declaration><![CDATA[METHOD getPoint : RobotPoseSimple
+      <Declaration><![CDATA[(*
+Implementation of abstract Spline method.
+Gets the configuration of the Spline at any given arcLength. 
+*)
+METHOD getPoint : RobotPoseSimple
 VAR_INPUT
 	arcLength	: LREAL;
 END_VAR
