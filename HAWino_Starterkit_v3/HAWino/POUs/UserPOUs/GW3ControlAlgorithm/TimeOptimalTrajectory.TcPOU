@@ -19,7 +19,7 @@ VAR
 	cnt					: INT 				:= 0;
 	
 	samplingTime		: LREAL				:= 0.05;
-	radius				: LREAL				:= 0.2;
+	radius				: LREAL				:= 0.1;
 	maxVel				: LREAL				:= 0.7;
 	maxAcc				: LREAL				:= 0.9;
 	maxRotVel			: LREAL				:= 100;
@@ -35,7 +35,6 @@ END_IF
 
 IF  trajectoryPlanner.posTrajectory[WPLidx].x = -1 AND trajectoryPlanner.posTrajectory[WPLidx].y = -1  AND trajectoryPlanner.posTrajectory[WPLidx].theta = -1 THEN
 	finished := TRUE;
-	trajectoryPlanner.resetTrajectoryFlags();
 END_IF
 
 IF drive AND NOT finished AND ready THEN
@@ -47,6 +46,15 @@ END_IF
 
 ]]></ST>
     </Implementation>
+    <Method Name="generateTrajectory" Id="{3d1dbbe1-33ce-40a6-ae71-929ba959894c}">
+      <Declaration><![CDATA[METHOD generateTrajectory : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[trajectoryPlanner.generateTrajectory();]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="setRobotPose" Id="{612c742a-1fe7-4003-9836-d6bbc0467a35}">
       <Declaration><![CDATA[METHOD setRobotPose : RobotPoseSimple
 VAR_INPUT
@@ -73,20 +81,16 @@ trajectoryPlanner(path := path,
 				  thetaAccMax := maxRotAcc,
 				  thetaVelMax := maxRotVel);
 				  
-trajectoryPlanner.generateTrajectory();]]></ST>
+]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="TimeOptimalTrajectory">
-      <LineId Id="37" Count="7" />
-      <LineId Id="99" Count="0" />
-      <LineId Id="45" Count="0" />
-      <LineId Id="48" Count="1" />
-      <LineId Id="54" Count="0" />
-      <LineId Id="97" Count="1" />
-      <LineId Id="56" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="72" Count="0" />
+      <LineId Id="124" Count="7" />
+      <LineId Id="133" Count="8" />
       <LineId Id="71" Count="0" />
+    </LineIds>
+    <LineIds Name="TimeOptimalTrajectory.generateTrajectory">
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.setRobotPose">
       <LineId Id="5" Count="0" />

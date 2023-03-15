@@ -197,7 +197,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[WHILE NOT trajectoryGenerationFinished AND NOT trajectoryGenerationFailed DO
+        <ST><![CDATA[IF NOT trajectoryGenerationFinished AND NOT trajectoryGenerationFailed THEN
 	CASE currentStep OF
 		1:
 			step1();
@@ -210,23 +210,39 @@ END_VAR
 		5:
 			step5();
 	END_CASE
-END_WHILE
+END_IF
 
 IF trajectoryGenerationFinished THEN
 	generateOutputTrajectories();
 	trajectoriesReady := TRUE;
+	trajectoryGenerationFinished := FALSE;
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Method Name="resetTrajectoryFlags" Id="{cdd05716-e05f-4e73-ab88-3631f133ec4e}">
-      <Declaration><![CDATA[METHOD PUBLIC resetTrajectoryFlags
+    <Method Name="resetFlag" Id="{cdd05716-e05f-4e73-ab88-3631f133ec4e}">
+      <Declaration><![CDATA[METHOD PUBLIC resetFlag
 VAR_INPUT
+	flagToReset : STRING[10];
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[trajectoryGenerationFailed 		:= FALSE;
-trajectoryGenerationFinished 	:= FALSE;
-trajectoriesReady 				:= FALSE;]]></ST>
+        <ST><![CDATA[//CASE flagToReset OF
+//	'trajectoryGenerationFailed' : trajectoryGenerationFailed := FALSE;
+//	"trajectoryGenerationFinished" : trajectoryGenerationFinished := FALSE;
+//	"trajectoriesReady" : trajectoriesReady := FALSE;	
+//END_CASE
+
+IF (flagToReset = 'failed') THEN
+	trajectoryGenerationFailed 		:= FALSE;
+END_IF
+
+IF (flagToReset = 'finished') THEN
+	trajectoryGenerationFinished 	:= FALSE;
+END_IF
+
+IF (flagToReset = 'ready') THEN
+	trajectoriesReady 				:= FALSE;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="step1" Id="{772b0480-83fa-4035-ba7a-a9a78d2f8302}">
@@ -510,12 +526,17 @@ END_IF]]></ST>
       <LineId Id="12" Count="12" />
       <LineId Id="5" Count="0" />
       <LineId Id="26" Count="3" />
+      <LineId Id="33" Count="0" />
       <LineId Id="25" Count="0" />
     </LineIds>
-    <LineIds Name="TrajectoryPlanner.resetTrajectoryFlags">
-      <LineId Id="10" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="14" Count="0" />
+    <LineIds Name="TrajectoryPlanner.resetFlag">
+      <LineId Id="19" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="28" Count="9" />
     </LineIds>
     <LineIds Name="TrajectoryPlanner.step1">
       <LineId Id="11" Count="4" />

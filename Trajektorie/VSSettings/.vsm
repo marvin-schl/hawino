@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <Node>
   <Title>Trajektorie</Title>
   <Expanded>False</Expanded>
@@ -237,4 +238,158 @@
       </Children>
     </Node>
   </Children>
+=======
+<Node>
+  <Title>Trajektorie</Title>
+  <Expanded>False</Expanded>
+  <FileName></FileName>
+  <Children>
+    <Node>
+      <Title>XY Scope Project</Title>
+      <Expanded>False</Expanded>
+      <FileName>E:\hawino\Trajektorie\XY Scope Project.tcscopex</FileName>
+      <Children>
+        <Node>
+          <Title>DataPool</Title>
+          <Expanded>False</Expanded>
+          <FileName></FileName>
+          <Children>
+            <Node>
+              <Title>xCam</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>xObs</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>xRef</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>yCam</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>yObs</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>yRef</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+          </Children>
+        </Node>
+        <Node>
+          <Title>XY Chart</Title>
+          <Expanded>False</Expanded>
+          <FileName></FileName>
+          <Children>
+            <Node>
+              <Title>Axis Group</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children>
+                <Node>
+                  <Title>yCam, xCam</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children>
+                    <Node>
+                      <Title>X: yCam</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                    <Node>
+                      <Title>Y: xCam</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                  </Children>
+                </Node>
+                <Node>
+                  <Title>yObs, xObs</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children>
+                    <Node>
+                      <Title>X: yObs</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                    <Node>
+                      <Title>Y: xObs</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                  </Children>
+                </Node>
+                <Node>
+                  <Title>xRef, yRef</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children>
+                    <Node>
+                      <Title>X: xRef</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                    <Node>
+                      <Title>Y: yRef</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                  </Children>
+                </Node>
+              </Children>
+            </Node>
+          </Children>
+        </Node>
+        <Node>
+          <Title>YT Chart</Title>
+          <Expanded>False</Expanded>
+          <FileName></FileName>
+          <Children>
+            <Node>
+              <Title>Axis Group (3)</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>Axis Group (4)</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>Axis Group (1)</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+          </Children>
+        </Node>
+      </Children>
+    </Node>
+  </Children>
+>>>>>>> 8f32c086b58cf5550f4fd51b26714b890f1af381
 </Node>

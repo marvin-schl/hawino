@@ -16,6 +16,7 @@ VAR_INPUT
 	xVxToRobot:		LREAL;
 	xVyToRobot:		LREAL;
 	xOmegaToRobot:	LREAL;
+	theta:			LREAL; //theta for I/O Lineraztion only explicitly Input for FF-Linearization
 END_VAR
 
 VAR_OUTPUT
@@ -48,7 +49,7 @@ Robot2World(
 	vx_robot 	:= xVxRobot,
 	vy_robot 	:= xVyRobot,
 	omega_robot := xOmegaRobot,
-	theta		:= yObserverdPose.theta,
+	theta		:= theta,
 	vx_world 	=> vXworldToSimulink,
 	vy_world  	=> vYworldToSimulink,
 	omega_world => omegaWorldToSimulink);

@@ -405,6 +405,46 @@
 			</ArrayInfo>
 		</DataType>
 		<DataType>
+			<Name GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}" AutoDeleteType="true">ControllerState</Name>
+			<BitSize>16</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
+			<EnumInfo>
+				<Text><![CDATA[init]]></Text>
+				<Enum>0</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[idle]]></Text>
+				<Enum>1</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[calcTrajectory]]></Text>
+				<Enum>2</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[setTrajectory]]></Text>
+				<Enum>3</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[ready]]></Text>
+				<Enum>4</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[driving]]></Text>
+				<Enum>5</Enum>
+			</EnumInfo>
+			<Properties>
+				<Property>
+					<Name>qualified_only</Name>
+				</Property>
+				<Property>
+					<Name>strict</Name>
+				</Property>
+				<Property>
+					<Name>generate_implicit_init_function</Name>
+				</Property>
+			</Properties>
+		</DataType>
+		<DataType>
 			<Name GUID="{48A9867C-4E1C-5C48-972D-E35D946F6489}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..2,0..2] OF LREAL</Name>
 			<BitSize>576</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
@@ -3881,42 +3921,42 @@
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.xBoEnable</Name>
+							<Name>ControlPRG.xBoEnable</Name>
 							<Comment><![CDATA[////////////////////////////////////////////
 ////////// LINKS TO GW2  ///////////////////
 ////////////////////////////////////////////]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.observer.estimatedPoseFromSimlink</Name>
+							<Name>ControlPRG.observer.estimatedPoseFromSimlink</Name>
 							<Comment><![CDATA[from Simulink]]></Comment>
 							<Type GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}">ARRAY [0..2] OF LREAL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.robot.vXfromRobot</Name>
+							<Name>ControlPRG.robot.vXfromRobot</Name>
 							<Comment><![CDATA[outputs from robot]]></Comment>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.robot.vYfromRobot</Name>
+							<Name>ControlPRG.robot.vYfromRobot</Name>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.robot.vThetaFromRobot</Name>
+							<Name>ControlPRG.robot.vThetaFromRobot</Name>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.robotPoses</Name>
+							<Name>ControlPRG.robotPoses</Name>
 							<Comment><![CDATA[input from camera]]></Comment>
 							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.newWaypointListAvailable</Name>
+							<Name>ControlPRG.newWaypointListAvailable</Name>
 							<Comment><![CDATA[ implemented, Status-Bit zur Signalisierung einer neuen WP-Liste]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.waypointList</Name>
+							<Name>ControlPRG.waypointList</Name>
 							<Comment><![CDATA[ implemented, Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)]]></Comment>
 							<Type GUID="{57D1290D-8922-6C29-A5EB-E802603DE228}">ARRAY [0..100] OF RobotPoseSimple</Type>
 						</Var>
@@ -3962,68 +4002,73 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.observer.cameraPoseToSimulink</Name>
+							<Name>ControlPRG.state</Name>
+							<Comment><![CDATA[sets controller state]]></Comment>
+							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.cameraPoseToSimulink</Name>
 							<Comment><![CDATA[to Simulink]]></Comment>
 							<Type GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}">ARRAY [0..2] OF LREAL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.observer.vXworldToSimulink</Name>
+							<Name>ControlPRG.observer.vXworldToSimulink</Name>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.observer.vYworldToSimulink</Name>
+							<Name>ControlPRG.observer.vYworldToSimulink</Name>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.observer.omegaWorldToSimulink</Name>
+							<Name>ControlPRG.observer.omegaWorldToSimulink</Name>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.observer.vXtoRobotWorldToSimulink</Name>
+							<Name>ControlPRG.observer.vXtoRobotWorldToSimulink</Name>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.observer.vYtoRobotWorldToSimulink</Name>
+							<Name>ControlPRG.observer.vYtoRobotWorldToSimulink</Name>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.observer.omegaToRobotWorldToSimulink</Name>
+							<Name>ControlPRG.observer.omegaToRobotWorldToSimulink</Name>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.observer.K</Name>
+							<Name>ControlPRG.observer.K</Name>
 							<Type GUID="{48A9867C-4E1C-5C48-972D-E35D946F6489}">ARRAY [0..2,0..2] OF LREAL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.robot.vXtoRobot</Name>
+							<Name>ControlPRG.robot.vXtoRobot</Name>
 							<Comment><![CDATA[inputs to robot]]></Comment>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.robot.vYtoRobot</Name>
+							<Name>ControlPRG.robot.vYtoRobot</Name>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.robot.vThetaToRobot</Name>
+							<Name>ControlPRG.robot.vThetaToRobot</Name>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.yBoDriving</Name>
+							<Name>ControlPRG.yBoDriving</Name>
 							<Comment><![CDATA[ implemented, TRUE, wenn Roboter fährt				]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.yBoArrivedAtDestination</Name>
+							<Name>ControlPRG.yBoArrivedAtDestination</Name>
 							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.yUintWaypointIndex</Name>
+							<Name>ControlPRG.yUintWaypointIndex</Name>
 							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>TrackingController.yRPposition</Name>
+							<Name>ControlPRG.yRPposition</Name>
 							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
 							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
 						</Var>
@@ -4059,7 +4104,7 @@
 					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
 						<Name>PlcTask Inputs</Name>
 						<Var>
-							<Name>TrackingController.xIntMoveToEndPosition</Name>
+							<Name>ControlPRG.xIntMoveToEndPosition</Name>
 							<Comment><![CDATA[ unused,		Anfahrt (in Sperrzone vor Tasche oder Ladestation) = 1, Fahrt = 0]]></Comment>
 							<Type>INT</Type>
 						</Var>
@@ -4122,6 +4167,10 @@
 							<Name>GW2DummyPRG.roboter.yRPposition</Name>
 							<Comment><![CDATA[ aktuelle Roboterposition, für Simulationszwecke;]]></Comment>
 							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
+						</Var>
+						<Var>
+							<Name>GW2DummyPRG.roboter.yControllerState</Name>
+							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" ContextId="2" AreaNo="33">
@@ -7294,24 +7343,25 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="MQTT_1 Inputs^MQTT.nBatteryTemperature" VarB="RTD Inputs Channel 1^Batterytemperature"/>
 			</OwnerB>
 			<OwnerB Name="TIPC^HAWino^HAWino Instance">
-				<Link VarA="ControlTask Inputs^MotorDrivers.vThetaCartesianToMotors" VarB="ControlTask Outputs^TrackingController.robot.vThetaToRobot"/>
-				<Link VarA="ControlTask Inputs^MotorDrivers.vXCartesianToMotors" VarB="ControlTask Outputs^TrackingController.robot.vXtoRobot"/>
-				<Link VarA="ControlTask Inputs^MotorDrivers.vYCartesianToMotors" VarB="ControlTask Outputs^TrackingController.robot.vYtoRobot"/>
-				<Link VarA="ControlTask Inputs^TrackingController.newWaypointListAvailable" VarB="PlcTask Outputs^GW2DummyPRG.roboter.newWaypointListAvailable"/>
-				<Link VarA="ControlTask Inputs^TrackingController.robot.vThetaFromRobot" VarB="ControlTask Outputs^WheelEncoders.vthetaCartesianFromMotors"/>
-				<Link VarA="ControlTask Inputs^TrackingController.robot.vXfromRobot" VarB="ControlTask Outputs^WheelEncoders.vXCartesianFromMotors"/>
-				<Link VarA="ControlTask Inputs^TrackingController.robot.vYfromRobot" VarB="ControlTask Outputs^WheelEncoders.vYCartesianFromMotors"/>
-				<Link VarA="ControlTask Inputs^TrackingController.robotPoses" VarB="PlcTask Outputs^Camera.cameraData.robotPosition"/>
-				<Link VarA="ControlTask Inputs^TrackingController.waypointList" VarB="PlcTask Outputs^GW2DummyPRG.roboter.waypointList"/>
-				<Link VarA="ControlTask Inputs^TrackingController.xBoEnable" VarB="PlcTask Outputs^GW2DummyPRG.roboter.xBoEnable"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.newWaypointListAvailable" VarB="PlcTask Outputs^GW2DummyPRG.roboter.newWaypointListAvailable"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.robot.vThetaFromRobot" VarB="ControlTask Outputs^WheelEncoders.vthetaCartesianFromMotors"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.robot.vXfromRobot" VarB="ControlTask Outputs^WheelEncoders.vXCartesianFromMotors"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.robot.vYfromRobot" VarB="ControlTask Outputs^WheelEncoders.vYCartesianFromMotors"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.robotPoses" VarB="PlcTask Outputs^Camera.cameraData.robotPosition"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.waypointList" VarB="PlcTask Outputs^GW2DummyPRG.roboter.waypointList"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.xBoEnable" VarB="PlcTask Outputs^GW2DummyPRG.roboter.xBoEnable"/>
+				<Link VarA="ControlTask Inputs^MotorDrivers.vThetaCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vThetaToRobot"/>
+				<Link VarA="ControlTask Inputs^MotorDrivers.vXCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vXtoRobot"/>
+				<Link VarA="ControlTask Inputs^MotorDrivers.vYCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vYtoRobot"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^bComCheckAnswer" VarB="MQTT_1 Outputs^MQTT.bComCheckAnswer"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^nRobotNumber" VarB="PlcTask Outputs^HAWino.Robot_Number"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.txtReadInit" VarB="PlcTask Outputs^HAWino.initDone"/>
-				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yBoArrivedAtDestination" VarB="ControlTask Outputs^TrackingController.yBoArrivedAtDestination"/>
-				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yBoDriving" VarB="ControlTask Outputs^TrackingController.yBoDriving"/>
-				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yRPposition" VarB="ControlTask Outputs^TrackingController.yRPposition"/>
-				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yUintWaypointIndex" VarB="ControlTask Outputs^TrackingController.yUintWaypointIndex"/>
-				<Link VarA="PlcTask Inputs^TrackingController.xIntMoveToEndPosition" VarB="PlcTask Outputs^GW2DummyPRG.roboter.xIntMoveToEndPosition"/>
+				<Link VarA="PlcTask Inputs^ControlPRG.xIntMoveToEndPosition" VarB="PlcTask Outputs^GW2DummyPRG.roboter.xIntMoveToEndPosition"/>
+				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yBoArrivedAtDestination" VarB="ControlTask Outputs^ControlPRG.yBoArrivedAtDestination"/>
+				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yBoDriving" VarB="ControlTask Outputs^ControlPRG.yBoDriving"/>
+				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yControllerState" VarB="ControlTask Outputs^ControlPRG.state"/>
+				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yRPposition" VarB="ControlTask Outputs^ControlPRG.yRPposition"/>
+				<Link VarA="PlcTask Inputs^GW2DummyPRG.roboter.yUintWaypointIndex" VarB="ControlTask Outputs^ControlPRG.yUintWaypointIndex"/>
 			</OwnerB>
 			<OwnerB Name="TIRC^TcCOM Objects^Object2 (SoC_Model_Data_Aquisition_2022)">
 				<Link VarA="PlcTask Outputs^PowerManager.stMqtt_HAWino_IN^fActualBatteryCurrent" VarB="SoC_Model_Data_Aquisition_202_U^Current"/>
@@ -7326,15 +7376,15 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^nEstimatedRunningTime" VarB="SoC_Model__Data_Processing_20_Y^EstimatedRunningTime"/>
 			</OwnerB>
 			<OwnerB Name="TIRC^TcCOM Objects^Object3 (simpleObserver)">
-				<Link VarA="ControlTask Inputs^TrackingController.observer.estimatedPoseFromSimlink" VarB="AdditionalOutports^TcModuleOutput_OutEstimatedPose"/>
-				<Link VarA="ControlTask Outputs^TrackingController.observer.K" VarB="AdditionalInports^TcModuleInput_K"/>
-				<Link VarA="ControlTask Outputs^TrackingController.observer.cameraPoseToSimulink" VarB="AdditionalInports^TcModuleInput_InCameraPose"/>
-				<Link VarA="ControlTask Outputs^TrackingController.observer.omegaToRobotWorldToSimulink" VarB="AdditionalInports^TcModuleInput_omegaToRobot"/>
-				<Link VarA="ControlTask Outputs^TrackingController.observer.omegaWorldToSimulink" VarB="AdditionalInports^TcModuleInput_InVThetaworld"/>
-				<Link VarA="ControlTask Outputs^TrackingController.observer.vXtoRobotWorldToSimulink" VarB="AdditionalInports^TcModuleInput_vxToRobot"/>
-				<Link VarA="ControlTask Outputs^TrackingController.observer.vXworldToSimulink" VarB="AdditionalInports^TcModuleInput_InVXworld"/>
-				<Link VarA="ControlTask Outputs^TrackingController.observer.vYtoRobotWorldToSimulink" VarB="AdditionalInports^TcModuleInput_vyToRobot"/>
-				<Link VarA="ControlTask Outputs^TrackingController.observer.vYworldToSimulink" VarB="AdditionalInports^TcModuleInput_InVYworld"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.observer.estimatedPoseFromSimlink" VarB="AdditionalOutports^TcModuleOutput_OutEstimatedPose"/>
+				<Link VarA="ControlTask Outputs^ControlPRG.observer.K" VarB="AdditionalInports^TcModuleInput_K"/>
+				<Link VarA="ControlTask Outputs^ControlPRG.observer.cameraPoseToSimulink" VarB="AdditionalInports^TcModuleInput_InCameraPose"/>
+				<Link VarA="ControlTask Outputs^ControlPRG.observer.omegaToRobotWorldToSimulink" VarB="AdditionalInports^TcModuleInput_omegaToRobot"/>
+				<Link VarA="ControlTask Outputs^ControlPRG.observer.omegaWorldToSimulink" VarB="AdditionalInports^TcModuleInput_InVThetaworld"/>
+				<Link VarA="ControlTask Outputs^ControlPRG.observer.vXtoRobotWorldToSimulink" VarB="AdditionalInports^TcModuleInput_vxToRobot"/>
+				<Link VarA="ControlTask Outputs^ControlPRG.observer.vXworldToSimulink" VarB="AdditionalInports^TcModuleInput_InVXworld"/>
+				<Link VarA="ControlTask Outputs^ControlPRG.observer.vYtoRobotWorldToSimulink" VarB="AdditionalInports^TcModuleInput_vyToRobot"/>
+				<Link VarA="ControlTask Outputs^ControlPRG.observer.vYworldToSimulink" VarB="AdditionalInports^TcModuleInput_InVYworld"/>
 			</OwnerB>
 		</OwnerA>
 		<OwnerA Name="TIRC^TcCOM Objects^Object2 (SoC_Model_Data_Aquisition_2022)">
