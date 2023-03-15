@@ -4,15 +4,16 @@ classdef Path < Spline
         endPoint
         transitions
         subsplines
+        phiDZ
     end
     
     methods 
-        function obj = Path(x,y,r)
+        function obj = Path(x,y,r, phiDZ)
            [x, y] = obj.preprocessWaypointlist(x,y)
            nmbSubSplines = 2*length(x)-3;
            subsplines   = Spline.empty(nmbSubSplines,0);
            obj.transitions  = zeros(length(obj.subsplines)-1,1);
-           
+           obj.phiDZ = phiDZ;
            %generate bezier curves
            for i = 2:2:nmbSubSplines-1
                subsplines(i) = BezierCurve(x(i/2:i/2+2),y(i/2:i/2+2),r);
@@ -44,6 +45,7 @@ classdef Path < Spline
         end
         
         function [x, y, phi] = getPoint(obj, s)
+ 
             [idx, s_offset] = obj.getSubsplineToPoint(s);
             x   = zeros(length(s),1);
             y   = zeros(length(s),1);
@@ -51,8 +53,8 @@ classdef Path < Spline
 
             for i = 1:length(idx)
                 [x(i),y(i)] = obj.subsplines(idx(i)).getPoint(s_offset(i));
-                deltaPhi = obj.endPoint.phi - obj.startPoint.phi;
-                phi(i)   = obj.startPoint.phi+deltaPhi/2*(1-cos(pi/obj.length*s(i)));
+                phi(i) = obj.phi(s(i));
+                
             end
         end
         
@@ -67,12 +69,7 @@ classdef Path < Spline
             [idx, s_offset] = obj.getSubsplineToPoint(s);
             for i = 1:length(idx)                 
                 [x(i),y(i)] = obj.subsplines(idx(i)).diff(s_offset(i), order);
-                deltaPhi = obj.endPoint.phi - obj.startPoint.phi;
-                if order == 1
-                    phi(i) = deltaPhi*pi/(2*obj.length)*sin(pi/obj.length*s(i));
-                elseif order == 2
-                    phi(i) = deltaPhi*pi^2/(2*obj.length^2)*cos(pi/obj.length*s(i));
-                end
+                phi(i) = obj.dphi(s(i),order);
             end
         end
         
@@ -138,6 +135,28 @@ classdef Path < Spline
             t = zeros(length(obj.subsplines)-1,1);
             for i = 1:length(obj.subsplines)
                 t(i+1,1) = t(i,1) + obj.subsplines(i).getLength();
+            end
+        end
+        
+        function phi = phi(obj, s)
+            deltaPhi = obj.endPoint.phi-obj.startPoint.phi;
+            if s < obj.phiDZ
+                phi = obj.startPoint.phi;
+            elseif s > obj.length-obj.phiDZ
+                phi = obj.endPoint.phi;
+            else
+                phi   = obj.startPoint.phi+deltaPhi/2*(1-cos(pi/(obj.length-2*obj.phiDZ)*(s-obj.phiDZ)));
+            end
+        end
+        
+        function dphi = dphi(obj, s,order)
+            deltaPhi =  obj.endPoint.phi-obj.startPoint.phi;
+            if s < obj.phiDZ || s > obj.length-obj.phiDZ
+                dphi = 0;
+            elseif order == 1
+                dphi = deltaPhi/2*pi/(obj.length-2*obj.phiDZ)*sin(pi/(obj.length-2*obj.phiDZ)*(s-obj.phiDZ));
+            elseif order == 2
+                dphi   = deltaPhi/2*(pi/(obj.length-2*obj.phiDZ))^2*cos(pi/(obj.length-2*obj.phiDZ)*(s-obj.phiDZ));
             end
         end
         

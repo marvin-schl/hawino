@@ -5,6 +5,7 @@
 VAR_INPUT
 	waypointListRaw: 	ARRAY [0..100] OF RobotPoseSimple;
 	radius: 			LREAL;
+	thetaDZ: 				LREAL := 0.1;
 END_VAR
 VAR
 	waypointList: 		ARRAY [0..100] 	OF 	RobotPoseSimple;		
@@ -79,18 +80,29 @@ END_VAR
 					subspline => subspline,
 					arcOffset => arcOffset);
 deltaTheta:= endPoint.theta - startPoint.theta; 		
-dPos 		:= subspline^.diff(arcLength := arcOffset, order:= order);	
-diff.x 		:= dPos.x;
-diff.y 		:= dPos.y;	
-CASE order OF
-	1:
-		diff.theta  := deltaTheta*pi/(2*lengthVar)*SIN(pi/lengthVar*arcLength);
-	2:
-		diff.theta 	:= deltaTheta*EXPT(pi,2)/(2*EXPT(lengthVar,2))*SIN(pi/lengthVar*arcLength);
-ELSE
-		diff.x      := -1;
-		diff.y 		:= -1;
-END_CASE]]></ST>
+diff 		:= subspline^.diff(arcLength := arcOffset, order:= order);	
+diff.theta 	:= dTheta(arcLength := arcLength, order := order);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="dTheta" Id="{7d2d238e-6c7d-41bf-901f-e1aba91ddba5}">
+      <Declaration><![CDATA[METHOD PRIVATE dTheta : LREAL
+VAR_INPUT
+	arcLength: LREAL;
+	order: INT;
+END_VAR
+VAR
+	deltaTheta: LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[deltaTheta := endPoint.theta - startPoint.theta;
+IF arcLength < thetaDZ  OR arcLength > lengthVar - thetaDZ THEN
+	dTheta := 0;
+ELSIF order = 1 THEN
+	dTheta := deltaTheta/2*(pi/(lengthVar-2*thetaDZ))*SIN(pi/(lengthVar-2*thetaDZ)*(arcLength-thetaDZ));
+ELSIF order = 2 THEN
+	dTheta := deltaTheta/2*EXPT(pi/(lengthVar-2*thetaDZ),2)*COS(pi/(lengthVar-2*thetaDZ)*(arcLength-thetaDZ));
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="generateSubsplines" Id="{64c26576-c972-4416-a2f8-ea26c3f38e4d}">
@@ -176,7 +188,7 @@ END_VAR
 getPoint := subspline^.getPoint(arcLength:= arcOffset);
 
 deltaTheta 		:= endPoint.theta - startPoint.theta;
-getPoint.theta	:= startPoint.theta + deltaTheta/2*(1-COS(pi/lengthVar*arcLength));]]></ST>
+getPoint.theta	:= theta(arcLength := arcLength);]]></ST>
       </Implementation>
     </Method>
     <Method Name="getSubsplineToPoint" Id="{d9693a58-8dc8-4612-b85b-8d181f60b2f3}">
@@ -259,6 +271,25 @@ END_FOR
 nmbOfPreprocessedWaypoints := nextIDX +1;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="theta" Id="{3e06842d-afd1-418d-bfed-0a225c6266f7}">
+      <Declaration><![CDATA[METHOD PRIVATE theta : LREAL
+VAR_INPUT
+	arcLength: LREAL;
+END_VAR
+VAR
+	deltaTheta: LREAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[deltaTheta := endPoint.theta - startPoint.theta;
+IF arcLength < thetaDZ THEN
+	theta := startPoint.theta;
+ELSIF arcLength > lengthVar - thetaDZ THEN
+	theta := endPoint.theta;
+ELSE
+	theta := startPoint.theta + deltaTheta/2*(1-COS(pi/(lengthVar-2*thetaDZ)*(arcLength-thetaDZ)));
+END_IF ]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="Path">
       <LineId Id="311" Count="2" />
       <LineId Id="322" Count="0" />
@@ -275,8 +306,12 @@ nmbOfPreprocessedWaypoints := nextIDX +1;]]></ST>
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="Path.diff">
-      <LineId Id="57" Count="14" />
+      <LineId Id="57" Count="4" />
       <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="Path.dTheta">
+      <LineId Id="15" Count="6" />
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="Path.generateSubsplines">
       <LineId Id="22" Count="38" />
@@ -314,6 +349,10 @@ nmbOfPreprocessedWaypoints := nextIDX +1;]]></ST>
       <LineId Id="91" Count="1" />
       <LineId Id="75" Count="2" />
       <LineId Id="43" Count="0" />
+    </LineIds>
+    <LineIds Name="Path.theta">
+      <LineId Id="13" Count="6" />
+      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
