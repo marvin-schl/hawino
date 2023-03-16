@@ -114,7 +114,7 @@ observer(xCameraPose 	:= robotPoses[Var_HAWIno.Robot_Number],	//extraxt roboter 
  		 xVxToRobot		:= controller.vXrobot,
 		 xVyToRobot		:= controller.vYrobot,
 		 xOmegaToRobot	:= controller.omegaRobot,				//link theta-velocity with measured velocity
-		 theta			:=  trajectory.referencePose.theta);	//FF-Lineariztion				
+		 theta			:= robotPoses[Var_HAWIno.Robot_Number].theta);	//FF-Lineariztion				
 		 
 
 
@@ -135,7 +135,7 @@ World2Robot(
 			vx_world := controller.vXrobot,						//controller outputs vXref in world coordinates
 			vy_world := controller.vYrobot,						//controller outputs vYref in world coordinates
 			omega_world := controller.omegaRobot,				//controller outputs vThetaRef in world coordinates
-			theta := trajectory.referencePose.theta,			//trajectory theta for I/O Lin => FF-Structure
+			theta := observer.yObserverdPose.theta,			//trajectory theta for I/O Lin => FF-Structure
 			vx_robot => robot.vXref,							//vXref in robot coordinates are passed to robot as control output
 			vy_robot => robot.vYref,							//vYref in robot coordinates are passed to robot as control output
 			omega_robot => robot.vThetaRef						//vThetaref in robot coordinates are passed to robot as control output

@@ -49,7 +49,7 @@ Robot2World(
 	vx_robot 	:= xVxRobot,
 	vy_robot 	:= xVyRobot,
 	omega_robot := xOmegaRobot,
-	theta		:= theta,
+	theta		:= yObserverdPose.theta,
 	vx_world 	=> vXworldToSimulink,
 	vy_world  	=> vYworldToSimulink,
 	omega_world => omegaWorldToSimulink);
