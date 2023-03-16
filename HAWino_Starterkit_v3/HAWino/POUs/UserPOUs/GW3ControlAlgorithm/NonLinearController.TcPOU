@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="NonLinearController" Id="{0371b9e7-a40b-413e-82c4-4000acb8116e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK NonLinearController
+VAR_INPUT
+	xRobotPose: 		RobotPoseSimple; 				//current pose
+	xRobotPoseRef: 		RobotPoseSimple; 				//reference pose
+	xRobotPoseVelRef:	RobotPoseSimple;
+	vXFromRobot:					LREAL;
+	vYFromRobot:					LREAL;
+END_VAR
+
+VAR_OUTPUT
+	vX			: LREAL;		// x-component of linear velocity (to low-level-controller)
+	vY			: LREAL;		// y-component of linear velocity (to low-level controller)
+	vTheta		: LREAL;		// Angular velocity (to low-level controller)
+	reachedReference:	BOOL;
+END_VAR
+
+VAR
+		// Reference values
+	xR 			: LREAL;		// REFERENCE position, x-coordinate in global frame
+	yR 			: LREAL;   		// REFERENCE poisiton, y-cooridnate in global frame
+	thetaR	 	: LREAL;     	// REFERENCE orientiation in global frame
+	vR 			: LREAL;		// REFERENCE linear velocity (tangential TO path)          
+	vThetaR 	: LREAL;		// REFERENCE angular velocity
+	// Actual values
+	x 			: LREAL;		// Actual position, x-coordinate in global frame
+	y 			: LREAL;		// Actual position, y-coordinate in global frame
+	theta 		: LREAL;      	// Actual orientation in global frame
+	v 			: LREAL;		// Actual linear velocity (tangential TO path)	
+
+	// Control parameters. Suggestion: start tuning with k1 = 1, k3 = 3
+	k1			: LREAL;		// Control parameter, chose k1 > k3 
+	k2			: LREAL;		// Control parameter (fixed)
+	k3			: LREAL;		// Control parameter, chose k3 > 0
+	xE			: LREAL;		// Robot pose error in mobile frame (x-component)
+	yE			: LREAL;		// Robot pose error in mobile frame (y-component)
+	thetaE		: LREAL;     	// Robot orientation error with resepect to global x-axis
+	u1			: LREAL;		// Control variable
+	u2			: LREAL;		// Control variable
+	accuracyXY: LREAL := 2;
+	accuracyTheta: LREAL := 0.01;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[xR 		:= xRobotPoseRef.x / 1000;
+yR 		:= xRobotPoseRef.y / 1000;
+thetaR  := xRobotPoseref.theta;
+vR 		:= SQRT(EXPT(xRobotPoseVelRef.x,2)+ EXPT(xRobotPoseVelRef.y,2)) / 1000;
+vThetaR := xRobotPoseVelRef.theta;
+
+x		:= xRobotPose.x / 1000;
+y		:= xRobotPose.y / 1000;
+theta	:= xRobotPose.theta;
+v		:= SQRT(EXPT(vXFromRobot,2)+EXPT(vYFromRobot,2)) / 1000;
+
+// Suggested value for k2
+k1 := 1;
+k3 := 3;
+k2 := 2 * ABS(vR) * SQRT(k3);
+
+
+// State Trafo: Robot pose error in global frame --> mobile frame
+xE := COS(theta) * (xR - x) + SIN(theta) * (yR - y);
+yE := -SIN(theta) * (xR - x) + COS(theta) * (yR - y);
+thetaE := -(thetaR - theta);
+
+// Control law
+u2 := -k2 * thetaE + k3 * vR * yE * SI(thetaE);
+u1 := vR * (COS(thetaE) - 1) + yE * (vThetaR + u2) + k1 * xE;
+
+// Effective control variables (outputs to low-level-controller)
+vX := (u1 + vR) * COS(theta) * 1000;
+vY := (u1 + vR) * SIN(theta) * 1000;
+vTheta := u2 + vThetaR;
+
+// Compute euclidian distance to reference pose
+IF ABS(xR - x) < accuracyXY AND ABS(yR - y) < accuracyXY AND ABS(thetaR - theta) < accuracyTheta THEN
+	reachedReference := TRUE;
+END_IF]]></ST>
+    </Implementation>
+    <Method Name="resetReachedReference" Id="{2353b82a-007b-4110-be57-f1dca2f276dd}">
+      <Declaration><![CDATA[METHOD resetReachedReference : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[reachedReference := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="NonLinearController">
+      <LineId Id="178" Count="0" />
+      <LineId Id="183" Count="1" />
+      <LineId Id="179" Count="1" />
+      <LineId Id="186" Count="0" />
+      <LineId Id="181" Count="0" />
+      <LineId Id="187" Count="2" />
+      <LineId Id="182" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="93" Count="1" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="191" Count="0" />
+      <LineId Id="72" Count="12" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="161" Count="1" />
+      <LineId Id="87" Count="0" />
+    </LineIds>
+    <LineIds Name="NonLinearController.resetReachedReference">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
