@@ -44,7 +44,7 @@
     <Compile Include="DUTs\RobotPoseSimple.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\RobotStatus_GW1.TcDUT">
+    <Compile Include="DUTs\RobotStatusGW1.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\Sys\DUT_SysState.TcDUT">

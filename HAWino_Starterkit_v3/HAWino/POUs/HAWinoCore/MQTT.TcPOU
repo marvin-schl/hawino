@@ -27,6 +27,8 @@ VAR
 	sTopicSubToPowerMgmt : STRING(255);// := CONCAT('PowerMgmt/Robots/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));	// ToDo: Bisher ist die Nummer des HAWino fest kodiert
 	sTopicRcv      : STRING(255);
 	sPayloadRcv    : STRING(255);
+	sPayloadRcv_Status    : STRING(255);
+	sPayloadRcv_Status_Test: STRING(255);
 	fbMessageQueue : FB_IotMqttMessageQueue;
     fbMessage      : FB_IotMqttMessage;
 	hrErrorOccurred : HRESULT; 			// Enthlt dern letzten augetretenen Fehler
@@ -83,9 +85,10 @@ VAR
 	WerkstueckAusgelesen: BOOL;
 	i: INT := 0;
 	sPayloadPub1 : STRING(2000);
-	Robotstatus_GW1 : RobotStatus_GW1;
+	Robotstatus : RobotStatusGW1;
 	Auftrag : Auftrag;
 	sTopicSubToGW1: STRING(255);
+	nPayloadSize:INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -333,13 +336,14 @@ IF txtReadInit THEN
 	IF fbMessageQueue.nQueuedMessages > 0 THEN			// Kontrolle, ob neue Daten vorliegen
 		IF fbMessageQueue.Dequeue(fbMessage:=fbMessage) THEN
 			fbMessage.GetTopic(pTopic:=ADR(sTopicRcv), nTopicSize:=SIZEOF(sTopicRcv) );
-			fbMessage.GetPayload(pPayload:=ADR(sPayloadRcv), nPayloadSize:=SIZEOF(sPayloadRcv), bSetNullTermination:=FALSE);
+			
+
 				
 			//
 			// Message from PowerMgmt
 			//
 			IF fbMessage.CompareTopic(sTopic:=sTopicSubToPowerMgmt) THEN		// Wenn die Daten vom PowerMgmt kommen, dann führe folgenede Aktion aus
-				
+				fbMessage.GetPayload(pPayload:=ADR(sPayloadRcv), nPayloadSize:=SIZEOF(sPayloadRcv), bSetNullTermination:=FALSE);
 			// Json-String aufteilen und in Variablen schreiben
 				fbJsonDataType.SetSymbolFromJson(sPayloadRcv,'ST_PwrMgmt_HAWino_Out',SIZEOF(stMqtt_HAWinoValues.Input),ADR(stMqtt_HAWinoValues.Input));
 			END_IF
@@ -349,22 +353,26 @@ IF txtReadInit THEN
 			// von GW1
 			IF fbMessage.CompareTopic(sTopic:=sTopicSubToGW1_Status) THEN
 				
-			// Json-String aufteilen und in Variablen schreiben
-				fbJsonDataType.SetSymbolFromJson(sPayloadRcv,'RobotStatus_GW1',SIZEOF(RobotStatus_GW1),ADR(Robotstatus_GW1));
-				IF Robotstatus_GW1.Status = 'WerkstueckAusgelesen' THEN
+				fbMessage.GetPayload(pPayload:=ADR(sPayloadRcv_Status), nPayloadSize:=SIZEOF(sPayloadRcv_Status), bSetNullTermination:=true);
+				// Json-String aufteilen und in Variablen schreiben
+				fbJsonDataType.SetSymbolFromJson(sPayloadRcv_Status,'RobotStatusGW1',SIZEOF(RobotStatus),ADR(RobotStatus));
+				sPayloadRcv_Status_Test := sPayloadRcv_Status;
+				IF Robotstatus.Status = 'WerkstueckAusgelesen' THEN
 					WerkstueckAusgelesen := 1;
 				END_IF
-				Robotstatus_GW1.Status := '';
+				Robotstatus.Status := '';
 			END_IF
+			//sPayloadRcv_Status := '';
 			
 			IF fbMessage.CompareTopic(sTopic:=sTopicSubToGW1_Auftrag) THEN
-				
+				fbMessage.GetPayload(pPayload:=ADR(sPayloadRcv), nPayloadSize:=SIZEOF(sPayloadRcv), bSetNullTermination:=TRUE);
+			
 			// Json-String aufteilen und in Variablen schreiben
 				fbJsonDataType.SetSymbolFromJson(sPayloadRcv,'Auftrag',SIZEOF(Auftrag),ADR(Auftrag));
 				AuftragDa := 1;
 			END_IF
 		END_IF
-	END_IF		
+	END_IF	
 	
 	
 	
@@ -484,23 +492,32 @@ END_IF]]></ST>
       <LineId Id="347" Count="0" />
       <LineId Id="1190" Count="0" />
       <LineId Id="306" Count="0" />
-      <LineId Id="399" Count="10" />
+      <LineId Id="399" Count="5" />
+      <LineId Id="1311" Count="0" />
+      <LineId Id="405" Count="4" />
       <LineId Id="421" Count="1" />
       <LineId Id="410" Count="5" />
       <LineId Id="1193" Count="0" />
       <LineId Id="1197" Count="0" />
-      <LineId Id="1195" Count="1" />
-      <LineId Id="1199" Count="2" />
+      <LineId Id="1309" Count="0" />
+      <LineId Id="1404" Count="0" />
+      <LineId Id="1196" Count="0" />
+      <LineId Id="1199" Count="0" />
+      <LineId Id="1402" Count="0" />
+      <LineId Id="1200" Count="1" />
       <LineId Id="1206" Count="0" />
       <LineId Id="1192" Count="0" />
+      <LineId Id="1401" Count="0" />
       <LineId Id="1212" Count="0" />
-      <LineId Id="1214" Count="2" />
+      <LineId Id="1214" Count="1" />
+      <LineId Id="1312" Count="0" />
+      <LineId Id="1216" Count="0" />
       <LineId Id="1213" Count="0" />
       <LineId Id="1218" Count="0" />
       <LineId Id="416" Count="1" />
       <LineId Id="350" Count="0" />
-      <LineId Id="499" Count="0" />
       <LineId Id="419" Count="0" />
+      <LineId Id="1400" Count="0" />
       <LineId Id="423" Count="1" />
       <LineId Id="420" Count="0" />
       <LineId Id="426" Count="3" />

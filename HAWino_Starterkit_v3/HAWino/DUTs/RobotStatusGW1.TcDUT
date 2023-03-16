@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
-  <DUT Name="RobotStatus_GW1" Id="{72821bf8-befc-4067-90b9-0c1ae9f9c536}">
-    <Declaration><![CDATA[TYPE RobotStatus_GW1 :
+  <DUT Name="RobotStatusGW1" Id="{72821bf8-befc-4067-90b9-0c1ae9f9c536}">
+    <Declaration><![CDATA[TYPE RobotStatusGW1 :
 STRUCT
 	Status : STRING;
 END_STRUCT

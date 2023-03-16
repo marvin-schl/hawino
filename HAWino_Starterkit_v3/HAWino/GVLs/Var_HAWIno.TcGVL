@@ -12,7 +12,7 @@
 // CX-4D0046 = 5
 
 VAR_GLOBAL
-	Robot_Number : INT :=4;
+	Robot_Number : INT :=2;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
