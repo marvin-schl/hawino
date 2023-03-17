@@ -1189,7 +1189,7 @@
 		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1006">424de6000000000000007600000028000000100000000e000000010004000000000070000000000000000000000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffff788833338887ffff78883bb38887ffffffff3bb3ffffffffffff8778fffffffffffffffffffffffffffffffff999ffff78f78fffffffffff78f78ffff999ffff78f7888fffffffff78f78f78f999ffff78f78f78ffffffff78f7888ff999ffffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.214.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="2">
 				<Cpu BaseTime="1000"/>
@@ -3133,14 +3133,6 @@
 					<Vars VarGrpType="1" ContextId="1" AreaNo="16">
 						<Name>PlcTask Inputs</Name>
 						<Var>
-							<Name>MotorDrivers.bumper</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MotorDrivers.bumperStopReset</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>MotorDrivers.vXCartesianToMotors</Name>
 							<Comment><![CDATA[Inputs: CartesianToMotors + Bumper]]></Comment>
 							<Type>LREAL</Type>
@@ -3152,6 +3144,14 @@
 						<Var>
 							<Name>MotorDrivers.vThetaCartesianToMotors</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.bumper</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.bumperStopReset</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.shutdownButton</Name>
@@ -3175,12 +3175,12 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.requestShutdown</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>IrDistanceSensors.distanceRaw</Name>
 							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.requestShutdown</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.supplyCurrentRaw</Name>
@@ -3191,16 +3191,16 @@
 							<Type>REAL</Type>
 						</Var>
 						<Var>
+							<Name>Gripper.closeGripperFromSimulink</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
 							<Name>Gripper.closeGripperCommand</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.slider</Name>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.closeGripperFromSimulink</Name>
-							<Type>LREAL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.partGripped</Name>
@@ -3244,10 +3244,6 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.shutdownTrigger</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>WheelEncoders.vXCartesianFromMotors</Name>
 							<Comment><![CDATA[OUTPUTS]]></Comment>
 							<Type>LREAL</Type>
@@ -3259,6 +3255,10 @@
 						<Var>
 							<Name>WheelEncoders.vthetaCartesianFromMotors</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.shutdownTrigger</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>IrDistanceSensors.distance_mm</Name>
@@ -3355,7 +3355,7 @@
 			<PlcAuxTask Affinity="#x00000002"/>
 		</Plc>
 		<Io>
-			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="169.254.155.210.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
+			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="5.53.205.214.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
 				<Name>Gerät 1 (EtherCAT)</Name>
 				<AddressInfo>
 					<Ccat>
@@ -3392,6 +3392,9 @@
 				</AddressInfo>
 				<Image Id="1" AddrType="9" ImageType="3">
 					<Name>Prozessabbild</Name>
+				</Image>
+				<Image Id="3" AddrType="10" ImageType="3">
+					<Name>Prozessabbild-2</Name>
 				</Image>
 				<Box Id="1" BoxType="9099">
 					<Name>Klemme 1 (EK1200)</Name>
@@ -6194,7 +6197,11 @@ Bit1: Value smaller than Limit2]]></Comment>
 		</Io>
 	</Project>
 	<Mappings>
-		<MappingInfo Identifier="{00000000-2002-0850-0120-500810000403}" Id="#x02030010"/>
+		<MappingInfo Identifier="{00000000-2001-0850-0020-500800205008}" Id="#x02030060"/>
+		<MappingInfo Identifier="{00000000-2001-0850-0020-500810000403}" Id="#x02030010"/>
+		<MappingInfo Identifier="{00000000-2002-0850-0120-500831000403}" Id="#x02030050"/>
+		<MappingInfo Identifier="{08502001-2002-0850-0020-500801205008}" Id="#x02030020" Watchdog="04000000280000000400000004000000"/>
+		<MappingInfo Identifier="{08502001-0060-0201-0020-500820000101}" Id="#x02030070" Watchdog="04000000280000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-2002-0850-1000-010101205008}" Id="#x02030040" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-0060-0201-1000-010120000101}" Id="#x02030030" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIPC^HAWino^HAWino Instance">
@@ -6236,9 +6243,25 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^MotorDrivers.enableToMotor3" VarB="DCM Control Channel 1^Control^Enable"/>
 				<Link VarA="PlcTask Outputs^MotorDrivers.velocityToMotor3" VarB="DCM Velocity Channel 1^Velocity"/>
 			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Temperaturklemme A8 (EL3204)">
+				<Link VarA="MQTT_1 Inputs^MQTT.nBatteryTemperature" VarB="RTD Inputs Channel 1^Batterytemperature"/>
+			</OwnerB>
+			<OwnerB Name="TIPC^HAWino^HAWino Instance">
+				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^bComCheckAnswer" VarB="MQTT_1 Outputs^MQTT.bComCheckAnswer"/>
+				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^nRobotNumber" VarB="PlcTask Outputs^HAWino.Robot_Number"/>
+				<Link VarA="MQTT_1 Inputs^MQTT.txtReadInit" VarB="PlcTask Outputs^HAWino.initDone"/>
+			</OwnerB>
 			<OwnerB Name="TIRC^TcCOM Objects^Object2 (SoC_Model_Data_Aquisition_2022)">
 				<Link VarA="PlcTask Outputs^PowerManager.stMqtt_HAWino_IN^fActualBatteryCurrent" VarB="SoC_Model_Data_Aquisition_202_U^Current"/>
 				<Link VarA="PlcTask Outputs^PowerManager.stMqtt_HAWino_IN^fActualBatteryVoltage" VarB="SoC_Model_Data_Aquisition_202_U^Voltage"/>
+			</OwnerB>
+			<OwnerB Name="TIRC^TcCOM Objects^Object2 (SoC_Model__Data_Processing_2022)">
+				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^bCheckCurrentDetected" VarB="SoC_Model__Data_Processing_20_Y^CACCheckDetected"/>
+				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^fActualBatteryCurrent" VarB="SoC_Model__Data_Processing_20_Y^CurrentOut"/>
+				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^fActualBatteryVoltage" VarB="SoC_Model__Data_Processing_20_Y^VoltageOut"/>
+				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^fSoC" VarB="SoC_Model__Data_Processing_20_Y^SoC"/>
+				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^nEstimatedChargingTime" VarB="SoC_Model__Data_Processing_20_Y^EstimatedChargingTime"/>
+				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^nEstimatedRunningTime" VarB="SoC_Model__Data_Processing_20_Y^EstimatedRunningTime"/>
 			</OwnerB>
 		</OwnerA>
 		<OwnerA Name="TIRC^TcCOM Objects^Object2 (SoC_Model_Data_Aquisition_2022)">

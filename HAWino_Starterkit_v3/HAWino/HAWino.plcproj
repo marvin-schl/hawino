@@ -63,6 +63,10 @@
     <Compile Include="MQTT_1.TcTTO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Param.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
@@ -70,6 +74,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\HAWinoCore\CameraConnectionUDP.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HAWinoCore\Fahrauftrag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\HAWinoCore\Gripper.TcPOU">
@@ -106,6 +113,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\ArrayToStruct.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\MQTT_Managment.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\TrajectoryControllable.TcIO">

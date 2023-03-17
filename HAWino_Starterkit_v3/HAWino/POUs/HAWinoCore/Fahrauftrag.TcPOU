@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="Fahrauftrag" Id="{d11e2ac1-1df3-4b17-bdc0-8c45421bbbdd}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Fahrauftrag //IMPLEMENTS TrajectoryControllable
+VAR
+	//State machine
+	sStart : BOOL := TRUE;
+	s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12: BOOL := FALSE;
+	
+	//Auftrag:Auftrag;
+	RobotStatusGW1:RobotStatusGW1;
+	TrajectoryController:TrajectoryController;
+	leererAuftrag:Auftrag;
+	//Hilfsvariablen vorübergehend
+	//wayPointList : ARRAY[0..1] OF RobotPoseSimple;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//vorübergehend
+//wayPointList[0].x := 1400;
+//wayPointList[1].x := 1800;
+//wayPointList[0].y := 1000;
+//wayPointList[1].y := 1000;
+//wayPointList[1] := {.x := 1,.y := 2};
+leererAuftrag.AbholStation := 0;
+leererAuftrag.AbholTasche := 0;
+leererAuftrag.AblageStation := 0;
+leererAuftrag.AblageTasche := 0;
+leererAuftrag.Art := '';
+
+//Frage: Setzt GW3 die Variablen zurück?
+
+
+//Ablauf einer Fahrt:
+IF sStart AND NOT s0 THEN
+	sStart := 0; s0 := 1;
+	//	RückmeldungGW1 Verfügbar
+	Var_HAWIno.Feedback := 'Verfuegbar';
+END_IF
+//	Warten auf Auftrag
+IF s0 AND NOT s1 AND .Var_HAWIno.Auftrag.Art = 'Fahrauftrag' THEN
+	s0 := 0; s1 := 1;
+	//	RückmeldugGW1 Auftrag angenommen setzt
+	Var_HAWIno.Feedback := 'Auftrag angenommen';
+	//	Bahnplanung
+	//trajectoryControllable.setWaypointList := wayPointList;				//----------todo
+END_IF
+
+//	RückmeldungGW3 Fahrt abwarten
+IF s1 AND NOT s2 AND trajectoryController.yBoDriving THEN
+	s1 := 0; s2 := 1;
+	//	RückmeldungGW1 Auf Anfahrt setzen
+	Var_HAWIno.Feedback := 'Auf Anfahrt';
+END_IF
+
+//	RückmeldungGW3 am Ziel abwarten
+IF s2 AND NOT s3 AND trajectoryController.yBoArrivedAtDestination THEN
+	s2 := 0; s3 := 1;
+	//	Greifersteuerung
+																		//----------todo
+	//	RückmeldungGW1 Teil aufgenommen setzen
+	Var_HAWIno.Feedback := 'Teil aufgenommen';
+	//	Fahrauftrag zu Lesekopf
+	//trajectoryControllable.setWaypointList := wayPointList;				//----------todo
+END_IF
+
+//  RückmeldungGW3 Fahrt abwarten
+IF s3 AND NOT s4 AND trajectoryController.yBoDriving THEN
+	s3 := 0; s4 := 1;
+END_IF
+
+//	RückmeldungGW3 am Ziel abwarten
+IF s4 AND NOT s5 AND trajectoryController.yBoArrivedAtDestination THEN
+	s4 := 0; s5 := 1;
+	//	RückmeldungGW1 Abmeldung
+	Var_HAWIno.Feedback := 'Abmeldung';
+END_IF
+
+//	Warten auf Werkstück ausgelesen
+IF s5 AND NOT s6 AND .Var_HAWIno.RFID_Status = 'WerkstueckAusgelesen' THEN
+	s5 := 0; s6 := 1;
+	.Var_HAWIno.RFID_Status := '';
+	//	Bahnplanung
+	//trajectoryControllable.setWaypointList := wayPointList;				//----------todo
+END_IF
+
+//	RückmeldungGW3 Fahrt abwarten
+IF s6 AND NOT s7 AND trajectoryController.yBoDriving THEN
+	s6 := 0; s7 := 1;
+	//	Rückmeldung Auf Transport
+	Var_HAWIno.Feedback := 'Auf Transport';
+END_IF
+
+//	RückmeldungGW3 am Ziel abwarten
+IF s7 AND NOT s8 AND trajectoryController.yBoArrivedAtDestination THEN
+	s7 := 0; s8 := 1;
+	//	RückmeldungGW1 Anmeldung
+	Var_HAWIno.Feedback := 'Anmeldung';
+END_IF
+
+//	Warten auf Werkstück ausgelesen
+IF s8 AND NOT s9 AND .Var_HAWIno.RFID_Status = 'WerkstueckAusgelesen' THEN
+	s8 := 0; s9 := 1;
+	.Var_HAWIno.RFID_Status := '';
+	//	Fahrauftrag zur Ablage
+	//trajectoryControllable.setWaypointList := wayPointList;				//----------todo
+END_IF
+
+//  RückmeldungGW3 Fahrt abwarten
+IF s9 AND NOT s10 AND trajectoryController.yBoDriving THEN
+	s9 := 0; s10 := 1;
+END_IF
+
+//	RückmeldungGW3 am Ziel abwarten
+IF s10 AND NOT s11 AND trajectoryController.yBoArrivedAtDestination THEN
+	s10 := 0; s11 := 1;
+	//	Greifersteuerung
+																		//----------todo
+	//	RückmeldungGW1 Teil abgelegt
+	Var_HAWIno.Feedback := 'Teil abgelegt';
+	//	Fahrauftrag zum Parkplatz
+	//trajectoryControllable.setWaypointList := wayPointList;				//----------todo
+END_IF
+
+//  RückmeldungGW3 Fahrt abwarten
+IF s11 AND NOT s12 AND trajectoryController.yBoDriving THEN
+	s11 := 0; s12 := 1;
+END_IF
+
+//	RückmeldungGW3 am Ziel abwarten
+IF s12 AND NOT s0 AND trajectoryController.yBoArrivedAtDestination THEN
+	s12 := 0; s0 := 1;
+	.Var_HAWIno.Auftrag := leererAuftrag;
+	//	RückmeldungGW1 Verfügbar
+	Var_HAWIno.Feedback := 'Verfuegbar';
+END_IF
+				]]></ST>
+    </Implementation>
+    <LineIds Name="Fahrauftrag">
+      <LineId Id="101" Count="0" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="207" Count="0" />
+      <LineId Id="209" Count="3" />
+      <LineId Id="203" Count="0" />
+      <LineId Id="202" Count="0" />
+      <LineId Id="103" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="191" Count="0" />
+      <LineId Id="195" Count="0" />
+      <LineId Id="192" Count="0" />
+      <LineId Id="194" Count="0" />
+      <LineId Id="193" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="89" Count="1" />
+      <LineId Id="92" Count="3" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="110" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="111" Count="1" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="113" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="120" Count="1" />
+      <LineId Id="123" Count="0" />
+      <LineId Id="125" Count="0" />
+      <LineId Id="124" Count="0" />
+      <LineId Id="126" Count="2" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="130" Count="3" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="134" Count="1" />
+      <LineId Id="137" Count="1" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="139" Count="1" />
+      <LineId Id="204" Count="0" />
+      <LineId Id="142" Count="1" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="145" Count="3" />
+      <LineId Id="144" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="150" Count="3" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="161" Count="1" />
+      <LineId Id="205" Count="0" />
+      <LineId Id="163" Count="1" />
+      <LineId Id="156" Count="0" />
+      <LineId Id="79" Count="1" />
+      <LineId Id="166" Count="2" />
+      <LineId Id="170" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="172" Count="1" />
+      <LineId Id="175" Count="0" />
+      <LineId Id="177" Count="0" />
+      <LineId Id="176" Count="0" />
+      <LineId Id="178" Count="0" />
+      <LineId Id="174" Count="0" />
+      <LineId Id="180" Count="0" />
+      <LineId Id="171" Count="0" />
+      <LineId Id="84" Count="1" />
+      <LineId Id="182" Count="1" />
+      <LineId Id="181" Count="0" />
+      <LineId Id="184" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="186" Count="0" />
+      <LineId Id="185" Count="0" />
+      <LineId Id="206" Count="0" />
+      <LineId Id="189" Count="1" />
+      <LineId Id="187" Count="0" />
+      <LineId Id="63" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

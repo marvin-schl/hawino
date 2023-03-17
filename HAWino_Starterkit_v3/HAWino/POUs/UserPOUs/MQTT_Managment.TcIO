@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <Itf Name="MQTT_Managment" Id="{14fbd5f2-649b-4db9-88d1-a5af0750220a}">
+    <Declaration><![CDATA[INTERFACE MQTT_Managment
+]]></Declaration>
+    <Property Name="Auftrag" Id="{11fcc337-9a66-4c51-8ae8-fef8c73fe093}">
+      <Declaration><![CDATA[PROPERTY Auftrag : Auftrag]]></Declaration>
+      <Get Name="Get" Id="{6594335e-a7fb-4695-b8a8-76c54d29a2f1}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{5b5c706b-3f8b-4f69-b972-5a45cc306206}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="Feedback_Status" Id="{aca73507-f735-40d1-a273-740e3723b5c6}">
+      <Declaration><![CDATA[PROPERTY Feedback_Status : String(50)]]></Declaration>
+      <Get Name="Get" Id="{fd90c4a5-786d-46e6-bab9-5d1267828959}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{3c357216-4abc-4482-b317-e53e2aa53f7f}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="StatusGW1" Id="{4c9a8d9c-dbbc-42df-a2cb-b62bbf0399ab}">
+      <Declaration><![CDATA[PROPERTY StatusGW1 : RobotStatusGW1]]></Declaration>
+      <Get Name="Get" Id="{6ddd01d8-f5e2-495c-976f-e851ab279a57}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{53966bd6-de69-4110-b91c-e30f46fab42b}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

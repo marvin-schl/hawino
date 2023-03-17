@@ -72,9 +72,9 @@ VAR
 	
 	
 	// eigene Variablen	
-	feedback: ARRAY[0..7] OF STRING := ['Verfuegbar', 'Auftrag angenommen', 'Auf Anfahrt', 'Teil aufgenommen', 
-											'Abmeldung', 'Auf Transport', 'Anmeldung', 'Teil abgelegt'];
-	sTopicPubToGW1 : STRING(255) := CONCAT('VPJ/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
+	//feedback: ARRAY[0..7] OF STRING := ['Verfuegbar', 'Auftrag angenommen', 'Auf Anfahrt', 'Teil aufgenommen', 
+											//'Abmeldung', 'Auf Transport', 'Anmeldung', 'Teil abgelegt'];
+	sTopicPubToGW1 : STRING(255);
 	s0: BOOL := 1;
 	s1, s2, s3, s4, s5, s6, s7: BOOL := 0;
 	AuftragDa: BOOL;
@@ -89,10 +89,13 @@ VAR
 	Auftrag : Auftrag;
 	sTopicSubToGW1: STRING(255);
 	nPayloadSize:INT;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//Case machen! preop op
+//Auftrag: {"Art":"Fahrauftrag","AbholStation":1,"AbholTasche":2,"AblageStation":3,"AblageTasche":1}
+//Status: {"Status":"WerkstueckAusgelesen"}
 
 IF txtReadInit THEN
 	IF NOT initMQTT THEN
@@ -102,6 +105,7 @@ IF txtReadInit THEN
 		sTopicSubToGW1  := CONCAT('VPJ/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
 		sTopicSubToGW1_Status  := CONCAT(sTopicSubToGW1, '/Status');
 		sTopicSubToGW1_Auftrag  := CONCAT(sTopicSubToGW1, '/Auftrag');
+		sTopicPubToGW1 := CONCAT('VPJ/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
 		initMQTT:= TRUE;
 	END_IF
 	
@@ -225,6 +229,7 @@ IF txtReadInit THEN
 										bRetain:= FALSE, 
 										bQueue:= FALSE);
 									
+									
 			
 			SOC_Out	:= CONCAT( '{"SoC" : ',LREAL_TO_STRING(stMqtt_HAWinoValues.Output.fSoC));
 			SOC_Out	:= CONCAT( SOC_Out,'}');
@@ -255,7 +260,7 @@ IF txtReadInit THEN
 			Timer2(IN:= startTime2, PT:=T#10S);
 	
 			//Rückmeldung Verfügbar
-			sPayloadPub1 := CONCAT( '{"status" : ', feedback[i]);
+			sPayloadPub1 := CONCAT( '{"Status" : ', Var_HAWIno.Feedback);
 			sPayloadPub1 := CONCAT( sPayloadPub1,'}');
 			
 			fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
@@ -267,61 +272,61 @@ IF txtReadInit THEN
 											
 											
 			//Warten auf Auftrag
-			IF s0 AND NOT s1 AND AuftragDa THEN
-				s0 := 0; s1 := 1;
+			//IF s0 AND NOT s1 AND AuftragDa THEN
+				//s0 := 0; s1 := 1;
 				//Rückmeldung Auftrag angenommen
-				i := 1;
-				AuftragDa := 0;
-				startTime1 := 1;
-			END_IF
-			IF s1 AND NOT s2 AND Timer1.Q THEN
-				startTime1 := 0;
-				s1 := 0; s2 := 1;
+				//i := 1;
+				//AuftragDa := 0;
+				//startTime1 := 1;
+			//END_IF
+			//IF s1 AND NOT s2 AND Timer1.Q THEN
+				//startTime1 := 0;
+				//s1 := 0; s2 := 1;
 				//Rückmeldung Auf Anfahrt
-				i := 2;
-				startTime2 := 1;
-			END_IF
-			IF s2 AND NOT s3 AND Timer2.Q THEN
-				startTime2 := 0;
-				s2 := 0; s3 := 1;
+				//i := 2;
+				//startTime2 := 1;
+			//END_IF
+			//IF s2 AND NOT s3 AND Timer2.Q THEN
+				//startTime2 := 0;
+				//s2 := 0; s3 := 1;
 				//Rückmeldung Teil aufgenommen
-				i := 3;
-				startTime1 := 1;
-			END_IF
-			IF s3 AND NOT s4 AND Timer1.Q THEN
-				startTime1 := 0;
-				s3 := 0; s4 := 1;
+				//i := 3;
+				//startTime1 := 1;
+			//END_IF
+			//IF s3 AND NOT s4 AND Timer1.Q THEN
+				//startTime1 := 0;
+				//s3 := 0; s4 := 1;
 				//Rückmeldung Abmeldung
-				i := 4;
-			END_IF
+				//i := 4;
+			//END_IF
 			//Warten auf Werkstück ausgelesen
-			IF s4 AND NOT s5 AND WerkstueckAusgelesen THEN
-				s4 := 0; s5 := 1;
+			//IF s4 AND NOT s5 AND WerkstueckAusgelesen THEN
+				//s4 := 0; s5 := 1;
 				//Rückmeldung Auf Transport
-				i := 5;
-				WerkstueckAusgelesen := 0;
-				startTime2 := 1;
-			END_IF
-			IF s5 AND NOT s6 AND Timer2.Q THEN
-				startTime2 := 0;
-				s5 := 0; s6 := 1;
+				//i := 5;
+				//WerkstueckAusgelesen := 0;
+				//startTime2 := 1;
+			//END_IF
+			//IF s5 AND NOT s6 AND Timer2.Q THEN
+				//startTime2 := 0;
+				//s5 := 0; s6 := 1;
 				//Rückmeldung Anmeldung
-				i := 6;
-			END_IF
+				//i := 6;
+			//END_IF
 			//Warten auf Werkstück ausgelesen
-			IF s6 AND NOT s7 AND WerkstueckAusgelesen THEN
-				s6 := 0; s7 := 1;
+			//IF s6 AND NOT s7 AND WerkstueckAusgelesen THEN
+				//s6 := 0; s7 := 1;
 				//Rückmeldung Teil abgelegt
-				i := 7;
-				WerkstueckAusgelesen :=0;
-				startTime1 := 1;
-			END_IF
-			IF s7 AND NOT s0 AND Timer1.Q THEN
-				startTime1 := 0;
-				s7 := 0; s0 := 1;
+				//i := 7;
+				//WerkstueckAusgelesen :=0;
+				//startTime1 := 1;
+			//END_IF
+			//IF s7 AND NOT s0 AND Timer1.Q THEN
+				//startTime1 := 0;
+				//s7 := 0; s0 := 1;
 				//Rückmeldung Verfügbar
-				i:= 0;
-			END_IF
+			//	i:= 0;
+			//END_IF
 			
 	//Hier müsste noch die ankommenden Daten vom GW1 ausglesen und ausgewertet (AuftragDa und WerkstueckAusgelesen schreiben) werden
 	//IN MQTT könnte dann evtl das Auslesen/Subscribe wegfallen fürs erste...
@@ -356,10 +361,10 @@ IF txtReadInit THEN
 				fbMessage.GetPayload(pPayload:=ADR(sPayloadRcv_Status), nPayloadSize:=SIZEOF(sPayloadRcv_Status), bSetNullTermination:=true);
 				// Json-String aufteilen und in Variablen schreiben
 				fbJsonDataType.SetSymbolFromJson(sPayloadRcv_Status,'RobotStatusGW1',SIZEOF(RobotStatus),ADR(RobotStatus));
-				sPayloadRcv_Status_Test := sPayloadRcv_Status;
-				IF Robotstatus.Status = 'WerkstueckAusgelesen' THEN
-					WerkstueckAusgelesen := 1;
-				END_IF
+				.Var_HAWIno.RFID_Status := Robotstatus.Status;
+				//IF Robotstatus.Status = 'WerkstueckAusgelesen' THEN
+				//	WerkstueckAusgelesen := 1;
+				//END_IF
 				Robotstatus.Status := '';
 			END_IF
 			//sPayloadRcv_Status := '';
@@ -370,6 +375,7 @@ IF txtReadInit THEN
 			// Json-String aufteilen und in Variablen schreiben
 				fbJsonDataType.SetSymbolFromJson(sPayloadRcv,'Auftrag',SIZEOF(Auftrag),ADR(Auftrag));
 				AuftragDa := 1;
+				.Var_HAWIno.Auftrag:=Auftrag;
 			END_IF
 		END_IF
 	END_IF	
@@ -399,7 +405,10 @@ IF txtReadInit THEN
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="MQTT">
-      <LineId Id="889" Count="1" />
+      <LineId Id="889" Count="0" />
+      <LineId Id="1495" Count="0" />
+      <LineId Id="1503" Count="0" />
+      <LineId Id="890" Count="0" />
       <LineId Id="189" Count="0" />
       <LineId Id="756" Count="0" />
       <LineId Id="821" Count="0" />
@@ -407,6 +416,7 @@ END_IF]]></ST>
       <LineId Id="960" Count="0" />
       <LineId Id="1189" Count="0" />
       <LineId Id="1209" Count="0" />
+      <LineId Id="1494" Count="0" />
       <LineId Id="825" Count="0" />
       <LineId Id="822" Count="0" />
       <LineId Id="757" Count="0" />
@@ -453,7 +463,9 @@ END_IF]]></ST>
       <LineId Id="303" Count="2" />
       <LineId Id="302" Count="0" />
       <LineId Id="307" Count="0" />
-      <LineId Id="310" Count="25" />
+      <LineId Id="310" Count="24" />
+      <LineId Id="1497" Count="0" />
+      <LineId Id="335" Count="0" />
       <LineId Id="961" Count="0" />
       <LineId Id="621" Count="0" />
       <LineId Id="629" Count="1" />
@@ -514,6 +526,7 @@ END_IF]]></ST>
       <LineId Id="1216" Count="0" />
       <LineId Id="1213" Count="0" />
       <LineId Id="1218" Count="0" />
+      <LineId Id="1507" Count="0" />
       <LineId Id="416" Count="1" />
       <LineId Id="350" Count="0" />
       <LineId Id="419" Count="0" />
