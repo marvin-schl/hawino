@@ -1,0 +1,165 @@
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<Filter Include="TwinCAT">
+			<UniqueIdentifier>{6F452A97-12E1-CBD7-FFBF-8202EBE86E5E}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\ClassFactory">
+			<UniqueIdentifier>{7BCF5418-7A7B-1F01-D4F5-C4EF7C752871}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\RT">
+			<UniqueIdentifier>{2DFD6FB2-1871-9330-4730-4AB649C4C652}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\OS">
+			<UniqueIdentifier>{9CA1D2AB-92CD-022E-FA77-998F821E3558}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\UM">
+			<UniqueIdentifier>{B25956B5-4332-22FD-9C84-8190CA7C727F}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\Classes">
+			<UniqueIdentifier>{392FD09F-31EA-E555-D784-153566EADE5D}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\Classes\KalmanObserver_R2021b">
+			<UniqueIdentifier>{6DDB7573-907D-3480-4A08-9D59907C25C8}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Resource Files">
+			<UniqueIdentifier>{B86B814F-687E-F20C-37CA-17A82E574F61}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink">
+			<UniqueIdentifier>{20393BA6-8224-F1BA-0B72-959582A2F126}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink\KalmanObserver_R2021b">
+			<UniqueIdentifier>{8C72C1DC-74F6-D305-3487-E8B27D8A34FE}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink\KalmanObserver_R2021b\Sources">
+			<UniqueIdentifier>{2CA8840C-E77E-4569-E252-AB9221BC49E4}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink\KalmanObserver_R2021b\Includes">
+			<UniqueIdentifier>{425FE040-792E-2A61-6C2A-2F739A165FC1}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="xml">
+			<UniqueIdentifier>{B3AB45BA-AE59-1D85-DF1E-811BD505A4A9}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TMx">
+			<UniqueIdentifier>{3D022CC1-4DF3-5DCB-D0FB-813E74AD2A63}</UniqueIdentifier>
+		</Filter>
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="TcPch.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="KalmanObserver_R2021bServices.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="KalmanObserver_R2021bDuts.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="KalmanObserver_R2021bInterfaces.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="KalmanObserver_R2021bClassFactory.h">
+			<Filter>TwinCAT\ClassFactory</Filter>
+		</ClInclude>
+		<ClInclude Include="KalmanObserver_R2021bDrv.h">
+			<Filter>TwinCAT\RT</Filter>
+		</ClInclude>
+		<ClInclude Include="KalmanObserver_R2021bCtrl.h">
+			<Filter>TwinCAT\UM</Filter>
+		</ClInclude>
+		<ClInclude Include="KalmanObserver_R2021bW32.h">
+			<Filter>TwinCAT\UM</Filter>
+		</ClInclude>
+		<ClInclude Include="KalmanObserver_R2021bW32Resource.h">
+			<Filter>TwinCAT\UM</Filter>
+		</ClInclude>
+		<ClInclude Include="TcComKalmanObserver_R2021b.h">
+			<Filter>TwinCAT\Classes\KalmanObserver_R2021b</Filter>
+		</ClInclude>
+		<ClInclude Include="FbKalmanObserver_R2021b.h">
+			<Filter>TwinCAT\Classes\KalmanObserver_R2021b</Filter>
+		</ClInclude>
+		<ClInclude Include="KalmanObserver_R2021bInternal.h">
+			<Filter>TwinCAT\Classes\KalmanObserver_R2021b</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_KalmanObserver_R2021b_START_DIR)\KalmanObserver_R2021b_tcgrt\KalmanObserver_R2021b.h">
+			<Filter>Simulink\KalmanObserver_R2021b\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_KalmanObserver_R2021b_START_DIR)\KalmanObserver_R2021b_tcgrt\KalmanObserver_R2021b_private.h">
+			<Filter>Simulink\KalmanObserver_R2021b\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_KalmanObserver_R2021b_START_DIR)\KalmanObserver_R2021b_tcgrt\KalmanObserver_R2021b_types.h">
+			<Filter>Simulink\KalmanObserver_R2021b\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_KalmanObserver_R2021b_START_DIR)\KalmanObserver_R2021b_tcgrt\multiword_types.h">
+			<Filter>Simulink\KalmanObserver_R2021b\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_KalmanObserver_R2021b_START_DIR)\KalmanObserver_R2021b_tcgrt\rtmodel.h">
+			<Filter>Simulink\KalmanObserver_R2021b\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_KalmanObserver_R2021b_START_DIR)\KalmanObserver_R2021b_tcgrt\rtwtypes.h">
+			<Filter>Simulink\KalmanObserver_R2021b\Includes</Filter>
+		</ClInclude>
+	</ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="TcPch.cpp">
+			<Filter>TwinCAT</Filter>
+		</ClCompile>
+		<ClCompile Include="KalmanObserver_R2021bClassFactory.cpp">
+			<Filter>TwinCAT\ClassFactory</Filter>
+		</ClCompile>
+		<ClCompile Include="KalmanObserver_R2021bDrv.cpp">
+			<Filter>TwinCAT\RT</Filter>
+		</ClCompile>
+		<ClCompile Include="KalmanObserver_R2021bModulesMain.cpp">
+			<Filter>TwinCAT\OS</Filter>
+		</ClCompile>
+		<ClCompile Include="KalmanObserver_R2021bCtrl.cpp">
+			<Filter>TwinCAT\UM</Filter>
+		</ClCompile>
+		<ClCompile Include="KalmanObserver_R2021bW32.cpp">
+			<Filter>TwinCAT\UM</Filter>
+		</ClCompile>
+		<ClCompile Include="TcComKalmanObserver_R2021b.cpp">
+			<Filter>TwinCAT\Classes\KalmanObserver_R2021b</Filter>
+		</ClCompile>
+		<ClCompile Include="FbKalmanObserver_R2021b.cpp">
+			<Filter>TwinCAT\Classes\KalmanObserver_R2021b</Filter>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_KalmanObserver_R2021b_START_DIR)\KalmanObserver_R2021b_tcgrt\KalmanObserver_R2021b.cpp">
+			<Filter>Simulink\KalmanObserver_R2021b\Sources</Filter>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_KalmanObserver_R2021b_START_DIR)\KalmanObserver_R2021b_tcgrt\KalmanObserver_R2021b_data.cpp">
+			<Filter>Simulink\KalmanObserver_R2021b\Sources</Filter>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_KalmanObserver_R2021b_MATLAB_ROOT)\rtw\c\src\common\rt_main.cpp">
+			<Filter>Simulink\KalmanObserver_R2021b\Sources</Filter>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="KalmanObserver_R2021bW32.rc">
+			<Filter>TwinCAT\UM</Filter>
+		</ResourceCompile>
+		<ResourceCompile Include="KalmanObserver_R2021b.rc">
+			<Filter>Resource Files</Filter>
+		</ResourceCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="KalmanObserver_R2021bArtifacts.props">
+			<Filter>KalmanObserver_R2021b.vcxproj</Filter>
+		</None>
+		<None Include="KalmanObserver_R2021bW32.def">
+			<Filter>TwinCAT\UM</Filter>
+		</None>
+		<None Include="KalmanObserver_R2021b_ModuleInfo.xml">
+			<Filter>TwinCAT\Classes\KalmanObserver_R2021b</Filter>
+		</None>
+		<None Include="KalmanObserver_R2021b.libcat.xml">
+			<Filter>xml</Filter>
+		</None>
+		<None Include="KalmanObserver_R2021b.tmc">
+			<Filter>TMx</Filter>
+		</None>
+		<None Include="KalmanObserver_R2021b.tml">
+			<Filter>TMx</Filter>
+		</None>
+	</ItemGroup>
+</Project>
