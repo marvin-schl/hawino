@@ -55,6 +55,20 @@ END_VAR
         <ST><![CDATA[trajectoryPlanner.generateTrajectory();]]></ST>
       </Implementation>
     </Method>
+    <Method Name="reset" Id="{a510e6d9-b061-4cba-a683-d76415bcb2be}">
+      <Declaration><![CDATA[METHOD reset : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[WPLidx 			:= 0; 						//reset
+finished 		:= FALSE;
+
+trajectoryPlanner.resetFlag('ready');
+trajectoryPlanner.resetFlag('failed');
+trajectoryPlanner.resetFlag('finished');]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="setRobotPose" Id="{612c742a-1fe7-4003-9836-d6bbc0467a35}">
       <Declaration><![CDATA[METHOD setRobotPose : RobotPoseSimple
 VAR_INPUT
@@ -71,10 +85,7 @@ VAR_INPUT
 	newWayPointList	: ARRAY [0..100]  OF RobotPoseSimple;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[WPLidx 			:= 0; 						//reset
-finished 		:= FALSE;
-
-path(waypointListRaw := newWayPointList, radius := radius);
+        <ST><![CDATA[path(waypointListRaw := newWayPointList, radius := radius);
 trajectoryPlanner(path := path, 
 				  qAccMax := maxAcc, 
 				  qVelMax := maxVel, 
@@ -92,12 +103,15 @@ trajectoryPlanner(path := path,
     <LineIds Name="TimeOptimalTrajectory.generateTrajectory">
       <LineId Id="5" Count="0" />
     </LineIds>
+    <LineIds Name="TimeOptimalTrajectory.reset">
+      <LineId Id="10" Count="1" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="5" Count="2" />
+    </LineIds>
     <LineIds Name="TimeOptimalTrajectory.setRobotPose">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.setWaypointList">
-      <LineId Id="7" Count="1" />
-      <LineId Id="26" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="18" Count="0" />
       <LineId Id="20" Count="0" />
