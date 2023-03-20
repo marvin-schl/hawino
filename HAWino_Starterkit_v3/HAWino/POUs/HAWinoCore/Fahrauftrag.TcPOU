@@ -12,7 +12,7 @@ VAR
 	TrajectoryController:TrajectoryController;
 	leererAuftrag:Auftrag;
 	//Hilfsvariablen vorübergehend
-	//wayPointList : ARRAY[0..1] OF RobotPoseSimple;
+	wayPointList : ARRAY[0..10] OF RobotPoseSimple;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -28,7 +28,7 @@ leererAuftrag.AblageStation := 0;
 leererAuftrag.AblageTasche := 0;
 leererAuftrag.Art := '';
 
-//Frage: Setzt GW3 die Variablen zurück?
+//Frage: Setzt GW3 die Variablen zurück? - jeder setzt seine variablen zurück
 
 
 //Ablauf einer Fahrt:

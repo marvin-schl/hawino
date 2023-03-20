@@ -3133,6 +3133,14 @@
 					<Vars VarGrpType="1" ContextId="1" AreaNo="16">
 						<Name>PlcTask Inputs</Name>
 						<Var>
+							<Name>MotorDrivers.bumper</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.bumperStopReset</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>MotorDrivers.vXCartesianToMotors</Name>
 							<Comment><![CDATA[Inputs: CartesianToMotors + Bumper]]></Comment>
 							<Type>LREAL</Type>
@@ -3144,18 +3152,6 @@
 						<Var>
 							<Name>MotorDrivers.vThetaCartesianToMotors</Name>
 							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>MotorDrivers.bumper</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MotorDrivers.bumperStopReset</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.shutdownButton</Name>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>WheelEncoders.encDataFromMotor1</Name>
@@ -3171,32 +3167,32 @@
 							<Type>UINT</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.batteryVoltageRaw</Name>
-							<Type>INT</Type>
+							<Name>PowerManager.shutdownButton</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>IrDistanceSensors.distanceRaw</Name>
 							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.requestShutdown</Name>
-							<Type>BOOL</Type>
+							<Name>PowerManager.batteryVoltageRaw</Name>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.supplyCurrentRaw</Name>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.SOC</Name>
-							<Type>REAL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.closeGripperFromSimulink</Name>
-							<Type>LREAL</Type>
+							<Name>PowerManager.requestShutdown</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.closeGripperCommand</Name>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.SOC</Name>
+							<Type>REAL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.slider</Name>
@@ -3205,6 +3201,10 @@
 						<Var>
 							<Name>Gripper.partGripped</Name>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.closeGripperFromSimulink</Name>
+							<Type>LREAL</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
@@ -3244,6 +3244,10 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.shutdownTrigger</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>WheelEncoders.vXCartesianFromMotors</Name>
 							<Comment><![CDATA[OUTPUTS]]></Comment>
 							<Type>LREAL</Type>
@@ -3255,10 +3259,6 @@
 						<Var>
 							<Name>WheelEncoders.vthetaCartesianFromMotors</Name>
 							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.shutdownTrigger</Name>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>IrDistanceSensors.distance_mm</Name>
