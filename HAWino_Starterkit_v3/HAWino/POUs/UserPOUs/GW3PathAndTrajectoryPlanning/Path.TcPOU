@@ -24,7 +24,10 @@ lengthVar := calculateLength();
 calculateTransitions();
 
 startPoint := subsplines[0]^.startPointVal;
-endPoint   := subsplines[nmbOfSubsplines-1]^.endPointVal;]]></ST>
+endPoint   := subsplines[nmbOfSubsplines-1]^.endPointVal;
+
+startPoint.theta := waypointList[0].theta;
+endPoint.theta	 := waypointList[nmbOfPreprocessedWaypoints-1].theta;]]></ST>
     </Implementation>
     <Method Name="calculateLength" Id="{fa9150c3-1548-4fad-bc03-2a7bdbb95fff}">
       <Declaration><![CDATA[(* 
@@ -296,6 +299,9 @@ END_IF ]]></ST>
       <LineId Id="315" Count="0" />
       <LineId Id="317" Count="3" />
       <LineId Id="96" Count="0" />
+      <LineId Id="336" Count="0" />
+      <LineId Id="335" Count="0" />
+      <LineId Id="337" Count="0" />
     </LineIds>
     <LineIds Name="Path.calculateLength">
       <LineId Id="22" Count="2" />

@@ -20,7 +20,7 @@ VAR
 	
 	samplingTime		: LREAL				:= 0.05;
 	radius				: LREAL				:= 0.1;
-	maxVel				: LREAL				:= 0.9;
+	maxVel				: LREAL				:= 0.15;
 	maxAcc				: LREAL				:= 0.8;
 	maxRotVel			: LREAL				:= 100;
 	maxRotAcc			: LREAL				:= 100;	

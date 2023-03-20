@@ -74,7 +74,9 @@ END_IF
 //4.) set control outputs
 vXrobot 	:= u[0];
 vYrobot 	:= u[1];
-omegaRobot	:= u[2];
+IF ABS(poseError.theta) > accuracyTheta THEN
+	omegaRobot	:= u[2];
+END_IF
 
 
 ]]></ST>
@@ -119,7 +121,10 @@ END_VAR
       <LineId Id="43" Count="0" />
       <LineId Id="24" Count="0" />
       <LineId Id="74" Count="1" />
-      <LineId Id="72" Count="1" />
+      <LineId Id="236" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="237" Count="0" />
+      <LineId Id="73" Count="0" />
       <LineId Id="154" Count="0" />
       <LineId Id="46" Count="0" />
     </LineIds>
