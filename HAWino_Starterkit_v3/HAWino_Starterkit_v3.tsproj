@@ -3839,14 +3839,6 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MotorDrivers.bumper</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MotorDrivers.bumperStopReset</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>ControlPRG.observer.estimatedPoseFromSimlink</Name>
 							<Comment><![CDATA[from Simulink]]></Comment>
 							<Type GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}">ARRAY [0..2] OF LREAL</Type>
@@ -3873,6 +3865,14 @@
 							<Name>ControlPRG.waypointList</Name>
 							<Comment><![CDATA[ implemented, Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)]]></Comment>
 							<Type GUID="{57D1290D-8922-6C29-A5EB-E802603DE228}">ARRAY [0..100] OF RobotPoseSimple</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.bumper</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.bumperStopReset</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MotorDrivers.vXCartesianToMotors</Name>
@@ -3917,19 +3917,6 @@
 							<Name>ControlPRG.state</Name>
 							<Comment><![CDATA[ controller state]]></Comment>
 							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
-						</Var>
-						<Var>
-							<Name>MotorDrivers.enableToMotor1</Name>
-							<Comment><![CDATA[Outputs: Motor Values and Enable Signal]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MotorDrivers.enableToMotor2</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MotorDrivers.enableToMotor3</Name>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>ControlPRG.observer.cameraPoseToSimulink</Name>
@@ -3981,6 +3968,19 @@
 							<Name>ControlPRG.yRPposition</Name>
 							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
 							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.enableToMotor1</Name>
+							<Comment><![CDATA[Outputs: Motor Values and Enable Signal]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.enableToMotor2</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.enableToMotor3</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MotorDrivers.velocityToMotor1</Name>
@@ -4039,6 +4039,14 @@
 					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
 						<Name>PlcTask Inputs</Name>
 						<Var>
+							<Name>PowerManager.shutdownButton</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.batteryVoltageRaw</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
 							<Name>Fahrauftrag.TrajectoryController.yBoArrivedAtDestination</Name>
 							<Comment><![CDATA[ TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
 							<Type>BOOL</Type>
@@ -4058,6 +4066,14 @@
 							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.requestShutdown</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.closeGripperCommand</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>Fahrauftrag.Auftrag</Name>
 							<Type GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}">Auftrag</Type>
 						</Var>
@@ -4066,20 +4082,12 @@
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.shutdownButton</Name>
+							<Name>Gripper.slider</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>IrDistanceSensors.distanceRaw</Name>
 							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.batteryVoltageRaw</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.requestShutdown</Name>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.supplyCurrentRaw</Name>
@@ -4088,14 +4096,6 @@
 						<Var>
 							<Name>PowerManager.SOC</Name>
 							<Type>REAL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.closeGripperCommand</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.slider</Name>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.partGripped</Name>
@@ -4133,6 +4133,14 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.shutdownTrigger</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.batteryVoltage_V</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
 							<Name>Fahrauftrag.FeedbackToGW1</Name>
 							<Comment><![CDATA[testToSimulink AT%Q*: LREAL;
 testFromSimulink AT%I*: LREAL;]]></Comment>
@@ -4159,21 +4167,8 @@ testFromSimulink AT%I*: LREAL;]]></Comment>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.shutdownTrigger</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.batteryVoltage_V</Name>
-							<Type>REAL</Type>
-						</Var>
-						<Var>
 							<Name>PowerManager.supplyCurrent_A</Name>
 							<Type>REAL</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.stMqtt_HAWino_IN</Name>
-							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
-							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.driveEnable</Name>
@@ -4182,6 +4177,11 @@ testFromSimulink AT%I*: LREAL;]]></Comment>
 						<Var>
 							<Name>Gripper.driveVelocity</Name>
 							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.stMqtt_HAWino_IN</Name>
+							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
+							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.sliderToSimulink</Name>
