@@ -18,7 +18,7 @@ VAR
 	wayPointListRaw		: ARRAY [0..100] OF RobotPoseSimple;
 	cnt					: INT 				:= 0;
 	
-	radius				: LREAL				:= 0.1;
+	maxRadius				: LREAL				:= 0.1;
 	
 	samplingTime		: LREAL				:= 0.05;
 	
@@ -87,9 +87,22 @@ END_VAR
       <Declaration><![CDATA[METHOD setWaypointList : ARRAY [0..100] OF RobotPoseSimple
 VAR_INPUT
 	newWayPointList	: ARRAY [0..100]  OF RobotPoseSimple;
+END_VAR
+
+VAR
+	extendedWayPointList			:	ARRAY [0..101] OF RobotPoseSimple;
+	i				: UINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[path(waypointListRaw := newWayPointList, radius := radius);
+        <ST><![CDATA[// shift all elements +1 to right except the lat one (gets overwritten)
+FOR i := SIZEOF(newWayPointList) - 1 TO 0 BY  -1 DO
+	extendedWayPointList[i + 1] := newWayPointList[i];
+END_FOR
+
+// insert actual pose as first waypoint
+extendedWayPointList[0] := currentPose;
+
+path(waypointListRaw := extendedWayPointList, maxRadius := maxRadius);
 trajectoryPlanner(path := path, 
 				  qAccMax := maxAcc, 
 				  qVelMax := maxVel, 
@@ -117,6 +130,13 @@ trajectoryPlanner(path := path,
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.setWaypointList">
+      <LineId Id="39" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="49" Count="1" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="40" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="18" Count="0" />
       <LineId Id="20" Count="0" />

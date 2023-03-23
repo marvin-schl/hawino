@@ -10,14 +10,16 @@ Point is directly used as controlPoint. From the prev and nex Wapoints the start
 FUNCTION_BLOCK BezierCurve EXTENDS Spline
 VAR_INPUT
 	waypoints: ARRAY[0..2] OF RobotPoseSimple;
-	radius: LREAL;
 	deltaT: LREAL := 1E-3; //only for inital length calculation
+	maxRadius : LREAL;		// Max. radius of bezier curves
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
 	prevWP, nextWP, controlPoint: RobotPoseSimple;
 	a2, a1, a0, b2, b1, b0: LREAL;
+	radius		: LREAL := 0.1;				// Calculated radius of bezier curves.
+	d1, d2, d		: LREAL;					// Distances to determine radius of bezier curves
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -25,7 +27,18 @@ END_VAR
 prevWP := waypoints[0];
 nextWP := waypoints[2];
 
-getStartEndPoint();
+getStartEndPoint(radius := maxRadius);
+
+// Compute minimum required radius
+d1 := SQRT(EXPT(controlPoint.x - startPoint.x, 2) + EXPT(controlPoint.y - startPoint.y, 2));
+d2 := SQRT(EXPT(controlPoint.x - endPoint.x, 2) + EXPT(controlPoint.y - endPoint.y, 2));
+d := MIN(d1, d2);
+
+IF (d < maxRadius) THEN
+	radius := d;
+	getStartEndPoint(radius := radius);
+END_IF
+
 calculateCoefficients();
 lengthVar := calculateLength();]]></ST>
     </Implementation>
@@ -187,6 +200,7 @@ getPointNorm.theta := -1; //unused]]></ST>
     <Method Name="getStartEndPoint" Id="{2a56e530-9f6d-479f-a020-5589e1799307}">
       <Declaration><![CDATA[METHOD PRIVATE getStartEndPoint : RobotPoseSimple
 VAR_INPUT
+	radius : LREAL;
 END_VAR
 
 VAR
@@ -317,7 +331,20 @@ tToArcLengthIntegral := (t/2 + z2 / (4*z3)) * SQRT(z1) - (z5* ((EXPT(z2,2) / 4-z
     <LineIds Name="BezierCurve">
       <LineId Id="78" Count="1" />
       <LineId Id="92" Count="0" />
-      <LineId Id="87" Count="2" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="116" Count="0" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="120" Count="0" />
+      <LineId Id="124" Count="0" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="129" Count="0" />
+      <LineId Id="134" Count="0" />
+      <LineId Id="130" Count="0" />
+      <LineId Id="117" Count="0" />
+      <LineId Id="89" Count="0" />
       <LineId Id="36" Count="0" />
     </LineIds>
     <LineIds Name="BezierCurve.calculateCoefficients">

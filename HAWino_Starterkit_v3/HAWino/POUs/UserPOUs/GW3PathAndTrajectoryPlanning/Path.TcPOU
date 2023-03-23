@@ -4,7 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK Path EXTENDS Spline
 VAR_INPUT
 	waypointListRaw: 	ARRAY [0..100] OF RobotPoseSimple;
-	radius: 			LREAL;
+	maxRadius: 			LREAL;
 	thetaDZ: 				LREAL := 0.1;
 END_VAR
 VAR
@@ -135,7 +135,7 @@ END_VAR]]></Declaration>
 		wplTmpBezier[k] := waypointList[j];
 		k := k + 1;
 	END_FOR  
-	bezierCurves[(i-1)/2](waypoints:=wplTmpBezier, radius:=radius);
+	bezierCurves[(i-1)/2](waypoints:=wplTmpBezier, maxRadius := maxRadius);
 	subsplines[i]:= ADR(bezierCurves[(i-1)/2]);
 	END_FOR
 	
