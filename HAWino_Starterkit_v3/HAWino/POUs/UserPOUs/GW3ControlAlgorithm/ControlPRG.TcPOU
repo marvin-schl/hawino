@@ -63,6 +63,7 @@ CASE state OF
 	ControllerState.idle:
 		//if new waypointlist available reset trajectory and go into set trajectory state
 		IF newWaypointListAvailable THEN
+			controller.reset();
 			trajectory.reset(); //reset trajectory before setTrajectory to ensure all flags are resetted properly
 			state := ControllerState.setTrajectory;
 		END_IF
@@ -90,6 +91,8 @@ CASE state OF
 	ControllerState.ready:
 		IF newWaypointListAvailable THEN
 			//stop and calculate new trajectory
+			controller.reset();
+			trajectory.reset(); //reset trajectory before setTrajectory to ensure all flags are resetted properly
 			state := ControllerState.setTrajectory;
 		ELSIF xBoEnable THEN
 			state := ControllerState.driving;
@@ -97,6 +100,7 @@ CASE state OF
 	
 	ControllerState.driving:
 		IF newWaypointListAvailable THEN
+			controller.reset();
 			trajectory.reset(); //reset trajectory before setTrajectory to ensure all flags are resetted properly
 			//stop and calculate new trajectory
 			state := ControllerState.setTrajectory;
@@ -104,7 +108,7 @@ CASE state OF
 			//got back to idle and set arrived flag for GW2, method needed?
 			state := ControllerState.idle;
 			controller.reset();
-			// TODO: trajectory.reset(...);
+			trajectory.reset();
 		ELSIF xBoEnable THEN
 			//do the driving
 			drive();
@@ -143,7 +147,8 @@ trajectory(
 
 //init controller and link to observer
 controller(xRobotPose 		:= observer.yObserverdPose,			//pass controller the observerd roboter pose
-		   xRobotPoseRef	:= trajectory.referencePose);		//pass controller the reference position for the next cycle comming from the trajectory
+		   xRobotPoseRef	:= trajectory.referencePose,
+		   enable			:= robot.enable);		//pass controller the reference position for the next cycle comming from the trajectory
 
 //transform control inputs into robot coordinates and pass them to the robot
 //pass enable signal to robot
@@ -197,7 +202,15 @@ END_VAR]]></Declaration>
       </Implementation>
     </Method>
     <LineIds Name="ControlPRG">
-      <LineId Id="895" Count="121" />
+      <LineId Id="895" Count="18" />
+      <LineId Id="1059" Count="0" />
+      <LineId Id="914" Count="26" />
+      <LineId Id="1061" Count="1" />
+      <LineId Id="941" Count="6" />
+      <LineId Id="1058" Count="0" />
+      <LineId Id="948" Count="46" />
+      <LineId Id="1060" Count="0" />
+      <LineId Id="995" Count="21" />
       <LineId Id="94" Count="0" />
     </LineIds>
     <LineIds Name="ControlPRG.calculateTrajectory">

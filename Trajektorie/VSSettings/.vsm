@@ -6,7 +6,7 @@
     <Node>
       <Title>XY Scope Project</Title>
       <Expanded>True</Expanded>
-      <FileName>C:\Users\Marvin\MySafeCloud\Documents\Uni\Master\VPJ\hawino\Trajektorie\XY Scope Project.tcscopex</FileName>
+      <FileName>E:\hawino\Trajektorie\XY Scope Project.tcscopex</FileName>
       <Children>
         <Node>
           <Title>DataPool</Title>
@@ -65,12 +65,12 @@
         </Node>
         <Node>
           <Title>XY Chart</Title>
-          <Expanded>True</Expanded>
+          <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>Axis Group</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -136,12 +136,12 @@
         </Node>
         <Node>
           <Title>YT Chart</Title>
-          <Expanded>True</Expanded>
+          <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>Axis Group (3)</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -174,7 +174,7 @@
         </Node>
         <Node>
           <Title>YT Chart (1)</Title>
-          <Expanded>True</Expanded>
+          <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
@@ -191,6 +191,12 @@
               </Children>
             </Node>
           </Children>
+        </Node>
+        <Node>
+          <Title>YT Chart (2)</Title>
+          <Expanded>False</Expanded>
+          <FileName></FileName>
+          <Children />
         </Node>
       </Children>
     </Node>
