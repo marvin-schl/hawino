@@ -13,6 +13,9 @@ VAR
 	leererAuftrag:Auftrag;
 	//Hilfsvariablen vorübergehend
 	wayPointList : ARRAY[0..10] OF RobotPoseSimple;
+	
+	testToSimulink AT%Q*: LREAL;
+	testFromSimulink AT%I*: LREAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -42,8 +45,10 @@ IF s0 AND NOT s1 AND .Var_HAWIno.Auftrag.Art = 'Fahrauftrag' THEN
 	s0 := 0; s1 := 1;
 	//	RückmeldugGW1 Auftrag angenommen setzt
 	Var_HAWIno.Feedback := 'Auftrag angenommen';
-	//	Bahnplanung
+	//Bahnplanung
+ 
 	//trajectoryControllable.setWaypointList := wayPointList;				//----------todo
+	TrajectoryController.setWaypointList(WaypointList);
 END_IF
 
 //	RückmeldungGW3 Fahrt abwarten
@@ -156,7 +161,10 @@ END_IF
       <LineId Id="193" Count="0" />
       <LineId Id="6" Count="0" />
       <LineId Id="89" Count="1" />
-      <LineId Id="92" Count="3" />
+      <LineId Id="92" Count="2" />
+      <LineId Id="226" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="230" Count="0" />
       <LineId Id="91" Count="0" />
       <LineId Id="110" Count="0" />
       <LineId Id="65" Count="0" />

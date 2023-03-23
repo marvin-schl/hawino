@@ -17,6 +17,9 @@
     <LibraryReferences>{8c16abc0-f2da-470c-9f77-19ec34318f24}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DUTs\AstarAlgorithmusVariablen.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\Auftrag.TcDUT">
       <SubType>Code</SubType>
     </Compile>

@@ -3743,6 +3743,10 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>Fahrauftrag.testFromSimulink</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
 							<Name>MotorDrivers.vXCartesianToMotors</Name>
 							<Comment><![CDATA[Inputs: CartesianToMotors + Bumper]]></Comment>
 							<Type>LREAL</Type>
@@ -3836,6 +3840,10 @@
 						<Var>
 							<Name>MotorDrivers.velocityToMotor1</Name>
 							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.testToSimulink</Name>
+							<Type>LREAL</Type>
 						</Var>
 						<Var>
 							<Name>MotorDrivers.velocityToMotor2</Name>
