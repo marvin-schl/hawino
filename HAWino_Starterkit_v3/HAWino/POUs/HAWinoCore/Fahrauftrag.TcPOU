@@ -16,7 +16,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//vorübergehend
+      <ST><![CDATA[ //vorübergehend
 //wayPointList[0].x := 1400;
 //wayPointList[1].x := 1800;
 //wayPointList[0].y := 1000;
