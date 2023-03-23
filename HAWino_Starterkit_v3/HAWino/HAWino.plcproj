@@ -96,19 +96,49 @@
     <Compile Include="POUs\HAWinoCore\HAWino.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\NonlinearController.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\Robot.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\SimpleObserver.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\SimpleStateFeedbackLaw.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\SimpleTrajectory.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\TimeOptimalTrajectory.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\ControlPRG.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\FKT_Scale.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\GW2DummyPRG.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\Robot.TcPOU">
+    <Compile Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning\BezierCurve.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\SimpleStateFeedbackLaw.TcPOU">
+    <Compile Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning\LinearSpline.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\SimpleTrajectory.TcPOU">
+    <Compile Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning\Path.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning\Spline.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning\TrajectoryPlanner.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\TestTrajectory.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\TestAndMeasurement\CameraNoise.TcPOU">
@@ -126,6 +156,12 @@
     <Compile Include="POUs\UserPOUs\TestAndMeasurement\Sinusfahrt.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\ATAN2.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\FILL.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\Robot2World.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -138,16 +174,16 @@
     <Compile Include="POUs\UserPOUs\UserFunctions\RP2ARRAY.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\SI.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\World2Robot.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\SimpleObserver.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\UserPOUs\TrackingController.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\UserPOUs\TrajectoryControl.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\ZEROS.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -158,6 +194,8 @@
     <Folder Include="GVLs" />
     <Folder Include="POUs\HAWinoCore" />
     <Folder Include="POUs\UserPOUs" />
+    <Folder Include="POUs\UserPOUs\GW3ControlAlgorithm" />
+    <Folder Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning" />
     <Folder Include="POUs\UserPOUs\UserFunctions" />
     <Folder Include="POUs\UserPOUs\TestAndMeasurement" />
     <Folder Include="VISUs" />

@@ -4,19 +4,19 @@ classdef Path < Spline
         endPoint
         transitions
         subsplines
-        maxAbsCurvature
+        phiDZ
     end
     
     methods 
-        function obj = Path(x,y,r)
-           
+        function obj = Path(x,y,r, phiDZ)
+           [x, y] = obj.preprocessWaypointlist(x,y)
            nmbSubSplines = 2*length(x)-3;
            subsplines   = Spline.empty(nmbSubSplines,0);
            obj.transitions  = zeros(length(obj.subsplines)-1,1);
-           
+           obj.phiDZ = phiDZ;
            %generate bezier curves
            for i = 2:2:nmbSubSplines-1
-               subsplines(i) = QuadraticBezierCurve(x(i/2:i/2+2),y(i/2:i/2+2),r);
+               subsplines(i) = BezierCurve(x(i/2:i/2+2),y(i/2:i/2+2),r);
            end
            
            %generate first linear
@@ -39,51 +39,79 @@ classdef Path < Spline
            obj.subsplines = subsplines;
            obj.length = obj.calculateLength();
            obj.transitions = obj.calculateTransitions();
-           obj.startPoint = struct("x", x(1), "y", y(1));
-           obj.endPoint =  struct("x", x(length(x)), "y", y(length(y)));      
            
-           obj.maxAbsCurvature = struct("x",0,"y",0)
-%            for spline=obj.subsplines
-%                obj.maxAbsCurvature.x = max(obj.maxAbsCurvature.x,  spline.maxAbsCurvature.x);
-%                obj.maxAbsCurvature.y = max(obj.maxAbsCurvature.y,  spline.maxAbsCurvature.y);
-%            end
+           obj.startPoint = struct("x", x(1), "y", y(1), "phi", subsplines(1).startPoint.phi);
+           obj.endPoint =  struct("x", x(length(x)), "y", y(length(y)), "phi", obj.subsplines(length(obj.subsplines)).endPoint.phi);      
         end
         
-        function [x,y] = getPoint(obj, s)
+        function [x, y, phi] = getPoint(obj, s)
+ 
             [idx, s_offset] = obj.getSubsplineToPoint(s);
-            x = zeros(length(s),1);
-            y = zeros(length(s),1);
+            x   = zeros(length(s),1);
+            y   = zeros(length(s),1);
+            phi = zeros(length(s),1);
+
             for i = 1:length(idx)
                 [x(i),y(i)] = obj.subsplines(idx(i)).getPoint(s_offset(i));
+                phi(i) = obj.phi(s(i));
+                
             end
         end
         
-        function [kx, ky] = getMaxSegmentCurvature(obj, s, ds);
-            if ~exist("ds","var")
-                ds = 1e-3;
-            end
-            
-            [idx, s_offset] = obj.getSubsplineToPoint(s);
-            kx = zeros(length(s),1);            
-            ky = zeros(length(s),1);
-            for i = 1:length(idx)
-                kx(i) = obj.subsplines(idx(i)).maxAbsCurvature.x;
-                ky(i) = obj.subsplines(idx(i)).maxAbsCurvature.y;
-            end
-        end
-        
-        function [x,y] = diff(obj, s, order)
+        function [x,y, phi] = diff(obj, s, order)
            if (~exist("order","var"))
                order = 1;
            end
             
             x = zeros(length(s),1);
             y = zeros(length(s),1);
-            
+            phi = zeros(length(s),1);
             [idx, s_offset] = obj.getSubsplineToPoint(s);
             for i = 1:length(idx)                 
                 [x(i),y(i)] = obj.subsplines(idx(i)).diff(s_offset(i), order);
+                phi(i) = obj.dphi(s(i),order);
             end
+        end
+        
+        function s = getDiscontinuousSwitchtingPointCandidate(obj)
+            s = obj.transitions(2:length(obj.transitions)-1);
+        end
+        
+        function s = getContinousSwitchingPointCandiate(obj, ds)
+            if ~exist("ds","var")
+                ds = 0.1;
+            end
+            
+            sPath = [0:ds:obj.length];
+            
+            %search f
+            idxY = find((diff(sign(obj.dfy(sPath))) ~= 0) == 1);
+            idxX = find((diff(sign(obj.dfx(sPath))) ~= 0) == 1);
+            
+            s = [];
+            if ~isempty(idxX)
+                for idx = idxX
+                   sm = sPath(idx)-2*ds;
+                   sp = sPath(idx)+2*ds;
+                   s0 = fzero(@(s) obj.dfx(s), [sm sp]); 
+                   if ~isempty(s0)
+                       s = [s;s0];
+                   end
+                end
+            end
+            
+            if ~isempty(idxY) 
+               for idx = idxY
+                   sm = sPath(idx)-2*ds;
+                   sp = sPath(idx)+2*ds;
+                   s0 = fzero(@(s) obj.dfy(s), [sm sp]); 
+                   if ~isempty(s0) ~= 0
+                       s = [s;s0];
+                   end
+                end
+            end
+
+
         end
     end
     
@@ -110,7 +138,51 @@ classdef Path < Spline
             end
         end
         
+        function phi = phi(obj, s)
+            deltaPhi = obj.endPoint.phi-obj.startPoint.phi;
+            if s < obj.phiDZ
+                phi = obj.startPoint.phi;
+            elseif s > obj.length-obj.phiDZ
+                phi = obj.endPoint.phi;
+            else
+                phi   = obj.startPoint.phi+deltaPhi/2*(1-cos(pi/(obj.length-2*obj.phiDZ)*(s-obj.phiDZ)));
+            end
+        end
         
+        function dphi = dphi(obj, s,order)
+            deltaPhi =  obj.endPoint.phi-obj.startPoint.phi;
+            if s < obj.phiDZ || s > obj.length-obj.phiDZ
+                dphi = 0;
+            elseif order == 1
+                dphi = deltaPhi/2*pi/(obj.length-2*obj.phiDZ)*sin(pi/(obj.length-2*obj.phiDZ)*(s-obj.phiDZ));
+            elseif order == 2
+                dphi   = deltaPhi/2*(pi/(obj.length-2*obj.phiDZ))^2*cos(pi/(obj.length-2*obj.phiDZ)*(s-obj.phiDZ));
+            end
+        end
+        
+        function [x, y] = preprocessWaypointlist(obj, xwpl, ywpl)
+        x = [xwpl(1)];
+        y = [ywpl(1)];
+        for i=2:length(xwpl)-1
+            phi1 = atan2(ywpl(i)-ywpl(i-1),xwpl(i)-xwpl(i-1));
+            phi2 = atan2(ywpl(i+1)-ywpl(i),xwpl(i+1)-xwpl(i));
+            if phi1 ~= phi2
+                x = [x, xwpl(i)];
+                y = [y, ywpl(i)];
+            end
+        end
+        x = [x, xwpl(length(xwpl))];
+        y = [y, ywpl(length(ywpl))];
+        end
+        
+        function y = dfy(obj,s)
+            [~, y, ~] = obj.diff(s, 1);
+        end
+
+        function x = dfx(obj, s)
+             [x, ~, ~] = obj.diff(s, 1);
+        end
+             
     end
     
     methods (Access = protected)
@@ -120,6 +192,6 @@ classdef Path < Spline
                 len = len + obj.subsplines(i).getLength();
             end
         end
-    end
-    
+    end     
+   
 end

@@ -2,7 +2,6 @@ classdef Spline <  matlab.mixin.Heterogeneous
     properties (Abstract)
        startPoint
        endPoint
-       maxAbsCurvature
     end
     
     properties
@@ -20,7 +19,8 @@ classdef Spline <  matlab.mixin.Heterogeneous
        diff
     end
     
-    methods ( Access=protected, Abstract)
+
+    methods ( Access=protected,Abstract)
        calculateLength
     end
             
