@@ -48,8 +48,8 @@ public:
 	double TcModuleInput_vxToRobot;
 	double TcModuleInput_vyToRobot;
 	double TcModuleOutput_DEBUG;
+	matrix_3_real_T TcModuleOutput_OutKalmanObsPose;
 	matrix_3_real_T TcModuleOutput_OutSimpleObsPose;
-	matrix_3_real_T TcModuleOutput_OutSimpleObsPose1;
 	double TcModuleOutput_version;
 
 

@@ -7,9 +7,9 @@
  *
  * Code generation for model "KalmanObserver_R2021b".
  *
- * Model version              : 1.1
+ * Model version              : 1.2
  * Simulink Coder version : 9.6 (R2021b) 14-May-2021
- * C++ source code generated on : Mon Mar 20 12:17:59 2023
+ * C++ source code generated on : Thu Mar 23 18:34:24 2023
  *
  * Target selection: TwinCatGrt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -170,7 +170,7 @@ struct B_KalmanObserver_R2021b_T {
 
 /* Block states (default storage) for system '<Root>' */
 struct DW_KalmanObserver_R2021b_T {
-  real_T CameraDelay_DSTATE[42];       /* '<S1>/CameraDelay' */
+  real_T CameraDelay_DSTATE[6];        /* '<S1>/CameraDelay' */
   real_T DelayOneStep1_DSTATE[3];      /* '<S1>/Delay One Step1' */
   real_T estPoseOld[3];                /* '<S1>/PoseCalculation' */
   real_T xHatOld[3];                   /* '<S1>/MATLAB Function' */
@@ -178,8 +178,8 @@ struct DW_KalmanObserver_R2021b_T {
   real_T oldCamData[3];                /* '<S1>/CamFlag' */
   void *version_PWORK;                 /* '<Root>/version' */
   void *DEBUG_PWORK;                   /* '<Root>/DEBUG' */
+  void *OutKalmanObsPose_PWORK;        /* '<Root>/OutKalmanObsPose' */
   void *OutSimpleObsPose_PWORK;        /* '<Root>/OutSimpleObsPose' */
-  void *OutSimpleObsPose1_PWORK;       /* '<Root>/OutSimpleObsPose1' */
   void *InCameraPose_PWORK;            /* '<Root>/InCameraPose' */
   void *vxToRobot_PWORK;               /* '<Root>/vxToRobot' */
   void *vyToRobot_PWORK;               /* '<Root>/vyToRobot' */
@@ -216,7 +216,7 @@ struct ODE1_IntgData {
 
 /* Parameters (default storage) */
 struct P_KalmanObserver_R2021b_T_ {
-  real_T Constant_Value;               /* Expression: 0.1
+  real_T Constant_Value;               /* Expression: 0.11
                                         * Referenced by: '<Root>/Constant'
                                         */
   real_T CameraDelay_InitialCondition; /* Expression: 0.0

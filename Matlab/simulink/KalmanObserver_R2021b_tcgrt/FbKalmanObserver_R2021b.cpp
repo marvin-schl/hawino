@@ -106,8 +106,8 @@ bool CFbKalmanObserver_R2021b::FB_init(bool bInitRetains, bool bInCopyCode)
 	{
 		memset(&(TcModuleInput_InCameraPose),0,sizeof(TcModuleInput_InCameraPose));
 		memset(&(TcModuleOutput_DEBUG),0,sizeof(TcModuleOutput_DEBUG));
+		memset(&(TcModuleOutput_OutKalmanObsPose),0,sizeof(TcModuleOutput_OutKalmanObsPose));
 		memset(&(TcModuleOutput_OutSimpleObsPose),0,sizeof(TcModuleOutput_OutSimpleObsPose));
-		memset(&(TcModuleOutput_OutSimpleObsPose1),0,sizeof(TcModuleOutput_OutSimpleObsPose1));
 		memset(&(TcModuleOutput_version),0,sizeof(TcModuleOutput_version));
 		TcModuleInput_InCameraPose[0] = 0;
 		TcModuleInput_InCameraPose[1] = 0;
@@ -144,8 +144,8 @@ bool CFbKalmanObserver_R2021b::FB_init(bool bInitRetains, bool bInCopyCode)
 		KalmanObserver_R2021b_DW.vxToRobot_PWORK = reinterpret_cast<PVOID>(&(TcModuleInput_vxToRobot));
 		KalmanObserver_R2021b_DW.vyToRobot_PWORK = reinterpret_cast<PVOID>(&(TcModuleInput_vyToRobot));
 		KalmanObserver_R2021b_DW.DEBUG_PWORK = reinterpret_cast<PVOID>(&(TcModuleOutput_DEBUG));
+		KalmanObserver_R2021b_DW.OutKalmanObsPose_PWORK = reinterpret_cast<PVOID>(&(TcModuleOutput_OutKalmanObsPose));
 		KalmanObserver_R2021b_DW.OutSimpleObsPose_PWORK = reinterpret_cast<PVOID>(&(TcModuleOutput_OutSimpleObsPose));
-		KalmanObserver_R2021b_DW.OutSimpleObsPose1_PWORK = reinterpret_cast<PVOID>(&(TcModuleOutput_OutSimpleObsPose1));
 		KalmanObserver_R2021b_DW.version_PWORK = reinterpret_cast<PVOID>(&(TcModuleOutput_version));
 
 		FpRestore(fpState);

@@ -13,6 +13,9 @@
     <Content Include="MeasureVariance.tcscopex">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="ObserverComparison.tcscopex">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="ParameterEstimation.tcscopex">
       <SubType>Content</SubType>
     </Content>

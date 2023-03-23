@@ -61,7 +61,7 @@ BEGIN_OBJDATAAREA_MAP(CTcComKalmanObserver_R2021b)
 	OBJDATAAREA_SPAN_PTR_SIZE_FLAGS( 0, 1, &(AdditionalInports), sizeof(AdditionalInports), 0)
 	OBJDATAAREA_SPAN_PTR_SIZE_FLAGS( 1, 1, &(AdditionalOutports), sizeof(AdditionalOutports), OBJDATAAREA_DISABLE_SET)
 	OBJDATAAREA_SPAN_PTR_SIZE_FLAGS( 2, 1, &(KalmanObserver_R2021b_P), sizeof(KalmanObserver_R2021b_P), 0)
-	OBJDATAAREA_SPAN_PTR_SIZE_FLAGS( 3, 1, &(KalmanObserver_R2021b_DW.CameraDelay_DSTATE), 504, OBJDATAAREA_DISABLE_SET)
+	OBJDATAAREA_SPAN_PTR_SIZE_FLAGS( 3, 1, &(KalmanObserver_R2021b_DW.CameraDelay_DSTATE), 216, OBJDATAAREA_DISABLE_SET)
 END_OBJDATAAREA_MAP()
 
 BEGIN_SETOBJPARA_MAP2(CTcComKalmanObserver_R2021b,TcMatSim::GeneratedTcCom)
@@ -143,8 +143,8 @@ HRESULT CTcComKalmanObserver_R2021b::SetObjStateIP(ITComObjectServer* ipSrv, TCo
 	{
 		memset(&(AdditionalInports.TcModuleInput_InCameraPose),0,sizeof(AdditionalInports.TcModuleInput_InCameraPose));
 		memset(&(AdditionalOutports.TcModuleOutput_DEBUG),0,sizeof(AdditionalOutports.TcModuleOutput_DEBUG));
+		memset(&(AdditionalOutports.TcModuleOutput_OutKalmanObsPose),0,sizeof(AdditionalOutports.TcModuleOutput_OutKalmanObsPose));
 		memset(&(AdditionalOutports.TcModuleOutput_OutSimpleObsPose),0,sizeof(AdditionalOutports.TcModuleOutput_OutSimpleObsPose));
-		memset(&(AdditionalOutports.TcModuleOutput_OutSimpleObsPose1),0,sizeof(AdditionalOutports.TcModuleOutput_OutSimpleObsPose1));
 		memset(&(AdditionalOutports.TcModuleOutput_version),0,sizeof(AdditionalOutports.TcModuleOutput_version));
 		AdditionalInports.TcModuleInput_InCameraPose[0] = 0;
 		AdditionalInports.TcModuleInput_InCameraPose[1] = 0;
@@ -182,8 +182,8 @@ HRESULT CTcComKalmanObserver_R2021b::SetObjStatePS(TComInitDataHdr* pInitData)
 		KalmanObserver_R2021b_DW.vxToRobot_PWORK = reinterpret_cast<PVOID>(&(AdditionalInports.TcModuleInput_vxToRobot));
 		KalmanObserver_R2021b_DW.vyToRobot_PWORK = reinterpret_cast<PVOID>(&(AdditionalInports.TcModuleInput_vyToRobot));
 		KalmanObserver_R2021b_DW.DEBUG_PWORK = reinterpret_cast<PVOID>(&(AdditionalOutports.TcModuleOutput_DEBUG));
+		KalmanObserver_R2021b_DW.OutKalmanObsPose_PWORK = reinterpret_cast<PVOID>(&(AdditionalOutports.TcModuleOutput_OutKalmanObsPose));
 		KalmanObserver_R2021b_DW.OutSimpleObsPose_PWORK = reinterpret_cast<PVOID>(&(AdditionalOutports.TcModuleOutput_OutSimpleObsPose));
-		KalmanObserver_R2021b_DW.OutSimpleObsPose1_PWORK = reinterpret_cast<PVOID>(&(AdditionalOutports.TcModuleOutput_OutSimpleObsPose1));
 		KalmanObserver_R2021b_DW.version_PWORK = reinterpret_cast<PVOID>(&(AdditionalOutports.TcModuleOutput_version));
 
 		if (SUCCEEDED(hr))

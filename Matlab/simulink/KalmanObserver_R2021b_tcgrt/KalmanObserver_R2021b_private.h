@@ -7,9 +7,9 @@
  *
  * Code generation for model "KalmanObserver_R2021b".
  *
- * Model version              : 1.1
+ * Model version              : 1.2
  * Simulink Coder version : 9.6 (R2021b) 14-May-2021
- * C++ source code generated on : Mon Mar 20 12:17:59 2023
+ * C++ source code generated on : Thu Mar 23 18:34:24 2023
  *
  * Target selection: TwinCatGrt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping

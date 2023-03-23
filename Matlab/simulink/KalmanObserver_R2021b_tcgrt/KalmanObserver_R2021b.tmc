@@ -1,4 +1,4 @@
-<TcModuleClass Hash="{AAFF719C-9944-4888-B245-965EE05F436C}" GeneratedBy="TE140x-TargetForMatlabSimulink 2.3.1.1, MATLAB 9.11.0.2022996 (R2021b) Update 4 (win64)">
+<TcModuleClass Hash="{735E234C-B73F-4B31-8ED1-1003EED620D3}" GeneratedBy="TE140x-TargetForMatlabSimulink 2.3.1.1, MATLAB 9.11.0.2022996 (R2021b) Update 4 (win64)">
 	<Vendor>
 		<Name>TE140x Module Vendor</Name>
 		<ImageData/>
@@ -263,12 +263,12 @@
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{D66A6CF3-92AF-F198-AE29-9C504D923AF2}">matrix_42_real_T</Name>
-			<BitSize>2688</BitSize>
+			<Name GUID="{3737846F-E1D6-FF59-67F2-2DADB20D8528}">matrix_6_real_T</Name>
+			<BitSize>384</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 			<ArrayInfo>
 				<LBound>0</LBound>
-				<Elements>42</Elements>
+				<Elements>6</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
@@ -482,7 +482,7 @@
 					<Default>
 						<SubItem>
 							<Name>.Constant_Value</Name>
-							<Value>0.1</Value>
+							<Value>0.11</Value>
 						</SubItem>
 						<SubItem>
 							<Name>.CameraDelay_InitialCondition</Name>
@@ -593,14 +593,14 @@
 						<BitOffs>0</BitOffs>
 					</Symbol>
 					<Symbol>
-						<Name>TcModuleOutput_OutSimpleObsPose</Name>
+						<Name>TcModuleOutput_OutKalmanObsPose</Name>
 						<BitSize>192</BitSize>
 						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
 						<PTCID>#x81000008</PTCID>
 						<BitOffs>64</BitOffs>
 					</Symbol>
 					<Symbol>
-						<Name>TcModuleOutput_OutSimpleObsPose1</Name>
+						<Name>TcModuleOutput_OutSimpleObsPose</Name>
 						<BitSize>192</BitSize>
 						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
 						<PTCID>#x81000020</PTCID>
@@ -652,11 +652,11 @@
 					<AreaNo AreaType="Internal" CreateSymbols="true">3</AreaNo>
 					<Name>KalmanObserver_R2021b_DW1</Name>
 					<ContextId>0</ContextId>
-					<ByteSize>504</ByteSize>
+					<ByteSize>216</ByteSize>
 					<Symbol>
 						<Name>CameraDelay_DSTATE</Name>
-						<BitSize>2688</BitSize>
-						<BaseType GUID="{D66A6CF3-92AF-F198-AE29-9C504D923AF2}">matrix_42_real_T</BaseType>
+						<BitSize>384</BitSize>
+						<BaseType GUID="{3737846F-E1D6-FF59-67F2-2DADB20D8528}">matrix_6_real_T</BaseType>
 						<PTCID>#x83000000</PTCID>
 						<BitOffs>0</BitOffs>
 					</Symbol>
@@ -664,36 +664,36 @@
 						<Name>DelayOneStep1_DSTATE</Name>
 						<BitSize>192</BitSize>
 						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
-						<PTCID>#x83000150</PTCID>
-						<BitOffs>2688</BitOffs>
+						<PTCID>#x83000030</PTCID>
+						<BitOffs>384</BitOffs>
 					</Symbol>
 					<Symbol>
 						<Name>estPoseOld</Name>
 						<BitSize>192</BitSize>
 						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
-						<PTCID>#x83000168</PTCID>
-						<BitOffs>2880</BitOffs>
+						<PTCID>#x83000048</PTCID>
+						<BitOffs>576</BitOffs>
 					</Symbol>
 					<Symbol>
 						<Name>xHatOld</Name>
 						<BitSize>192</BitSize>
 						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
-						<PTCID>#x83000180</PTCID>
-						<BitOffs>3072</BitOffs>
+						<PTCID>#x83000060</PTCID>
+						<BitOffs>768</BitOffs>
 					</Symbol>
 					<Symbol>
 						<Name>P</Name>
 						<BitSize>576</BitSize>
 						<BaseType GUID="{72A91784-953A-FD09-4E66-5B1F6549B49B}">matrix_9_real_T</BaseType>
-						<PTCID>#x83000198</PTCID>
-						<BitOffs>3264</BitOffs>
+						<PTCID>#x83000078</PTCID>
+						<BitOffs>960</BitOffs>
 					</Symbol>
 					<Symbol>
 						<Name>oldCamData</Name>
 						<BitSize>192</BitSize>
 						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
-						<PTCID>#x830001e0</PTCID>
-						<BitOffs>3840</BitOffs>
+						<PTCID>#x830000c0</PTCID>
+						<BitOffs>1536</BitOffs>
 					</Symbol>
 				</DataArea>
 			</DataAreas>
@@ -715,6 +715,6 @@
 	<Configurations/>
 	<Library>
 		<Name>KalmanObserver_R2021b</Name>
-		<Version>0.0.0.1</Version>
+		<Version>0.0.0.6</Version>
 	</Library>
 </TcModuleClass>

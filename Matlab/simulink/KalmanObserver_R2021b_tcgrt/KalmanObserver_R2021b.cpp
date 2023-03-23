@@ -7,9 +7,9 @@
  *
  * Code generation for model "KalmanObserver_R2021b".
  *
- * Model version              : 1.1
+ * Model version              : 1.2
  * Simulink Coder version : 9.6 (R2021b) 14-May-2021
- * C++ source code generated on : Mon Mar 20 12:17:59 2023
+ * C++ source code generated on : Thu Mar 23 18:34:24 2023
  *
  * Target selection: TwinCatGrt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -475,31 +475,26 @@ void KalmanObserver_R2021b_step(void)
           KalmanObserver_R2021b_B.debug;
       }
 
+      /* Update for S-Function (TcModuleInOut): '<Root>/OutKalmanObsPose' */
+      if (KalmanObserver_R2021b_DW.OutKalmanObsPose_PWORK != NULL) {
+        memcpy(KalmanObserver_R2021b_DW.OutKalmanObsPose_PWORK,
+               &KalmanObserver_R2021b_B.xHat[0], 24);
+      }
+
       /* Update for S-Function (TcModuleInOut): '<Root>/OutSimpleObsPose' */
       if (KalmanObserver_R2021b_DW.OutSimpleObsPose_PWORK != NULL) {
         memcpy(KalmanObserver_R2021b_DW.OutSimpleObsPose_PWORK,
                &KalmanObserver_R2021b_B.estimatedPose[0], 24);
       }
 
-      /* Update for S-Function (TcModuleInOut): '<Root>/OutSimpleObsPose1' */
-      if (KalmanObserver_R2021b_DW.OutSimpleObsPose1_PWORK != NULL) {
-        memcpy(KalmanObserver_R2021b_DW.OutSimpleObsPose1_PWORK,
-               &KalmanObserver_R2021b_B.xHat[0], 24);
-      }
-
       /* Update for Delay: '<S1>/CameraDelay' */
-      for (int_T idxDelay{0}; idxDelay < 13; idxDelay++) {
-        int32_T CameraDelay_DSTATE_tmp;
-        CameraDelay_DSTATE_tmp = (idxDelay + 1) * 3;
-        KalmanObserver_R2021b_DW.CameraDelay_DSTATE[idxDelay * 3] =
-          KalmanObserver_R2021b_DW.CameraDelay_DSTATE[CameraDelay_DSTATE_tmp];
-        KalmanObserver_R2021b_DW.CameraDelay_DSTATE[idxDelay * 3 + 1] =
-          KalmanObserver_R2021b_DW.CameraDelay_DSTATE[CameraDelay_DSTATE_tmp + 1];
-        KalmanObserver_R2021b_DW.CameraDelay_DSTATE[idxDelay * 3 + 2] =
-          KalmanObserver_R2021b_DW.CameraDelay_DSTATE[CameraDelay_DSTATE_tmp + 2];
-      }
-
-      KalmanObserver_R2021b_DW.CameraDelay_DSTATE[39] =
+      KalmanObserver_R2021b_DW.CameraDelay_DSTATE[0] =
+        KalmanObserver_R2021b_DW.CameraDelay_DSTATE[3];
+      KalmanObserver_R2021b_DW.CameraDelay_DSTATE[1] =
+        KalmanObserver_R2021b_DW.CameraDelay_DSTATE[4];
+      KalmanObserver_R2021b_DW.CameraDelay_DSTATE[2] =
+        KalmanObserver_R2021b_DW.CameraDelay_DSTATE[5];
+      KalmanObserver_R2021b_DW.CameraDelay_DSTATE[3] =
         KalmanObserver_R2021b_B.Odometry[0];
 
       /* Update for Delay: '<S1>/Delay One Step1' */
@@ -507,7 +502,7 @@ void KalmanObserver_R2021b_step(void)
         KalmanObserver_R2021b_B.Odometry[0];
 
       /* Update for Delay: '<S1>/CameraDelay' */
-      KalmanObserver_R2021b_DW.CameraDelay_DSTATE[40] =
+      KalmanObserver_R2021b_DW.CameraDelay_DSTATE[4] =
         KalmanObserver_R2021b_B.Odometry[1];
 
       /* Update for Delay: '<S1>/Delay One Step1' */
@@ -515,7 +510,7 @@ void KalmanObserver_R2021b_step(void)
         KalmanObserver_R2021b_B.Odometry[1];
 
       /* Update for Delay: '<S1>/CameraDelay' */
-      KalmanObserver_R2021b_DW.CameraDelay_DSTATE[41] =
+      KalmanObserver_R2021b_DW.CameraDelay_DSTATE[5] =
         KalmanObserver_R2021b_B.Odometry[2];
 
       /* Update for Delay: '<S1>/Delay One Step1' */
@@ -631,7 +626,7 @@ void KalmanObserver_R2021b_initialize(void)
                      sizeof(DW_KalmanObserver_R2021b_T));
 
   /* InitializeConditions for Delay: '<S1>/CameraDelay' */
-  for (int32_T i{0}; i < 42; i++) {
+  for (int32_T i{0}; i < 6; i++) {
     KalmanObserver_R2021b_DW.CameraDelay_DSTATE[i] =
       KalmanObserver_R2021b_P.CameraDelay_InitialCondition;
   }

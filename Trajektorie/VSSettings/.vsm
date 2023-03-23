@@ -5,14 +5,20 @@
   <Children>
     <Node>
       <Title>XY Scope Project</Title>
-      <Expanded>False</Expanded>
+      <Expanded>True</Expanded>
       <FileName>E:\hawino\Trajektorie\XY Scope Project.tcscopex</FileName>
       <Children>
         <Node>
           <Title>DataPool</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
+            <Node>
+              <Title>thetaKalman</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
             <Node>
               <Title>thetaObs</Title>
               <Expanded>False</Expanded>
@@ -27,6 +33,12 @@
             </Node>
             <Node>
               <Title>xCam</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>xKalman</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -50,6 +62,12 @@
               <Children />
             </Node>
             <Node>
+              <Title>yKalman</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
               <Title>yObs</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
@@ -65,12 +83,12 @@
         </Node>
         <Node>
           <Title>XY Chart</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>Axis Group</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -130,6 +148,25 @@
                     </Node>
                   </Children>
                 </Node>
+                <Node>
+                  <Title>xKalman, yKalman</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children>
+                    <Node>
+                      <Title>X: xKalman</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                    <Node>
+                      <Title>Y: yKalman</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                  </Children>
+                </Node>
               </Children>
             </Node>
           </Children>
@@ -174,7 +211,7 @@
         </Node>
         <Node>
           <Title>YT Chart (1)</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
@@ -197,6 +234,19 @@
           <Expanded>False</Expanded>
           <FileName></FileName>
           <Children />
+        </Node>
+        <Node>
+          <Title>Array Bar Chart</Title>
+          <Expanded>False</Expanded>
+          <FileName></FileName>
+          <Children>
+            <Node>
+              <Title>Axis Group (5)</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+          </Children>
         </Node>
       </Children>
     </Node>

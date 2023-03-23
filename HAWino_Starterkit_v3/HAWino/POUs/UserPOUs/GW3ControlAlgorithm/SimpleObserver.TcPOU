@@ -21,6 +21,7 @@ END_VAR
 
 VAR_OUTPUT
 	yObserverdPose: 	RobotPoseSimple;
+	yKalmanObservedPose: RobotPoseSimple;
 END_VAR
 
 VAR
@@ -40,7 +41,8 @@ VAR
 	//from Simulink
 	estimatedPoseFromSimlink AT%I* 	: ARRAY [0..2] OF LREAL;
 	
-	
+	//TEMPORARY++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	kalmanPose AT%I*  	: ARRAY [0..2] OF LREAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -71,7 +73,17 @@ ELSE
 	yObserverdPose.theta := estimatedPoseFromSimlink[2];
 END_IF
 
-]]></ST>
+// ++++++++++++ JUST TESTING FOR KALMAN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+yKalmanObservedPose.x := kalmanPose[0];
+yKalmanObservedPose.y := kalmanPose[1];
+
+IF kalmanPose[2] > pi THEN
+	yKalmanObservedPose.theta := -2*pi+kalmanPose[2];
+ELSIF kalmanPose[2] < -pi THEN
+	yKalmanObservedPose.theta := 2*pi+kalmanPose[2];
+ELSE	
+	yKalmanObservedPose.theta := kalmanPose[2];
+END_IF]]></ST>
     </Implementation>
     <LineIds Name="SimpleObserver">
       <LineId Id="68" Count="0" />
@@ -89,8 +101,12 @@ END_IF
       <LineId Id="223" Count="0" />
       <LineId Id="225" Count="0" />
       <LineId Id="181" Count="0" />
+      <LineId Id="279" Count="0" />
       <LineId Id="57" Count="0" />
       <LineId Id="14" Count="0" />
+      <LineId Id="270" Count="0" />
+      <LineId Id="272" Count="6" />
+      <LineId Id="271" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
