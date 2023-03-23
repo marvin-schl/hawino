@@ -116,6 +116,7 @@ ELSE
 	
 	extendedWayPointList[101].x := -1;
 	extendedWayPointList[101].y := -1;
+	extendedWayPointList[0].theta := currentPose.theta;
 END_IF
 
 path(waypointListRaw := extendedWayPointList, maxRadius := maxRadius);
@@ -155,6 +156,7 @@ trajectoryPlanner(path := path,
       <LineId Id="79" Count="3" />
       <LineId Id="85" Count="1" />
       <LineId Id="88" Count="0" />
+      <LineId Id="98" Count="0" />
       <LineId Id="67" Count="0" />
       <LineId Id="87" Count="0" />
       <LineId Id="13" Count="0" />

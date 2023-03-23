@@ -6,6 +6,7 @@ VAR_INPUT
 	robotPose				: RobotPoseSimple;		// Actual robot pose [x, y, theta] in global frame
 	robotPoseRef			: RobotPoseSimple;		// Reference robot pose [x, y, theta] in global frame
 	robotVelocitiesRef		: RobotPoseSimple;		// Reference robot velocites [vX, vY, omega] in global frame
+	vRef					: LREAL;				// Reference linear velocity along path
 	enable					: BOOL;
 END_VAR
 
