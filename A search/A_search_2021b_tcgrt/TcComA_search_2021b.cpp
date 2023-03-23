@@ -132,7 +132,7 @@ HRESULT CTcComA_search_2021b::SetObjStateIP(ITComObjectServer* ipSrv, TComInitDa
 	if (SUCCEEDED(hr))
 	{
 		m_ContextInfo[0].OriginalTid = 0;
-		m_ContextInfo[0].OriginalSampleTime = 10;
+		m_ContextInfo[0].OriginalSampleTime = 0.65;
 
 	}
 	if (SUCCEEDED(hr))

@@ -5,8 +5,8 @@
 		<TE140xSdk>$(ModuleGeneratorSdk)</TE140xSdk>
 	</PropertyGroup>
 	<PropertyGroup> <!--Simulink_A_search_2021b-->
-		<Simulink_A_search_2021b_BUILD_DIR>D:\A search\A_search_2021b_tcgrt\</Simulink_A_search_2021b_BUILD_DIR>
-		<Simulink_A_search_2021b_START_DIR>D:\A search\A_search_2021b_tcgrt\\..</Simulink_A_search_2021b_START_DIR>
+		<Simulink_A_search_2021b_BUILD_DIR>E:\hawino\A search\A_search_2021b_tcgrt\</Simulink_A_search_2021b_BUILD_DIR>
+		<Simulink_A_search_2021b_START_DIR>E:\hawino\A search\A_search_2021b_tcgrt\\..</Simulink_A_search_2021b_START_DIR>
 		<Simulink_A_search_2021b_MATLAB_ROOT>C:\Program Files\MATLAB\R2021b</Simulink_A_search_2021b_MATLAB_ROOT>
 		<Simulink_A_search_2021b_INCDIR1>$(Simulink_A_search_2021b_START_DIR)</Simulink_A_search_2021b_INCDIR1>
 		<Simulink_A_search_2021b_INCDIR2>$(Simulink_A_search_2021b_START_DIR)\A_search_2021b_tcgrt</Simulink_A_search_2021b_INCDIR2>
