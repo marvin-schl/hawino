@@ -12,7 +12,10 @@
 // CX-4D0046 = 5
 
 VAR_GLOBAL
-	Robot_Number : INT :=4;
+	Robot_Number : INT :=2;
+	Feedback: STRING(50);			//Rückgabewerte an GW1
+	Auftrag: Auftrag;				//ankommender Auftrag von GW1
+	RFID_Status: String(50);		//Rückmeldung von GW1, ob RFID auslesen/schreiben erfolgreich
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

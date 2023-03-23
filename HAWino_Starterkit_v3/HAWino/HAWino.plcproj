@@ -44,7 +44,7 @@
     <Compile Include="DUTs\RobotPoseSimple.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\RobotStatus_GW1.TcDUT">
+    <Compile Include="DUTs\RobotStatusGW1.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\Sys\DUT_SysState.TcDUT">
@@ -70,6 +70,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\HAWinoCore\CameraConnectionUDP.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HAWinoCore\Fahrauftrag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\HAWinoCore\Gripper.TcPOU">
@@ -106,6 +109,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\ArrayToStruct.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\MQTT_Managment.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\ReadAssigment.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\ToRobotPoseSimple.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\TrajectoryControllable.TcIO">
