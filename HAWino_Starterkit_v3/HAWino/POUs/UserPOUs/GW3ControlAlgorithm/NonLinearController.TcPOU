@@ -7,6 +7,7 @@ VAR_INPUT
 	robotPoseRef			: RobotPoseSimple;		// Reference robot pose [x, y, theta] in global frame
 	robotVelocitiesRef		: RobotPoseSimple;		// Reference robot velocites [vX, vY, omega] in global frame
 	vRef					: LREAL;				// Reference linear velocity along path
+	enable					: BOOL;
 END_VAR
 
 VAR_OUTPUT
@@ -23,50 +24,72 @@ VAR
 	xRef, yRef, thetaRef	: LREAL;				// 
 	omegaRef				: LREAL;				//
 	xAct, yAct, thetaAct	: LREAL;	
+	vTransMax				: LREAL;
+	vRotMax					: LREAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[xRef := robotPoseRef[0];
-yRef := robotPoseRef[1];
-thetaRef := robotPoseRef[2];
-omegaRef := robotVelocitiesRef[2];
-xAct := robotPose[0];
-yAct := robotPose[1];
-thetaAct := robotPose[2];
+      <ST><![CDATA[// Reset effective control varibales
+vX := 0;
+vY := 0;
+omega := 0;
 
+IF enable THEN
+	xRef := robotPoseRef[0] / 1000;
+	yRef := robotPoseRef[1] / 1000;
+	thetaRef := robotPoseRef[2];
+	omegaRef := robotVelocitiesRef[2];
+	xAct := robotPose[0] / 1000;
+	yAct := robotPose[1] / 1000;
+	thetaAct := robotPose[2];
 
+	// Suggested value for k2
+	k2 := 2 * ABS(vRef) * SQRT(k3);
+	
+	// Control errors in mobile reference frame
+	xE := COS(thetaAct) * (xRef - xAct) + SIN(thetaAct) * (yRef - yAct);
+	yE := -SIN(thetaAct) * (xRef - xAct) + COS(thetaAct) * (yRef - yAct);
+	thetaE := -(thetaRef - thetaAct);
+	
+	// Control law
+	u2 := -k2 * thetaE + k3 * vRef * yE * SI(thetaE);
+	u1 := vRef * (COS(thetaE) - 1) + yE * (omegaRef + u2) + k1 * xE;
+	
+	// Limit effective control variables
+	IF (vX > vTransMax) THEN
+		vX := vTransMax;
+	ELSIF (vX < - vTransMax) THEN
+		vX := - vTransMax;
+	END_IF
+	
+	IF (vY > vTransMax) THEN
+		vY := vTransMax;
+	ELSIF (vY < - vTransMax) THEN
+		vY := - vTransMax;
+	END_IF
+	
+	IF (omega > vRotMax) THEN
+		omega := vRotMax;
+	ELSIF (omega < - vRotMax) THEN
+		omega := - vRotMax;
+	END_IF
+	
+	// Write effective control variables
+	vX := (u1 + vRef) * COS(thetaAct);
+	vY := (u1 + vRef) * SIN(thetaAct);
+	omega := u2 + omegaRef;
+END_IF
 
-
-// Suggested value for k2
-k2 := 2 * ABS(vRef) * SQRT(k3);
-
-// Control errors in mobile reference frame
-xE := COS(thetaAct) * (xRef - xAct) + SIN(thetaAct) * (yRef - yAct);
-yE := -SIN(thetaAct) * (xRef - xAct) + COS(thetaAct) * (yRef - yAct);
-thetaE := -(thetaRef - thetaAct);
-
-// Control law
-u2 := -k2 * thetaE + k3 * vRef * yE * SI(thetaE);
-u1 := vRef * (COS(thetaE) - 1) + yE * (omegaRef + u2) + k1 * xE;
-
-// Effective control variables
-vX := (u1 + vRef) * COS(thetaAct);
-vY := (u1 + vRef) * SIN(thetaAct);
-omega := u2 + omegaRef;]]></ST>
+]]></ST>
     </Implementation>
     <LineIds Name="NonlinearController">
-      <LineId Id="91" Count="1" />
-      <LineId Id="90" Count="0" />
-      <LineId Id="93" Count="0" />
-      <LineId Id="79" Count="0" />
-      <LineId Id="81" Count="0" />
-      <LineId Id="85" Count="0" />
-      <LineId Id="94" Count="0" />
-      <LineId Id="88" Count="1" />
-      <LineId Id="80" Count="0" />
-      <LineId Id="39" Count="10" />
-      <LineId Id="76" Count="0" />
-      <LineId Id="51" Count="2" />
+      <LineId Id="154" Count="4" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="161" Count="6" />
+      <LineId Id="171" Count="11" />
+      <LineId Id="184" Count="23" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="153" Count="0" />
       <LineId Id="9" Count="0" />
     </LineIds>
   </POU>

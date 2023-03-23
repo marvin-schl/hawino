@@ -48,9 +48,9 @@ ELSIF poseError.theta < -pi THEN
 END_IF
 	
 
-IF ABS(poseError.x) < accuracyXY AND ABS(poseError.y) < accuracyXY AND ABS(poseError.theta) < accuracyTheta THEN
-	reachedReference := TRUE;
-END_IF
+reachedReference := (ABS(poseError.x) < accuracyXY) AND (ABS(poseError.y) < accuracyXY) AND (ABS(poseError.theta) < accuracyTheta);
+
+
 
 //2.) apply gain on errors
 FOR i := 0 TO 2 DO
