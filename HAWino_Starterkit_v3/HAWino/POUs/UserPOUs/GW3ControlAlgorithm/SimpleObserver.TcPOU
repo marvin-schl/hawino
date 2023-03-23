@@ -61,11 +61,13 @@ vYtoRobotWorldToSimulink :=xVyToRobot;
 omegaToRobotWorldToSimulink := xOmegaToRobot;
 
 yObserverdPose.x := estimatedPoseFromSimlink[0];
-yObserverdPose.y := estimatedPoseFromSimlink[1];			
-yObserverdPose.theta := estimatedPoseFromSimlink[2];
+yObserverdPose.y := estimatedPoseFromSimlink[1];
 
-
-
+IF estimatedPoseFromSimlink[2] > pi THEN
+	yObserverdPose.theta := -2*pi+estimatedPoseFromSimlink[2];
+ELSIF estimatedPoseFromSimlink[2] < -pi THEN
+	yObserverdPose.theta := 2*pi+estimatedPoseFromSimlink[2];
+END_IF
 
 ]]></ST>
     </Implementation>
@@ -81,7 +83,8 @@ yObserverdPose.theta := estimatedPoseFromSimlink[2];
       <LineId Id="132" Count="0" />
       <LineId Id="70" Count="0" />
       <LineId Id="60" Count="0" />
-      <LineId Id="53" Count="4" />
+      <LineId Id="176" Count="5" />
+      <LineId Id="57" Count="0" />
       <LineId Id="14" Count="0" />
     </LineIds>
   </POU>
