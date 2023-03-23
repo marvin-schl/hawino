@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <Task Name="ControlTask" Id="{7ad294b1-a7c5-4741-8178-893977b10bea}">
+    <!--CycleTime in micro seconds.-->
+    <CycleTime>10000</CycleTime>
+    <Priority>1</Priority>
+    <PouCall>
+      <Name>ControlPRG</Name>
+    </PouCall>
+    <PouCall>
+      <Name>MotorDrivers</Name>
+    </PouCall>
+    <PouCall>
+      <Name>WheelEncoders</Name>
+    </PouCall>
+    <TaskFBGuid>{c6745a89-8caf-4d4b-b655-109b4dd73381}</TaskFBGuid>
+    <Fb_init>{145f5444-ea53-4249-a646-be3f7c411ce3}</Fb_init>
+    <Fb_exit>{97303027-429e-49f1-bb67-93eca3242959}</Fb_exit>
+    <CycleUpdate>{966be234-b92e-4723-a430-6a3e2c71dd87}</CycleUpdate>
+    <PostCycleUpdate>{3740d81b-75e1-488c-92e8-3547779c9642}</PostCycleUpdate>
+  </Task>
+</TcPlcObject>

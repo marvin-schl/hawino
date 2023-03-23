@@ -40,7 +40,7 @@ supplyCurrent_A :=  supplyCurrentRaw * 1000.0 / 270.0 / 32768 * 10;
 
 IF batteryVoltage_V < 12 AND SOC < 10 THEN
 	
-	shutdownTrigger := TRUE;
+	//shutdownTrigger := TRUE;
 
 END_IF
 

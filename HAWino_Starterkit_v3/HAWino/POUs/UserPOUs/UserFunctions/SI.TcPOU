@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="SI" Id="{df8897c1-e126-495b-8643-b65e708f885c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION SI : LREAL
+VAR_INPUT
+	x	: LREAL;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF (x > -0.001) AND (x < 0.001) THEN
+	SI := 1.0;
+ELSE
+	SI := SIN(x) / x;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="SI">
+      <LineId Id="7" Count="0" />
+      <LineId Id="9" Count="3" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

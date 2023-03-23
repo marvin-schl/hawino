@@ -268,49 +268,118 @@
 			</SubItem>
 		</DataType>
 		<DataType>
-			<Name GUID="{78189268-4DCA-E0BC-718B-D361EFD0087C}">ITcA_search_2021b</Name>
-			<BitSize X64="64">32</BitSize>
-			<BaseType GUID="{00000001-0000-0000-E000-000000000064}">ITcUnknown</BaseType>
-			<Method>
-				<Name VTableIndex="0">step</Name>
-				<ReturnType GUID="{18071995-0000-0000-0000-000000000019}">HRESULT</ReturnType>
-				<ReturnBitSize>32</ReturnBitSize>
-			</Method>
-		</DataType>
-		<DataType>
-			<Name GUID="{F943D866-5CCA-8252-A4DE-C3B2588A676E}">matrix_144_real_T</Name>
-			<BitSize>9216</BitSize>
+			<Name GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..2] OF LREAL</Name>
+			<BitSize>192</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 			<ArrayInfo>
 				<LBound>0</LBound>
-				<Elements>144</Elements>
+				<Elements>3</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{7D36307D-4D1F-1968-DDE2-C60825B06EF5}" HideSubItems="true">matrix_720_real_T</Name>
-			<BitSize>46080</BitSize>
-			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+			<Name GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}" AutoDeleteType="true">RobotPoseSimple</Name>
+			<BitSize>192</BitSize>
+			<SubItem>
+				<Name>x</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>y</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>64</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>theta</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>128</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{3157D781-AEE6-75C1-0F14-5410698AD079}" AutoDeleteType="true">RobotPose</Name>
+			<BitSize>256</BitSize>
+			<ExtendsType GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</ExtendsType>
+			<SubItem>
+				<Name>e</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>192</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
+			<Name IecBaseType="true">ARRAY [1..8] OF RobotPose</Name>
+			<Comment><![CDATA[input from camera]]></Comment>
+			<BitSize>2048</BitSize>
+			<BaseType GUID="{3157D781-AEE6-75C1-0F14-5410698AD079}">RobotPose</BaseType>
 			<ArrayInfo>
-				<LBound>0</LBound>
-				<Elements>720</Elements>
+				<LBound>1</LBound>
+				<Elements>8</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{84F14F01-1544-F8A7-772F-08338F3898B9}" HideSubItems="true">matrix_20736_real_T</Name>
-			<BitSize>1327104</BitSize>
-			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+			<Name IecBaseType="true">ARRAY [0..100] OF RobotPoseSimple</Name>
+			<Comment><![CDATA[ implemented, Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)]]></Comment>
+			<BitSize>19392</BitSize>
+			<BaseType GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</BaseType>
 			<ArrayInfo>
 				<LBound>0</LBound>
-				<Elements>20736</Elements>
+				<Elements>101</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{96759023-969C-4C54-91CF-54C1F04F81ED}">matrix_12_real_T</Name>
-			<BitSize>768</BitSize>
+			<Name GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}" AutoDeleteType="true">ControllerState</Name>
+			<BitSize>16</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
+			<EnumInfo>
+				<Text><![CDATA[init]]></Text>
+				<Enum>0</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[idle]]></Text>
+				<Enum>1</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[calcTrajectory]]></Text>
+				<Enum>2</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[setTrajectory]]></Text>
+				<Enum>3</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[ready]]></Text>
+				<Enum>4</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[driving]]></Text>
+				<Enum>5</Enum>
+			</EnumInfo>
+			<Properties>
+				<Property>
+					<Name>qualified_only</Name>
+				</Property>
+				<Property>
+					<Name>strict</Name>
+				</Property>
+				<Property>
+					<Name>generate_implicit_init_function</Name>
+				</Property>
+			</Properties>
+		</DataType>
+		<DataType>
+			<Name GUID="{48A9867C-4E1C-5C48-972D-E35D946F6489}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..2,0..2] OF LREAL</Name>
+			<BitSize>576</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 			<ArrayInfo>
 				<LBound>0</LBound>
-				<Elements>12</Elements>
+				<Elements>3</Elements>
+			</ArrayInfo>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>3</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
@@ -410,6 +479,45 @@
 			</SubItem>
 		</DataType>
 		<DataType>
+			<Name GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}" AutoDeleteType="true">Auftrag</Name>
+			<BitSize>720</BitSize>
+			<SubItem>
+				<Name>Art</Name>
+				<Type GUID="{18071995-0000-0000-0000-000100000050}">STRING(80)</Type>
+				<Comment><![CDATA[Fahrtauftag oder Ladeauftrag]]></Comment>
+				<BitSize>648</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>AbholStation</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000006}">INT</Type>
+				<Comment><![CDATA[Station 1...4, wo Teil aktuell liegt]]></Comment>
+				<BitSize>16</BitSize>
+				<BitOffs>656</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>AbholTasche</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000006}">INT</Type>
+				<Comment><![CDATA[Tasche 1...4, wo Teil aktuell liegt]]></Comment>
+				<BitSize>16</BitSize>
+				<BitOffs>672</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>AblageStation</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000006}">INT</Type>
+				<Comment><![CDATA[Station 1...4, wo Teil hinsoll]]></Comment>
+				<BitSize>16</BitSize>
+				<BitOffs>688</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>AblageTasche</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000006}">INT</Type>
+				<Comment><![CDATA[Tasche 1...4, wo Teil hinsoll]]></Comment>
+				<BitSize>16</BitSize>
+				<BitOffs>704</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
 			<Name GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}" IecBaseType="true" AutoDeleteType="true">ARRAY [1..9] OF INT</Name>
 			<BitSize>144</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
@@ -425,46 +533,6 @@
 			<ArrayInfo>
 				<LBound>1</LBound>
 				<Elements>9</Elements>
-			</ArrayInfo>
-		</DataType>
-		<DataType>
-			<Name GUID="{DAD43D27-55DD-A30E-9547-D928938C0BF4}" AutoDeleteType="true">RobotPose</Name>
-			<BitSize>256</BitSize>
-			<SubItem>
-				<Name>x</Name>
-				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
-				<BitSize>64</BitSize>
-				<BitOffs>0</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>y</Name>
-				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
-				<BitSize>64</BitSize>
-				<BitOffs>64</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>theta</Name>
-				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
-				<BitSize>64</BitSize>
-				<BitOffs>128</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>e</Name>
-				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
-				<BitSize>64</BitSize>
-				<BitOffs>192</BitOffs>
-			</SubItem>
-			<Hides>
-				<Hide GUID="{1A66A3D7-C263-D480-F3B5-F6F3EDD2405E}"/>
-			</Hides>
-		</DataType>
-		<DataType>
-			<Name GUID="{D7CE56E3-3442-0D5B-FBDA-4759793BF77D}" IecBaseType="true" AutoDeleteType="true">ARRAY [1..8] OF RobotPose</Name>
-			<BitSize>2048</BitSize>
-			<BaseType GUID="{DAD43D27-55DD-A30E-9547-D928938C0BF4}">RobotPose</BaseType>
-			<ArrayInfo>
-				<LBound>1</LBound>
-				<Elements>8</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
@@ -1235,7 +1303,7 @@
 		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1006">424de6000000000000007600000028000000100000000e000000010004000000000070000000000000000000000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffff788833338887ffff78883bb38887ffffffff3bb3ffffffffffff8778fffffffffffffffffffffffffffffffff999ffff78f78fffffffffff78f78ffff999ffff78f7888fffffffff78f78f78f999ffff78f78f78ffffffff78f7888ff999ffffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.214.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.207.184.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="2">
 				<Cpu BaseTime="1000"/>
@@ -1254,6 +1322,12 @@
 				</Task>
 				<Task Id="6" Priority="14" CycleTime="100000" AmsPort="353" Affinity="#x00000002" AdtTasks="true">
 					<Name>TcCOM_DataProcessing</Name>
+				</Task>
+				<Task Id="7" Priority="1" CycleTime="100000" AmsPort="354" AdtTasks="true">
+					<Name>ControlTask</Name>
+				</Task>
+				<Task Id="8" Priority="2" CycleTime="100000" AmsPort="355" AdtTasks="true">
+					<Name>A_search</Name>
 				</Task>
 			</Tasks>
 			<Modules>
@@ -3141,562 +3215,6 @@
 						</ParameterValues>
 					</TmcDesc>
 				</Module>
-				<Module Id="#x01010040" KeepUnrestoredLinks="2" ClassFactoryId="TE140x Module Vendor|A_search_2021b|0.0.0.3">
-					<Name>Object3 (A_search_2021b)</Name>
-					<ImageId>1000</ImageId>
-					<TmcDesc GUID="{D3CF0C5B-72ED-6E6F-924C-D778A775A0C2}">
-						<Name>A_search_2021b</Name>
-						<CLSID ClassFactory="A_search_2021b" RealTimeInstantiable="true">{D3CF0C5B-72ED-6E6F-924C-D778A775A0C2}</CLSID>
-						<Info>
-							<TabExtension GUID="{BB6DDFDC-900F-473F-83FC-D83513217B55}"/>
-						</Info>
-						<Licenses>
-							<License>
-								<LicenseId>{AD7F40C3-F160-4413-83E3-6B7656A795A2}</LicenseId>
-							</License>
-						</Licenses>
-						<InitSequence>PSO</InitSequence>
-						<Contexts>
-							<Context>
-								<Id>0</Id>
-								<Name>Context0 (4294.97 ms)</Name>
-							</Context>
-						</Contexts>
-						<Interfaces>
-							<Interface>
-								<Type GUID="{00000001-0000-0000-E000-000000000064}">ITcUnknown</Type>
-							</Interface>
-							<Interface>
-								<Type GUID="{00000002-0000-0000-E000-000000000064}">ITcPersist</Type>
-							</Interface>
-							<Interface>
-								<Type GUID="{00000012-0000-0000-E000-000000000064}">ITComObject</Type>
-							</Interface>
-							<Interface>
-								<Type GUID="{03000018-0000-0000-E000-000000000064}">ITcWatchSource</Type>
-							</Interface>
-							<Interface>
-								<Type GUID="{03000010-0000-0000-E000-000000000064}">ITcCyclic</Type>
-							</Interface>
-							<Interface>
-								<Type GUID="{03000025-0000-0000-E000-000000000064}">ITcPostCyclic</Type>
-							</Interface>
-							<Interface>
-								<Type GUID="{03000012-0000-0000-E000-000000000064}">ITcADI</Type>
-							</Interface>
-							<Interface>
-								<Type GUID="{78189268-4DCA-E0BC-718B-D361EFD0087C}">ITcA_search_2021b</Type>
-								<ContextId>0</ContextId>
-							</Interface>
-						</Interfaces>
-						<Parameters>
-							<Parameter HideParameter="true" CreateSymbol="true">
-								<Name>TaskOid</Name>
-								<BitSize>32</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-00000000000F}">OTCID</BaseType>
-								<PTCID>#x03002060</PTCID>
-							</Parameter>
-							<Parameter HideParameter="true" CreateSymbol="true">
-								<Name>TaskPriority</Name>
-								<BitSize>32</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
-								<PTCID>#x03002070</PTCID>
-							</Parameter>
-							<Parameter HideParameter="true" CreateSymbol="true">
-								<Name>TaskCycleTimeNs</Name>
-								<BitSize>32</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
-								<PTCID>#x03002080</PTCID>
-							</Parameter>
-							<Parameter HideParameter="true" CreateSymbol="true">
-								<Name>TaskPort</Name>
-								<BitSize>16</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-000000000005}">UINT</BaseType>
-								<PTCID>#x03002090</PTCID>
-							</Parameter>
-							<Parameter HideParameter="true" CreateSymbol="true">
-								<Name>TaskSortOrder</Name>
-								<BitSize>32</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
-								<PTCID>#x030020b0</PTCID>
-							</Parameter>
-							<Parameter HideParameter="true">
-								<Name>TraceLevelMax</Name>
-								<BitSize>32</BitSize>
-								<BaseType GUID="{8007AE3B-86BB-40F2-B385-EF87FCC239A4}">TcTraceLevel</BaseType>
-								<Default>
-									<EnumText>tlInfo</EnumText>
-								</Default>
-								<PTCID>#x00000001</PTCID>
-							</Parameter>
-							<Parameter CreateSymbol="true">
-								<Name>ModuleCaller</Name>
-								<BitSize>32</BitSize>
-								<BaseType GUID="{D94EAD20-451D-4AE0-87CC-9A9884043E25}" Namespace="TcMgSdk">ModuleCaller</BaseType>
-								<Default>
-									<EnumText>CyclicTask</EnumText>
-								</Default>
-								<PTCID>#x00000002</PTCID>
-							</Parameter>
-							<Parameter HideParameter="true">
-								<Name>CallerVerification</Name>
-								<BitSize>32</BitSize>
-								<BaseType GUID="{1F89595E-59E5-47C7-9A58-A611A4C98DEC}" Namespace="TcMgSdk">CallerVerification</BaseType>
-								<Default>
-									<EnumText>Default</EnumText>
-								</Default>
-								<PTCID>#x00000003</PTCID>
-							</Parameter>
-							<Parameter CreateSymbol="true">
-								<Name>StepSizeAdaptation</Name>
-								<BitSize>32</BitSize>
-								<BaseType GUID="{65804E5D-07CA-41C0-AEDC-C5051585B216}" Namespace="TcMgSdk">StepSizeAdaptation</BaseType>
-								<Default>
-									<EnumText>RequireMatchingTaskCycleTime</EnumText>
-								</Default>
-								<PTCID>#x00000004</PTCID>
-							</Parameter>
-							<Parameter CreateSymbol="true">
-								<Name>ExecutionSequence</Name>
-								<BitSize>32</BitSize>
-								<BaseType GUID="{3856C4C8-CCAF-403F-A7C8-4E1502F2FFFC}" Namespace="TcMgSdk">ExecutionSequence1</BaseType>
-								<Default>
-									<EnumText>UpdateBeforeOutputMapping</EnumText>
-								</Default>
-								<PTCID>#x00000005</PTCID>
-							</Parameter>
-							<Parameter CreateSymbol="true">
-								<Name>Execute</Name>
-								<BitSize>8</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
-								<Default>
-									<EnumText>TRUE</EnumText>
-								</Default>
-								<PTCID>#x00000006</PTCID>
-							</Parameter>
-							<Parameter HideParameter="true">
-								<Name>AccessLockState</Name>
-								<BitSize>32</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-000000000061}">TCOM_STATE</BaseType>
-								<Default>
-									<EnumText>TCOM_STATE_OP</EnumText>
-								</Default>
-								<PTCID>#x00000007</PTCID>
-							</Parameter>
-							<Parameter HideParameter="true">
-								<Name>InitExceptionHandling</Name>
-								<BitSize>8</BitSize>
-								<BaseType GUID="{53CDED75-D12E-408E-B06D-0E50F6A35065}" Namespace="TcMgSdk">FpExcptCtrlSet</BaseType>
-								<Default>
-									<EnumText>CallerExceptions</EnumText>
-								</Default>
-								<PTCID>#x00000008</PTCID>
-							</Parameter>
-							<Parameter HideParameter="true">
-								<Name>UpdateExceptionHandling</Name>
-								<BitSize>8</BitSize>
-								<BaseType GUID="{53CDED75-D12E-408E-B06D-0E50F6A35065}" Namespace="TcMgSdk">FpExcptCtrlSet</BaseType>
-								<Default>
-									<EnumText>CallerExceptions</EnumText>
-								</Default>
-								<PTCID>#x00000009</PTCID>
-							</Parameter>
-							<Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
-								<Name>ModuleBuildInfo</Name>
-								<BitSize>96</BitSize>
-								<BaseType GUID="{0564A6B7-D0A7-47F6-9375-C2F05C960A28}" Namespace="TcMgSdk">ModuleBuildInfo</BaseType>
-								<PTCID>#x0000000a</PTCID>
-							</Parameter>
-							<Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
-								<Name>Initialized</Name>
-								<BitSize>8</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
-								<Default>
-									<EnumText>FALSE</EnumText>
-								</Default>
-								<PTCID>#x0000000b</PTCID>
-							</Parameter>
-							<Parameter OnlineParameter="true" HideParameter="true" CreateSymbol="true" ReadOnly="true">
-								<Name>InitExceptionInfo</Name>
-								<BitSize>1376</BitSize>
-								<BaseType GUID="{241597CD-DFF8-4569-90EE-6B470D7A1D92}" Namespace="TcMgSdk">ExceptionInfo</BaseType>
-								<PTCID>#x0000000c</PTCID>
-							</Parameter>
-							<Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
-								<Name>CycleCount</Name>
-								<BitSize>64</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-00000000000B}">ULINT</BaseType>
-								<PTCID>#x0000000d</PTCID>
-							</Parameter>
-							<Parameter OnlineParameter="true" HideParameter="true" CreateSymbol="true" ReadOnly="true">
-								<Name>ExceptionCount</Name>
-								<BitSize>64</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-00000000000B}">ULINT</BaseType>
-								<PTCID>#x0000000e</PTCID>
-							</Parameter>
-							<Parameter OnlineParameter="true" HideParameter="true" CreateSymbol="true" ReadOnly="true">
-								<Name>ExeceptionInfo</Name>
-								<BitSize>1376</BitSize>
-								<BaseType GUID="{241597CD-DFF8-4569-90EE-6B470D7A1D92}" Namespace="TcMgSdk">ExceptionInfo</BaseType>
-								<PTCID>#x0000000f</PTCID>
-							</Parameter>
-						</Parameters>
-						<DataAreas>
-							<DataArea>
-								<AreaNo AreaType="InputDst" CreateSymbols="true">0</AreaNo>
-								<Name>AdditionalInports</Name>
-								<ContextId>0</ContextId>
-								<ByteSize>40</ByteSize>
-								<Symbol>
-									<Name>TcModuleInput_endNode</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x80000000</PTCID>
-									<BitOffs>0</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>TcModuleInput_xGoalEnd</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x80000008</PTCID>
-									<BitOffs>64</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>TcModuleInput_xRobotStart</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x80000010</PTCID>
-									<BitOffs>128</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>TcModuleInput_yGoalEnd</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x80000018</PTCID>
-									<BitOffs>192</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>TcModuleInput_yRobotStart</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x80000020</PTCID>
-									<BitOffs>256</BitOffs>
-								</Symbol>
-							</DataArea>
-							<DataArea>
-								<AreaNo AreaType="OutputSrc" CreateSymbols="true">1</AreaNo>
-								<Name>AdditionalOutports</Name>
-								<ContextId>0</ContextId>
-								<ByteSize>2304</ByteSize>
-								<Symbol>
-									<Name>TcModuleOutput_xPointList</Name>
-									<BitSize>9216</BitSize>
-									<BaseType GUID="{F943D866-5CCA-8252-A4DE-C3B2588A676E}">matrix_144_real_T</BaseType>
-									<PTCID>#x81000000</PTCID>
-									<BitOffs>0</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>TcModuleOutput_yPointList</Name>
-									<BitSize>9216</BitSize>
-									<BaseType GUID="{F943D866-5CCA-8252-A4DE-C3B2588A676E}">matrix_144_real_T</BaseType>
-									<PTCID>#x81000480</PTCID>
-									<BitOffs>9216</BitOffs>
-								</Symbol>
-							</DataArea>
-							<DataArea>
-								<AreaNo AreaType="Internal" CreateSymbols="true">2</AreaNo>
-								<Name>A_search_2021b_B</Name>
-								<ContextId>0</ContextId>
-								<ByteSize>177552</ByteSize>
-								<Symbol>
-									<Name>closedList</Name>
-									<BitSize>46080</BitSize>
-									<BaseType GUID="{7D36307D-4D1F-1968-DDE2-C60825B06EF5}">matrix_720_real_T</BaseType>
-									<PTCID>#x82000000</PTCID>
-									<BitOffs>0</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>xRobotStart</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x82001680</PTCID>
-									<BitOffs>46080</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>yRobotStart</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x82001688</PTCID>
-									<BitOffs>46144</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>xGoalEnd</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x82001690</PTCID>
-									<BitOffs>46208</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>yGoalEnd</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x82001698</PTCID>
-									<BitOffs>46272</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>endNode</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x820016a0</PTCID>
-									<BitOffs>46336</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>xKoordinaten</Name>
-									<BitSize>9216</BitSize>
-									<BaseType GUID="{F943D866-5CCA-8252-A4DE-C3B2588A676E}">matrix_144_real_T</BaseType>
-									<PTCID>#x820016a8</PTCID>
-									<BitOffs>46400</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>yKoordinaten</Name>
-									<BitSize>9216</BitSize>
-									<BaseType GUID="{F943D866-5CCA-8252-A4DE-C3B2588A676E}">matrix_144_real_T</BaseType>
-									<PTCID>#x82001b28</PTCID>
-									<BitOffs>55616</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>startKnoten</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x82001fa8</PTCID>
-									<BitOffs>64832</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>A</Name>
-									<BitSize>1327104</BitSize>
-									<BaseType GUID="{84F14F01-1544-F8A7-772F-08338F3898B9}">matrix_20736_real_T</BaseType>
-									<PTCID>#x82001fb0</PTCID>
-									<BitOffs>64896</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>removeNode</Name>
-									<BitSize>768</BitSize>
-									<BaseType GUID="{96759023-969C-4C54-91CF-54C1F04F81ED}">matrix_12_real_T</BaseType>
-									<PTCID>#x8202a7b0</PTCID>
-									<BitOffs>1392000</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>xKnoten</Name>
-									<BitSize>9216</BitSize>
-									<BaseType GUID="{F943D866-5CCA-8252-A4DE-C3B2588A676E}">matrix_144_real_T</BaseType>
-									<PTCID>#x8202a810</PTCID>
-									<BitOffs>1392768</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>yKnoten</Name>
-									<BitSize>9216</BitSize>
-									<BaseType GUID="{F943D866-5CCA-8252-A4DE-C3B2588A676E}">matrix_144_real_T</BaseType>
-									<PTCID>#x8202ac90</PTCID>
-									<BitOffs>1401984</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>wayPointList</Name>
-									<BitSize>9216</BitSize>
-									<BaseType GUID="{F943D866-5CCA-8252-A4DE-C3B2588A676E}">matrix_144_real_T</BaseType>
-									<PTCID>#x8202b110</PTCID>
-									<BitOffs>1411200</BitOffs>
-								</Symbol>
-							</DataArea>
-						</DataAreas>
-						<Properties>
-							<Property>
-								<Name>CoderLicense</Name>
-								<Value>{73C71EBD-104A-4EE6-955D-ADE86A37EFC3}</Value>
-							</Property>
-						</Properties>
-						<Xml>
-							<GeneratedModuleInfoFile>A_search_2021b_ModuleInfo.xml</GeneratedModuleInfoFile>
-						</Xml>
-						<ParameterValues>
-							<Value>
-								<Name>TaskOid</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>TaskPriority</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>TaskCycleTimeNs</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>TaskPort</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>TaskSortOrder</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>TraceLevelMax</Name>
-								<EnumText>tlInfo</EnumText>
-							</Value>
-							<Value>
-								<Name>ModuleCaller</Name>
-								<EnumText>CyclicTask</EnumText>
-							</Value>
-							<Value>
-								<Name>CallerVerification</Name>
-								<EnumText>Default</EnumText>
-							</Value>
-							<Value>
-								<Name>StepSizeAdaptation</Name>
-								<EnumText>RequireMatchingTaskCycleTime</EnumText>
-							</Value>
-							<Value>
-								<Name>ExecutionSequence</Name>
-								<EnumText>UpdateBeforeOutputMapping</EnumText>
-							</Value>
-							<Value>
-								<Name>Execute</Name>
-								<EnumText>TRUE</EnumText>
-							</Value>
-							<Value>
-								<Name>AccessLockState</Name>
-								<EnumText>TCOM_STATE_OP</EnumText>
-							</Value>
-							<Value>
-								<Name>InitExceptionHandling</Name>
-								<EnumText>CallerExceptions</EnumText>
-							</Value>
-							<Value>
-								<Name>UpdateExceptionHandling</Name>
-								<EnumText>CallerExceptions</EnumText>
-							</Value>
-							<Value>
-								<Name>ModuleBuildInfo.TcBuild</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleBuildInfo.TcRevision</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleBuildInfo.Debug</Name>
-								<EnumText>FALSE</EnumText>
-							</Value>
-							<Value>
-								<Name>Initialized</Name>
-								<EnumText>FALSE</EnumText>
-							</Value>
-							<Value>
-								<Name>InitExceptionInfo.ExceptionCode</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>InitExceptionInfo.TmxName</Name>
-								<String></String>
-							</Value>
-							<Value>
-								<Name>InitExceptionInfo.TmxVersion[0]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>InitExceptionInfo.TmxVersion[1]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>InitExceptionInfo.TmxVersion[2]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>InitExceptionInfo.TmxVersion[3]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>InitExceptionInfo.InstructionAddr</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>InitExceptionInfo.ReturnAddr[0]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>InitExceptionInfo.ReturnAddr[1]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>InitExceptionInfo.ReturnAddr[2]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>InitExceptionInfo.ReturnAddr[3]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>InitExceptionInfo.DumpCreated</Name>
-								<EnumText>FALSE</EnumText>
-							</Value>
-							<Value>
-								<Name>CycleCount</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ExceptionCount</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ExeceptionInfo.ExceptionCode</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ExeceptionInfo.TmxName</Name>
-								<String></String>
-							</Value>
-							<Value>
-								<Name>ExeceptionInfo.TmxVersion[0]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ExeceptionInfo.TmxVersion[1]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ExeceptionInfo.TmxVersion[2]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ExeceptionInfo.TmxVersion[3]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ExeceptionInfo.InstructionAddr</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ExeceptionInfo.ReturnAddr[0]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ExeceptionInfo.ReturnAddr[1]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ExeceptionInfo.ReturnAddr[2]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ExeceptionInfo.ReturnAddr[3]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ExeceptionInfo.DumpCreated</Name>
-								<EnumText>FALSE</EnumText>
-							</Value>
-						</ParameterValues>
-					</TmcDesc>
-				</Module>
 			</Modules>
 		</System>
 		<Plc>
@@ -3705,35 +3223,19 @@
 					<Name>HAWino Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
-						<Name>MQTT_1 Inputs</Name>
+						<Name>ControlTask Inputs</Name>
 						<Var>
-							<Name>MQTT.nBatteryTemperature</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>MQTT.txtReadInit</Name>
-							<Comment><![CDATA[Input synccheck. robotdata has been read and can be used.]]></Comment>
+							<Name>ControlPRG.xBoEnable</Name>
+							<Comment><![CDATA[////////////////////////////////////////////
+////////// LINKS TO GW2  ///////////////////
+////////////////////////////////////////////]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MQTT.stMqtt_HAWino_In</Name>
-							<Comment><![CDATA[ Attention! Don't link TIME Variables, otherwise we get an error!]]></Comment>
-							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
-						</Var>
-					</Vars>
-					<Vars VarGrpType="2" AreaNo="1">
-						<Name>MQTT_1 Outputs</Name>
-						<Var>
-							<Name>MQTT.bComCheckAnswer</Name>
+							<Name>ControlPRG.newWaypointListAvailable</Name>
+							<Comment><![CDATA[ implemented, Status-Bit zur Signalisierung einer neuen WP-Liste]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
-						<Var>
-							<Name>MQTT.stMqtt_HAWino_Out</Name>
-							<Type GUID="{AF674DC3-C06A-03AE-A51C-A518FFE766C3}">ST_PwrMgmt_HAWino_Out</Type>
-						</Var>
-					</Vars>
-					<Vars VarGrpType="1" ContextId="1" AreaNo="16">
-						<Name>PlcTask Inputs</Name>
 						<Var>
 							<Name>MotorDrivers.bumper</Name>
 							<Type>BOOL</Type>
@@ -3743,8 +3245,32 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>Fahrauftrag.testFromSimulink</Name>
+							<Name>ControlPRG.observer.estimatedPoseFromSimlink</Name>
+							<Comment><![CDATA[from Simulink]]></Comment>
+							<Type GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}">ARRAY [0..2] OF LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vXfromRobot</Name>
+							<Comment><![CDATA[outputs from robot]]></Comment>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vYfromRobot</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vThetaFromRobot</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robotPoses</Name>
+							<Comment><![CDATA[input from camera]]></Comment>
+							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.waypointList</Name>
+							<Comment><![CDATA[ implemented, Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)]]></Comment>
+							<Type GUID="{57D1290D-8922-6C29-A5EB-E802603DE228}">ARRAY [0..100] OF RobotPoseSimple</Type>
 						</Var>
 						<Var>
 							<Name>MotorDrivers.vXCartesianToMotors</Name>
@@ -3772,57 +3298,23 @@
 							<Name>WheelEncoders.encDataFromMotor3</Name>
 							<Type>UINT</Type>
 						</Var>
-						<Var>
-							<Name>PowerManager.shutdownButton</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>IrDistanceSensors.distanceRaw</Name>
-							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.batteryVoltageRaw</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.supplyCurrentRaw</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.requestShutdown</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.closeGripperCommand</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.SOC</Name>
-							<Type>REAL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.slider</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.partGripped</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.closeGripperFromSimulink</Name>
-							<Type>LREAL</Type>
-						</Var>
 					</Vars>
-					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
-						<Name>PlcTask Outputs</Name>
+					<Vars VarGrpType="2" AreaNo="1">
+						<Name>ControlTask Outputs</Name>
 						<Var>
-							<Name>HAWino.Robot_Number</Name>
-							<Comment><![CDATA[CX35CDD6]]></Comment>
+							<Name>ControlPRG.yBoArrivedAtDestination</Name>
+							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yUintWaypointIndex</Name>
+							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>HAWino.initDone</Name>
-							<Type>BOOL</Type>
+							<Name>ControlPRG.state</Name>
+							<Comment><![CDATA[ controller state]]></Comment>
+							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
 						</Var>
 						<Var>
 							<Name>MotorDrivers.enableToMotor1</Name>
@@ -3838,12 +3330,59 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MotorDrivers.velocityToMotor1</Name>
-							<Type>INT</Type>
+							<Name>ControlPRG.observer.cameraPoseToSimulink</Name>
+							<Comment><![CDATA[to Simulink]]></Comment>
+							<Type GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}">ARRAY [0..2] OF LREAL</Type>
 						</Var>
 						<Var>
-							<Name>Fahrauftrag.testToSimulink</Name>
+							<Name>ControlPRG.observer.vXworldToSimulink</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.vYworldToSimulink</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.omegaWorldToSimulink</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.vXtoRobotWorldToSimulink</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.vYtoRobotWorldToSimulink</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.omegaToRobotWorldToSimulink</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.K</Name>
+							<Type GUID="{48A9867C-4E1C-5C48-972D-E35D946F6489}">ARRAY [0..2,0..2] OF LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vXtoRobot</Name>
+							<Comment><![CDATA[inputs to robot]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vYtoRobot</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vThetaToRobot</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yRPposition</Name>
+							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
+							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.velocityToMotor1</Name>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>MotorDrivers.velocityToMotor2</Name>
@@ -3852,10 +3391,6 @@
 						<Var>
 							<Name>MotorDrivers.velocityToMotor3</Name>
 							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.shutdownTrigger</Name>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>WheelEncoders.vXCartesianFromMotors</Name>
@@ -3870,13 +3405,144 @@
 							<Name>WheelEncoders.vthetaCartesianFromMotors</Name>
 							<Type>LREAL</Type>
 						</Var>
+					</Vars>
+					<Vars VarGrpType="1" ContextId="1" AreaNo="16">
+						<Name>MQTT_1 Inputs</Name>
+						<Var>
+							<Name>MQTT.nBatteryTemperature</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>MQTT.txtReadInit</Name>
+							<Comment><![CDATA[Input synccheck. robotdata has been read and can be used.]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MQTT.stMqtt_HAWino_In</Name>
+							<Comment><![CDATA[ Attention! Don't link TIME Variables, otherwise we get an error!]]></Comment>
+							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
+						<Name>MQTT_1 Outputs</Name>
+						<Var>
+							<Name>MQTT.bComCheckAnswer</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MQTT.stMqtt_HAWino_Out</Name>
+							<Type GUID="{AF674DC3-C06A-03AE-A51C-A518FFE766C3}">ST_PwrMgmt_HAWino_Out</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
+						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>Fahrauftrag.TrajectoryController.yBoArrivedAtDestination</Name>
+							<Comment><![CDATA[ TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.TrajectoryController.yUintWaypointIndex</Name>
+							<Comment><![CDATA[ COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.TrajectoryController.yRPposition</Name>
+							<Comment><![CDATA[ aktuelle Roboterposition, für Simulationszwecke;]]></Comment>
+							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.TrajectoryController.yControllerState</Name>
+							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.Auftrag</Name>
+							<Type GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}">Auftrag</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.StatusFromGW1</Name>
+							<Type>STRING(50)</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.shutdownButton</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IrDistanceSensors.distanceRaw</Name>
+							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.batteryVoltageRaw</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.requestShutdown</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.supplyCurrentRaw</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.SOC</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.closeGripperCommand</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.slider</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.partGripped</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.closeGripperFromSimulink</Name>
+							<Type>LREAL</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="2" ContextId="2" AreaNo="33">
+						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>HAWino.Robot_Number</Name>
+							<Comment><![CDATA[CX35CDD6]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>HAWino.initDone</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.TrajectoryController.xBoEnable</Name>
+							<Comment><![CDATA[ Freigabesignal für Fahrt, Roboter stoppt bei FALSE]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.TrajectoryController.waypointList</Name>
+							<Comment><![CDATA[ Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)]]></Comment>
+							<Type GUID="{57D1290D-8922-6C29-A5EB-E802603DE228}">ARRAY [0..100] OF RobotPoseSimple</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.TrajectoryController.newWaypointListAvailable</Name>
+							<Comment><![CDATA[ Status-Bit zur Signalisierung einer neuen WP-Liste]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.FeedbackToGW1</Name>
+							<Comment><![CDATA[testToSimulink AT%Q*: LREAL;
+testFromSimulink AT%I*: LREAL;]]></Comment>
+							<Type>STRING(50)</Type>
+						</Var>
 						<Var>
 							<Name>IrDistanceSensors.distance_mm</Name>
 							<Type GUID="{E653CDAE-1A31-0819-E492-0347803C1564}">ARRAY [1..9] OF REAL</Type>
 						</Var>
 						<Var>
 							<Name>Camera.cameraData.robotPosition</Name>
-							<Type GUID="{D7CE56E3-3442-0D5B-FBDA-4759793BF77D}">ARRAY [1..8] OF RobotPose</Type>
+							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
 						</Var>
 						<Var>
 							<Name>Camera.cameraData.HH</Name>
@@ -3889,6 +3555,10 @@
 						<Var>
 							<Name>Camera.cameraData.SS</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.shutdownTrigger</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.batteryVoltage_V</Name>
@@ -3930,6 +3600,15 @@
 					<Contexts>
 						<Context>
 							<Id NeedCalleeCall="true">0</Id>
+							<Name>ControlTask</Name>
+							<ManualConfig>
+								<OTCID>#x02010070</OTCID>
+							</ManualConfig>
+							<Priority>1</Priority>
+							<CycleTime>10000000</CycleTime>
+						</Context>
+						<Context>
+							<Id NeedCalleeCall="true">1</Id>
 							<Name>MQTT_1</Name>
 							<ManualConfig>
 								<OTCID>#x02010040</OTCID>
@@ -3938,7 +3617,7 @@
 							<CycleTime>100000000</CycleTime>
 						</Context>
 						<Context>
-							<Id NeedCalleeCall="true">1</Id>
+							<Id NeedCalleeCall="true">2</Id>
 							<Name>PlcTask</Name>
 							<ManualConfig>
 								<OTCID>#x02010030</OTCID>
@@ -3952,20 +3631,21 @@
 							<Name>Camera.cameraData.oid</Name>
 							<Type GUID="{18071995-0000-0000-0000-00000000000F}">OTCID</Type>
 							<Comment><![CDATA[ To be set in PLC_Instance object and required for FW_ObjMgr_GetObjectInstance()]]></Comment>
-							<AreaNo>#x00000013</AreaNo>
+							<AreaNo>#x00000023</AreaNo>
 							<Data>30000101</Data>
 						</InitSymbol>
 					</InitSymbols>
 					<TaskPouOids>
-						<TaskPouOid Prio="11" OTCID="#x08502001"/>
-						<TaskPouOid Prio="20" OTCID="#x08502002"/>
+						<TaskPouOid Prio="1" OTCID="#x08502001"/>
+						<TaskPouOid Prio="11" OTCID="#x08502002"/>
+						<TaskPouOid Prio="20" OTCID="#x08502003"/>
 					</TaskPouOids>
 				</Instance>
 			</Project>
 			<PlcAuxTask Affinity="#x00000002"/>
 		</Plc>
 		<Io>
-			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="5.53.205.214.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
+			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="5.53.207.184.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
 				<Name>Gerät 1 (EtherCAT)</Name>
 				<AddressInfo>
 					<Ccat>
@@ -4005,6 +3685,9 @@
 				</Image>
 				<Image Id="3" AddrType="10" ImageType="3">
 					<Name>Prozessabbild-2</Name>
+				</Image>
+				<Image Id="4" AddrType="10" ImageType="3">
+					<Name>Prozessabbild-3</Name>
 				</Image>
 				<Box Id="1" BoxType="9099">
 					<Name>Klemme 1 (EK1200)</Name>
@@ -6809,10 +6492,15 @@ Bit1: Value smaller than Limit2]]></Comment>
 	<Mappings>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500800205008}" Id="#x02030060"/>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500810000403}" Id="#x02030010"/>
-		<MappingInfo Identifier="{00000000-2002-0850-0120-500831000403}" Id="#x02030050"/>
-		<MappingInfo Identifier="{08502001-2002-0850-0020-500801205008}" Id="#x02030020" Watchdog="04000000280000000400000004000000"/>
-		<MappingInfo Identifier="{08502001-0060-0201-0020-500820000101}" Id="#x02030070" Watchdog="04000000280000000400000004000000"/>
-		<MappingInfo Identifier="{02010050-2002-0850-1000-010101205008}" Id="#x02030040" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{00000000-2001-0850-0020-500842000403}" Id="#x02030050"/>
+		<MappingInfo Identifier="{00000000-2002-0850-0020-500800205008}" Id="#x020300a0"/>
+		<MappingInfo Identifier="{00000000-2002-0850-0120-500831000403}" Id="#x02030040"/>
+		<MappingInfo Identifier="{08502001-2003-0850-0020-500802205008}" Id="#x02030080" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{08502002-2003-0850-0120-500802205008}" Id="#x020300c0" Watchdog="04000000280000000400000004000000"/>
+		<MappingInfo Identifier="{08502002-0060-0201-0120-500820000101}" Id="#x020300b0" Watchdog="04000000280000000400000004000000"/>
+		<MappingInfo Identifier="{08502003-0010-0304-0020-500810000403}" Id="#x02030020" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{08502003-0040-0304-0020-500840000403}" Id="#x02030070" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{02010050-2003-0850-1000-010102205008}" Id="#x02030090" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-0060-0201-1000-010120000101}" Id="#x02030030" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIPC^HAWino^HAWino Instance">
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Analoge Eingänge A6 (EL3068)">
@@ -6834,32 +6522,45 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^PowerManager.shutdownTrigger" VarB="InitiateShutdown^Output"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Digitale Eingänge A4 (EL1008)">
+				<Link VarA="ControlTask Inputs^MotorDrivers.bumper" VarB="Channel 3^Input"/>
 				<Link VarA="PlcTask Inputs^Gripper.slider" VarB="Channel 5^Input"/>
-				<Link VarA="PlcTask Inputs^MotorDrivers.bumper" VarB="Channel 3^Input"/>
 				<Link VarA="PlcTask Inputs^PowerManager.shutdownButton" VarB="ShutdownRequested (S11)^Input"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Motorklemme A2 (EL7342)">
-				<Link VarA="PlcTask Inputs^WheelEncoders.encDataFromMotor1" VarB="ENC Status compact Channel 1^Counter value"/>
-				<Link VarA="PlcTask Inputs^WheelEncoders.encDataFromMotor2" VarB="ENC Status compact Channel 2^Counter value"/>
-				<Link VarA="PlcTask Outputs^MotorDrivers.enableToMotor1" VarB="DCM Control Channel 1^Control^Enable"/>
-				<Link VarA="PlcTask Outputs^MotorDrivers.enableToMotor2" VarB="DCM Control Channel 2^Control^Enable"/>
-				<Link VarA="PlcTask Outputs^MotorDrivers.velocityToMotor1" VarB="DCM Velocity Channel 1^Velocity"/>
-				<Link VarA="PlcTask Outputs^MotorDrivers.velocityToMotor2" VarB="DCM Velocity Channel 2^Velocity"/>
+				<Link VarA="ControlTask Inputs^WheelEncoders.encDataFromMotor1" VarB="ENC Status compact Channel 1^Counter value"/>
+				<Link VarA="ControlTask Inputs^WheelEncoders.encDataFromMotor2" VarB="ENC Status compact Channel 2^Counter value"/>
+				<Link VarA="ControlTask Outputs^MotorDrivers.enableToMotor1" VarB="DCM Control Channel 1^Control^Enable"/>
+				<Link VarA="ControlTask Outputs^MotorDrivers.enableToMotor2" VarB="DCM Control Channel 2^Control^Enable"/>
+				<Link VarA="ControlTask Outputs^MotorDrivers.velocityToMotor1" VarB="DCM Velocity Channel 1^Velocity"/>
+				<Link VarA="ControlTask Outputs^MotorDrivers.velocityToMotor2" VarB="DCM Velocity Channel 2^Velocity"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Motorklemme A3 (EL7342)">
-				<Link VarA="PlcTask Inputs^WheelEncoders.encDataFromMotor3" VarB="ENC Status compact Channel 1^Counter value"/>
+				<Link VarA="ControlTask Inputs^WheelEncoders.encDataFromMotor3" VarB="ENC Status compact Channel 1^Counter value"/>
+				<Link VarA="ControlTask Outputs^MotorDrivers.enableToMotor3" VarB="DCM Control Channel 1^Control^Enable"/>
+				<Link VarA="ControlTask Outputs^MotorDrivers.velocityToMotor3" VarB="DCM Velocity Channel 1^Velocity"/>
 				<Link VarA="PlcTask Outputs^Gripper.driveEnable" VarB="DCM Control Channel 2^Control^Enable"/>
 				<Link VarA="PlcTask Outputs^Gripper.driveVelocity" VarB="DCM Velocity Channel 2^Velocity"/>
-				<Link VarA="PlcTask Outputs^MotorDrivers.enableToMotor3" VarB="DCM Control Channel 1^Control^Enable"/>
-				<Link VarA="PlcTask Outputs^MotorDrivers.velocityToMotor3" VarB="DCM Velocity Channel 1^Velocity"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Temperaturklemme A8 (EL3204)">
 				<Link VarA="MQTT_1 Inputs^MQTT.nBatteryTemperature" VarB="RTD Inputs Channel 1^Batterytemperature"/>
 			</OwnerB>
 			<OwnerB Name="TIPC^HAWino^HAWino Instance">
+				<Link VarA="ControlTask Inputs^ControlPRG.newWaypointListAvailable" VarB="PlcTask Outputs^Fahrauftrag.TrajectoryController.newWaypointListAvailable"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.robot.vThetaFromRobot" VarB="ControlTask Outputs^WheelEncoders.vthetaCartesianFromMotors"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.robot.vXfromRobot" VarB="ControlTask Outputs^WheelEncoders.vXCartesianFromMotors"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.robot.vYfromRobot" VarB="ControlTask Outputs^WheelEncoders.vYCartesianFromMotors"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.waypointList" VarB="PlcTask Outputs^Fahrauftrag.TrajectoryController.waypointList"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.xBoEnable" VarB="PlcTask Outputs^Fahrauftrag.TrajectoryController.xBoEnable"/>
+				<Link VarA="ControlTask Inputs^MotorDrivers.vThetaCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vThetaToRobot"/>
+				<Link VarA="ControlTask Inputs^MotorDrivers.vXCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vXtoRobot"/>
+				<Link VarA="ControlTask Inputs^MotorDrivers.vYCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vYtoRobot"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^bComCheckAnswer" VarB="MQTT_1 Outputs^MQTT.bComCheckAnswer"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^nRobotNumber" VarB="PlcTask Outputs^HAWino.Robot_Number"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.txtReadInit" VarB="PlcTask Outputs^HAWino.initDone"/>
+				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yBoArrivedAtDestination" VarB="ControlTask Outputs^ControlPRG.yBoArrivedAtDestination"/>
+				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yControllerState" VarB="ControlTask Outputs^ControlPRG.state"/>
+				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yRPposition" VarB="ControlTask Outputs^ControlPRG.yRPposition"/>
+				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yUintWaypointIndex" VarB="ControlTask Outputs^ControlPRG.yUintWaypointIndex"/>
 			</OwnerB>
 			<OwnerB Name="TIRC^TcCOM Objects^Object2 (SoC_Model_Data_Aquisition_2022)">
 				<Link VarA="PlcTask Outputs^PowerManager.stMqtt_HAWino_IN^fActualBatteryCurrent" VarB="SoC_Model_Data_Aquisition_202_U^Current"/>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <DUT Name="RobotPoseSimple" Id="{79adddee-a2aa-4bdd-85a1-2a263560f31d}">
-    <Declaration><![CDATA[TYPE RobotPoseSimple :
+    <Declaration><![CDATA[TYPE RobotPoseSimple:
 STRUCT
 	x, y, theta : LREAL;
 END_STRUCT

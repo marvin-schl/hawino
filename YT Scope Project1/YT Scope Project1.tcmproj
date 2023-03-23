@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{4fd52e4d-427d-40ae-b253-1fdfd37f3943}</ProjectGuid>
+    <AssemblyName>YT Scope Project1</AssemblyName>
+    <Name>YT Scope Project1</Name>
+    <RootNamespace>YT Scope Project1</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="CameraNoise.tcscopex">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ParameterEstimation.tcscopex">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SimpleEstANDContrl.tcscopex">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SimplePoseEst.tcscopex">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="sinusfahrt.tcscopex">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="YT Scope Project.tcscopex">
+      <SubType>Content</SubType>
+    </Content>
+  </ItemGroup>
+</Project>

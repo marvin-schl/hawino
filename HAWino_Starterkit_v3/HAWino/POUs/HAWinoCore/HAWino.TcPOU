@@ -13,7 +13,6 @@ VAR
 	start : BOOL:= TRUE;
 	initDone AT%Q* : BOOL := FALSE;
 	
-	Test: DS_TrajectoryController;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -33,14 +32,10 @@ END_VAR
 		END_IF
 	DUT_SysState.Op:
 	//Operate System
-		MotorDrivers();
-		WheelEncoders();
 		IrDistanceSensors();
 		Camera();
 		PowerManager();
 		Gripper();
-		
-		Test();
 END_CASE
 ]]></ST>
     </Implementation>
@@ -124,40 +119,13 @@ CASE state OF
       </Implementation>
     </Method>
     <LineIds Name="HAWino">
-      <LineId Id="153" Count="0" />
-      <LineId Id="180" Count="0" />
-      <LineId Id="155" Count="0" />
-      <LineId Id="161" Count="0" />
-      <LineId Id="158" Count="0" />
-      <LineId Id="162" Count="1" />
-      <LineId Id="157" Count="0" />
-      <LineId Id="181" Count="0" />
-      <LineId Id="165" Count="0" />
-      <LineId Id="175" Count="0" />
-      <LineId Id="178" Count="0" />
-      <LineId Id="166" Count="1" />
-      <LineId Id="164" Count="0" />
-      <LineId Id="182" Count="0" />
-      <LineId Id="169" Count="5" />
-      <LineId Id="195" Count="0" />
-      <LineId Id="198" Count="0" />
-      <LineId Id="156" Count="0" />
-      <LineId Id="98" Count="0" />
+      <LineId Id="3" Count="15" />
+      <LineId Id="21" Count="4" />
+      <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="HAWino.InitSysId">
-      <LineId Id="164" Count="0" />
-      <LineId Id="166" Count="0" />
-      <LineId Id="170" Count="2" />
-      <LineId Id="169" Count="0" />
-      <LineId Id="174" Count="0" />
-      <LineId Id="173" Count="0" />
-      <LineId Id="176" Count="0" />
-      <LineId Id="175" Count="0" />
-      <LineId Id="177" Count="1" />
-      <LineId Id="167" Count="0" />
-      <LineId Id="165" Count="0" />
-      <LineId Id="121" Count="42" />
-      <LineId Id="86" Count="0" />
+      <LineId Id="3" Count="56" />
+      <LineId Id="2" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

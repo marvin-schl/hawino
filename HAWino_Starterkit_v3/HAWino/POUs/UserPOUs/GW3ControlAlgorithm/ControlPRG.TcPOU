@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="ControlPRG" Id="{012ed989-ad00-4074-8a95-3f6b38ed2b93}" SpecialFunc="None">
+    <Declaration><![CDATA[//Tracking controller:
+// Main handling of the control algorithm
+// implements a state machine with states: init, idle, calcTrajectory, ready, driving
+// links the different components of the control algorithm: control law, observer, trajectory, robot, camera... => Maybe more needed later e.g. filter 
+// links to GW2 via the defined interface
+
+PROGRAM ControlPRG
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	//declare objects
+	observer 	: SimpleObserver;//Observer object
+	controller	: SimpleStateFeedbackLaw;			//Control law object
+	trajectory	: TimeOptimalTrajectory;			//Trajectory Object
+	robot		: Robot;							//link to physical I/O of roboter or simulation model of the roboter
+	robotPoses 	AT%I*: ARRAY [1..8] OF RobotPose;	//input from camera
+	
+
+	
+	CONTROL_ERROR_THRESH : LREAL := 5;
+	
+	FFLin: BOOL := FALSE;
+	thetaLin: LREAL;
+	
+	///////////////////////////////////////////////
+	///////////// LINKS TO GW2  ///////////////////
+	///////////////////////////////////////////////
+	
+	//inputs from GW2, uncomment and link when needed
+	xBoEnable AT%I*: BOOL := FALSE;							// implemented, Freigabesignal für Fahrt, Roboter stoppt bei FALSE
+	waypointList AT%I*: ARRAY[0..100] OF RobotPoseSimple;	// implemented, Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)
+	newWaypointListAvailable AT%I*: BOOL := FALSE;			// implemented, Status-Bit zur Signalisierung einer neuen WP-Liste
+	
+	//outputs to GW2, uncomment and link when needed				
+	yBoArrivedAtDestination AT%Q*:	BOOL := FALSE;			// implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP
+	yUintWaypointIndex AT%Q*: INT  := 0;					// implemented, COUNTER zur Anzeige, des Indexes des nächstes WP
+	yRPposition AT%Q*: RobotPoseSimple;						// implemented, aktuelle Roboterposition, für Simulationszwecke
+	state AT%Q*: ControllerState := ControllerState.init;	// controller state
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//robot disabled by default
+robot.enable			:= FALSE;
+
+//outputs to GW2
+yRPposition 			:= observer.yObserverdPose;
+yUintWaypointIndex 		:= trajectory.WPLidx;
+
+//control algorithm state machine
+CASE state OF
+	ControllerState.init:
+		//initilize objects and link them
+		init();
+		//go into idle
+		state := ControllerState.idle;
+	
+	ControllerState.idle:
+		//if new waypointlist available reset trajectory and go into set trajectory state
+		IF newWaypointListAvailable THEN
+			controller.reset();
+			trajectory.reset(); //reset trajectory before setTrajectory to ensure all flags are resetted properly
+			state := ControllerState.setTrajectory;
+		END_IF
+	
+	ControllerState.setTrajectory:
+		//got new trajectory so not anymore at destination
+		yBoArrivedAtDestination := FALSE;
+		//calculate trajectory
+		trajectory.setWaypointList(waypointList);
+			
+		//go into calcTrajectory as soon as GW2 resets the new waypointlist flag to avoid looping through
+		//ready --> setTrajectory --> calcTrajectory
+		IF NOT newWaypointListAvailable THEN
+			trajectory.reset(); //reset trajectory before setTrajectory to ensure all flags are resetted properly
+			state := ControllerState.calcTrajectory;
+		END_IF
+		
+	 ControllerState.calcTrajectory:
+		trajectory.generateTrajectory();
+	 	IF trajectory.ready THEN
+			state := ControllerState.ready;
+		END_IF
+		
+	
+	ControllerState.ready:
+		IF newWaypointListAvailable THEN
+			//stop and calculate new trajectory
+			controller.reset();
+			trajectory.reset(); //reset trajectory before setTrajectory to ensure all flags are resetted properly
+			state := ControllerState.setTrajectory;
+		ELSIF xBoEnable THEN
+			state := ControllerState.driving;
+		END_IF
+	
+	ControllerState.driving:
+		IF newWaypointListAvailable THEN
+			controller.reset();
+			trajectory.reset(); //reset trajectory before setTrajectory to ensure all flags are resetted properly
+			//stop and calculate new trajectory
+			state := ControllerState.setTrajectory;
+		ELSIF yBoArrivedAtDestination THEN
+			//got back to idle and set arrived flag for GW2, method needed?
+			state := ControllerState.idle;
+			controller.reset();
+			trajectory.reset();
+		ELSIF xBoEnable THEN
+			//do the driving
+			drive();
+		ELSE
+			//if xBoEnable isn't set anymore go into ready and wait for it again
+			state := ControllerState.ready;
+		END_IF
+END_CASE
+
+//Select FF or FB linearization
+IF FFLin = TRUE THEN
+	thetaLin := trajectory.referencePose.theta;
+ELSE
+	thetaLin := observer.yObserverdPose.theta;		
+END_IF
+
+
+//initilizing and linking of control algorithm individual components
+//init observer
+observer(xCameraPose 	:= robotPoses[Var_HAWIno.Robot_Number],	//extraxt roboter coordinates based on roboter number
+		 xVxRobot    	:= robot.vXfromRobot,						//link x-velocity with measured velocity
+		 xVyRobot    	:= robot.vYfromRobot,						//link y-velocity with measured velocity
+		 xOmegaRobot    := robot.vThetaFromRobot,
+ 		 xVxToRobot		:= controller.vXrobot,
+		 xVyToRobot		:= controller.vYrobot,
+		 xOmegaToRobot	:= controller.omegaRobot,				//link theta-velocity with measured velocity
+		 theta			:= thetaLin);							//Angle for IO-Lineariztion						 
+
+
+//trajectory object
+trajectory(
+	drive := robot.enable,
+	currentPose 	:= observer.yObserverdPose,					//Current implementation needs observed pose for distance calculation, TODO: check if needed for final implemenation
+	referencePose 	=> controller.xRobotPoseRef					//outputs reference pose to controller
+);
+
+//init controller and link to observer
+controller(xRobotPose 		:= observer.yObserverdPose,			//pass controller the observerd roboter pose
+		   xRobotPoseRef	:= trajectory.referencePose,
+		   enable			:= robot.enable);		//pass controller the reference position for the next cycle comming from the trajectory
+
+//transform control inputs into robot coordinates and pass them to the robot
+//pass enable signal to robot
+World2Robot(
+			vx_world := controller.vXrobot,						//controller outputs vXref in world coordinates
+			vy_world := controller.vYrobot,						//controller outputs vYref in world coordinates
+			omega_world := controller.omegaRobot,				//controller outputs vThetaRef in world coordinates
+			theta := thetaLin,									//trajectory theta for I/O Lin => FB-Structure
+			vx_robot => robot.vXref,							//vXref in robot coordinates are passed to robot as control output
+			vy_robot => robot.vYref,							//vYref in robot coordinates are passed to robot as control output
+			omega_robot => robot.vThetaRef						//vThetaref in robot coordinates are passed to robot as control output
+);
+
+// to do:
+IF trajectory.finished AND controller.reachedReference THEN
+	yBoArrivedAtDestination := TRUE;
+END_IF
+
+//needs to be called so that the velocities will be written to motor drives
+robot(); 
+
+
+]]></ST>
+    </Implementation>
+    <Method Name="calculateTrajectory" Id="{8f230d49-0c59-4087-8372-938452edcf61}">
+      <Declaration><![CDATA[METHOD calculateTrajectory : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[trajectory.setWaypointList(waypointList);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="drive" Id="{d4cf0706-755e-4b45-b3e9-0b9f8575bd33}">
+      <Declaration><![CDATA[METHOD drive : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[robot.enable := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="init" Id="{0d1b690b-7302-4509-955c-4b8bf838eebc}">
+      <Declaration><![CDATA[METHOD init : BOOL
+VAR_INPUT
+END_VAR
+VAR
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="ControlPRG">
+      <LineId Id="895" Count="3" />
+      <LineId Id="900" Count="13" />
+      <LineId Id="1059" Count="0" />
+      <LineId Id="914" Count="26" />
+      <LineId Id="1061" Count="1" />
+      <LineId Id="941" Count="6" />
+      <LineId Id="1058" Count="0" />
+      <LineId Id="948" Count="46" />
+      <LineId Id="1060" Count="0" />
+      <LineId Id="995" Count="21" />
+      <LineId Id="94" Count="0" />
+    </LineIds>
+    <LineIds Name="ControlPRG.calculateTrajectory">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ControlPRG.drive">
+      <LineId Id="10" Count="0" />
+    </LineIds>
+    <LineIds Name="ControlPRG.init">
+      <LineId Id="26" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

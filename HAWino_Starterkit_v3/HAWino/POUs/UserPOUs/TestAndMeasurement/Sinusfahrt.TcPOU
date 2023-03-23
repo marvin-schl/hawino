@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="Sinusfahrt" Id="{c150639c-cb22-4a58-be4d-e31e62b1ca9e}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Sinusfahrt
+VAR
+	// Inputs
+	vXFromMotor AT%I*: LREAL;
+	vYFromMotor AT%I*: LREAL;
+	vThetaFromMotor AT%I*: LREAL;
+	
+		i1_raw, i2_raw, i3_raw	AT%I*: 					UINT;
+	
+	//Outputs
+	v AT%Q*: LREAL;
+	
+	//local
+	state: INT := 0;
+	counter: INT := 0;
+	
+	//Odometry
+	distX, distY, distTheta :LREAL :=0;
+	// Task Freqeuncy in ms
+	taskfreq: LREAL := 10;
+	
+	//the actual robot has to be selected in connecting PlcTaskInputs to actual Robot Camera data
+	// x Koordinate bei Start nach Kamera
+	camX AT%I*: LREAL := 0;
+	// y Koordinate bei Start laut Kamera
+	camY AT%I*: LREAL;
+	// theta laut Kamera zu Beginn
+	camTheta AT%I*: LREAL := 0;
+	
+	// Error in x
+	ErrX: LREAL;
+	// Error in y
+	ErrY: LREAL;
+	// Error in Theta
+	ErrTheta: LREAL;
+	//errorcam via UDP
+	ErrCam AT%I*: LREAL;
+	// soll geschwindigkeit
+	vSoll: LREAL := 400;
+	
+	//omega für sinus
+	omega: LREAL :=2*PI/1600;
+	i1: INT;
+	i2: INT;
+	i3: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*IF state = 0 THEN
+	v := 100;
+	counter := counter+1;
+	IF counter >  1990 THEN
+		state:=1;
+	END_IF
+END_IF
+	
+IF state = 1 THEN
+		v := 0;
+END_IF *)
+
+//state 0 to wait for cameraposition data
+IF state = 0 THEN
+	counter := counter+1;
+	IF counter > 199 THEN
+		state := 1;
+		counter := 0;
+	END_IF
+END_IF
+
+IF state = 1 THEN
+	v := vSoll*SIN(omega*counter);
+	
+	
+	//Initiale Pose nach Kamera als Startpose setzen
+	IF counter < 1 THEN
+		distX:= camX ;
+		distY :=camY ;
+		distTheta :=camTheta ;
+	END_IF
+
+	counter := counter + 1;
+	IF counter > 3999 THEN
+		state := 2;
+		counter := 0;
+	END_IF
+END_IF
+
+IF state = 2 THEN
+	v := 0;
+	counter := counter + 1;
+	IF counter > 199 THEN
+		state := 3;
+		counter := 0;
+	END_IF
+END_IF
+
+IF state = 3 THEN
+	v := 0;
+	counter := counter + 1;
+	IF counter > 199 THEN
+		state := 4;
+		counter := 0;
+	END_IF
+END_IF
+
+IF state = 4 THEN
+	v := 0;
+END_IF
+
+//Odometry calculation
+distX := distX + vXFromMotor*taskfreq/1000;
+distY := distY + vYFromMotor*taskfreq/1000;
+distTheta := distTheta + vThetaFromMotor*taskfreq/1000;
+
+//Error Calculation
+ErrX := camX-distX; 
+ErrY := camY-distY;
+ErrTheta := camTheta-distTheta;
+
+//ACHTUNG LOKALE ROBOTER DATEN MÜSSEN FÜR DIREKTE VERGLEICHBARKEI MIT KAMERAPOSE IN GLOBALE KS TRANSFORMEIRT WERDEN
+
+
+// Ströme umrechnen
+IF i1 > 32.767 THEN
+	i1 := UINT_TO_INT(i1_raw - 65535);
+ELSE
+	i1 := UINT_TO_INT(i1_raw);
+END_IF
+
+IF i2 > 32.767 THEN
+	i2 := UINT_TO_INT(i2_raw - 65535);
+ELSE
+	i2 := UINT_TO_INT(i2_raw);
+END_IF
+
+IF i3 > 32.767 THEN
+	i3 := UINT_TO_INT(i3_raw - 65535);
+ELSE
+	i3 := UINT_TO_INT(i3_raw);
+END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="Sinusfahrt">
+      <LineId Id="6" Count="70" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="121" Count="19" />
+      <LineId Id="120" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

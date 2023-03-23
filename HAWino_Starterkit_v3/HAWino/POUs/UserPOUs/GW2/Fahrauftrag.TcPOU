@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="Fahrauftrag" Id="{d11e2ac1-1df3-4b17-bdc0-8c45421bbbdd}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Fahrauftrag //IMPLEMENTS TrajectoryControllable
+VAR
+	//State machine
+	sStart : BOOL := TRUE;
+	s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14,s15,s16,s17,s18,s19,s20,s21,s22: BOOL := FALSE;
+	
+	readAssigment: ReadAssigment;
+	TrajectoryController: TrajectoryControl;
+	leererAuftrag:Auftrag;
+	//Hilfsvariablen vorübergehend
+	wayPointList : ARRAY[0..100] OF RobotPoseSimple;
+	
+	//testToSimulink AT%Q*: LREAL;
+	//testFromSimulink AT%I*: LREAL;
+	FeedbackToGW1 AT%Q*: STRING(50);
+	Auftrag AT%I*: Auftrag;
+	StatusFromGW1 AT%I*: STRING(50);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[leererAuftrag.AbholStation := 0;
+leererAuftrag.AbholTasche := 0;
+leererAuftrag.AblageStation := 0;
+leererAuftrag.AblageTasche := 0;
+leererAuftrag.Art := '';
+
+//Test
+IF Var_HAWIno.Auftrag.AbholStation = 1 THEN
+	IF Var_HAWIno.Auftrag.AbholTasche = 1 THEN
+		wayPointList[0] := ToRobotPoseSimple(x:= 100, y:= 500, theta:= -1);
+	ELSIF Var_HAWIno.Auftrag.AbholTasche = 2 THEN
+		wayPointList[0] := ToRobotPoseSimple(x:= 200, y:= 500, theta:= -1);
+		wayPointList[1] := ToRobotPoseSimple(x:= 300, y:= 500, theta:= -1);
+	END_IF
+END_IF
+
+//Frage: Setzt GW3 die Variablen zurück? - jeder setzt seine variablen zurück
+
+//Ablauf einer Fahrt:
+IF sStart AND NOT s0 THEN
+	sStart := 0; s0 := 1;
+	//	RückmeldungGW1 Verfügbar
+	Var_HAWIno.Feedback := 'Verfuegbar';
+END_IF
+//	Warten auf Auftrag
+IF s0 AND NOT s1 AND .Var_HAWIno.Auftrag.Art = 'Fahrauftrag' THEN
+	s0 := 0; s1 := 1;
+	//	RückmeldugGW1 Auftrag angenommen setzt
+	Var_HAWIno.Feedback := 'Auftrag angenommen';
+	//readAssigment.assigment := .Var_HAWIno.Auftrag;
+	readAssigment(assigment:= .Var_HAWIno.Auftrag);
+	//Bahnplanung
+ 	
+	TrajectoryController.setWaypointList(WaypointList);
+	trajectoryController.newWaypointListAvailable := TRUE;
+END_IF
+
+///////////////////////////////////////////////FahrtZumAbholort///////////////////////////////////////////////////
+
+// 	RückmeldungGW3 Wegpunkte erhalten abwarten
+IF s1 AND NOT s2 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
+	s1 := 0; s2 := 1;
+	trajectoryController.newWaypointListAvailable := FALSE;
+END_IF
+
+// 	RückmeldungGW3 ready abwarten
+IF s2 AND NOT s3 AND trajectoryController.yControllerState = ControllerState.ready THEN
+	s2 := 0; s3 := 1;
+	trajectoryController.xBoEnable := TRUE;
+END_IF
+	
+//	RückmeldungGW3 Fahrt abwarten
+IF s3 AND NOT s4 AND trajectoryController.yControllerState = ControllerState.driving THEN
+	s3 := 0; s4 := 1;
+	//	RückmeldungGW1 Auf Anfahrt setzen
+	Var_HAWIno.Feedback := 'Auf Anfahrt';
+END_IF
+
+//	RückmeldungGW3 am Ziel abwarten
+IF s4 AND NOT s5 AND trajectoryController.yBoArrivedAtDestination THEN
+	s4 := 0; s5 := 1;
+	trajectoryController.xBoEnable := FALSE;
+	//	Greifersteuerung
+																		//----------todo
+	//	RückmeldungGW1 Teil aufgenommen setzen
+	Var_HAWIno.Feedback := 'Teil aufgenommen';
+	//	Fahrauftrag zu Lesekopf
+	TrajectoryController.setWaypointList(readAssigment.pointsFromSlotToReader);
+	trajectoryController.newWaypointListAvailable := TRUE;
+END_IF
+
+/////////////////////////////////////////////////////FahrtZumLesekopf/////////////////////////////////////////////////////////
+
+// 	RückmeldungGW3 Wegpunkte erhalten abwarten
+IF s5 AND NOT s6 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
+	s5 := 0; s6 := 1;
+	trajectoryController.newWaypointListAvailable := FALSE;
+END_IF
+
+// 	RückmeldungGW3 ready abwarten
+IF s6 AND NOT s7 AND trajectoryController.yControllerState = ControllerState.ready THEN
+	s6 := 0; s7 := 1;
+	trajectoryController.xBoEnable := TRUE;
+END_IF
+	
+//	RückmeldungGW3 Fahrt abwarten
+IF s7 AND NOT s8 AND trajectoryController.yControllerState = ControllerState.driving THEN
+	s7 := 0; s8 := 1;
+END_IF
+
+//	RückmeldungGW3 am Ziel abwarten
+IF s8 AND NOT s9 AND trajectoryController.yBoArrivedAtDestination THEN
+	s8 := 0; s9 := 1;
+	trajectoryController.xBoEnable := FALSE;
+	//	RückmeldungGW1 Abmeldung
+	Var_HAWIno.Feedback := 'Abmeldung';
+END_IF
+
+//	Warten auf Werkstück ausgelesen
+IF s9 AND NOT s10 AND .Var_HAWIno.RFID_Status = 'WerkstueckAusgelesen' THEN
+	s9 := 0; s10 := 1;
+	.Var_HAWIno.RFID_Status := '';
+	//	Bahnplanung
+	TrajectoryController.setWaypointList(WaypointList);
+	trajectoryController.newWaypointListAvailable := TRUE;
+END_IF
+
+/////////////////////////////////////////////////FahrtZurAblageStation///////////////////////////////////////////////////
+
+// 	RückmeldungGW3 Wegpunkte erhalten abwarten
+IF s10 AND NOT s11 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
+	s10 := 0; s11 := 1;
+	trajectoryController.newWaypointListAvailable := FALSE;
+END_IF
+
+// 	RückmeldungGW3 ready abwarten
+IF s11 AND NOT s12 AND trajectoryController.yControllerState = ControllerState.ready THEN
+	s11 := 0; s12 := 1;
+	trajectoryController.xBoEnable := TRUE;
+END_IF
+	
+//	RückmeldungGW3 Fahrt abwarten
+IF s12 AND NOT s13 AND trajectoryController.yControllerState = ControllerState.driving THEN
+	s12 := 0; s13 := 1;
+	//	RückmeldungGW1 Auf Anfahrt setzen
+	Var_HAWIno.Feedback := 'Auf Transport';
+END_IF
+
+//	RückmeldungGW3 am Ziel abwarten
+IF s13 AND NOT s14 AND trajectoryController.yBoArrivedAtDestination THEN
+	s13 := 0; s14 := 1;
+	trajectoryController.xBoEnable := FALSE;
+	//	RückmeldungGW1 Anmeldung
+	Var_HAWIno.Feedback := 'Anmeldung';
+END_IF
+
+//	Warten auf Werkstück ausgelesen
+IF s14 AND NOT s15 AND .Var_HAWIno.RFID_Status = 'WerkstueckAusgelesen' THEN
+	s14 := 0; s15 := 1;
+	.Var_HAWIno.RFID_Status := '';
+	//	Fahrauftrag zur Ablage
+	TrajectoryController.setWaypointList(readAssigment.pointsFromReaderToSlot);
+	trajectoryController.newWaypointListAvailable := TRUE;
+END_IF
+
+//////////////////////////////////////////////////FahrtZurAblage///////////////////////////////////////////////////////
+
+// 	RückmeldungGW3 Wegpunkte erhalten abwarten
+IF s15 AND NOT s16 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
+	s15 := 0; s16 := 1;
+	trajectoryController.newWaypointListAvailable := FALSE;
+END_IF
+
+// 	RückmeldungGW3 ready abwarten
+IF s16 AND NOT s17 AND trajectoryController.yControllerState = ControllerState.ready THEN
+	s16 := 0; s17 := 1;
+	trajectoryController.xBoEnable := TRUE;
+END_IF
+	
+//	RückmeldungGW3 Fahrt abwarten
+IF s17 AND NOT s18 AND trajectoryController.yControllerState = ControllerState.driving THEN
+	s17 := 0; s18 := 1;
+END_IF
+
+//	RückmeldungGW3 am Ziel abwarten
+IF s18 AND NOT s19 AND trajectoryController.yBoArrivedAtDestination THEN
+	s18 := 0; s19 := 1;
+	trajectoryController.xBoEnable := FALSE;
+	//	Greifersteuerung
+																		//----------todo
+	//	RückmeldungGW1 Teil abgelegt
+	Var_HAWIno.Feedback := 'Teil abgelegt';
+	//	Fahrauftrag zum Parkplatz
+	TrajectoryController.setWaypointList(WaypointList);
+	trajectoryController.newWaypointListAvailable := TRUE;
+END_IF
+
+///////////////////////////////////////////////////FahrtZumParkplatz////////////////////////////////////////////////////////
+
+// 	RückmeldungGW3 Wegpunkte erhalten abwarten
+IF s19 AND NOT s20 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
+	s19 := 0; s20 := 1;
+	trajectoryController.newWaypointListAvailable := FALSE;
+END_IF
+
+// 	RückmeldungGW3 ready abwarten
+IF s20 AND NOT s21 AND trajectoryController.yControllerState = ControllerState.ready THEN
+	s20 := 0; s21 := 1;
+	trajectoryController.xBoEnable := TRUE;
+END_IF
+	
+//	RückmeldungGW3 Fahrt abwarten
+IF s21 AND NOT s22 AND trajectoryController.yControllerState = ControllerState.driving THEN
+	s21 := 0; s22 := 1;
+END_IF
+
+//	RückmeldungGW3 am Ziel abwarten
+IF s22 AND NOT s0 AND trajectoryController.yBoArrivedAtDestination THEN
+	s22 := 0; s0 := 1;
+	trajectoryController.xBoEnable := FALSE;
+	.Var_HAWIno.Auftrag := leererAuftrag;
+	//	RückmeldungGW1 Verfügbar
+	Var_HAWIno.Feedback := 'Verfuegbar';
+END_IF
+				]]></ST>
+    </Implementation>
+    <LineIds Name="Fahrauftrag">
+      <LineId Id="207" Count="0" />
+      <LineId Id="209" Count="3" />
+      <LineId Id="368" Count="0" />
+      <LineId Id="367" Count="0" />
+      <LineId Id="371" Count="0" />
+      <LineId Id="370" Count="0" />
+      <LineId Id="369" Count="0" />
+      <LineId Id="374" Count="0" />
+      <LineId Id="376" Count="0" />
+      <LineId Id="375" Count="0" />
+      <LineId Id="203" Count="0" />
+      <LineId Id="372" Count="1" />
+      <LineId Id="202" Count="0" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="191" Count="0" />
+      <LineId Id="195" Count="0" />
+      <LineId Id="192" Count="0" />
+      <LineId Id="194" Count="0" />
+      <LineId Id="193" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="89" Count="1" />
+      <LineId Id="92" Count="1" />
+      <LineId Id="247" Count="0" />
+      <LineId Id="377" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="226" Count="0" />
+      <LineId Id="230" Count="0" />
+      <LineId Id="248" Count="0" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="288" Count="0" />
+      <LineId Id="249" Count="0" />
+      <LineId Id="289" Count="0" />
+      <LineId Id="110" Count="0" />
+      <LineId Id="251" Count="0" />
+      <LineId Id="250" Count="0" />
+      <LineId Id="254" Count="0" />
+      <LineId Id="252" Count="0" />
+      <LineId Id="263" Count="4" />
+      <LineId Id="262" Count="0" />
+      <LineId Id="253" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="111" Count="1" />
+      <LineId Id="261" Count="0" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="113" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="120" Count="1" />
+      <LineId Id="268" Count="0" />
+      <LineId Id="123" Count="0" />
+      <LineId Id="125" Count="0" />
+      <LineId Id="124" Count="0" />
+      <LineId Id="126" Count="1" />
+      <LineId Id="354" Count="1" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="290" Count="0" />
+      <LineId Id="269" Count="0" />
+      <LineId Id="291" Count="0" />
+      <LineId Id="270" Count="13" />
+      <LineId Id="286" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="134" Count="1" />
+      <LineId Id="350" Count="0" />
+      <LineId Id="137" Count="1" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="139" Count="1" />
+      <LineId Id="204" Count="0" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="356" Count="1" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="292" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="293" Count="0" />
+      <LineId Id="298" Count="16" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="315" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="150" Count="1" />
+      <LineId Id="351" Count="0" />
+      <LineId Id="152" Count="1" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="161" Count="1" />
+      <LineId Id="205" Count="0" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="358" Count="1" />
+      <LineId Id="156" Count="0" />
+      <LineId Id="294" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="295" Count="0" />
+      <LineId Id="316" Count="13" />
+      <LineId Id="332" Count="0" />
+      <LineId Id="168" Count="0" />
+      <LineId Id="170" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="172" Count="1" />
+      <LineId Id="352" Count="0" />
+      <LineId Id="175" Count="0" />
+      <LineId Id="177" Count="0" />
+      <LineId Id="176" Count="0" />
+      <LineId Id="178" Count="0" />
+      <LineId Id="174" Count="0" />
+      <LineId Id="360" Count="1" />
+      <LineId Id="171" Count="0" />
+      <LineId Id="296" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="297" Count="0" />
+      <LineId Id="333" Count="13" />
+      <LineId Id="349" Count="0" />
+      <LineId Id="181" Count="0" />
+      <LineId Id="184" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="186" Count="0" />
+      <LineId Id="185" Count="0" />
+      <LineId Id="353" Count="0" />
+      <LineId Id="206" Count="0" />
+      <LineId Id="189" Count="1" />
+      <LineId Id="187" Count="0" />
+      <LineId Id="63" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

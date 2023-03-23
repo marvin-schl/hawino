@@ -23,4 +23,5 @@ _CompileInfo/
 _Libraries/
 _ModuleInstall/
 HAWino_Starterkit_v3.project.~u
-*.suo
+.suo
+.DS_Store
