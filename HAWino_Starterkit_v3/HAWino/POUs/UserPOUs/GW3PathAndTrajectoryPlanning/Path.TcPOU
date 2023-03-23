@@ -3,14 +3,14 @@
   <POU Name="Path" Id="{95fe6ec8-af15-4fc0-b4c5-550c7aba9b73}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Path EXTENDS Spline
 VAR_INPUT
-	waypointListRaw: 	ARRAY [0..100] OF RobotPoseSimple;
+	waypointListRaw: 	ARRAY [0..101] OF RobotPoseSimple;
 	maxRadius: 			LREAL;
 	thetaDZ: 				LREAL := 0.1;
 END_VAR
 VAR
-	waypointList: 		ARRAY [0..100] 	OF 	RobotPoseSimple;		
-	subsplines: 		ARRAY [0..99] 	OF  POINTER TO Spline;
-	transitions: 		ARRAY [0..99] 	OF LREAL;
+	waypointList: 		ARRAY [0..101] 	OF 	RobotPoseSimple;		
+	subsplines: 		ARRAY [0..100] 	OF  POINTER TO Spline;
+	transitions: 		ARRAY [0..100] 	OF LREAL;
 	nmbOfSubsplines, nmbOfPreprocessedWaypoints:	INT;
 END_VAR
 ]]></Declaration>

@@ -37,7 +37,7 @@ VAR
 	maxIter				: INT := 100; 				//maximum allowed iterations for while loop of bisection method
 	acc					: LREAL;					//acceleration for the next time step in the algorithm
 	searchPos			: LREAL;					//position from which the swithing point search starts
-	swp					: ARRAY[0..98] OF LREAL;	//array of switching points, not needed entrys are filled with -1
+	swp					: ARRAY[0..99] OF LREAL;	//array of switching points, not needed entrys are filled with -1
 	nmbSWP				: INT;						//number of swichting points
 	
 	pos			: ARRAY[0..500] OF LREAL;			//the i-th element indicates the position on the curve at time t=i*deltaT

@@ -24,6 +24,7 @@
   <ImageAutoDeleteCapacity>0</ImageAutoDeleteCapacity>
   <ImageAutoDeleteOlderThan>0</ImageAutoDeleteOlderThan>
   <ImagesDeleteMode>Disabled</ImagesDeleteMode>
+  <IsTemplate>false</IsTemplate>
   <Layout>&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;Layout&gt;
   &lt;Window Guid="2191dfd4-87ac-43de-96e8-1a4dfe411272" LastFocused="133211174553762333" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="8b27f7de-1506-46f9-ad1d-891de36c15ac" DocumentIndexInWindowGroup="1" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
@@ -2109,16 +2110,13 @@
       <Title>DataPool_1630</Title>
     </DataPool>
     <YTChart AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-      <AnchorTimestamp>0</AnchorTimestamp>
       <AssignedCore>0</AssignedCore>
       <AutoStart>true</AutoStart>
       <Comment />
-      <ConnectedTimeMemberGuid>00000000-0000-0000-0000-000000000000</ConnectedTimeMemberGuid>
       <DefaultDisplayWidth>100000000</DefaultDisplayWidth>
-      <DisplayColor>-13816528</DisplayColor>
+      <DisplayColor>-986896</DisplayColor>
       <DisplayOverwriteMode>false</DisplayOverwriteMode>
-      <DurationLength>0</DurationLength>
-      <ForeColor>-921103</ForeColor>
+      <ForeColor>-16777216</ForeColor>
       <Guid>643ed290-b831-4b55-af1f-db6ba4343248</Guid>
       <MasterChart>00000000-0000-0000-0000-000000000000</MasterChart>
       <Name>YT Chart</Name>
@@ -2127,7 +2125,7 @@
       <SubMember>
         <AxisGroup AssemblyName="TwinCAT.Measurement.Scope.API.Model">
           <Comment />
-          <DisplayColor>-14342874</DisplayColor>
+          <DisplayColor>-1</DisplayColor>
           <Enabled>true</Enabled>
           <Guid>90350d0e-7c7d-47ab-b449-2f56fdb45388</Guid>
           <Name>Axis Group</Name>
@@ -2148,9 +2146,9 @@
               <SubMember>
                 <AxisStyle AssemblyName="TwinCAT.Measurement.Scope.API.Model">
                   <Comment />
-                  <DisplayColor>-921103</DisplayColor>
+                  <DisplayColor>-16777216</DisplayColor>
                   <Grid>true</Grid>
-                  <GridColor>-921103</GridColor>
+                  <GridColor>-16777216</GridColor>
                   <GridDivisions>10</GridDivisions>
                   <GridLineWidth>1</GridLineWidth>
                   <Guid>e775a266-296a-49e2-85f3-1021c2d6c7a7</Guid>
@@ -2182,9 +2180,9 @@
               <SubMember>
                 <AxisStyle AssemblyName="TwinCAT.Measurement.Scope.API.Model">
                   <Comment />
-                  <DisplayColor>-921103</DisplayColor>
+                  <DisplayColor>-16777216</DisplayColor>
                   <Grid>true</Grid>
-                  <GridColor>-921103</GridColor>
+                  <GridColor>-16777216</GridColor>
                   <GridDivisions>10</GridDivisions>
                   <GridLineWidth>1</GridLineWidth>
                   <Guid>f93e1c1d-2c48-4436-9854-8fcd9967b1af</Guid>
@@ -2224,6 +2222,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>333ec1c1-759a-46cb-8849-588357993557</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleInput_InVYfromMotors</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -2332,6 +2331,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>ae640f15-364e-4c8f-a5f6-b2cf24912c2c</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleInput_InVXfromMotors</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -2440,6 +2440,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>b37f4d02-e9d1-4555-a389-1e13bca0cb9d</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleInput_InVThetafromMotors</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -2548,6 +2549,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>65d4db21-02b0-404a-8894-e6ba7865751a</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleInput_InNextWaypoint[2]</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -2656,6 +2658,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>bb4c3993-51cd-4f85-8a09-f714dd49a887</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleInput_InNextWaypoint[1]</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -2764,6 +2767,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>c8573312-1797-4091-ab00-40f4aa0af92d</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleInput_InNextWaypoint[0]</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -2872,6 +2876,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>5a42d382-49e7-40ec-9ed1-f20dee51b62d</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleInput_InContrlI</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -2980,6 +2985,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>81dc35cc-9ee5-4f40-8366-feedf45cef7f</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleInput_InContrP</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3088,6 +3094,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>92e8645a-6835-4773-9e95-a37d7faaa9da</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleInput_InContrIN</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3196,6 +3203,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>32cf9605-04a0-4728-928f-3781efa90bfd</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleInput_InContrID</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3304,6 +3312,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>ae039b11-d7b8-417e-8afa-00ebc2c287a1</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleInput_InCameraPose[2]</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3412,6 +3421,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>17d885e7-74c5-4416-b598-325ae69a8036</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleInput_InCameraPose[1]</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3520,6 +3530,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>6e6eb8fb-79d2-4983-b3cb-dda621596c92</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleInput_InCameraPose[0]</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3628,6 +3639,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>dabfca43-88f4-49e1-b829-e2d7c699a99d</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_OutVtoMotors[2]</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3736,6 +3748,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>2924e492-c4d8-4613-be47-46cb0cd944d2</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_OutVtoMotors[1]</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3844,6 +3857,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>3e40d515-1bf3-4f6f-aa03-de5e6f76fe37</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_OutVtoMotors[0]</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3952,6 +3966,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>4c794335-3b6a-46aa-a636-c36fe18af8e0</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_OutEstY</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4060,6 +4075,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>48bb542f-e184-4f7c-b607-e1b8e5d283b1</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_OutEstX</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4168,6 +4184,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>3e1f42e6-7b01-4532-9821-3683195a69a3</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_OutEstTheta</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4276,6 +4293,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>43a6dccb-f52f-499a-91c7-8bc2fd3dfe87</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_OutErrorPose[2]</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4384,6 +4402,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>82550192-763c-4a45-a6b2-b3b03e4261fe</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_OutErrorPose[1]</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4492,6 +4511,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>df462094-26fc-4613-a6c3-2a9c2edf83cd</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_OutErrorPose[0]</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4600,6 +4620,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>b967deda-2c56-4189-abd6-bb23ddbf2ad2</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_Estimator_vWorld[2]</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4708,6 +4729,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>7b4f3a5f-3f37-4801-a12d-87864a622888</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_Estimator_vWorld[1]</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4816,6 +4838,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>6b99121b-45ac-4422-b936-0857cda39ffb</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_Estimator_vWorld[0]</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4915,8 +4938,8 @@
         </AxisGroup>
         <OverviewChart AssemblyName="TwinCAT.Measurement.Scope.API.Model">
           <Comment />
-          <DisplayColor>-14342874</DisplayColor>
-          <ForeColor>-921103</ForeColor>
+          <DisplayColor>-1</DisplayColor>
+          <ForeColor>-16777216</ForeColor>
           <Guid>a6cdfcc1-42dd-474c-b38f-334c685ef57f</Guid>
           <Name>Overview Chart</Name>
           <OverviewVisible>false</OverviewVisible>
@@ -4950,10 +4973,9 @@
               </ButtonSize>
               <Comment />
               <DisplayColor>Black</DisplayColor>
-              <EnabledButtons>RunButton PauseButton Splitter1 DisplaywidthTextBox Splitter2 ScrollBackBig ScrollBackSmall ScrollForwardSmall ScrollForwardBig Splitter3 PositionTextBox Splitter4 UndoButton RedoButton Splitter5 PanXButton PanXYButton ZoomXButton ZoomXYButton UnzoomButton ZoomOutMaxButton OverviewButton CopyToClipboard OpenCurveCreatorButton</EnabledButtons>
+              <EnabledButtons>RunButton PauseButton Splitter1 DisplaywidthTextBox Splitter2 ScrollBackBig ScrollBackSmall ScrollForwardSmall ScrollForwardBig Splitter3 PositionTextBox Splitter4 UndoButton RedoButton Splitter5 PanXButton PanXYButton ZoomXButton ZoomXYButton UnzoomButton ZoomOutMaxButton OverviewButton CopyToClipboard</EnabledButtons>
               <EnabledTimeLabels>All</EnabledTimeLabels>
               <Guid>b3dc4c2f-7f6f-417f-aadb-3c918b9f8a79</Guid>
-              <IndexNavigation>false</IndexNavigation>
               <Name>Chartmenu Style</Name>
               <SortPriority>100</SortPriority>
               <TimeStripFontSize>8.25</TimeStripFontSize>
@@ -4977,10 +4999,7 @@
           <Title>MarkerContainer_1675</Title>
         </MarkerContainer>
       </SubMember>
-      <TimeOffset>0</TimeOffset>
-      <TimeRefreshMode>Explicit</TimeRefreshMode>
       <Title>YTChart_1631</Title>
-      <TriggerGroupOffset>0</TriggerGroupOffset>
     </YTChart>
     <TriggerModule AssemblyName="TwinCAT.Measurement.Scope.API.Model">
       <Comment />
@@ -4992,16 +5011,13 @@
       <Title>TriggerModule_1642</Title>
     </TriggerModule>
     <YTChart AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-      <AnchorTimestamp>0</AnchorTimestamp>
       <AssignedCore>0</AssignedCore>
       <AutoStart>true</AutoStart>
       <Comment />
-      <ConnectedTimeMemberGuid>00000000-0000-0000-0000-000000000000</ConnectedTimeMemberGuid>
       <DefaultDisplayWidth>100000000</DefaultDisplayWidth>
-      <DisplayColor>-13816528</DisplayColor>
+      <DisplayColor>-986896</DisplayColor>
       <DisplayOverwriteMode>false</DisplayOverwriteMode>
-      <DurationLength>0</DurationLength>
-      <ForeColor>-921103</ForeColor>
+      <ForeColor>-16777216</ForeColor>
       <Guid>2191dfd4-87ac-43de-96e8-1a4dfe411272</Guid>
       <MasterChart>00000000-0000-0000-0000-000000000000</MasterChart>
       <Name>YT Chart (1)</Name>
@@ -5010,8 +5026,8 @@
       <SubMember>
         <OverviewChart AssemblyName="TwinCAT.Measurement.Scope.API.Model">
           <Comment />
-          <DisplayColor>-14342874</DisplayColor>
-          <ForeColor>-921103</ForeColor>
+          <DisplayColor>-1</DisplayColor>
+          <ForeColor>-16777216</ForeColor>
           <Guid>a69b3c6a-b632-4884-a8ac-9e522a4e5f8b</Guid>
           <Name>Overview Chart (1)</Name>
           <OverviewVisible>false</OverviewVisible>
@@ -5045,10 +5061,9 @@
               </ButtonSize>
               <Comment />
               <DisplayColor>Black</DisplayColor>
-              <EnabledButtons>RunButton PauseButton Splitter1 DisplaywidthTextBox Splitter2 ScrollBackBig ScrollBackSmall ScrollForwardSmall ScrollForwardBig Splitter3 PositionTextBox Splitter4 UndoButton RedoButton Splitter5 PanXButton PanXYButton ZoomXButton ZoomXYButton UnzoomButton ZoomOutMaxButton OverviewButton CopyToClipboard OpenCurveCreatorButton</EnabledButtons>
+              <EnabledButtons>RunButton PauseButton Splitter1 DisplaywidthTextBox Splitter2 ScrollBackBig ScrollBackSmall ScrollForwardSmall ScrollForwardBig Splitter3 PositionTextBox Splitter4 UndoButton RedoButton Splitter5 PanXButton PanXYButton ZoomXButton ZoomXYButton UnzoomButton ZoomOutMaxButton OverviewButton CopyToClipboard</EnabledButtons>
               <EnabledTimeLabels>All</EnabledTimeLabels>
               <Guid>506e56a9-f930-4ee4-be2e-9e8e9ff44ab9</Guid>
-              <IndexNavigation>false</IndexNavigation>
               <Name>Chartmenu Style (1)</Name>
               <SortPriority>100</SortPriority>
               <TimeStripFontSize>8.25</TimeStripFontSize>
@@ -5073,7 +5088,7 @@
         </MarkerContainer>
         <AxisGroup AssemblyName="TwinCAT.Measurement.Scope.API.Model">
           <Comment />
-          <DisplayColor>-14342874</DisplayColor>
+          <DisplayColor>-1</DisplayColor>
           <Enabled>true</Enabled>
           <Guid>b6a0784e-9eb3-4019-9992-9d760ca69a79</Guid>
           <Name>Axis Group (1)</Name>
@@ -5094,9 +5109,9 @@
               <SubMember>
                 <AxisStyle AssemblyName="TwinCAT.Measurement.Scope.API.Model">
                   <Comment />
-                  <DisplayColor>-921103</DisplayColor>
+                  <DisplayColor>-16777216</DisplayColor>
                   <Grid>true</Grid>
-                  <GridColor>-921103</GridColor>
+                  <GridColor>-16777216</GridColor>
                   <GridDivisions>10</GridDivisions>
                   <GridLineWidth>1</GridLineWidth>
                   <Guid>134b27d0-fd69-41b2-bcf9-0fb92a07b8cc</Guid>
@@ -5128,9 +5143,9 @@
               <SubMember>
                 <AxisStyle AssemblyName="TwinCAT.Measurement.Scope.API.Model">
                   <Comment />
-                  <DisplayColor>-921103</DisplayColor>
+                  <DisplayColor>-16777216</DisplayColor>
                   <Grid>true</Grid>
-                  <GridColor>-921103</GridColor>
+                  <GridColor>-16777216</GridColor>
                   <GridDivisions>10</GridDivisions>
                   <GridLineWidth>1</GridLineWidth>
                   <Guid>1320ab2e-445a-4512-8c08-3dd6dc62b9b0</Guid>
@@ -5170,6 +5185,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>8c37d7bc-4a82-49e6-a807-eb70e0b9a04f</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_OutVtoMotors[2] (1)</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -5278,6 +5294,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>c3129374-1e60-4fbe-8ddf-ce4bf81365b3</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_OutVtoMotors[1] (1)</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -5386,6 +5403,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>2e7161f9-cdaf-4b04-ab0f-73794872468b</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_OutVtoMotors[0] (1)</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -5494,6 +5512,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>9b169950-ede6-4007-a759-76d49ee3279c</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_Estimator_vWorld[2] (1)</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -5602,6 +5621,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>0140c779-d53f-40fa-9a5c-f1d4d1d66303</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_Estimator_vWorld[1] (1)</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -5710,6 +5730,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>8732efc5-2777-49db-ab27-b0e98dd94254</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: TcModuleOutput_Estimator_vWorld[0] (1)</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -5808,10 +5829,7 @@
           <Title>AxisGroup_1653</Title>
         </AxisGroup>
       </SubMember>
-      <TimeOffset>0</TimeOffset>
-      <TimeRefreshMode>Explicit</TimeRefreshMode>
       <Title>YTChart_1647</Title>
-      <TriggerGroupOffset>0</TriggerGroupOffset>
     </YTChart>
   </SubMember>
   <SynchronisationMode>Default</SynchronisationMode>
@@ -5819,6 +5837,7 @@
   <Title>ScopeProject_3</Title>
   <UseAutoSave>false</UseAutoSave>
   <UseFileStore>true</UseFileStore>
+  <UseUserSettings>true</UseUserSettings>
   <Version>1.0.0.2</Version>
   <ViewDetailLevel>Default</ViewDetailLevel>
 </ScopeProject>

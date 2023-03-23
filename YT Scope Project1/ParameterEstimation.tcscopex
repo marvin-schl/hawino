@@ -24,6 +24,7 @@
   <ImageAutoDeleteCapacity>0</ImageAutoDeleteCapacity>
   <ImageAutoDeleteOlderThan>0</ImageAutoDeleteOlderThan>
   <ImagesDeleteMode>Disabled</ImagesDeleteMode>
+  <IsTemplate>false</IsTemplate>
   <Layout>&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;Layout&gt;
   &lt;Window Guid="426e9393-bd11-4a96-b6ff-438c6dcb4c6c" LastFocused="133204342358612875" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="c6d01c04-1066-467b-ae22-46abb5782b8e" DocumentIndexInWindowGroup="0" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
@@ -2190,16 +2191,13 @@
       <Title>DataPool_695</Title>
     </DataPool>
     <YTChart AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-      <AnchorTimestamp>0</AnchorTimestamp>
       <AssignedCore>0</AssignedCore>
       <AutoStart>true</AutoStart>
       <Comment />
-      <ConnectedTimeMemberGuid>00000000-0000-0000-0000-000000000000</ConnectedTimeMemberGuid>
       <DefaultDisplayWidth>100000000</DefaultDisplayWidth>
-      <DisplayColor>-13816528</DisplayColor>
+      <DisplayColor>-986896</DisplayColor>
       <DisplayOverwriteMode>false</DisplayOverwriteMode>
-      <DurationLength>0</DurationLength>
-      <ForeColor>-921103</ForeColor>
+      <ForeColor>-16777216</ForeColor>
       <Guid>426e9393-bd11-4a96-b6ff-438c6dcb4c6c</Guid>
       <MasterChart>00000000-0000-0000-0000-000000000000</MasterChart>
       <Name>YT Chart</Name>
@@ -2208,7 +2206,7 @@
       <SubMember>
         <AxisGroup AssemblyName="TwinCAT.Measurement.Scope.API.Model">
           <Comment />
-          <DisplayColor>-14342874</DisplayColor>
+          <DisplayColor>-1</DisplayColor>
           <Enabled>true</Enabled>
           <Guid>3e905f24-c7df-4037-8c84-24323b150114</Guid>
           <Name>Axis Group</Name>
@@ -2229,9 +2227,9 @@
               <SubMember>
                 <AxisStyle AssemblyName="TwinCAT.Measurement.Scope.API.Model">
                   <Comment />
-                  <DisplayColor>-921103</DisplayColor>
+                  <DisplayColor>-16777216</DisplayColor>
                   <Grid>true</Grid>
-                  <GridColor>-921103</GridColor>
+                  <GridColor>-16777216</GridColor>
                   <GridDivisions>10</GridDivisions>
                   <GridLineWidth>1</GridLineWidth>
                   <Guid>ea815b9d-48f3-42e3-b715-6b8ef36a720c</Guid>
@@ -2263,9 +2261,9 @@
               <SubMember>
                 <AxisStyle AssemblyName="TwinCAT.Measurement.Scope.API.Model">
                   <Comment />
-                  <DisplayColor>-921103</DisplayColor>
+                  <DisplayColor>-16777216</DisplayColor>
                   <Grid>true</Grid>
-                  <GridColor>-921103</GridColor>
+                  <GridColor>-16777216</GridColor>
                   <GridDivisions>10</GridDivisions>
                   <GridLineWidth>1</GridLineWidth>
                   <Guid>6b19fe4a-a5a0-489d-a759-d98382d410c0</Guid>
@@ -2296,8 +2294,8 @@
         </AxisGroup>
         <OverviewChart AssemblyName="TwinCAT.Measurement.Scope.API.Model">
           <Comment />
-          <DisplayColor>-14342874</DisplayColor>
-          <ForeColor>-921103</ForeColor>
+          <DisplayColor>-1</DisplayColor>
+          <ForeColor>-16777216</ForeColor>
           <Guid>17373a5b-1835-478a-b079-835d84a6ca57</Guid>
           <Name>Overview Chart</Name>
           <OverviewVisible>false</OverviewVisible>
@@ -2331,10 +2329,9 @@
               </ButtonSize>
               <Comment />
               <DisplayColor>Black</DisplayColor>
-              <EnabledButtons>RunButton PauseButton Splitter1 DisplaywidthTextBox Splitter2 ScrollBackBig ScrollBackSmall ScrollForwardSmall ScrollForwardBig Splitter3 PositionTextBox Splitter4 UndoButton RedoButton Splitter5 PanXButton PanXYButton ZoomXButton ZoomXYButton UnzoomButton ZoomOutMaxButton OverviewButton CopyToClipboard OpenCurveCreatorButton</EnabledButtons>
+              <EnabledButtons>RunButton PauseButton Splitter1 DisplaywidthTextBox Splitter2 ScrollBackBig ScrollBackSmall ScrollForwardSmall ScrollForwardBig Splitter3 PositionTextBox Splitter4 UndoButton RedoButton Splitter5 PanXButton PanXYButton ZoomXButton ZoomXYButton UnzoomButton ZoomOutMaxButton OverviewButton CopyToClipboard</EnabledButtons>
               <EnabledTimeLabels>All</EnabledTimeLabels>
               <Guid>f2bce3ae-6373-4bd0-a3fd-31909f8a0615</Guid>
-              <IndexNavigation>false</IndexNavigation>
               <Name>Chartmenu Style</Name>
               <SortPriority>100</SortPriority>
               <TimeStripFontSize>8.25</TimeStripFontSize>
@@ -2350,7 +2347,7 @@
         </ChartStyle>
         <AxisGroup AssemblyName="TwinCAT.Measurement.Scope.API.Model">
           <Comment />
-          <DisplayColor>-14342874</DisplayColor>
+          <DisplayColor>-1</DisplayColor>
           <Enabled>true</Enabled>
           <Guid>12a344bb-e06f-4203-b743-319a4e7d87ef</Guid>
           <Name>Axis Group (1)</Name>
@@ -2370,6 +2367,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>bcf56bec-95b8-497f-becd-e0e20936ef47</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: vXFromMotor</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -2478,6 +2476,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>32f34736-ca67-40be-b465-17e2ac9fb34b</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: vYFromMotor</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -2586,6 +2585,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>afba7c6c-fb95-4a65-bf9f-37c59472350c</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: vThetaFromMotor</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -2694,6 +2694,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>8b4f991f-b4f3-4625-b139-5d51a30b63c1</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: i1_raw</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -2802,6 +2803,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>1664bcbc-611e-47d0-bf6d-973e0b9c24de</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: i2_raw</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -2910,6 +2912,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>e49ce4d8-3bb4-40a8-9834-e6e323f3ec93</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: i3_raw</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3018,6 +3021,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>7516eb38-cb4d-4ae0-b317-d09ccc2f755e</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: vx</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3126,6 +3130,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>ccae37e3-1f26-4861-b6e3-e66be17b15f6</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: vy</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3234,6 +3239,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>218d1119-f9b9-4de8-aff0-7491b6ca4dc9</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: vtheta</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3342,6 +3348,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>00f8211e-4ea2-4d05-9f12-4fc8ee222992</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: state</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3450,6 +3457,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>453e96a0-6d48-4e4b-9988-a972fd21f0df</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: counter</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3558,6 +3566,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>b50c52c2-065b-462d-b734-873406ace7da</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: distX</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3666,6 +3675,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>18b0760f-ff3c-4e7b-b6a8-462ab104c892</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: distY</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3774,6 +3784,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>6819abc1-8565-4702-92cb-4aec87796ba0</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: distTheta</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3882,6 +3893,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>d1e3b910-f2ed-44c1-b374-15e7b0f865f0</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: taskfreq</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -3990,6 +4002,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>db531d94-058c-4cc3-8f1b-279bda485167</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: camX</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4098,6 +4111,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>87ebd18c-58f5-4747-8e3c-41e34c94adaf</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: camY</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4206,6 +4220,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>b0ad7283-053c-4c49-ab64-ad62bdf287de</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: camTheta</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4314,6 +4329,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>658ff37a-2aa0-4552-829d-70a75bec7148</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: ErrX</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4422,6 +4438,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>6db5a71a-109e-466c-8640-d5ed719381d1</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: ErrY</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4530,6 +4547,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>bda0231d-759a-4ac3-b2f2-4b403cb1f42d</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: ErrTheta</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4638,6 +4656,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>6ef162db-ac7f-45a9-b484-afa5c97ec615</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: ErrCam</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4746,6 +4765,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>a2a45ec4-c666-4dae-9d89-75db4bb307b4</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: vSoll</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4854,6 +4874,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>6578e9d2-5034-43af-925d-4138ebcb6f81</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: i1</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -4962,6 +4983,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>d8db0c34-443f-42bf-8c28-87bab293d6e2</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: i2</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -5070,6 +5092,7 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>151a9da9-e96b-4ad3-9223-bf150390b736</Guid>
+                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: i3</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -5180,9 +5203,9 @@
               <SubMember>
                 <AxisStyle AssemblyName="TwinCAT.Measurement.Scope.API.Model">
                   <Comment />
-                  <DisplayColor>-921103</DisplayColor>
+                  <DisplayColor>-16777216</DisplayColor>
                   <Grid>true</Grid>
-                  <GridColor>-921103</GridColor>
+                  <GridColor>-16777216</GridColor>
                   <GridDivisions>10</GridDivisions>
                   <GridLineWidth>1</GridLineWidth>
                   <Guid>4d3ef29d-7a07-46e3-a2a6-af09b658e402</Guid>
@@ -5212,10 +5235,7 @@
           <Title>AxisGroup_268</Title>
         </AxisGroup>
       </SubMember>
-      <TimeOffset>0</TimeOffset>
-      <TimeRefreshMode>Explicit</TimeRefreshMode>
       <Title>YTChart_696</Title>
-      <TriggerGroupOffset>0</TriggerGroupOffset>
     </YTChart>
     <TriggerModule AssemblyName="TwinCAT.Measurement.Scope.API.Model">
       <Comment />
@@ -5232,6 +5252,7 @@
   <Title>ScopeProject_3</Title>
   <UseAutoSave>false</UseAutoSave>
   <UseFileStore>true</UseFileStore>
+  <UseUserSettings>true</UseUserSettings>
   <Version>1.0.0.2</Version>
   <ViewDetailLevel>Default</ViewDetailLevel>
 </ScopeProject>

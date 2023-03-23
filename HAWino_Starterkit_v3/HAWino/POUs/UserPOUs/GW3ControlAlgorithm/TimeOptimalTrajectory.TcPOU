@@ -91,11 +91,11 @@ END_VAR
 
 VAR
 	extendedWayPointList			:	ARRAY [0..101] OF RobotPoseSimple;
-	i				: UINT;
+	i				: INT;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// shift all elements +1 to right except the lat one (gets overwritten)
-FOR i := SIZEOF(newWayPointList) - 1 TO 0 BY  -1 DO
+FOR i := 100 TO 0 BY  -1 DO
 	extendedWayPointList[i + 1] := newWayPointList[i];
 END_FOR
 
