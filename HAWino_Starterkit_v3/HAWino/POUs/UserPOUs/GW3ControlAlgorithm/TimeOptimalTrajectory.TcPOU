@@ -10,6 +10,7 @@ VAR_OUTPUT
 	finished			: BOOL 				:= FALSE;
 	ready				: BOOL				:= FALSE;
 	referencePose		: RobotPoseSimple;
+	referenceVelocities	: RobotPoseSimple;
 	WPLidx 				: INT 				:= 0;
 END_VAR
 VAR
@@ -47,6 +48,9 @@ IF drive AND NOT finished AND ready THEN
 	referencePose.y := trajectoryPlanner.posTrajectory[WPLidx].y;
 	referencePose.x := trajectoryPlanner.posTrajectory[WPLidx].x;
 	referencePose.theta := trajectoryPlanner.posTrajectory[WPLidx].theta;
+	referenceVelocities.x := trajectoryPlanner.velTrajectory[WPLidx].x;
+	referenceVelocities.y := trajectoryPlanner.velTrajectory[WPLidx].y;
+	referenceVelocities.theta := trajectoryPlanner.velTrajectory[WPLidx].theta;
 	cnt := cnt +1;	
 END_IF
 
@@ -91,16 +95,28 @@ END_VAR
 
 VAR
 	extendedWayPointList			:	ARRAY [0..101] OF RobotPoseSimple;
-	i				: INT;
+	i								: INT;
+	maxInitialPoseError				: LREAL := 100;		// unit: mm
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[// shift all elements +1 to right except the lat one (gets overwritten)
-FOR i := 100 TO 0 BY  -1 DO
-	extendedWayPointList[i + 1] := newWayPointList[i];
-END_FOR
+        <ST><![CDATA[// Insert actual position as first waypoint if robot is too far away from first
+IF (SQRT(EXPT(currentPose.x - newWayPointList[0].x, 2) + EXPT(currentPose.y - newWayPointList[0].y, 2)) > maxInitialPoseError) THEN
+	// shift all elements +1 to right except the lat one (gets overwritten)
+	FOR i := 100 TO 0 BY -1 DO
+		extendedWayPointList[i + 1] := newWayPointList[i];
+	END_FOR
 
-// insert actual pose as first waypoint
-extendedWayPointList[0] := currentPose;
+	// insert actual pose as first waypoint
+	extendedWayPointList[0] := currentPose;
+ELSE
+	// shift all elements +1 to right except the lat one (gets overwritten)
+	FOR i := 0 TO 100 BY 1 DO
+		extendedWayPointList[i] := newWayPointList[i];
+	END_FOR
+	
+	extendedWayPointList[101].x := -1;
+	extendedWayPointList[101].y := -1;
+END_IF
 
 path(waypointListRaw := extendedWayPointList, maxRadius := maxRadius);
 trajectoryPlanner(path := path, 
@@ -116,7 +132,10 @@ trajectoryPlanner(path := path,
     </Method>
     <LineIds Name="TimeOptimalTrajectory">
       <LineId Id="124" Count="7" />
-      <LineId Id="133" Count="8" />
+      <LineId Id="133" Count="5" />
+      <LineId Id="172" Count="0" />
+      <LineId Id="174" Count="1" />
+      <LineId Id="139" Count="2" />
       <LineId Id="71" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.generateTrajectory">
@@ -130,13 +149,14 @@ trajectoryPlanner(path := path,
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.setWaypointList">
-      <LineId Id="39" Count="0" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="49" Count="1" />
-      <LineId Id="43" Count="0" />
-      <LineId Id="41" Count="0" />
-      <LineId Id="52" Count="0" />
-      <LineId Id="40" Count="0" />
+      <LineId Id="63" Count="1" />
+      <LineId Id="68" Count="6" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="79" Count="3" />
+      <LineId Id="85" Count="1" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="87" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="18" Count="0" />
       <LineId Id="20" Count="0" />

@@ -12,7 +12,8 @@
 // CX-4D0046 = 5
 
 VAR_GLOBAL
-	Robot_Number : INT :=4;
+	Robot_Number 				: INT :=4;
+	CONTROLLER_CYCLE_TIME	 	: LREAL := 10E-3;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
