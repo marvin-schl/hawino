@@ -24,8 +24,10 @@ VAR
 	xRef, yRef, thetaRef	: LREAL;				// 
 	omegaRef				: LREAL;				//
 	xAct, yAct, thetaAct	: LREAL;	
-	vTransMax				: LREAL;
-	vRotMax					: LREAL;
+	vTransMax				: LREAL := 934 / 1000;
+	vRotMax					: LREAL := 1.57;
+	positionTolerance		: LREAL := 2 / 1000;
+	orientationTolerance	: LREAL := 0.01;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -55,6 +57,11 @@ IF enable THEN
 	u2 := -k2 * thetaE + k3 * vRef * yE * SI(thetaE);
 	u1 := vRef * (COS(thetaE) - 1) + yE * (omegaRef + u2) + k1 * xE;
 	
+	// Write effective control variables
+	vX := (u1 + vRef) * COS(thetaAct);
+	vY := (u1 + vRef) * SIN(thetaAct);
+	omega := u2 + omegaRef;
+	
 	// Limit effective control variables
 	IF (vX > vTransMax) THEN
 		vX := vTransMax;
@@ -74,10 +81,7 @@ IF enable THEN
 		omega := - vRotMax;
 	END_IF
 	
-	// Write effective control variables
-	vX := (u1 + vRef) * COS(thetaAct);
-	vY := (u1 + vRef) * SIN(thetaAct);
-	omega := u2 + omegaRef;
+	reachedReference := (SQRT(EXPT(xE, 2) + EXPT(yE, 2)) < positionTolerance) AND (ABS(thetaE) < orientationTolerance);
 END_IF
 
 ]]></ST>
@@ -87,7 +91,10 @@ END_IF
       <LineId Id="152" Count="0" />
       <LineId Id="161" Count="6" />
       <LineId Id="171" Count="11" />
-      <LineId Id="184" Count="23" />
+      <LineId Id="203" Count="4" />
+      <LineId Id="239" Count="0" />
+      <LineId Id="241" Count="18" />
+      <LineId Id="240" Count="0" />
       <LineId Id="160" Count="0" />
       <LineId Id="153" Count="0" />
       <LineId Id="9" Count="0" />
