@@ -18,10 +18,16 @@ VAR
 	wayPointListRaw		: ARRAY [0..100] OF RobotPoseSimple;
 	cnt					: INT 				:= 0;
 	
+	maxRadius				: LREAL				:= 0.1;
+	
 	samplingTime		: LREAL				:= 0.05;
-	radius				: LREAL				:= 0.1;
-	maxVel				: LREAL				:= 0.4;
-	maxAcc				: LREAL				:= 0.9;
+	
+	maxVel				: LREAL				:= 0.7;
+	maxAcc				: LREAL				:= 0.8;
+	
+	arcLengthSlow		: LREAL				:= 0.1;
+	maxSlowVel			: LREAL				:= 0.15;
+	
 	maxRotVel			: LREAL				:= 100;
 	maxRotAcc			: LREAL				:= 100;	
 END_VAR
@@ -55,6 +61,18 @@ END_VAR
         <ST><![CDATA[trajectoryPlanner.generateTrajectory();]]></ST>
       </Implementation>
     </Method>
+    <Method Name="reset" Id="{a510e6d9-b061-4cba-a683-d76415bcb2be}">
+      <Declaration><![CDATA[METHOD reset : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[WPLidx 			:= 0; 						//reset
+finished 		:= FALSE;
+
+trajectoryPlanner.reset();]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="setRobotPose" Id="{612c742a-1fe7-4003-9836-d6bbc0467a35}">
       <Declaration><![CDATA[METHOD setRobotPose : RobotPoseSimple
 VAR_INPUT
@@ -62,24 +80,36 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[//not needed here ]]></ST>
       </Implementation>
     </Method>
     <Method Name="setWaypointList" Id="{e85e045f-80a3-4da6-9e39-79af30febaa9}">
       <Declaration><![CDATA[METHOD setWaypointList : ARRAY [0..100] OF RobotPoseSimple
 VAR_INPUT
 	newWayPointList	: ARRAY [0..100]  OF RobotPoseSimple;
+END_VAR
+
+VAR
+	extendedWayPointList			:	ARRAY [0..101] OF RobotPoseSimple;
+	i				: INT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[WPLidx 			:= 0; 						//reset
-finished 		:= FALSE;
+        <ST><![CDATA[// shift all elements +1 to right except the lat one (gets overwritten)
+FOR i := 100 TO 0 BY  -1 DO
+	extendedWayPointList[i + 1] := newWayPointList[i];
+END_FOR
 
-path(waypointListRaw := newWayPointList, radius := radius);
+// insert actual pose as first waypoint
+extendedWayPointList[0] := currentPose;
+
+path(waypointListRaw := extendedWayPointList, maxRadius := maxRadius);
 trajectoryPlanner(path := path, 
 				  qAccMax := maxAcc, 
 				  qVelMax := maxVel, 
 				  thetaAccMax := maxRotAcc,
-				  thetaVelMax := maxRotVel);
+				  thetaVelMax := maxRotVel,
+				  qVelMaxSlow := maxSlowVel,
+				  arcLengthSlow := arcLengthSlow);
 				  
 ]]></ST>
       </Implementation>
@@ -92,18 +122,28 @@ trajectoryPlanner(path := path,
     <LineIds Name="TimeOptimalTrajectory.generateTrajectory">
       <LineId Id="5" Count="0" />
     </LineIds>
+    <LineIds Name="TimeOptimalTrajectory.reset">
+      <LineId Id="15" Count="2" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
     <LineIds Name="TimeOptimalTrajectory.setRobotPose">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.setWaypointList">
-      <LineId Id="7" Count="1" />
-      <LineId Id="26" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="49" Count="1" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="40" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="18" Count="0" />
       <LineId Id="20" Count="0" />
       <LineId Id="19" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="23" Count="0" />
+      <LineId Id="34" Count="1" />
       <LineId Id="30" Count="0" />
       <LineId Id="24" Count="0" />
     </LineIds>
