@@ -5,7 +5,7 @@
   <Children>
     <Node>
       <Title>XY Scope Project</Title>
-      <Expanded>True</Expanded>
+      <Expanded>False</Expanded>
       <FileName>E:\hawino\Trajektorie\XY Scope Project.tcscopex</FileName>
       <Children>
         <Node>
@@ -65,7 +65,7 @@
         </Node>
         <Node>
           <Title>XY Chart</Title>
-          <Expanded>True</Expanded>
+          <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
@@ -75,7 +75,7 @@
               <Children>
                 <Node>
                   <Title>xCam, yCam</Title>
-                  <Expanded>True</Expanded>
+                  <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children>
                     <Node>
@@ -94,7 +94,7 @@
                 </Node>
                 <Node>
                   <Title>xObs, yObs</Title>
-                  <Expanded>True</Expanded>
+                  <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children>
                     <Node>
@@ -113,7 +113,7 @@
                 </Node>
                 <Node>
                   <Title>xRef, yRef</Title>
-                  <Expanded>True</Expanded>
+                  <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children>
                     <Node>
@@ -136,12 +136,12 @@
         </Node>
         <Node>
           <Title>YT Chart</Title>
-          <Expanded>True</Expanded>
+          <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>Axis Group (3)</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -191,6 +191,12 @@
               </Children>
             </Node>
           </Children>
+        </Node>
+        <Node>
+          <Title>YT Chart (2)</Title>
+          <Expanded>False</Expanded>
+          <FileName></FileName>
+          <Children />
         </Node>
       </Children>
     </Node>
