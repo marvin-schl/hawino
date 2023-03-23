@@ -4117,10 +4117,6 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.requestShutdown</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>IrDistanceSensors.distanceRaw</Name>
 							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
 						</Var>
@@ -4133,16 +4129,20 @@
 							<Type>REAL</Type>
 						</Var>
 						<Var>
-							<Name>Gripper.closeGripperCommand</Name>
+							<Name>PowerManager.requestShutdown</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>Gripper.slider</Name>
+							<Name>Gripper.closeGripperCommand</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.closeGripperFromSimulink</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.slider</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.partGripped</Name>

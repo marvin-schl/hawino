@@ -229,13 +229,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//CASE flagToReset OF
-//	'trajectoryGenerationFailed' : trajectoryGenerationFailed := FALSE;
-//	"trajectoryGenerationFinished" : trajectoryGenerationFinished := FALSE;
-//	"trajectoriesReady" : trajectoriesReady := FALSE;	
-//END_CASE
-
-trajectoryGenerationFailed 		:= FALSE;
+        <ST><![CDATA[trajectoryGenerationFailed 		:= FALSE;
 trajectoryGenerationFinished 	:= FALSE;
 trajectoriesReady 				:= FALSE;
 
@@ -352,7 +346,7 @@ IF pos[idxForward] > path.length THEN
 	//integrate backward
 	idxBackward := 1;
 	currentStep := 5;
-ELSIF currAccMin/vel[idxForward] > currdVelMaxAcc OR (vel[idxForward]-vel[idxForward-1])/deltaT < -qAccMax THEN
+ELSIF currAccMin/vel[idxForward] > currdVelMaxAcc THEN //OR (vel[idxForward]-vel[idxForward-1])/deltaT < -qAccMax THEN
 	//search for the next switching point
 	searchPos := pos[idxForward-2];
 	
@@ -477,11 +471,11 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF arcLength > path.length-arcLengthSlow THEN
-	velMax := qVelMaxSlow;
-ELSE
+        <ST><![CDATA[// arcLength > path.length-arcLengthSlow THEN
+//elMax := qVelMaxSlow;
+//ELSE
 	velMax := qVelMax;
-END_IF]]></ST>
+//END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="velMaxAcc" Id="{6c6d04de-b7bf-4af6-952f-23ef36188aad}">
@@ -538,11 +532,6 @@ END_IF]]></ST>
       <LineId Id="25" Count="0" />
     </LineIds>
     <LineIds Name="TrajectoryPlanner.reset">
-      <LineId Id="19" Count="0" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="24" Count="1" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="26" Count="0" />
       <LineId Id="28" Count="0" />
       <LineId Id="32" Count="0" />
       <LineId Id="36" Count="0" />
