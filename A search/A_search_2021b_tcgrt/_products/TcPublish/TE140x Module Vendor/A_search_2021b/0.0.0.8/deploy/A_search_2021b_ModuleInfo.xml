@@ -1,0 +1,4535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TctGeneratedModules>
+   <ModuleInfo CLSID="{D3CF0C5B-72ED-6E6F-924C-D778A775A0C2}" GUID="{D3CF0C5B-72ED-6E6F-924C-D778A775A0C2}" LibraryId="TE140x Module Vendor|A_search_2021b|0.0.0.8">
+      <BlockDiagram>
+         <Name>A_search_2021b</Name>
+         <Identifier>&lt;Root&gt;</Identifier>
+         <Type>root</Type>
+         <Position h="0" w="0" x="0" y="0"/>
+         <BlockDesign/>
+         <Block>
+            <Name>Constant</Name>
+            <Identifier>&lt;Root&gt;/Constant</Identifier>
+            <Type>Constant</Type>
+            <Position h="30" w="30" x="130" y="85"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+               <Image>
+                  <Placeholder Name="Value" Value="103"/>
+               </Image>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="165" y="100"/>
+            </Port>
+         </Block>
+         <Block>
+            <Name>Constant1</Name>
+            <Identifier>&lt;Root&gt;/Constant1</Identifier>
+            <Type>Constant</Type>
+            <Position h="30" w="30" x="120" y="-135"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+               <Image>
+                  <Placeholder Name="Value" Value="1500"/>
+               </Image>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="155" y="-120"/>
+            </Port>
+         </Block>
+         <Block>
+            <Name>Constant2</Name>
+            <Identifier>&lt;Root&gt;/Constant2</Identifier>
+            <Type>Constant</Type>
+            <Position h="30" w="30" x="120" y="-80"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+               <Image>
+                  <Placeholder Name="Value" Value="1200"/>
+               </Image>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="155" y="-65"/>
+            </Port>
+         </Block>
+         <Block>
+            <Name>Constant3</Name>
+            <Identifier>&lt;Root&gt;/Constant3</Identifier>
+            <Type>Constant</Type>
+            <Position h="30" w="30" x="130" y="-25"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+               <Image>
+                  <Placeholder Name="Value" Value="4893"/>
+               </Image>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="165" y="-10"/>
+            </Port>
+         </Block>
+         <Block>
+            <Name>Constant4</Name>
+            <Identifier>&lt;Root&gt;/Constant4</Identifier>
+            <Type>Constant</Type>
+            <Position h="30" w="30" x="130" y="30"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+               <Image>
+                  <Placeholder Name="Value" Value="2741"/>
+               </Image>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="165" y="45"/>
+            </Port>
+         </Block>
+         <Block>
+            <Name>Constant5</Name>
+            <Identifier>&lt;Root&gt;/Constant5</Identifier>
+            <Type>Constant</Type>
+            <Position h="30" w="30" x="510" y="-220"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+               <Image>
+                  <Placeholder Name="Value" Value="1"/>
+               </Image>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="545" y="-205"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="545" y="-205"/>
+                  <Point x="590" y="-205"/>
+                  <Point x="590" y="-144"/>
+               </Line>
+            </Port>
+         </Block>
+         <Block>
+            <Name>Enabled
+Subsystem</Name>
+            <Identifier>&lt;S1&gt;</Identifier>
+            <Type>SubSystem</Type>
+            <Position h="288" w="335" x="425" y="-139"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Inport</Type>
+               <Position x="410" y="-105"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;Root&gt;/xRobotStart</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+            </Port>
+            <Port>
+               <Type No="2">Inport</Type>
+               <Position x="410" y="-50"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;Root&gt;/yRobotStart</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+            </Port>
+            <Port>
+               <Type No="3">Inport</Type>
+               <Position x="410" y="5"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;Root&gt;/xGoalEnd</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+            </Port>
+            <Port>
+               <Type No="4">Inport</Type>
+               <Position x="410" y="60"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;Root&gt;/yGoalEnd</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+            </Port>
+            <Port>
+               <Type No="5">Inport</Type>
+               <Position x="410" y="115"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;Root&gt;/endNode</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+            </Port>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="765" y="-65"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="765" y="-65"/>
+                  <Point x="815" y="-65"/>
+               </Line>
+               <Signal Category="Output" Name="xKoordinaten" ReadOnly="true">
+                  <AdsIdxOffs>#x820016A8</AdsIdxOffs>
+               </Signal>
+            </Port>
+            <Port>
+               <Type No="2">Outport</Type>
+               <Position x="765" y="80"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="765" y="80"/>
+                  <Point x="815" y="80"/>
+               </Line>
+            </Port>
+            <Port>
+               <Type No="6">Enable</Type>
+               <Position x="590" y="-154"/>
+               <Rotation>-1.5708</Rotation>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;Root&gt;/Constant5</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+            </Port>
+            <Block>
+               <Name>xRobot</Name>
+               <Identifier>&lt;S1&gt;/xRobot</Identifier>
+               <Type>Inport</Type>
+               <Position h="14" w="30" x="-265" y="323"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+                  <Image>
+                     <Placeholder Name="Port" Value="1"/>
+                  </Image>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="-230" y="330"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="-230" y="330"/>
+                     <Point x="-180" y="330"/>
+                  </Line>
+               </Port>
+            </Block>
+            <Block>
+               <Name>yRobot</Name>
+               <Identifier>&lt;S1&gt;/yRobot</Identifier>
+               <Type>Inport</Type>
+               <Position h="14" w="30" x="-265" y="353"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+                  <Image>
+                     <Placeholder Name="Port" Value="2"/>
+                  </Image>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="-230" y="360"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="-230" y="360"/>
+                     <Point x="-180" y="360"/>
+                  </Line>
+               </Port>
+            </Block>
+            <Block>
+               <Name>xEnd</Name>
+               <Identifier>&lt;S1&gt;/xEnd</Identifier>
+               <Type>Inport</Type>
+               <Position h="14" w="30" x="-20" y="153"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+                  <Image>
+                     <Placeholder Name="Port" Value="3"/>
+                  </Image>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="15" y="160"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="15" y="160"/>
+                     <Point x="45" y="160"/>
+                  </Line>
+               </Port>
+            </Block>
+            <Block>
+               <Name>yEnd</Name>
+               <Identifier>&lt;S1&gt;/yEnd</Identifier>
+               <Type>Inport</Type>
+               <Position h="14" w="30" x="-20" y="188"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+                  <Image>
+                     <Placeholder Name="Port" Value="4"/>
+                  </Image>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="15" y="195"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="15" y="195"/>
+                     <Point x="45" y="195"/>
+                  </Line>
+               </Port>
+            </Block>
+            <Block>
+               <Name>endnode</Name>
+               <Identifier>&lt;S1&gt;/endnode</Identifier>
+               <Type>Inport</Type>
+               <Position h="14" w="30" x="-20" y="48"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+                  <Image>
+                     <Placeholder Name="Port" Value="5"/>
+                  </Image>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="15" y="55"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="15" y="55"/>
+                     <Point x="45" y="55"/>
+                  </Line>
+               </Port>
+            </Block>
+            <Block>
+               <Name>Enable</Name>
+               <Identifier>&lt;S1&gt;/Enable</Identifier>
+               <Type>EnablePort</Type>
+               <Position h="20" w="20" x="255" y="-215"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+               </BlockDesign>
+            </Block>
+            <Block>
+               <Name>A-Stern-Algorithmus</Name>
+               <Identifier>&lt;S1&gt;/A-Stern-Algorithmus</Identifier>
+               <Type>SubSystem</Type>
+               <Position h="281" w="425" x="50" y="-68"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="35" y="-50"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Startposition</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="2">Inport</Type>
+                  <Position x="35" y="-15"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Graph erstellen</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="3">Inport</Type>
+                  <Position x="35" y="20"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Graph erstellen</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>2</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="4">Inport</Type>
+                  <Position x="35" y="55"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/endnode</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="5">Inport</Type>
+                  <Position x="35" y="90"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Graph erstellen</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>3</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="6">Inport</Type>
+                  <Position x="35" y="125"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Graph erstellen</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>4</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="7">Inport</Type>
+                  <Position x="35" y="160"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/xEnd</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="8">Inport</Type>
+                  <Position x="35" y="195"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/yEnd</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="480" y="75"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="480" y="75"/>
+                     <Point x="660" y="75"/>
+                  </Line>
+                  <Signal Category="Output" Name="wayPointList" ReadOnly="true">
+                     <AdsIdxOffs>#x8202B110</AdsIdxOffs>
+                  </Signal>
+               </Port>
+               <Block>
+                  <Name>wayPointList</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="237" y="20"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="wayPointList" ReadOnly="0">
+                     <AdsIdxOffs>#x8202B110</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>wayPointList</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="192" y="1616"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="wayPointList" ReadOnly="0">
+                     <AdsIdxOffs>#x8202B110</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Annotation>
+                  <Text>function</Text>
+                  <Position x="80" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> </Text>
+                  <Position x="137" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>wayPointList</Text>
+                  <Position x="145" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> = fcn(</Text>
+                  <Position x="292" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>startNode</Text>
+                  <Position x="338" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="410" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>A</Text>
+                  <Position x="422" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>,</Text>
+                  <Position x="437" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>removeNode</Text>
+                  <Position x="445" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="539" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>endNode</Text>
+                  <Position x="551" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="619" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xNode</Text>
+                  <Position x="631" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="680" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yNode</Text>
+                  <Position x="692" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="741" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xEnd</Text>
+                  <Position x="753" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="792" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yEnd</Text>
+                  <Position x="804" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>)</Text>
+                  <Position x="843" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>numNodes = 144;</Text>
+                  <Position x="80" y="34"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>openList = zeros(8,5); </Text>
+                  <Position x="80" y="48"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%1. Node 2. g(x) 3. h(x) 4. f(x) 5. parent node</Text>
+                  <Position x="239" y="48"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>closedList = zeros(144,5); </Text>
+                  <Position x="80" y="62"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%1. Node 2. g(x) 3. h(x) 4. f(x) 5. parent node</Text>
+                  <Position x="268" y="62"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>neighborList = zeros(8,5); </Text>
+                  <Position x="80" y="76"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%1. Node 2. g(x) 3. h(x) 4. f(x) 5. parent node</Text>
+                  <Position x="265" y="76"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>step = 1;</Text>
+                  <Position x="80" y="90"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>index = 1;</Text>
+                  <Position x="80" y="104"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>overlap = false;</Text>
+                  <Position x="80" y="118"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>nodefmin = 0;</Text>
+                  <Position x="80" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>currentNode = </Text>
+                  <Position x="80" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>startNode</Text>
+                  <Position x="186" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>;</Text>
+                  <Position x="258" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>parentNode = 0;</Text>
+                  <Position x="80" y="160"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>noPath = false;</Text>
+                  <Position x="80" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>g = 0;</Text>
+                  <Position x="80" y="188"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>gprev = g;</Text>
+                  <Position x="80" y="202"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>h = sqrt(power(</Text>
+                  <Position x="80" y="216"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xNode</Text>
+                  <Position x="188" y="216"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(</Text>
+                  <Position x="237" y="216"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>startNode</Text>
+                  <Position x="246" y="216"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>)-</Text>
+                  <Position x="318" y="216"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xEnd</Text>
+                  <Position x="332" y="216"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>,2) + power(</Text>
+                  <Position x="371" y="216"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yNode</Text>
+                  <Position x="458" y="216"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(</Text>
+                  <Position x="507" y="216"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>startNode</Text>
+                  <Position x="516" y="216"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>)-</Text>
+                  <Position x="588" y="216"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yEnd</Text>
+                  <Position x="602" y="216"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>,2));</Text>
+                  <Position x="641" y="216"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>f = g + h;</Text>
+                  <Position x="80" y="230"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>fmin = 0;</Text>
+                  <Position x="80" y="244"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%Goal reached?</Text>
+                  <Position x="80" y="272"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>while</Text>
+                  <Position x="80" y="286"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> currentNode ~= endNode</Text>
+                  <Position x="119" y="286"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="300"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>for</Text>
+                  <Position x="100" y="300"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> counter = 1:14</Text>
+                  <Position x="122" y="300"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="314"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%The currentnode isn't a hinderance</Text>
+                  <Position x="116" y="314"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="328"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="116" y="328"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> currentNode ~= </Text>
+                  <Position x="128" y="328"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>removeNode</Text>
+                  <Position x="247" y="328"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(counter)</Text>
+                  <Position x="341" y="328"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>            noHinderance = true;</Text>
+                  <Position x="80" y="342"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="356"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%The currentnode is a hinderance</Text>
+                  <Position x="116" y="356"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="370"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>else</Text>
+                  <Position x="116" y="370"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>            noHinderance = false;</Text>
+                  <Position x="80" y="384"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>            </Text>
+                  <Position x="80" y="398"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>break</Text>
+                  <Position x="132" y="398"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>;</Text>
+                  <Position x="176" y="398"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="412"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="116" y="412"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="426"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="100" y="426"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>   </Text>
+                  <Position x="80" y="440"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="96" y="440"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> noHinderance == true</Text>
+                  <Position x="108" y="440"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="454"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%The smallest f is put in closedlist when</Text>
+                  <Position x="116" y="454"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>        closedList(step, 1) = currentNode;</Text>
+                  <Position x="80" y="468"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        closedList(step, 2) = g;</Text>
+                  <Position x="80" y="482"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        closedList(step, 3) = h;</Text>
+                  <Position x="80" y="496"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        closedList(step, 4) = f;</Text>
+                  <Position x="80" y="510"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        closedList(step, 5) = parentNode;</Text>
+                  <Position x="80" y="524"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        step = step + 1;</Text>
+                  <Position x="80" y="538"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="566"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%Clear the openlist and neighborlist</Text>
+                  <Position x="116" y="566"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>        openList = zeros(8,5);</Text>
+                  <Position x="80" y="580"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        neighborList = zeros(8,5);</Text>
+                  <Position x="80" y="594"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        index = 1;</Text>
+                  <Position x="80" y="608"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="636"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%Search the neighbor and put in the neighborlist</Text>
+                  <Position x="116" y="636"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="650"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>for</Text>
+                  <Position x="116" y="650"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> i = 1:numNodes</Text>
+                  <Position x="138" y="650"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>            </Text>
+                  <Position x="80" y="664"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%calculate fowards</Text>
+                  <Position x="132" y="664"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>            </Text>
+                  <Position x="80" y="678"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="132" y="678"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> </Text>
+                  <Position x="144" y="678"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>A</Text>
+                  <Position x="152" y="678"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(currentNode,i) ~= 0</Text>
+                  <Position x="167" y="678"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                g = gprev + sqrt(power(</Text>
+                  <Position x="80" y="692"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xNode</Text>
+                  <Position x="309" y="692"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i)-</Text>
+                  <Position x="358" y="692"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xNode</Text>
+                  <Position x="381" y="692"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(</Text>
+                  <Position x="430" y="692"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>startNode</Text>
+                  <Position x="439" y="692"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>),2) + power(</Text>
+                  <Position x="511" y="692"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yNode</Text>
+                  <Position x="603" y="692"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i)-</Text>
+                  <Position x="652" y="692"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yNode</Text>
+                  <Position x="675" y="692"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(</Text>
+                  <Position x="724" y="692"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>startNode</Text>
+                  <Position x="733" y="692"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>),2));</Text>
+                  <Position x="805" y="692"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                h = sqrt(power(</Text>
+                  <Position x="80" y="706"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xNode</Text>
+                  <Position x="252" y="706"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i)-</Text>
+                  <Position x="301" y="706"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xEnd</Text>
+                  <Position x="324" y="706"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>,2) + power(</Text>
+                  <Position x="363" y="706"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yNode</Text>
+                  <Position x="450" y="706"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i)-</Text>
+                  <Position x="499" y="706"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yEnd</Text>
+                  <Position x="522" y="706"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>,2));</Text>
+                  <Position x="561" y="706"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                neighborList(index,1) = i;</Text>
+                  <Position x="80" y="720"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                neighborList(index,2) = g;</Text>
+                  <Position x="80" y="734"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                neighborList(index,3) = h;</Text>
+                  <Position x="80" y="748"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                neighborList(index,4) = g + h;</Text>
+                  <Position x="80" y="762"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                neighborList(index,5) = currentNode;</Text>
+                  <Position x="80" y="776"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                index = index + 1;</Text>
+                  <Position x="80" y="790"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>            </Text>
+                  <Position x="80" y="804"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="132" y="804"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="818"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="116" y="818"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="846"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%the possible neighbors will be inserted in the openlist when it</Text>
+                  <Position x="116" y="846"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="860"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%doesn't exist in closedlist</Text>
+                  <Position x="116" y="860"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="874"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>for</Text>
+                  <Position x="116" y="874"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> i = 1:size(neighborList,1)</Text>
+                  <Position x="138" y="874"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>            </Text>
+                  <Position x="80" y="888"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>for</Text>
+                  <Position x="132" y="888"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> j = 1:size(closedList,1)</Text>
+                  <Position x="154" y="888"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                </Text>
+                  <Position x="80" y="902"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="148" y="902"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> neighborList(i) == closedList(j)</Text>
+                  <Position x="160" y="902"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                    overlap = true;</Text>
+                  <Position x="80" y="916"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                    </Text>
+                  <Position x="80" y="930"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>break</Text>
+                  <Position x="164" y="930"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>;</Text>
+                  <Position x="208" y="930"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                </Text>
+                  <Position x="80" y="944"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="148" y="944"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>            </Text>
+                  <Position x="80" y="958"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="132" y="958"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>            </Text>
+                  <Position x="80" y="972"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="132" y="972"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> overlap == false</Text>
+                  <Position x="144" y="972"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                openList(i,1) = neighborList(i,1);</Text>
+                  <Position x="80" y="986"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                openList(i,2) = neighborList(i,2);</Text>
+                  <Position x="80" y="1000"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                openList(i,3) = neighborList(i,3);</Text>
+                  <Position x="80" y="1014"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                openList(i,4) = neighborList(i,4);</Text>
+                  <Position x="80" y="1028"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                openList(i,5) = neighborList(i,5);</Text>
+                  <Position x="80" y="1042"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>            </Text>
+                  <Position x="80" y="1056"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="132" y="1056"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>            overlap = false;</Text>
+                  <Position x="80" y="1070"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="1084"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="116" y="1084"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>   </Text>
+                  <Position x="80" y="1098"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>else</Text>
+                  <Position x="96" y="1098"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>       openList(nodefmin,:) = [];</Text>
+                  <Position x="80" y="1112"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>   </Text>
+                  <Position x="80" y="1126"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="96" y="1126"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="1154"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%Search the smallest f in openlist</Text>
+                  <Position x="100" y="1154"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    flag = false;</Text>
+                  <Position x="80" y="1168"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="1182"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>for</Text>
+                  <Position x="100" y="1182"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> i = 1:size(openList,1)</Text>
+                  <Position x="122" y="1182"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="1196"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="116" y="1196"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> openList(i,4) ~= 0</Text>
+                  <Position x="128" y="1196"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>            </Text>
+                  <Position x="80" y="1210"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="132" y="1210"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> flag == false</Text>
+                  <Position x="144" y="1210"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                fmin = openList(i,4);</Text>
+                  <Position x="80" y="1224"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                nodefmin = i;</Text>
+                  <Position x="80" y="1238"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                flag = true;</Text>
+                  <Position x="80" y="1252"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>            </Text>
+                  <Position x="80" y="1266"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="132" y="1266"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>            </Text>
+                  <Position x="80" y="1280"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="132" y="1280"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> fmin &gt; openList(i,4)</Text>
+                  <Position x="144" y="1280"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                fmin = openList(i,4);</Text>
+                  <Position x="80" y="1294"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>                nodefmin = i;</Text>
+                  <Position x="80" y="1308"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>            </Text>
+                  <Position x="80" y="1322"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="132" y="1322"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="1336"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="116" y="1336"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="1350"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="100" y="1350"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="1378"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%found the smallest f and update the values</Text>
+                  <Position x="100" y="1378"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    currentNode = openList(nodefmin,1);</Text>
+                  <Position x="80" y="1392"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    g = openList(nodefmin,2);</Text>
+                  <Position x="80" y="1406"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    h = openList(nodefmin,3);</Text>
+                  <Position x="80" y="1420"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    f = openList(nodefmin,4);</Text>
+                  <Position x="80" y="1434"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    parentNode = openList(nodefmin,5);</Text>
+                  <Position x="80" y="1448"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    gprev = g;</Text>
+                  <Position x="80" y="1462"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="80" y="1476"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>closedList(step, 1) = currentNode;</Text>
+                  <Position x="80" y="1504"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>closedList(step, 2) = g;</Text>
+                  <Position x="80" y="1518"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>closedList(step, 3) = h;</Text>
+                  <Position x="80" y="1532"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>closedList(step, 4) = f;</Text>
+                  <Position x="80" y="1546"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>closedList(step, 5) = parentNode;</Text>
+                  <Position x="80" y="1560"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>wayPointList = zeros(144,1);</Text>
+                  <Position x="80" y="1588"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>for</Text>
+                  <Position x="80" y="1602"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> index = 1:step</Text>
+                  <Position x="102" y="1602"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="1616"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>wayPointList</Text>
+                  <Position x="100" y="1616"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(index) = closedList(index,1);</Text>
+                  <Position x="247" y="1616"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+            </Block>
+            <Block>
+               <Name>Graph erstellen</Name>
+               <Identifier>&lt;S1&gt;/Graph erstellen</Identifier>
+               <Type>SubSystem</Type>
+               <Position h="297" w="175" x="-690" y="-51"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="-510" y="-15"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="-510" y="-15"/>
+                     <Point x="45" y="-15"/>
+                  </Line>
+                  <Signal Category="Output" Name="A" ReadOnly="true">
+                     <AdsIdxOffs>#x82001FB0</AdsIdxOffs>
+                  </Signal>
+               </Port>
+               <Port>
+                  <Type No="2">Outport</Type>
+                  <Position x="-510" y="60"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="-510" y="60"/>
+                     <Point x="-268" y="60"/>
+                     <Point x="-268" y="20"/>
+                     <Point x="45" y="20"/>
+                  </Line>
+                  <Signal Category="Output" Name="removeNode" ReadOnly="true">
+                     <AdsIdxOffs>#x8202A7B0</AdsIdxOffs>
+                  </Signal>
+               </Port>
+               <Port>
+                  <Type No="3">Outport</Type>
+                  <Position x="-510" y="135"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="-510" y="135"/>
+                     <Point x="-474" y="135"/>
+                     <Line>
+                        <Point x="-474" y="135"/>
+                        <Point x="-403" y="135"/>
+                        <Point x="-403" y="90"/>
+                        <Point x="45" y="90"/>
+                     </Line>
+                     <Line>
+                        <Point x="-474" y="135"/>
+                        <Point x="-474" y="241"/>
+                        <Line>
+                           <Point x="-474" y="241"/>
+                           <Point x="-474" y="390"/>
+                           <Point x="-180" y="390"/>
+                        </Line>
+                        <Line>
+                           <Point x="-474" y="241"/>
+                           <Point x="570" y="241"/>
+                           <Point x="570" y="115"/>
+                           <Point x="660" y="115"/>
+                        </Line>
+                     </Line>
+                  </Line>
+                  <Signal Category="Output" Name="xKnoten" ReadOnly="true">
+                     <AdsIdxOffs>#x8202A810</AdsIdxOffs>
+                  </Signal>
+               </Port>
+               <Port>
+                  <Type No="4">Outport</Type>
+                  <Position x="-510" y="210"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="-510" y="210"/>
+                     <Point x="-421" y="210"/>
+                     <Line>
+                        <Point x="-421" y="210"/>
+                        <Point x="-381" y="210"/>
+                        <Point x="-381" y="125"/>
+                        <Point x="45" y="125"/>
+                     </Line>
+                     <Line>
+                        <Point x="-421" y="210"/>
+                        <Point x="-421" y="279"/>
+                        <Line>
+                           <Point x="-421" y="279"/>
+                           <Point x="618" y="279"/>
+                           <Point x="618" y="155"/>
+                           <Point x="660" y="155"/>
+                        </Line>
+                        <Line>
+                           <Point x="-421" y="279"/>
+                           <Point x="-421" y="420"/>
+                           <Point x="-180" y="420"/>
+                        </Line>
+                     </Line>
+                  </Line>
+                  <Signal Category="Output" Name="yKnoten" ReadOnly="true">
+                     <AdsIdxOffs>#x8202AC90</AdsIdxOffs>
+                  </Signal>
+               </Port>
+               <Block>
+                  <Name>A</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="164" y="20"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="A" ReadOnly="0">
+                     <AdsIdxOffs>#x82001FB0</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>removeNode</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="325" y="20"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="removeNode" ReadOnly="0">
+                     <AdsIdxOffs>#x8202A7B0</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>xKnoten</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="452" y="20"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="xKnoten" ReadOnly="0">
+                     <AdsIdxOffs>#x8202A810</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>yKnoten</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="579" y="20"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="yKnoten" ReadOnly="0">
+                     <AdsIdxOffs>#x8202AC90</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>A</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="131" y="146"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="A" ReadOnly="0">
+                     <AdsIdxOffs>#x82001FB0</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>A</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="131" y="188"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="A" ReadOnly="0">
+                     <AdsIdxOffs>#x82001FB0</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>A</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="131" y="230"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="A" ReadOnly="0">
+                     <AdsIdxOffs>#x82001FB0</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>A</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="131" y="272"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="A" ReadOnly="0">
+                     <AdsIdxOffs>#x82001FB0</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>A</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="131" y="314"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="A" ReadOnly="0">
+                     <AdsIdxOffs>#x82001FB0</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>A</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="131" y="356"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="A" ReadOnly="0">
+                     <AdsIdxOffs>#x82001FB0</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>A</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="131" y="398"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="A" ReadOnly="0">
+                     <AdsIdxOffs>#x82001FB0</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>A</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="131" y="440"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="A" ReadOnly="0">
+                     <AdsIdxOffs>#x82001FB0</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>A</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="131" y="552"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="A" ReadOnly="0">
+                     <AdsIdxOffs>#x82001FB0</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>removeNode</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="289" y="552"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="removeNode" ReadOnly="0">
+                     <AdsIdxOffs>#x8202A7B0</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>A</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="131" y="566"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="A" ReadOnly="0">
+                     <AdsIdxOffs>#x82001FB0</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>removeNode</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="296" y="566"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="removeNode" ReadOnly="0">
+                     <AdsIdxOffs>#x8202A7B0</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>xKnoten</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="160" y="706"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="xKnoten" ReadOnly="0">
+                     <AdsIdxOffs>#x8202A810</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>yKnoten</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="160" y="720"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="yKnoten" ReadOnly="0">
+                     <AdsIdxOffs>#x8202AC90</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Annotation>
+                  <Text>function</Text>
+                  <Position x="80" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> [</Text>
+                  <Position x="137" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>A</Text>
+                  <Position x="149" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="219" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>removeNode</Text>
+                  <Position x="231" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="380" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xKnoten</Text>
+                  <Position x="392" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="507" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yKnoten</Text>
+                  <Position x="519" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>]= fcn</Text>
+                  <Position x="634" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>numberOfNodes = 144;</Text>
+                  <Position x="80" y="48"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>numberOfColumns = 18;</Text>
+                  <Position x="80" y="62"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>A = zeros(numberOfNodes);</Text>
+                  <Position x="80" y="76"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>% Verbindung zu relevanten Knoten</Text>
+                  <Position x="80" y="104"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>for</Text>
+                  <Position x="80" y="118"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> i = 1:numberOfNodes</Text>
+                  <Position x="102" y="118"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="100" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> i-1&gt;0 &amp;&amp; mod(i, numberOfColumns) ~= 1</Text>
+                  <Position x="112" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>A</Text>
+                  <Position x="116" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i-1,i) = 1000;</Text>
+                  <Position x="186" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="160"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="100" y="160"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="100" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> i+1&lt;numberOfNodes+1 &amp;&amp; mod(i,numberOfColumns) ~= 0</Text>
+                  <Position x="112" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="188"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>A</Text>
+                  <Position x="116" y="188"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i+1,i)= 1000;</Text>
+                  <Position x="186" y="188"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="202"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="100" y="202"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="216"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="100" y="216"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> i+numberOfColumns&lt;numberOfNodes+1</Text>
+                  <Position x="112" y="216"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="230"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>A</Text>
+                  <Position x="116" y="230"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i+numberOfColumns,i)=1000;</Text>
+                  <Position x="186" y="230"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="244"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="100" y="244"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="258"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="100" y="258"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> i-numberOfColumns&gt;0</Text>
+                  <Position x="112" y="258"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="272"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>A</Text>
+                  <Position x="116" y="272"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i-numberOfColumns,i)=1000;</Text>
+                  <Position x="186" y="272"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="286"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="100" y="286"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="300"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="100" y="300"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> i+numberOfColumns+1 &lt; numberOfNodes+1 &amp;&amp; mod(i,numberOfColumns) ~= 0</Text>
+                  <Position x="112" y="300"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="314"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>A</Text>
+                  <Position x="116" y="314"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i+numberOfColumns+1,i) = sqrt(2)*1000;</Text>
+                  <Position x="186" y="314"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="328"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="100" y="328"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="342"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="100" y="342"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> i+numberOfColumns-1 &lt; numberOfNodes+1 &amp;&amp; mod(i, numberOfColumns) ~= 1</Text>
+                  <Position x="112" y="342"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="356"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>A</Text>
+                  <Position x="116" y="356"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i+numberOfColumns-1,i) = sqrt(2)*1000;</Text>
+                  <Position x="186" y="356"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="370"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="100" y="370"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>     </Text>
+                  <Position x="80" y="384"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="104" y="384"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> i-numberOfColumns+1 &gt; 0 &amp;&amp; mod(i,numberOfColumns) ~= 1</Text>
+                  <Position x="116" y="384"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="398"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>A</Text>
+                  <Position x="116" y="398"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i-numberOfColumns+1,i) = sqrt(2)*1000;</Text>
+                  <Position x="186" y="398"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="412"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="100" y="412"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="426"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="100" y="426"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> i-numberOfColumns-1 &gt; 0 &amp;&amp; mod(i, numberOfColumns) ~= 0</Text>
+                  <Position x="112" y="426"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="440"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>A</Text>
+                  <Position x="116" y="440"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i-numberOfColumns-1,i) = sqrt(2)*1000;</Text>
+                  <Position x="186" y="440"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="454"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="100" y="454"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="80" y="468"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>% Lösen der Station</Text>
+                  <Position x="80" y="496"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>removeNode = [93 96 99 102 111 114 117 120 124 125 142 143];</Text>
+                  <Position x="80" y="510"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>for</Text>
+                  <Position x="80" y="524"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> counter = 1:12</Text>
+                  <Position x="102" y="524"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="538"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>for</Text>
+                  <Position x="100" y="538"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> j = 1:numberOfNodes</Text>
+                  <Position x="122" y="538"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="552"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>A</Text>
+                  <Position x="116" y="552"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(</Text>
+                  <Position x="186" y="552"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>removeNode</Text>
+                  <Position x="195" y="552"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(counter),j) = 0;</Text>
+                  <Position x="344" y="552"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="566"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>A</Text>
+                  <Position x="116" y="566"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(j,</Text>
+                  <Position x="186" y="566"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>removeNode</Text>
+                  <Position x="202" y="566"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(counter)) = 0;</Text>
+                  <Position x="351" y="566"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="580"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="100" y="580"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="80" y="594"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>% Umrechung von Knoten in Koordinaten</Text>
+                  <Position x="80" y="622"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>xKnoten = zeros(numberOfNodes,1);</Text>
+                  <Position x="80" y="636"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yKnoten = zeros(numberOfNodes,1);</Text>
+                  <Position x="80" y="650"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>row = 600;</Text>
+                  <Position x="80" y="664"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>col = 200;</Text>
+                  <Position x="80" y="678"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>for</Text>
+                  <Position x="80" y="692"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> i = 1:numberOfNodes</Text>
+                  <Position x="102" y="692"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="706"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xKnoten</Text>
+                  <Position x="100" y="706"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i) = col;</Text>
+                  <Position x="215" y="706"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="720"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yKnoten</Text>
+                  <Position x="100" y="720"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i) = row;</Text>
+                  <Position x="215" y="720"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    col = col + 400;</Text>
+                  <Position x="80" y="734"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="748"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="100" y="748"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> mod(i,numberOfColumns) == 0</Text>
+                  <Position x="112" y="748"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        col = 200;</Text>
+                  <Position x="80" y="762"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        row = row + 400;</Text>
+                  <Position x="80" y="776"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="790"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="100" y="790"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+            </Block>
+            <Block>
+               <Name>Startposition</Name>
+               <Identifier>&lt;S1&gt;/Startposition</Identifier>
+               <Type>SubSystem</Type>
+               <Position h="116" w="115" x="-175" y="317"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="-190" y="330"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/xRobot</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="2">Inport</Type>
+                  <Position x="-190" y="360"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/yRobot</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="3">Inport</Type>
+                  <Position x="-190" y="390"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Graph erstellen</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>3</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="4">Inport</Type>
+                  <Position x="-190" y="420"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Graph erstellen</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>4</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="-55" y="375"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="-55" y="375"/>
+                     <Point x="23" y="375"/>
+                     <Point x="23" y="-50"/>
+                     <Point x="45" y="-50"/>
+                  </Line>
+                  <Signal Category="Output" Name="startKnoten" ReadOnly="true">
+                     <AdsIdxOffs>#x82001FA8</AdsIdxOffs>
+                  </Signal>
+               </Port>
+               <Block>
+                  <Name>startKnoten</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="228" y="20"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="startKnoten" ReadOnly="0">
+                     <AdsIdxOffs>#x82001FA8</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Annotation>
+                  <Text>function</Text>
+                  <Position x="80" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> </Text>
+                  <Position x="137" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>startKnoten</Text>
+                  <Position x="145" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>= fcn(</Text>
+                  <Position x="283" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xRobot</Text>
+                  <Position x="325" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="378" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yRobot</Text>
+                  <Position x="390" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="443" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xKnoten</Text>
+                  <Position x="455" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="515" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yKnoten</Text>
+                  <Position x="527" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>)</Text>
+                  <Position x="587" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>startKnoten = 0;</Text>
+                  <Position x="80" y="48"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>startKnotenArray = 0;</Text>
+                  <Position x="80" y="62"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>diff_x = zeros(size(</Text>
+                  <Position x="80" y="76"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xKnoten</Text>
+                  <Position x="214" y="76"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>,1),1);</Text>
+                  <Position x="274" y="76"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>diff_y = zeros(size(</Text>
+                  <Position x="80" y="90"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yKnoten</Text>
+                  <Position x="214" y="90"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>,1),1);</Text>
+                  <Position x="274" y="90"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>for</Text>
+                  <Position x="80" y="118"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> i = 1:size(</Text>
+                  <Position x="102" y="118"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xKnoten</Text>
+                  <Position x="177" y="118"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>,1)</Text>
+                  <Position x="237" y="118"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    diff_x(i) = abs(</Text>
+                  <Position x="80" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xRobot</Text>
+                  <Position x="199" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>-</Text>
+                  <Position x="252" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xKnoten</Text>
+                  <Position x="261" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i));</Text>
+                  <Position x="321" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="80" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>for</Text>
+                  <Position x="80" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> i = 1:size(</Text>
+                  <Position x="102" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yKnoten</Text>
+                  <Position x="177" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>,1)</Text>
+                  <Position x="237" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    diff_y(i) = abs(</Text>
+                  <Position x="80" y="188"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yRobot</Text>
+                  <Position x="199" y="188"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>-</Text>
+                  <Position x="252" y="188"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yKnoten</Text>
+                  <Position x="261" y="188"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i));</Text>
+                  <Position x="321" y="188"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="80" y="202"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+            </Block>
+            <Block>
+               <Name>koordinatenListe</Name>
+               <Identifier>&lt;S1&gt;/koordinatenListe</Identifier>
+               <Type>SubSystem</Type>
+               <Position h="116" w="130" x="665" y="57"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="650" y="75"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/A-Stern-Algorithmus</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="2">Inport</Type>
+                  <Position x="650" y="115"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Graph erstellen</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>3</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="3">Inport</Type>
+                  <Position x="650" y="155"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Graph erstellen</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>4</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="800" y="85"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="800" y="85"/>
+                     <Point x="807" y="85"/>
+                     <Point x="807" y="80"/>
+                     <Point x="830" y="80"/>
+                  </Line>
+                  <Signal Category="Output" Name="xKoordinaten" ReadOnly="true">
+                     <AdsIdxOffs>#x820016A8</AdsIdxOffs>
+                  </Signal>
+               </Port>
+               <Port>
+                  <Type No="2">Outport</Type>
+                  <Position x="800" y="145"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="800" y="145"/>
+                     <Point x="813" y="145"/>
+                     <Point x="813" y="140"/>
+                     <Point x="830" y="140"/>
+                  </Line>
+                  <Signal Category="Output" Name="yKoordinaten" ReadOnly="true">
+                     <AdsIdxOffs>#x82001B28</AdsIdxOffs>
+                  </Signal>
+               </Port>
+               <Block>
+                  <Name>xKoordinaten</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="245" y="20"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="xKoordinaten" ReadOnly="0">
+                     <AdsIdxOffs>#x820016A8</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>yKoordinaten</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="408" y="20"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="yKoordinaten" ReadOnly="0">
+                     <AdsIdxOffs>#x82001B28</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>xKoordinaten</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="212" y="132"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="xKoordinaten" ReadOnly="0">
+                     <AdsIdxOffs>#x820016A8</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Block>
+                  <Name>yKoordinaten</Name>
+                  <Type>MCodeDisplayBlock</Type>
+                  <Position h="12" w="55" x="212" y="146"/>
+                  <BlockDesign>
+                     <Image>
+                        <Placeholder Name="Name" Value="---"/>
+                     </Image>
+                  </BlockDesign>
+                  <State Name="yKoordinaten" ReadOnly="0">
+                     <AdsIdxOffs>#x82001B28</AdsIdxOffs>
+                  </State>
+               </Block>
+               <Annotation>
+                  <Text>function</Text>
+                  <Position x="80" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> [</Text>
+                  <Position x="137" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xKoordinaten</Text>
+                  <Position x="149" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="300" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yKoordinaten</Text>
+                  <Position x="312" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>]= fcn(</Text>
+                  <Position x="463" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>wayPointList</Text>
+                  <Position x="509" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="601" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xArray</Text>
+                  <Position x="613" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="661" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yArray</Text>
+                  <Position x="673" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>)</Text>
+                  <Position x="721" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>sizeList = size(</Text>
+                  <Position x="80" y="48"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>wayPointList</Text>
+                  <Position x="187" y="48"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>,1);</Text>
+                  <Position x="279" y="48"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xKoordinaten = zeros(sizeList,1);</Text>
+                  <Position x="80" y="62"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yKoordinaten = zeros(sizeList,1);</Text>
+                  <Position x="80" y="76"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>for</Text>
+                  <Position x="80" y="104"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> i = 1 : sizeList</Text>
+                  <Position x="102" y="104"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="118"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="100" y="118"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> </Text>
+                  <Position x="112" y="118"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>wayPointList</Text>
+                  <Position x="120" y="118"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> ~= 0</Text>
+                  <Position x="212" y="118"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xKoordinaten</Text>
+                  <Position x="116" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i) = </Text>
+                  <Position x="267" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>xArray</Text>
+                  <Position x="302" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(</Text>
+                  <Position x="350" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>wayPointList</Text>
+                  <Position x="359" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i));</Text>
+                  <Position x="451" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yKoordinaten</Text>
+                  <Position x="116" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i) = </Text>
+                  <Position x="267" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>yArray</Text>
+                  <Position x="302" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(</Text>
+                  <Position x="350" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>wayPointList</Text>
+                  <Position x="359" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(i));</Text>
+                  <Position x="451" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="160"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="100" y="160"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+            </Block>
+            <Block>
+               <Name>xKoordinaten</Name>
+               <Identifier>&lt;S1&gt;/xKoordinaten</Identifier>
+               <Type>Outport</Type>
+               <Position h="14" w="30" x="835" y="73"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+                  <Image>
+                     <Placeholder Name="Port" Value="1"/>
+                  </Image>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="820" y="80"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/koordinatenListe</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+            </Block>
+            <Block>
+               <Name>yKoordinaten</Name>
+               <Identifier>&lt;S1&gt;/yKoordinaten</Identifier>
+               <Type>Outport</Type>
+               <Position h="14" w="30" x="835" y="133"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+                  <Image>
+                     <Placeholder Name="Port" Value="2"/>
+                  </Image>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="820" y="140"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/koordinatenListe</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>2</PortNo>
+                  </Source>
+               </Port>
+            </Block>
+         </Block>
+         <Block>
+            <Name>endNode</Name>
+            <Identifier>&lt;Root&gt;/endNode</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="295" y="105"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="390" y="115"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="390" y="115"/>
+                  <Point x="420" y="115"/>
+               </Line>
+               <Signal Category="Output" Name="endNode" ReadOnly="true">
+                  <AdsIdxOffs>#x820016A0</AdsIdxOffs>
+               </Signal>
+            </Port>
+            <State Category="DWork" Name="endNode_PWORK" ReadOnly="true"/>
+         </Block>
+         <Block>
+            <Name>xGoalEnd</Name>
+            <Identifier>&lt;Root&gt;/xGoalEnd</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="295" y="-5"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="390" y="5"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="390" y="5"/>
+                  <Point x="420" y="5"/>
+               </Line>
+               <Signal Category="Output" Name="xGoalEnd" ReadOnly="true">
+                  <AdsIdxOffs>#x82001690</AdsIdxOffs>
+               </Signal>
+            </Port>
+            <State Category="DWork" Name="xGoalEnd_PWORK" ReadOnly="true"/>
+         </Block>
+         <Block>
+            <Name>xPointList</Name>
+            <Identifier>&lt;Root&gt;/xPointList</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="820" y="-75"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Inport</Type>
+               <Position x="805" y="-65"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;S1&gt;</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+            </Port>
+            <State Category="DWork" Name="xPointList_PWORK" ReadOnly="true"/>
+         </Block>
+         <Block>
+            <Name>xRobotStart</Name>
+            <Identifier>&lt;Root&gt;/xRobotStart</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="295" y="-115"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="390" y="-105"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="390" y="-105"/>
+                  <Point x="420" y="-105"/>
+               </Line>
+               <Signal Category="Output" Name="xRobotStart" ReadOnly="true">
+                  <AdsIdxOffs>#x82001680</AdsIdxOffs>
+               </Signal>
+            </Port>
+            <State Category="DWork" Name="xRobotStart_PWORK" ReadOnly="true"/>
+         </Block>
+         <Block>
+            <Name>yGoalEnd</Name>
+            <Identifier>&lt;Root&gt;/yGoalEnd</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="295" y="50"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="390" y="60"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="390" y="60"/>
+                  <Point x="420" y="60"/>
+               </Line>
+               <Signal Category="Output" Name="yGoalEnd" ReadOnly="true">
+                  <AdsIdxOffs>#x82001698</AdsIdxOffs>
+               </Signal>
+            </Port>
+            <State Category="DWork" Name="yGoalEnd_PWORK" ReadOnly="true"/>
+         </Block>
+         <Block>
+            <Name>yPointList</Name>
+            <Identifier>&lt;Root&gt;/yPointList</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="820" y="70"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Inport</Type>
+               <Position x="805" y="80"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;S1&gt;</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>2</PortNo>
+               </Source>
+            </Port>
+            <State Category="DWork" Name="yPointList_PWORK" ReadOnly="true"/>
+         </Block>
+         <Block>
+            <Name>yRobotStart</Name>
+            <Identifier>&lt;Root&gt;/yRobotStart</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="295" y="-60"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="390" y="-50"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="390" y="-50"/>
+                  <Point x="420" y="-50"/>
+               </Line>
+               <Signal Category="Output" Name="yRobotStart" ReadOnly="true">
+                  <AdsIdxOffs>#x82001688</AdsIdxOffs>
+               </Signal>
+            </Port>
+            <State Category="DWork" Name="yRobotStart_PWORK" ReadOnly="true"/>
+         </Block>
+         <SubsystemHierarchy>
+            <Subsystem>
+               <ID>&lt;Root&gt;</ID>
+            </Subsystem>
+            <Subsystem>
+               <ID>&lt;S1&gt;</ID>
+               <Parent>&lt;Root&gt;</Parent>
+            </Subsystem>
+         </SubsystemHierarchy>
+         <DebugInfo>
+            <SourceFile>
+               <Name>A_search_2021b.cpp</Name>
+               <Path>E:\hawino\A search\A_search_2021b_tcgrt\A_search_2021b.cpp</Path>
+               <CodeSection CommentStartLine="44" EndLine="82" Method="A_search_2021b_mod" StartLine="45">
+                  <Block>&lt;S1&gt;/Startposition</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="83" EndLine="113" Method="A_search_2021b_mod" StartLine="84">
+                  <Block>&lt;S1&gt;/Startposition</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="114" EndLine="146" Method="A_search_2021b_mod" StartLine="115">
+                  <Block>&lt;S1&gt;/Startposition</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="147" EndLine="237" Method="A_search_2021b_mod" StartLine="148">
+                  <Block>&lt;S1&gt;/Startposition</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="298" EndLine="300" Method="step" StartLine="301">
+                  <Block>&lt;Root&gt;/Enabled Subsystem</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="298" EndLine="300" Method="step" StartLine="301">
+                  <Block>&lt;S1&gt;/Enable</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="301" EndLine="365" Method="step" StartLine="302">
+                  <Block>&lt;S1&gt;/Graph erstellen</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="366" EndLine="372" Method="sizeof" StartLine="367">
+                  <Block>&lt;S1&gt;/Startposition</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="373" EndLine="374" Method="sizeof" StartLine="374">
+                  <Block>&lt;S1&gt;/Graph erstellen</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="375" EndLine="401" Method="sizeof" StartLine="376">
+                  <Block>&lt;S1&gt;/Startposition</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="402" EndLine="551" Method="sizeof" StartLine="403">
+                  <Block>&lt;S1&gt;/A-Stern-Algorithmus</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="552" EndLine="553" Method="sizeof" StartLine="553">
+                  <Block>&lt;S1&gt;/A-Stern-Algorithmus</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="554" EndLine="576" Method="sizeof" StartLine="555">
+                  <Block>&lt;S1&gt;/koordinatenListe</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="577" EndLine="577" Method="sizeof" StartLine="578">
+                  <Block>&lt;S1&gt;/koordinatenListe</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="578" EndLine="579" Method="sizeof" StartLine="579">
+                  <Block>&lt;Root&gt;/Enabled Subsystem</Block>
+               </CodeSection>
+            </SourceFile>
+         </DebugInfo>
+      </BlockDiagram>
+      <DefaultValues>
+         <Value>
+            <Name>TaskOid</Name>
+         </Value>
+         <Value>
+            <Name>TaskPriority</Name>
+            <Value>0</Value>
+         </Value>
+         <Value>
+            <Name>TaskCycleTimeNs</Name>
+            <Value>0</Value>
+         </Value>
+         <Value>
+            <Name>TaskPort</Name>
+            <Value>0</Value>
+         </Value>
+         <Value>
+            <Name>TaskSortOrder</Name>
+            <Value>0</Value>
+         </Value>
+         <Value>
+            <Name>TraceLevelMax</Name>
+            <EnumText>tlInfo</EnumText>
+         </Value>
+         <Value>
+            <Name>ModuleCaller</Name>
+            <EnumText>CyclicTask</EnumText>
+         </Value>
+         <Value>
+            <Name>CallerVerification</Name>
+            <EnumText>Default</EnumText>
+         </Value>
+         <Value>
+            <Name>StepSizeAdaptation</Name>
+            <EnumText>RequireMatchingTaskCycleTime</EnumText>
+         </Value>
+         <Value>
+            <Name>ExecutionSequence</Name>
+            <EnumText>UpdateBeforeOutputMapping</EnumText>
+         </Value>
+         <Value>
+            <Name>Execute</Name>
+            <EnumText>TRUE</EnumText>
+         </Value>
+         <Value>
+            <Name>AccessLockState</Name>
+            <EnumText>TCOM_STATE_OP</EnumText>
+         </Value>
+         <Value>
+            <Name>InitExceptionHandling</Name>
+            <EnumText>CallerExceptions</EnumText>
+         </Value>
+         <Value>
+            <Name>UpdateExceptionHandling</Name>
+            <EnumText>CallerExceptions</EnumText>
+         </Value>
+      </DefaultValues>
+      <ModuleParameters>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="WRITE">
+            <Name>CallBy</Name>
+            <Category>Module parameters</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="WRITE">
+            <Name>ExecutionSequence</Name>
+            <Category>Module parameters</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="WRITE">
+            <Name>StepSizeAdaptation</Name>
+            <Category>Module parameters</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="">
+            <Name>Initialized</Name>
+            <Category>Monitoring</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="">
+            <Name>CycleUpdateExecuted</Name>
+            <Category>Monitoring</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="" StartupValueAccess="">
+            <Name>ModuleInfo</Name>
+            <Category>Module identification</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="" OnlineValueAccess="READONLY" StartupValueAccess="">
+            <Name>ModuleBuildInfo</Name>
+            <Category>Module identification</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="WRITE" StartupValueAccess="WRITE">
+            <Name>Execute</Name>
+            <Category>Module parameters</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="">
+            <Name>SimulinkTime</Name>
+            <Category>Monitoring</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="">
+            <Name>AccessLockState</Name>
+            <Category>Module parameters</Category>
+         </Parameter>
+      </ModuleParameters>
+      <BlockDesigns>
+         <BlockDesign>
+            <Type>Constant</Type>
+            <Image>
+               <svg height="100" id="svg3009" version="1.1" width="100">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <g id="layer1">
+                     <text id="text3001" style="font-size:8px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans" x="50" xml:space="preserve" y="50"><tspan id="tspan3003" x="50" y="50">ADS::Value Block::Value</tspan></text></g>
+               </svg>
+            </Image>
+         </BlockDesign>
+         <BlockDesign>
+            <Type SubType="Compare To Constant">SubSystem</Type>
+            <Image>
+               <svg height="100" id="svg3009" version="1.1" width="100">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <g id="layer1">
+                     <text id="text3001" style="font-size:8px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans" x="50" xml:space="preserve" y="50"><tspan id="tspan3003" x="50" y="50">Block::Operator</tspan></text></g>
+               </svg>
+            </Image>
+         </BlockDesign>
+         <BlockDesign>
+            <Type>Inport</Type>
+            <Border>
+               <svg height="30" id="svg3009" version="1.1" width="60">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <g id="layer1" transform="translate(0,-1022.3622)">
+                     <rect height="28.121166" id="rect2996" ry="14.060583" style="fill:none;stroke:#000000;stroke-width:1.87883461;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none" width="58.121166" x="0.9394173" y="1023.3016"/>
+                  </g>
+               </svg>
+            </Border>
+            <Image>
+               <svg height="30" id="svg3009" version="1.1" width="60">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <text id="text3010" style="font-size:8px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans" x="30" xml:space="preserve" y="15"><tspan id="tspan3012" x="30" y="15">Block::Port</tspan></text></svg>
+            </Image>
+         </BlockDesign>
+         <BlockDesign>
+            <Type>MCodeDisplayBlock</Type>
+            <Image>
+               <svg height="100" id="svg3009" version="1.1" width="100">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <g id="layer1">
+                     <text id="text3001" style="font-size:6px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#0000FF;fill-opacity:1;stroke:none;font-family:Sans" x="50" xml:space="preserve" y="50"><tspan id="tspan3003" x="50" y="50">ADS::Name</tspan></text></g>
+               </svg>
+            </Image>
+         </BlockDesign>
+         <BlockDesign>
+            <Type>Outport</Type>
+            <Border>
+               <svg height="30" id="svg3009" version="1.1" width="60">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <g id="layer1" transform="translate(0,-1022.3622)">
+                     <rect height="28.121166" id="rect2996" ry="14.060583" style="fill:none;stroke:#000000;stroke-width:1.87883461;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none" width="58.121166" x="0.9394173" y="1023.3016"/>
+                  </g>
+               </svg>
+            </Border>
+            <Image>
+               <svg height="30" id="svg3009" version="1.1" width="60">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <text id="text3010" style="font-size:8px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans" x="30" xml:space="preserve" y="15"><tspan id="tspan3012" x="30" y="15">Block::Port</tspan></text></svg>
+            </Image>
+         </BlockDesign>
+      </BlockDesigns>
+   </ModuleInfo>
+</TctGeneratedModules>

@@ -7,9 +7,9 @@
  *
  * Code generation for model "A_search_2021b".
  *
- * Model version              : 1.6
+ * Model version              : 1.12
  * Simulink Coder version : 9.6 (R2021b) 14-May-2021
- * C++ source code generated on : Thu Mar 23 16:26:50 2023
+ * C++ source code generated on : Thu Mar 23 17:25:46 2023
  *
  * Target selection: TwinCatGrt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping

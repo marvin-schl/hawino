@@ -3261,7 +3261,7 @@
 						</ParameterValues>
 					</TmcDesc>
 				</Module>
-				<Module Id="#x01010040" KeepUnrestoredLinks="2" ClassFactoryId="TE140x Module Vendor|A_search_2021b|0.0.0.4">
+				<Module Id="#x01010040" KeepUnrestoredLinks="2" ClassFactoryId="TE140x Module Vendor|A_search_2021b|0.0.0.12">
 					<Name>Object3 (A_search_2021b)</Name>
 					<ImageId>1000</ImageId>
 					<TmcDesc GUID="{D3CF0C5B-72ED-6E6F-924C-D778A775A0C2}">
@@ -3279,7 +3279,7 @@
 						<Contexts>
 							<Context>
 								<Id>0</Id>
-								<Name>Context0 (650 ms)</Name>
+								<Name>Context0 (1000 ms)</Name>
 							</Context>
 						</Contexts>
 						<Interfaces>

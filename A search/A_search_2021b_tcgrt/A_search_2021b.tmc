@@ -1,4 +1,4 @@
-<TcModuleClass Hash="{7D43CBB7-5093-4FB1-8C27-C27DE67703C0}" GeneratedBy="TE140x-TargetForMatlabSimulink 2.3.1.1, MATLAB 9.11.0.2022996 (R2021b) Update 4 (win64)">
+<TcModuleClass Hash="{3377366B-22D5-4D4F-9490-53545B0F04F9}" GeneratedBy="TE140x-TargetForMatlabSimulink 2.3.1.1, MATLAB 9.11.0.2022996 (R2021b) Update 4 (win64)">
 	<Vendor>
 		<Name>TE140x Module Vendor</Name>
 		<ImageData/>
@@ -292,8 +292,8 @@
 			<Contexts>
 				<Context>
 					<Id>0</Id>
-					<Name>Context0 (650 ms)</Name>
-					<CycleTime>650000000</CycleTime>
+					<Name>Context0 (1000 ms)</Name>
+					<CycleTime>1000000000</CycleTime>
 				</Context>
 			</Contexts>
 			<Interfaces>
@@ -656,6 +656,6 @@
 	<Configurations/>
 	<Library>
 		<Name>A_search_2021b</Name>
-		<Version>0.0.0.4</Version>
+		<Version>0.0.0.12</Version>
 	</Library>
 </TcModuleClass>
