@@ -41,11 +41,11 @@ poseError.x 	:= xRobotPoseRef.x 		- xRobotPose.x;
 poseError.y 	:= xRobotPoseRef.y 		- xRobotPose.y;
 poseError.theta := xRobotPoseRef.theta 	- xRobotPose.theta;
 
-IF poseError.theta > pi THEN
-	poseError.theta := -2*pi+poseError.theta;
-ELSIF poseError.theta < -pi THEN
-	poseError.theta := 2*pi+poseError.theta;
-END_IF
+//IF poseError.theta > pi THEN
+//	poseError.theta := -2*pi+poseError.theta;
+//ELSIF poseError.theta < -pi THEN
+//	poseError.theta := 2*pi+poseError.theta;
+//END_IF
 	
 
 reachedReference := (ABS(poseError.x) < accuracyXY) AND (ABS(poseError.y) < accuracyXY) AND (ABS(poseError.theta) < accuracyTheta);
