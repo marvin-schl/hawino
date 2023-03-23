@@ -1,0 +1,20 @@
+<?xml version = "1.0" encoding = "utf-8" ?>
+<Project ToolsVersion = "4.0" xmlns = "http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup> <!-- Global -->
+		<ModuleGeneratorSdk>C:\TwinCAT\Functions\TE14xx-ToolsForMatlabAndSimulink\TE140x\SDK</ModuleGeneratorSdk>
+		<TE140xSdk>$(ModuleGeneratorSdk)</TE140xSdk>
+	</PropertyGroup>
+	<PropertyGroup> <!--Simulink_A_search_2021b-->
+		<Simulink_A_search_2021b_BUILD_DIR>D:\A search\A_search_2021b_tcgrt\</Simulink_A_search_2021b_BUILD_DIR>
+		<Simulink_A_search_2021b_START_DIR>D:\A search\A_search_2021b_tcgrt\\..</Simulink_A_search_2021b_START_DIR>
+		<Simulink_A_search_2021b_MATLAB_ROOT>C:\Program Files\MATLAB\R2021b</Simulink_A_search_2021b_MATLAB_ROOT>
+		<Simulink_A_search_2021b_INCDIR1>$(Simulink_A_search_2021b_START_DIR)</Simulink_A_search_2021b_INCDIR1>
+		<Simulink_A_search_2021b_INCDIR2>$(Simulink_A_search_2021b_START_DIR)\A_search_2021b_tcgrt</Simulink_A_search_2021b_INCDIR2>
+		<Simulink_A_search_2021b_INCDIR3>$(Simulink_A_search_2021b_MATLAB_ROOT)\extern\include</Simulink_A_search_2021b_INCDIR3>
+		<Simulink_A_search_2021b_INCDIR4>$(Simulink_A_search_2021b_MATLAB_ROOT)\simulink\include</Simulink_A_search_2021b_INCDIR4>
+		<Simulink_A_search_2021b_INCDIR5>$(Simulink_A_search_2021b_MATLAB_ROOT)\rtw\c\src</Simulink_A_search_2021b_INCDIR5>
+		<Simulink_A_search_2021b_INCDIR6>$(Simulink_A_search_2021b_MATLAB_ROOT)\rtw\c\src\ext_mode\common</Simulink_A_search_2021b_INCDIR6>
+		<Simulink_A_search_2021b_Definitions>MODEL=A_search_2021b;NUMST=1;NCSTATES=0;HAVESTDIO;RT;USE_RTMODEL;CLASSIC_INTERFACE=0;ALLOCATIONFCN=0;TID01EQ=0;MAT_FILE=0;ONESTEPFCN=1;TERMFCN=1;MULTI_INSTANCE_CODE=1;INTEGER_CODE=0;MT=0;BOOLEAN_T=bool;</Simulink_A_search_2021b_Definitions>
+		<Simulink_A_search_2021b_IncludeDir>$(Simulink_A_search_2021b_INCDIR1);$(Simulink_A_search_2021b_INCDIR2);$(Simulink_A_search_2021b_INCDIR3);$(Simulink_A_search_2021b_INCDIR4);$(Simulink_A_search_2021b_INCDIR5);$(Simulink_A_search_2021b_INCDIR6);</Simulink_A_search_2021b_IncludeDir>
+	</PropertyGroup>
+</Project>
