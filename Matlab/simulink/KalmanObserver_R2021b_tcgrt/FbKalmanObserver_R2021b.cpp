@@ -112,6 +112,7 @@ bool CFbKalmanObserver_R2021b::FB_init(bool bInitRetains, bool bInCopyCode)
 		TcModuleInput_InCameraPose[0] = 0;
 		TcModuleInput_InCameraPose[1] = 0;
 		TcModuleInput_InCameraPose[2] = 0;
+		TcModuleInput_InCameraPose[3] = 0;
 		TcModuleInput_InVThetaworld = 0;
 		TcModuleInput_InVXworld = 0;
 		TcModuleInput_InVYworld = 0;

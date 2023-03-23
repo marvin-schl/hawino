@@ -9,7 +9,7 @@
 //is implemented in ST.
 FUNCTION_BLOCK SimpleObserver
 VAR_INPUT
-	xCameraPose:	RobotPoseSimple;
+	xCameraPose:	RobotPose;
 	xVxRobot: 		LREAL;
 	xVyRobot: 		LREAL;
 	xOmegaRobot: 	LREAL;
@@ -26,7 +26,7 @@ END_VAR
 
 VAR
 	//to Simulink
-	cameraPoseToSimulink 	AT%Q* 	: ARRAY [0..2] OF LREAL;
+	cameraPoseToSimulink 	AT%Q* 	: ARRAY [0..3] OF LREAL;
 	vXworldToSimulink 		AT%Q*	: LREAL;
 	vYworldToSimulink 		AT%Q*	: LREAL;
 	omegaWorldToSimulink 	AT%Q*	: LREAL;
@@ -34,15 +34,20 @@ VAR
 	vYtoRobotWorldToSimulink 		AT%Q*	: LREAL;
 	omegaToRobotWorldToSimulink 	AT%Q*	: LREAL;
 	
+	lpfilter: ARRAY [0..2] OF LPF1;
+	
+	
 	K AT%Q*: ARRAY [0..2,0..2] OF LREAL := [18, 0 ,0,
 									  		0, 18, 0,
 									  		0, 0, 18];
 	
 	//from Simulink
 	estimatedPoseFromSimlink AT%I* 	: ARRAY [0..2] OF LREAL;
-	
+	Tfilt: LREAL := 0.1;
 	//TEMPORARY++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	kalmanPose AT%I*  	: ARRAY [0..2] OF LREAL;
+	i: INT;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -56,7 +61,7 @@ Robot2World(
 	vy_world  	=> vYworldToSimulink,
 	omega_world => omegaWorldToSimulink);
 
-cameraPoseToSimulink := RPS2ARRAY(xCameraPose);
+cameraPoseToSimulink := RP2ARRAY(xCameraPose);
 
 vXtoRobotWorldToSimulink :=xVxToRobot;
 vYtoRobotWorldToSimulink :=xVyToRobot;
@@ -72,18 +77,21 @@ yObserverdPose.y := estimatedPoseFromSimlink[1];
 //ELSE	
 yObserverdPose.theta := estimatedPoseFromSimlink[2];
 //END_IF
-
+FOR i := 0 TO 2 BY 1 DO
+	lpfilter[i](T := Tfilt, K := 1, ts := 10E-3, u := kalmanPose[i]);
+END_FOR
 // ++++++++++++ JUST TESTING FOR KALMAN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-yKalmanObservedPose.x := kalmanPose[0];
-yKalmanObservedPose.y := kalmanPose[1];
+yKalmanObservedPose.x := lpfilter[0].y;
+yKalmanObservedPose.y := lpfilter[1].y;
 
 //IF kalmanPose[2] > pi THEN
 //	yKalmanObservedPose.theta := -2*pi+kalmanPose[2];
 //ELSIF kalmanPose[2] < -pi THEN
 //	yKalmanObservedPose.theta := 2*pi+kalmanPose[2];
 //ELSE	
-	yKalmanObservedPose.theta := kalmanPose[2];
-//END_IF]]></ST>
+	yKalmanObservedPose.theta := lpfilter[2].y;
+//END_IF
+yObserverdPose := yKalmanObservedPose;]]></ST>
     </Implementation>
     <LineIds Name="SimpleObserver">
       <LineId Id="68" Count="0" />
@@ -102,11 +110,13 @@ yKalmanObservedPose.y := kalmanPose[1];
       <LineId Id="225" Count="0" />
       <LineId Id="181" Count="0" />
       <LineId Id="279" Count="0" />
+      <LineId Id="327" Count="1" />
       <LineId Id="57" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="270" Count="0" />
       <LineId Id="272" Count="6" />
       <LineId Id="271" Count="0" />
+      <LineId Id="323" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

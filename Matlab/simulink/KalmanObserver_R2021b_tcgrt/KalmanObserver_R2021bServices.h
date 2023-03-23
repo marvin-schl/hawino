@@ -21,21 +21,21 @@
 
 // TcCOM-ClassID of CTcComKalmanObserver_R2021b: {794560D8-C12F-050E-2B01-9FC5B0020BE2}
 const CTCID CID_KALMANOBSERVER_R2021B = {0x794560D8, 0xC12F, 0x050E, {0x2B, 0x01, 0x9F, 0xC5, 0xB0, 0x02, 0x0B, 0xE2}};
-// TcCOM-ClassID of CFbKalmanObserver_R2021b: {7FD2A10D-B2AA-E8F7-6D84-B5C041EF8E7E}
-const CTCID CID_FB_KALMANOBSERVER_R2021B = {0x7FD2A10D, 0xB2AA, 0xE8F7, {0x6D, 0x84, 0xB5, 0xC0, 0x41, 0xEF, 0x8E, 0x7E}};
+// TcCOM-ClassID of CFbKalmanObserver_R2021b: {805A9933-5F31-CFE4-7C94-E9EBD781BC14}
+const CTCID CID_FB_KALMANOBSERVER_R2021B = {0x805A9933, 0x5F31, 0xCFE4, {0x7C, 0x94, 0xE9, 0xEB, 0xD7, 0x81, 0xBC, 0x14}};
 
 
 #ifndef KalmanObserver_R2021b_IGNORE_SERVICES_TYPES
-#if !defined(_TC_TYPE_610A2D24_A761_AE0B_B518_D70554B2A821_INCLUDED_)
-#define _TC_TYPE_610A2D24_A761_AE0B_B518_D70554B2A821_INCLUDED_
-typedef double matrix_3_real_T[3];
-#endif // !defined(_TC_TYPE_610A2D24_A761_AE0B_B518_D70554B2A821_INCLUDED_)
+#if !defined(_TC_TYPE_3C223E90_82DD_E25C_5FC3_58C4D6D8B8B9_INCLUDED_)
+#define _TC_TYPE_3C223E90_82DD_E25C_5FC3_58C4D6D8B8B9_INCLUDED_
+typedef double matrix_4_real_T[4];
+#endif // !defined(_TC_TYPE_3C223E90_82DD_E25C_5FC3_58C4D6D8B8B9_INCLUDED_)
 
-#if !defined(_TC_TYPE_5E8BA1E2_95AA_E1B3_30C6_C831FBBD7787_INCLUDED_)
-#define _TC_TYPE_5E8BA1E2_95AA_E1B3_30C6_C831FBBD7787_INCLUDED_
+#if !defined(_TC_TYPE_1A4CFA57_D797_617B_EB16_9326C9EB87F3_INCLUDED_)
+#define _TC_TYPE_1A4CFA57_D797_617B_EB16_9326C9EB87F3_INCLUDED_
 typedef struct _KalmanObserver_R2021b_AdditionalInports
 {
-	matrix_3_real_T TcModuleInput_InCameraPose;
+	matrix_4_real_T TcModuleInput_InCameraPose;
 	double TcModuleInput_InVThetaworld;
 	double TcModuleInput_InVXworld;
 	double TcModuleInput_InVYworld;
@@ -43,18 +43,24 @@ typedef struct _KalmanObserver_R2021b_AdditionalInports
 	double TcModuleInput_vxToRobot;
 	double TcModuleInput_vyToRobot;
 } KalmanObserver_R2021b_AdditionalInports, *PKalmanObserver_R2021b_AdditionalInports;
-#endif // !defined(_TC_TYPE_5E8BA1E2_95AA_E1B3_30C6_C831FBBD7787_INCLUDED_)
+#endif // !defined(_TC_TYPE_1A4CFA57_D797_617B_EB16_9326C9EB87F3_INCLUDED_)
 
-#if !defined(_TC_TYPE_25195608_AB1E_0BAD_AF90_8EE11433080F_INCLUDED_)
-#define _TC_TYPE_25195608_AB1E_0BAD_AF90_8EE11433080F_INCLUDED_
+#if !defined(_TC_TYPE_610A2D24_A761_AE0B_B518_D70554B2A821_INCLUDED_)
+#define _TC_TYPE_610A2D24_A761_AE0B_B518_D70554B2A821_INCLUDED_
+typedef double matrix_3_real_T[3];
+#endif // !defined(_TC_TYPE_610A2D24_A761_AE0B_B518_D70554B2A821_INCLUDED_)
+
+#if !defined(_TC_TYPE_0B4434C4_8A5A_3055_965A_AFD8F1FC1910_INCLUDED_)
+#define _TC_TYPE_0B4434C4_8A5A_3055_965A_AFD8F1FC1910_INCLUDED_
 typedef struct _KalmanObserver_R2021b_AdditionalOutports
 {
-	double TcModuleOutput_DEBUG;
+	bool TcModuleOutput_DEBUG;
+	unsigned char reserved1[7];
 	matrix_3_real_T TcModuleOutput_OutKalmanObsPose;
 	matrix_3_real_T TcModuleOutput_OutSimpleObsPose;
 	double TcModuleOutput_version;
 } KalmanObserver_R2021b_AdditionalOutports, *PKalmanObserver_R2021b_AdditionalOutports;
-#endif // !defined(_TC_TYPE_25195608_AB1E_0BAD_AF90_8EE11433080F_INCLUDED_)
+#endif // !defined(_TC_TYPE_0B4434C4_8A5A_3055_965A_AFD8F1FC1910_INCLUDED_)
 
 #if !defined(_TC_TYPE_C6C8F93A_E54D_0B86_4D42_C2718AE18617_INCLUDED_)
 #define _TC_TYPE_C6C8F93A_E54D_0B86_4D42_C2718AE18617_INCLUDED_
@@ -72,6 +78,16 @@ typedef struct _P_KalmanObserver_R2021b_T
 typedef CHAR STRING127[128];
 #endif // !defined(_TC_TYPE_18071995_0000_0000_0000_00010000007F_INCLUDED_)
 
+#if !defined(_TC_TYPE_A671EEE6_CF36_4D46_1FFC_29604E6B5EB6_INCLUDED_)
+#define _TC_TYPE_A671EEE6_CF36_4D46_1FFC_29604E6B5EB6_INCLUDED_
+typedef struct _emxArray_real_T_4_KalmanObser_T
+{
+	matrix_4_real_T data;
+	LONG size;
+	unsigned char reserved1[4];
+} emxArray_real_T_4_KalmanObser_T, *PemxArray_real_T_4_KalmanObser_T;
+#endif // !defined(_TC_TYPE_A671EEE6_CF36_4D46_1FFC_29604E6B5EB6_INCLUDED_)
+
 #if !defined(_TC_TYPE_3737846F_E1D6_FF59_67F2_2DADB20D8528_INCLUDED_)
 #define _TC_TYPE_3737846F_E1D6_FF59_67F2_2DADB20D8528_INCLUDED_
 typedef double matrix_6_real_T[6];
@@ -82,18 +98,28 @@ typedef double matrix_6_real_T[6];
 typedef double matrix_9_real_T[9];
 #endif // !defined(_TC_TYPE_72A91784_953A_FD09_4E66_5B1F6549B49B_INCLUDED_)
 
-#if !defined(_TC_TYPE_2D468F76_7D24_0D43_D379_F1A71820B9BF_INCLUDED_)
-#define _TC_TYPE_2D468F76_7D24_0D43_D379_F1A71820B9BF_INCLUDED_
+#if !defined(_TC_TYPE_40217109_BAF1_9D07_DAEE_49F863420332_INCLUDED_)
+#define _TC_TYPE_40217109_BAF1_9D07_DAEE_49F863420332_INCLUDED_
 typedef struct _KalmanObserver_R2021b_KalmanObserver_R2021b_DW1_Type
 {
+	emxArray_real_T_4_KalmanObser_T estPoseOld;
 	matrix_6_real_T CameraDelay_DSTATE;
 	matrix_3_real_T DelayOneStep1_DSTATE;
-	matrix_3_real_T estPoseOld;
 	matrix_3_real_T xHatOld;
 	matrix_9_real_T P;
-	matrix_3_real_T oldCamData;
+	matrix_4_real_T oldCamData;
 } KalmanObserver_R2021b_KalmanObserver_R2021b_DW1_Type, *PKalmanObserver_R2021b_KalmanObserver_R2021b_DW1_Type;
-#endif // !defined(_TC_TYPE_2D468F76_7D24_0D43_D379_F1A71820B9BF_INCLUDED_)
+#endif // !defined(_TC_TYPE_40217109_BAF1_9D07_DAEE_49F863420332_INCLUDED_)
+
+#if !defined(_TC_TYPE_F10D8C89_1944_0458_4F69_AEB0B7E97103_INCLUDED_)
+#define _TC_TYPE_F10D8C89_1944_0458_4F69_AEB0B7E97103_INCLUDED_
+#pragma pack(push,1)
+typedef struct _KalmanObserver_R2021b_KalmanObserver_R2021b_DW3_Type
+{
+	bool estPoseOld_not_empty;
+} KalmanObserver_R2021b_KalmanObserver_R2021b_DW3_Type, *PKalmanObserver_R2021b_KalmanObserver_R2021b_DW3_Type;
+#pragma pack(pop)
+#endif // !defined(_TC_TYPE_F10D8C89_1944_0458_4F69_AEB0B7E97103_INCLUDED_)
 
 
 #endif

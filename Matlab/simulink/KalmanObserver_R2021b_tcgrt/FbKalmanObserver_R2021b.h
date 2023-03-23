@@ -40,21 +40,21 @@ public:
 	static void _FB_init(ST_FB_init_FB_KalmanObserver_R2021b* ST_Param);
 
 
-	matrix_3_real_T TcModuleInput_InCameraPose;
+	matrix_4_real_T TcModuleInput_InCameraPose;
 	double TcModuleInput_InVThetaworld;
 	double TcModuleInput_InVXworld;
 	double TcModuleInput_InVYworld;
 	double TcModuleInput_omegaToRobot;
 	double TcModuleInput_vxToRobot;
 	double TcModuleInput_vyToRobot;
-	double TcModuleOutput_DEBUG;
+	bool TcModuleOutput_DEBUG;
 	matrix_3_real_T TcModuleOutput_OutKalmanObsPose;
 	matrix_3_real_T TcModuleOutput_OutSimpleObsPose;
 	double TcModuleOutput_version;
 
 
 };
-TYPESIZE_VALIDATION2(CFbKalmanObserver_R2021b,144,152);
+TYPESIZE_VALIDATION2(CFbKalmanObserver_R2021b,152,160);
 
 			
 #endif // _FbKalmanObserver_R2021b__h_INCLUDED

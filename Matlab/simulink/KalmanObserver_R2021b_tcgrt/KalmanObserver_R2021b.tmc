@@ -1,4 +1,4 @@
-<TcModuleClass Hash="{735E234C-B73F-4B31-8ED1-1003EED620D3}" GeneratedBy="TE140x-TargetForMatlabSimulink 2.3.1.1, MATLAB 9.11.0.2022996 (R2021b) Update 4 (win64)">
+<TcModuleClass Hash="{95A65E6D-A379-4E47-BF8F-123A02C467C3}" GeneratedBy="TE140x-TargetForMatlabSimulink 2.3.1.1, MATLAB 9.11.0.2022996 (R2021b) Update 4 (win64)">
 	<Vendor>
 		<Name>TE140x Module Vendor</Name>
 		<ImageData/>
@@ -254,6 +254,15 @@
 			</SubItem>
 		</DataType>
 		<DataType>
+			<Name GUID="{3C223E90-82DD-E25C-5FC3-58C4D6D8B8B9}">matrix_4_real_T</Name>
+			<BitSize>256</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>4</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
 			<Name GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</Name>
 			<BitSize>192</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
@@ -261,6 +270,22 @@
 				<LBound>0</LBound>
 				<Elements>3</Elements>
 			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{A671EEE6-CF36-4D46-1FFC-29604E6B5EB6}">emxArray_real_T_4_KalmanObser_T</Name>
+			<BitSize>320</BitSize>
+			<SubItem>
+				<Name>data</Name>
+				<Type GUID="{3C223E90-82DD-E25C-5FC3-58C4D6D8B8B9}">matrix_4_real_T</Type>
+				<BitSize>256</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>size</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000009}">DINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>256</BitOffs>
+			</SubItem>
 		</DataType>
 		<DataType>
 			<Name GUID="{3737846F-E1D6-FF59-67F2-2DADB20D8528}">matrix_6_real_T</Name>
@@ -482,7 +507,7 @@
 					<Default>
 						<SubItem>
 							<Name>.Constant_Value</Name>
-							<Value>0.11</Value>
+							<Value>0.2</Value>
 						</SubItem>
 						<SubItem>
 							<Name>.CameraDelay_InitialCondition</Name>
@@ -529,11 +554,11 @@
 					<AreaNo AreaType="InputDst" CreateSymbols="true">0</AreaNo>
 					<Name>AdditionalInports</Name>
 					<ContextId>0</ContextId>
-					<ByteSize>72</ByteSize>
+					<ByteSize>80</ByteSize>
 					<Symbol>
 						<Name>TcModuleInput_InCameraPose</Name>
-						<BitSize>192</BitSize>
-						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+						<BitSize>256</BitSize>
+						<BaseType GUID="{3C223E90-82DD-E25C-5FC3-58C4D6D8B8B9}">matrix_4_real_T</BaseType>
 						<PTCID>#x80000000</PTCID>
 						<BitOffs>0</BitOffs>
 					</Symbol>
@@ -541,43 +566,43 @@
 						<Name>TcModuleInput_InVThetaworld</Name>
 						<BitSize>64</BitSize>
 						<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-						<PTCID>#x80000018</PTCID>
-						<BitOffs>192</BitOffs>
-					</Symbol>
-					<Symbol>
-						<Name>TcModuleInput_InVXworld</Name>
-						<BitSize>64</BitSize>
-						<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 						<PTCID>#x80000020</PTCID>
 						<BitOffs>256</BitOffs>
 					</Symbol>
 					<Symbol>
-						<Name>TcModuleInput_InVYworld</Name>
+						<Name>TcModuleInput_InVXworld</Name>
 						<BitSize>64</BitSize>
 						<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 						<PTCID>#x80000028</PTCID>
 						<BitOffs>320</BitOffs>
 					</Symbol>
 					<Symbol>
-						<Name>TcModuleInput_omegaToRobot</Name>
+						<Name>TcModuleInput_InVYworld</Name>
 						<BitSize>64</BitSize>
 						<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 						<PTCID>#x80000030</PTCID>
 						<BitOffs>384</BitOffs>
 					</Symbol>
 					<Symbol>
-						<Name>TcModuleInput_vxToRobot</Name>
+						<Name>TcModuleInput_omegaToRobot</Name>
 						<BitSize>64</BitSize>
 						<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 						<PTCID>#x80000038</PTCID>
 						<BitOffs>448</BitOffs>
 					</Symbol>
 					<Symbol>
-						<Name>TcModuleInput_vyToRobot</Name>
+						<Name>TcModuleInput_vxToRobot</Name>
 						<BitSize>64</BitSize>
 						<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 						<PTCID>#x80000040</PTCID>
 						<BitOffs>512</BitOffs>
+					</Symbol>
+					<Symbol>
+						<Name>TcModuleInput_vyToRobot</Name>
+						<BitSize>64</BitSize>
+						<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+						<PTCID>#x80000048</PTCID>
+						<BitOffs>576</BitOffs>
 					</Symbol>
 				</DataArea>
 				<DataArea>
@@ -587,8 +612,8 @@
 					<ByteSize>64</ByteSize>
 					<Symbol>
 						<Name>TcModuleOutput_DEBUG</Name>
-						<BitSize>64</BitSize>
-						<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+						<BitSize>8</BitSize>
+						<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
 						<PTCID>#x81000000</PTCID>
 						<BitOffs>0</BitOffs>
 					</Symbol>
@@ -652,48 +677,61 @@
 					<AreaNo AreaType="Internal" CreateSymbols="true">3</AreaNo>
 					<Name>KalmanObserver_R2021b_DW1</Name>
 					<ContextId>0</ContextId>
-					<ByteSize>216</ByteSize>
+					<ByteSize>240</ByteSize>
+					<Symbol>
+						<Name>estPoseOld</Name>
+						<BitSize>320</BitSize>
+						<BaseType GUID="{A671EEE6-CF36-4D46-1FFC-29604E6B5EB6}">emxArray_real_T_4_KalmanObser_T</BaseType>
+						<PTCID>#x83000000</PTCID>
+						<BitOffs>0</BitOffs>
+					</Symbol>
 					<Symbol>
 						<Name>CameraDelay_DSTATE</Name>
 						<BitSize>384</BitSize>
 						<BaseType GUID="{3737846F-E1D6-FF59-67F2-2DADB20D8528}">matrix_6_real_T</BaseType>
-						<PTCID>#x83000000</PTCID>
-						<BitOffs>0</BitOffs>
+						<PTCID>#x83000028</PTCID>
+						<BitOffs>320</BitOffs>
 					</Symbol>
 					<Symbol>
 						<Name>DelayOneStep1_DSTATE</Name>
 						<BitSize>192</BitSize>
 						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
-						<PTCID>#x83000030</PTCID>
-						<BitOffs>384</BitOffs>
-					</Symbol>
-					<Symbol>
-						<Name>estPoseOld</Name>
-						<BitSize>192</BitSize>
-						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
-						<PTCID>#x83000048</PTCID>
-						<BitOffs>576</BitOffs>
+						<PTCID>#x83000058</PTCID>
+						<BitOffs>704</BitOffs>
 					</Symbol>
 					<Symbol>
 						<Name>xHatOld</Name>
 						<BitSize>192</BitSize>
 						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
-						<PTCID>#x83000060</PTCID>
-						<BitOffs>768</BitOffs>
+						<PTCID>#x83000070</PTCID>
+						<BitOffs>896</BitOffs>
 					</Symbol>
 					<Symbol>
 						<Name>P</Name>
 						<BitSize>576</BitSize>
 						<BaseType GUID="{72A91784-953A-FD09-4E66-5B1F6549B49B}">matrix_9_real_T</BaseType>
-						<PTCID>#x83000078</PTCID>
-						<BitOffs>960</BitOffs>
+						<PTCID>#x83000088</PTCID>
+						<BitOffs>1088</BitOffs>
 					</Symbol>
 					<Symbol>
 						<Name>oldCamData</Name>
-						<BitSize>192</BitSize>
-						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
-						<PTCID>#x830000c0</PTCID>
-						<BitOffs>1536</BitOffs>
+						<BitSize>256</BitSize>
+						<BaseType GUID="{3C223E90-82DD-E25C-5FC3-58C4D6D8B8B9}">matrix_4_real_T</BaseType>
+						<PTCID>#x830000d0</PTCID>
+						<BitOffs>1664</BitOffs>
+					</Symbol>
+				</DataArea>
+				<DataArea>
+					<AreaNo AreaType="Internal" CreateSymbols="true">4</AreaNo>
+					<Name>KalmanObserver_R2021b_DW3</Name>
+					<ContextId>0</ContextId>
+					<ByteSize>1</ByteSize>
+					<Symbol>
+						<Name>estPoseOld_not_empty</Name>
+						<BitSize>8</BitSize>
+						<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+						<PTCID>#x84000000</PTCID>
+						<BitOffs>0</BitOffs>
 					</Symbol>
 				</DataArea>
 			</DataAreas>
@@ -715,6 +753,6 @@
 	<Configurations/>
 	<Library>
 		<Name>KalmanObserver_R2021b</Name>
-		<Version>0.0.0.6</Version>
+		<Version>0.0.0.14</Version>
 	</Library>
 </TcModuleClass>

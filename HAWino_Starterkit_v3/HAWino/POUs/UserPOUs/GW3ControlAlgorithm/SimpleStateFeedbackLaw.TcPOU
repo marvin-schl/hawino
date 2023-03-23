@@ -23,9 +23,9 @@ END_VAR
 
 VAR
 	//static control parameters
-	K: ARRAY [0..2,0..2] OF LREAL := [3,0,0,
-									  0,3,0,
-									  0,0,3];
+	K: ARRAY [0..2,0..2] OF LREAL := [1,0,0,
+									  0,1,0,
+									  0,0,1];
 	poseError: RobotPoseSimple;
 	vtrans_max: LREAL := 934; //vY,vY
 	vrot_max: LREAL   := 1.57; //vTheta

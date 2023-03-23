@@ -7,9 +7,9 @@
  *
  * Code generation for model "KalmanObserver_R2021b".
  *
- * Model version              : 1.2
+ * Model version              : 1.18
  * Simulink Coder version : 9.6 (R2021b) 14-May-2021
- * C++ source code generated on : Thu Mar 23 18:34:24 2023
+ * C++ source code generated on : Thu Mar 23 22:12:44 2023
  *
  * Target selection: TwinCatGrt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -142,7 +142,7 @@
 
 /* Block signals (default storage) */
 struct B_KalmanObserver_R2021b_T {
-  real_T InCameraPose[3];              /* '<Root>/InCameraPose' */
+  real_T InCameraPose[4];              /* '<Root>/InCameraPose' */
   real_T CameraDelay[3];               /* '<S1>/CameraDelay' */
   real_T DelayOneStep1[3];             /* '<S1>/Delay One Step1' */
   real_T Odometry[3];                  /* '<S1>/Integrator' */
@@ -170,12 +170,12 @@ struct B_KalmanObserver_R2021b_T {
 
 /* Block states (default storage) for system '<Root>' */
 struct DW_KalmanObserver_R2021b_T {
+  emxArray_real_T_4_KalmanObser_T estPoseOld;/* '<S1>/PoseCalculation' */
   real_T CameraDelay_DSTATE[6];        /* '<S1>/CameraDelay' */
   real_T DelayOneStep1_DSTATE[3];      /* '<S1>/Delay One Step1' */
-  real_T estPoseOld[3];                /* '<S1>/PoseCalculation' */
   real_T xHatOld[3];                   /* '<S1>/MATLAB Function' */
   real_T P[9];                         /* '<S1>/MATLAB Function' */
-  real_T oldCamData[3];                /* '<S1>/CamFlag' */
+  real_T oldCamData[4];                /* '<S1>/CamFlag' */
   void *version_PWORK;                 /* '<Root>/version' */
   void *DEBUG_PWORK;                   /* '<Root>/DEBUG' */
   void *OutKalmanObsPose_PWORK;        /* '<Root>/OutKalmanObsPose' */
@@ -187,6 +187,7 @@ struct DW_KalmanObserver_R2021b_T {
   void *InVXworld_PWORK;               /* '<Root>/InVXworld' */
   void *InVYworld_PWORK;               /* '<Root>/InVYworld' */
   void *InVThetaworld_PWORK;           /* '<Root>/InVThetaworld' */
+  boolean_T estPoseOld_not_empty;      /* '<S1>/PoseCalculation' */
 };
 
 /* Continuous states (default storage) */
@@ -216,7 +217,7 @@ struct ODE1_IntgData {
 
 /* Parameters (default storage) */
 struct P_KalmanObserver_R2021b_T_ {
-  real_T Constant_Value;               /* Expression: 0.11
+  real_T Constant_Value;               /* Expression: 0.2
                                         * Referenced by: '<Root>/Constant'
                                         */
   real_T CameraDelay_InitialCondition; /* Expression: 0.0

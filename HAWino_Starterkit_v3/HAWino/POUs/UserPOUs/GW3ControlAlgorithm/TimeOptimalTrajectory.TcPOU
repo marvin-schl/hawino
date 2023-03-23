@@ -23,7 +23,7 @@ VAR
 	
 	samplingTime		: LREAL				:= 0.05;
 	
-	maxVel				: LREAL				:= 0.7;
+	maxVel				: LREAL				:= 0.5;
 	maxAcc				: LREAL				:= 0.8;
 	
 	arcLengthSlow		: LREAL				:= 0.1;

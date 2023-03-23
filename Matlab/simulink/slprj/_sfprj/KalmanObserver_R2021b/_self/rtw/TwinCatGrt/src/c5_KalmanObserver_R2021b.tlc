@@ -7,7 +7,7 @@
 %endfunction
 %function ChartDataMap(block, system) void
   %createrecord ChartDataElements {\
-    NumChartData   1 \
+    NumChartData   2 \
     ChartDataDefaults {\
       RecordType   "ChartData"\
       Dimensions   []\
@@ -19,7 +19,13 @@
       SFName       ""\
       Path         ""\
       SrcLocation  "KalmanObserver_R2021b:35:156-166"\
-      Dimensions   [3]\
+    }\
+    ChartData {\
+      Name         "estPoseOld_not_empty"\
+      Description  "EmlPersistentSentinel"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  "KalmanObserver_R2021b:35:156-166"\
     }\
   }
   %return ChartDataElements

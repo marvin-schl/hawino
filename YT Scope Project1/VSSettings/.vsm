@@ -592,12 +592,12 @@
     </Node>
     <Node>
       <Title>motorVelocitiesRef</Title>
-      <Expanded>True</Expanded>
+      <Expanded>False</Expanded>
       <FileName>E:\hawino\YT Scope Project1\motorVelocitiesRef.tcscopex</FileName>
       <Children>
         <Node>
           <Title>DataPool</Title>
-          <Expanded>True</Expanded>
+          <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
@@ -610,12 +610,12 @@
         </Node>
         <Node>
           <Title>YT Chart (1)</Title>
-          <Expanded>True</Expanded>
+          <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>Axis Group (1)</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>

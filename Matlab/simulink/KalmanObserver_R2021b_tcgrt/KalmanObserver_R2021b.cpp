@@ -7,9 +7,9 @@
  *
  * Code generation for model "KalmanObserver_R2021b".
  *
- * Model version              : 1.2
+ * Model version              : 1.18
  * Simulink Coder version : 9.6 (R2021b) 14-May-2021
- * C++ source code generated on : Thu Mar 23 18:34:24 2023
+ * C++ source code generated on : Thu Mar 23 22:12:44 2023
  *
  * Target selection: TwinCatGrt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -35,6 +35,10 @@ RT_MODEL_KalmanObserver_R2021_T KalmanObserver_R2021b_M_{ };
 
 RT_MODEL_KalmanObserver_R2021_T *const KalmanObserver_R2021b_M{ &
   KalmanObserver_R2021b_M_ };
+
+/* Forward declaration for local functions */
+static void KalmanObserver_R2021b_plus(real_T estimatedPose[3], const real_T
+  estPoseOld_data[], const int32_T *estPoseOld_size, const real_T Sum1[3]);
 
 /*
  * This function updates continuous states using the ODE1 fixed-step
@@ -66,9 +70,23 @@ static void rt_ertODEUpdateContinuousStates(RTWSolverInfo *si )
   rtsiSetSimTimeStep(si,MAJOR_TIME_STEP);
 }
 
+static void KalmanObserver_R2021b_plus(real_T estimatedPose[3], const real_T
+  estPoseOld_data[], const int32_T *estPoseOld_size, const real_T Sum1[3])
+{
+  int32_T stride_0_0;
+
+  /* MATLAB Function: '<S1>/PoseCalculation' */
+  stride_0_0 = (*estPoseOld_size != 1);
+  estimatedPose[0] = estPoseOld_data[0] + Sum1[0];
+  estimatedPose[1] = estPoseOld_data[stride_0_0] + Sum1[1];
+  estimatedPose[2] = estPoseOld_data[stride_0_0 << 1] + Sum1[2];
+}
+
 /* Model step function */
 void KalmanObserver_R2021b_step(void)
 {
+  static const real_T a_0[9]{ 1.01, 0.0, 0.0, 0.0, 1.01, 0.0, 0.0, 0.0, 1.01 };
+
   static const real_T b[9]{ 3.8635, 0.4415, -0.0036, 0.4415, 9.3899, -0.0078,
     -0.0036, -0.0078, 0.0001 };
 
@@ -77,15 +95,14 @@ void KalmanObserver_R2021b_step(void)
     -2.43008878392535E-5, 1.57202639633006E-6, -2.43008878392535E-5,
     2.50703907504212E-7 };
 
-  static const int8_T a[9]{ 1, 0, 0, 0, 1, 0, 0, 0, 1 };
+  static const int8_T b_a[9]{ 1, 0, 0, 0, 1, 0, 0, 0, 1 };
 
   real_T PAp[9];
+  real_T a[9];
   real_T b_x[9];
-  real_T xHatAp_tmp_0[9];
   real_T tmp[3];
   real_T xHatAp[3];
   int32_T p1;
-  int8_T xHatAp_tmp[9];
   if (rtmIsMajorTimeStep(KalmanObserver_R2021b_M)) {
     /* set solver stop time */
     if (!(KalmanObserver_R2021b_M->Timing.clockTick0+1)) {
@@ -114,14 +131,14 @@ void KalmanObserver_R2021b_step(void)
     /* S-Function (TcModuleInOut): '<Root>/InCameraPose' */
     if (KalmanObserver_R2021b_DW.InCameraPose_PWORK != NULL) {
       memcpy(&KalmanObserver_R2021b_B.InCameraPose[0],
-             KalmanObserver_R2021b_DW.InCameraPose_PWORK, 24);
+             KalmanObserver_R2021b_DW.InCameraPose_PWORK, 32);
     }
 
     /* MATLAB Function: '<S1>/CamFlag' */
     y = true;
     p1 = 0;
     exitg1 = false;
-    while ((!exitg1) && (p1 < 3)) {
+    while ((!exitg1) && (p1 < 4)) {
       if (!(KalmanObserver_R2021b_B.InCameraPose[p1] !=
             KalmanObserver_R2021b_DW.oldCamData[p1])) {
         y = false;
@@ -132,16 +149,21 @@ void KalmanObserver_R2021b_step(void)
     }
 
     if (y) {
-      KalmanObserver_R2021b_B.newCamDataArrived = true;
       p1 = 0;
       exitg1 = false;
       while ((!exitg1) && (p1 < 2)) {
         if (KalmanObserver_R2021b_B.InCameraPose[p1] == 0.0) {
-          KalmanObserver_R2021b_B.newCamDataArrived = false;
+          y = false;
           exitg1 = true;
         } else {
           p1++;
         }
+      }
+
+      if (y && (KalmanObserver_R2021b_B.InCameraPose[3] < 10.0)) {
+        KalmanObserver_R2021b_B.newCamDataArrived = true;
+      } else {
+        KalmanObserver_R2021b_B.newCamDataArrived = false;
       }
     } else {
       KalmanObserver_R2021b_B.newCamDataArrived = false;
@@ -149,6 +171,14 @@ void KalmanObserver_R2021b_step(void)
 
     KalmanObserver_R2021b_DW.oldCamData[0] =
       KalmanObserver_R2021b_B.InCameraPose[0];
+    KalmanObserver_R2021b_DW.oldCamData[1] =
+      KalmanObserver_R2021b_B.InCameraPose[1];
+    KalmanObserver_R2021b_DW.oldCamData[2] =
+      KalmanObserver_R2021b_B.InCameraPose[2];
+    KalmanObserver_R2021b_DW.oldCamData[3] =
+      KalmanObserver_R2021b_B.InCameraPose[3];
+
+    /* End of MATLAB Function: '<S1>/CamFlag' */
 
     /* Delay: '<S1>/CameraDelay' */
     KalmanObserver_R2021b_B.CameraDelay[0] =
@@ -158,10 +188,6 @@ void KalmanObserver_R2021b_step(void)
     KalmanObserver_R2021b_B.DelayOneStep1[0] =
       KalmanObserver_R2021b_DW.DelayOneStep1_DSTATE[0];
 
-    /* MATLAB Function: '<S1>/CamFlag' */
-    KalmanObserver_R2021b_DW.oldCamData[1] =
-      KalmanObserver_R2021b_B.InCameraPose[1];
-
     /* Delay: '<S1>/CameraDelay' */
     KalmanObserver_R2021b_B.CameraDelay[1] =
       KalmanObserver_R2021b_DW.CameraDelay_DSTATE[1];
@@ -169,10 +195,6 @@ void KalmanObserver_R2021b_step(void)
     /* Delay: '<S1>/Delay One Step1' */
     KalmanObserver_R2021b_B.DelayOneStep1[1] =
       KalmanObserver_R2021b_DW.DelayOneStep1_DSTATE[1];
-
-    /* MATLAB Function: '<S1>/CamFlag' */
-    KalmanObserver_R2021b_DW.oldCamData[2] =
-      KalmanObserver_R2021b_B.InCameraPose[2];
 
     /* Delay: '<S1>/CameraDelay' */
     KalmanObserver_R2021b_B.CameraDelay[2] =
@@ -229,7 +251,7 @@ void KalmanObserver_R2021b_step(void)
     real_T absx11;
     real_T absx21;
     real_T absx31;
-    int32_T p2;
+    int32_T i;
     int32_T p3;
 
     /* SignalConversion generated from: '<S3>/ SFunction ' incorporates:
@@ -243,40 +265,25 @@ void KalmanObserver_R2021b_step(void)
       KalmanObserver_R2021b_B.omegaToRobot;
 
     /* MATLAB Function: '<S1>/MATLAB Function' */
-    KalmanObserver_R2021b_B.camDataAdj[0] = 0.0;
-    KalmanObserver_R2021b_B.camDataAdj[1] = 0.0;
-    KalmanObserver_R2021b_B.camDataAdj[2] = 0.0;
-    for (p1 = 0; p1 < 9; p1++) {
-      xHatAp_tmp[p1] = a[p1];
-    }
-
-    for (p3 = 0; p3 < 3; p3++) {
-      absx11 = 0.0;
+    for (i = 0; i < 3; i++) {
+      KalmanObserver_R2021b_B.camDataAdj[i] = 0.0;
+      xHatAp[i] = 0.0;
       for (p1 = 0; p1 < 3; p1++) {
-        p2 = 3 * p1 + p3;
-        absx11 += static_cast<real_T>(xHatAp_tmp[p2]) *
-          KalmanObserver_R2021b_DW.xHatOld[p1];
-        xHatAp_tmp_0[p2] = 0.0;
-        xHatAp_tmp_0[p2] += KalmanObserver_R2021b_DW.P[3 * p1] *
-          static_cast<real_T>(xHatAp_tmp[p3]);
-        xHatAp_tmp_0[p2] += KalmanObserver_R2021b_DW.P[3 * p1 + 1] *
-          static_cast<real_T>(xHatAp_tmp[p3 + 3]);
-        xHatAp_tmp_0[p2] += KalmanObserver_R2021b_DW.P[3 * p1 + 2] *
-          static_cast<real_T>(xHatAp_tmp[p3 + 6]);
+        p3 = 3 * p1 + i;
+        a[p3] = 0.0;
+        a[p3] += KalmanObserver_R2021b_DW.P[3 * p1] * a_0[i];
+        a[p3] += KalmanObserver_R2021b_DW.P[3 * p1 + 1] * a_0[i + 3];
+        a[p3] += KalmanObserver_R2021b_DW.P[3 * p1 + 2] * a_0[i + 6];
+        xHatAp[i] += a_0[p3] * KalmanObserver_R2021b_DW.xHatOld[p1];
       }
 
-      absx11 += 0.01 *
-        KalmanObserver_R2021b_B.TmpSignalConversionAtSFunctionI[p3];
       for (p1 = 0; p1 < 3; p1++) {
-        p2 = 3 * p1 + p3;
-        PAp[p2] = ((static_cast<real_T>(xHatAp_tmp[3 * p1 + 1]) *
-                    xHatAp_tmp_0[p3 + 3] + static_cast<real_T>(xHatAp_tmp[3 * p1])
-                    * xHatAp_tmp_0[p3]) + static_cast<real_T>(xHatAp_tmp[3 * p1
-                    + 2]) * xHatAp_tmp_0[p3 + 6]) + b[p2];
+        p3 = 3 * p1 + i;
+        PAp[p3] = ((a_0[3 * p1 + 1] * a[i + 3] + a_0[3 * p1] * a[i]) + a_0[3 *
+                   p1 + 2] * a[i + 6]) + b[p3];
       }
 
-      KalmanObserver_R2021b_B.xHat[p3] = absx11;
-      xHatAp[p3] = absx11;
+      KalmanObserver_R2021b_B.xHat[i] = xHatAp[i];
     }
 
     for (p1 = 0; p1 < 9; p1++) {
@@ -284,33 +291,33 @@ void KalmanObserver_R2021b_step(void)
       KalmanObserver_R2021b_DW.P[p1] = absx11;
       absx11 += c[p1];
       b_x[p1] = absx11;
-      xHatAp_tmp_0[p1] = absx11;
+      a[p1] = absx11;
     }
 
     p1 = 0;
-    p2 = 3;
+    i = 3;
     p3 = 6;
-    absx11 = std::abs(xHatAp_tmp_0[0]);
-    absx21 = std::abs(xHatAp_tmp_0[1]);
-    absx31 = std::abs(xHatAp_tmp_0[2]);
+    absx11 = std::abs(a[0]);
+    absx21 = std::abs(a[1]);
+    absx31 = std::abs(a[2]);
     if ((absx21 > absx11) && (absx21 > absx31)) {
       p1 = 3;
-      p2 = 0;
-      b_x[0] = xHatAp_tmp_0[1];
-      b_x[1] = xHatAp_tmp_0[0];
-      b_x[3] = xHatAp_tmp_0[4];
-      b_x[4] = xHatAp_tmp_0[3];
-      b_x[6] = xHatAp_tmp_0[7];
-      b_x[7] = xHatAp_tmp_0[6];
+      i = 0;
+      b_x[0] = a[1];
+      b_x[1] = a[0];
+      b_x[3] = a[4];
+      b_x[4] = a[3];
+      b_x[6] = a[7];
+      b_x[7] = a[6];
     } else if (absx31 > absx11) {
       p1 = 6;
       p3 = 0;
-      b_x[0] = xHatAp_tmp_0[2];
-      b_x[2] = xHatAp_tmp_0[0];
-      b_x[3] = xHatAp_tmp_0[5];
-      b_x[5] = xHatAp_tmp_0[3];
-      b_x[6] = xHatAp_tmp_0[8];
-      b_x[8] = xHatAp_tmp_0[6];
+      b_x[0] = a[2];
+      b_x[2] = a[0];
+      b_x[3] = a[5];
+      b_x[5] = a[3];
+      b_x[6] = a[8];
+      b_x[8] = a[6];
     }
 
     b_x[1] /= b_x[0];
@@ -321,8 +328,8 @@ void KalmanObserver_R2021b_step(void)
     b_x[8] -= b_x[2] * b_x[6];
     if (std::abs(b_x[5]) > std::abs(b_x[4])) {
       int32_T itmp;
-      itmp = p2;
-      p2 = p3;
+      itmp = i;
+      i = p3;
       p3 = itmp;
       absx11 = b_x[1];
       b_x[1] = b_x[2];
@@ -339,61 +346,63 @@ void KalmanObserver_R2021b_step(void)
     b_x[8] -= b_x[5] * b_x[7];
     absx11 = (b_x[1] * b_x[5] - b_x[2]) / b_x[8];
     absx21 = -(b_x[7] * absx11 + b_x[1]) / b_x[4];
-    xHatAp_tmp_0[p1] = ((1.0 - b_x[3] * absx21) - b_x[6] * absx11) / b_x[0];
-    xHatAp_tmp_0[p1 + 1] = absx21;
-    xHatAp_tmp_0[p1 + 2] = absx11;
+    a[p1] = ((1.0 - b_x[3] * absx21) - b_x[6] * absx11) / b_x[0];
+    a[p1 + 1] = absx21;
+    a[p1 + 2] = absx11;
     absx11 = -b_x[5] / b_x[8];
     absx21 = (1.0 - b_x[7] * absx11) / b_x[4];
-    xHatAp_tmp_0[p2] = -(b_x[3] * absx21 + b_x[6] * absx11) / b_x[0];
-    xHatAp_tmp_0[p2 + 1] = absx21;
-    xHatAp_tmp_0[p2 + 2] = absx11;
+    a[i] = -(b_x[3] * absx21 + b_x[6] * absx11) / b_x[0];
+    a[i + 1] = absx21;
+    a[i + 2] = absx11;
     absx11 = 1.0 / b_x[8];
     absx21 = -b_x[7] * absx11 / b_x[4];
-    xHatAp_tmp_0[p3] = -(b_x[3] * absx21 + b_x[6] * absx11) / b_x[0];
-    xHatAp_tmp_0[p3 + 1] = absx21;
-    xHatAp_tmp_0[p3 + 2] = absx11;
+    a[p3] = -(b_x[3] * absx21 + b_x[6] * absx11) / b_x[0];
+    a[p3 + 1] = absx21;
+    a[p3 + 2] = absx11;
     for (p1 = 0; p1 < 3; p1++) {
-      for (p2 = 0; p2 < 3; p2++) {
-        p3 = 3 * p1 + p2;
+      for (i = 0; i < 3; i++) {
+        p3 = 3 * p1 + i;
         KalmanObserver_R2021b_B.H[p3] = 0.0;
-        KalmanObserver_R2021b_B.H[p3] += xHatAp_tmp_0[3 * p1] * PAp[p2];
-        KalmanObserver_R2021b_B.H[p3] += xHatAp_tmp_0[3 * p1 + 1] * PAp[p2 + 3];
-        KalmanObserver_R2021b_B.H[p3] += xHatAp_tmp_0[3 * p1 + 2] * PAp[p2 + 6];
+        KalmanObserver_R2021b_B.H[p3] += a[3 * p1] * PAp[i];
+        KalmanObserver_R2021b_B.H[p3] += a[3 * p1 + 1] * PAp[i + 3];
+        KalmanObserver_R2021b_B.H[p3] += a[3 * p1 + 2] * PAp[i + 6];
       }
     }
 
     if (KalmanObserver_R2021b_B.newCamDataArrived) {
-      for (p3 = 0; p3 < 3; p3++) {
-        KalmanObserver_R2021b_B.camDataAdj[p3] =
-          KalmanObserver_R2021b_B.InCameraPose[p3] +
-          KalmanObserver_R2021b_B.Sum2[p3];
-        tmp[p3] = KalmanObserver_R2021b_B.camDataAdj[p3] - ((static_cast<real_T>
-          (xHatAp_tmp[p3 + 3]) * KalmanObserver_R2021b_DW.xHatOld[1] +
-          static_cast<real_T>(xHatAp_tmp[p3]) *
-          KalmanObserver_R2021b_DW.xHatOld[0]) + static_cast<real_T>
-          (xHatAp_tmp[p3 + 6]) * KalmanObserver_R2021b_DW.xHatOld[2]);
+      KalmanObserver_R2021b_B.camDataAdj[0] =
+        KalmanObserver_R2021b_B.InCameraPose[0] + KalmanObserver_R2021b_B.Sum2[0];
+      KalmanObserver_R2021b_B.camDataAdj[1] =
+        KalmanObserver_R2021b_B.InCameraPose[1] + KalmanObserver_R2021b_B.Sum2[1];
+      KalmanObserver_R2021b_B.camDataAdj[2] =
+        KalmanObserver_R2021b_B.InCameraPose[2] + KalmanObserver_R2021b_B.Sum2[2];
+      for (p1 = 0; p1 < 9; p1++) {
+        a[p1] = b_a[p1];
+      }
+
+      for (p1 = 0; p1 < 3; p1++) {
+        tmp[p1] = KalmanObserver_R2021b_B.camDataAdj[p1] - ((a[p1 + 3] *
+          KalmanObserver_R2021b_DW.xHatOld[1] + a[p1] *
+          KalmanObserver_R2021b_DW.xHatOld[0]) + a[p1 + 6] *
+          KalmanObserver_R2021b_DW.xHatOld[2]);
       }
 
       for (p1 = 0; p1 < 3; p1++) {
         absx11 = 0.0;
-        for (p2 = 0; p2 < 3; p2++) {
-          p3 = 3 * p2 + p1;
-          absx11 += KalmanObserver_R2021b_B.H[p3] * tmp[p2];
-          xHatAp_tmp_0[p3] = 0.0;
-          xHatAp_tmp_0[p3] += static_cast<real_T>(xHatAp_tmp[3 * p2]) *
-            KalmanObserver_R2021b_B.H[p1];
-          xHatAp_tmp_0[p3] += static_cast<real_T>(xHatAp_tmp[3 * p2 + 1]) *
-            KalmanObserver_R2021b_B.H[p1 + 3];
-          xHatAp_tmp_0[p3] += static_cast<real_T>(xHatAp_tmp[3 * p2 + 2]) *
-            KalmanObserver_R2021b_B.H[p1 + 6];
+        for (i = 0; i < 3; i++) {
+          p3 = 3 * i + p1;
+          absx11 += KalmanObserver_R2021b_B.H[p3] * tmp[i];
+          b_x[p3] = 0.0;
+          b_x[p3] += a[3 * i] * KalmanObserver_R2021b_B.H[p1];
+          b_x[p3] += a[3 * i + 1] * KalmanObserver_R2021b_B.H[p1 + 3];
+          b_x[p3] += a[3 * i + 2] * KalmanObserver_R2021b_B.H[p1 + 6];
         }
 
         KalmanObserver_R2021b_B.xHat[p1] = xHatAp[p1] + absx11;
-        for (p2 = 0; p2 < 3; p2++) {
-          p3 = 3 * p2 + p1;
-          KalmanObserver_R2021b_DW.P[p3] = PAp[p3] - ((PAp[3 * p2 + 1] *
-            xHatAp_tmp_0[p1 + 3] + PAp[3 * p2] * xHatAp_tmp_0[p1]) + PAp[3 * p2
-            + 2] * xHatAp_tmp_0[p1 + 6]);
+        for (i = 0; i < 3; i++) {
+          p3 = 3 * i + p1;
+          KalmanObserver_R2021b_DW.P[p3] = PAp[p3] - ((PAp[3 * i + 1] * b_x[p1 +
+            3] + PAp[3 * i] * b_x[p1]) + PAp[3 * i + 2] * b_x[p1 + 6]);
         }
       }
     }
@@ -405,31 +414,61 @@ void KalmanObserver_R2021b_step(void)
                 9U * sizeof(real_T));
 
     /* MATLAB Function: '<S1>/PoseCalculation' */
-    if (KalmanObserver_R2021b_B.newCamDataArrived) {
-      KalmanObserver_R2021b_DW.estPoseOld[0] =
-        KalmanObserver_R2021b_B.InCameraPose[0] + KalmanObserver_R2021b_B.Sum2[0];
-      KalmanObserver_R2021b_DW.estPoseOld[1] =
-        KalmanObserver_R2021b_B.InCameraPose[1] + KalmanObserver_R2021b_B.Sum2[1];
-      KalmanObserver_R2021b_DW.estPoseOld[2] =
-        KalmanObserver_R2021b_B.InCameraPose[2] + KalmanObserver_R2021b_B.Sum2[2];
-      KalmanObserver_R2021b_B.debug = 1.0;
-    } else {
-      KalmanObserver_R2021b_DW.estPoseOld[0] += KalmanObserver_R2021b_B.Sum1[0];
-      KalmanObserver_R2021b_DW.estPoseOld[1] += KalmanObserver_R2021b_B.Sum1[1];
-      KalmanObserver_R2021b_DW.estPoseOld[2] += KalmanObserver_R2021b_B.Sum1[2];
-      KalmanObserver_R2021b_B.debug = 2.0;
+    if (!KalmanObserver_R2021b_DW.estPoseOld_not_empty) {
+      KalmanObserver_R2021b_DW.estPoseOld.size = 4;
+      KalmanObserver_R2021b_DW.estPoseOld.data[0] = 0.0;
+      KalmanObserver_R2021b_DW.estPoseOld.data[1] = 0.0;
+      KalmanObserver_R2021b_DW.estPoseOld.data[2] = 0.0;
+      KalmanObserver_R2021b_DW.estPoseOld.data[3] = 0.0;
     }
 
-    KalmanObserver_R2021b_B.estimatedX = KalmanObserver_R2021b_DW.estPoseOld[0];
-    KalmanObserver_R2021b_B.estimatedY = KalmanObserver_R2021b_DW.estPoseOld[1];
+    if (KalmanObserver_R2021b_B.newCamDataArrived) {
+      KalmanObserver_R2021b_DW.estPoseOld.size = 3;
+      KalmanObserver_R2021b_B.estimatedPose[0] =
+        KalmanObserver_R2021b_B.InCameraPose[0] + KalmanObserver_R2021b_B.Sum2[0];
+      KalmanObserver_R2021b_DW.estPoseOld.data[0] =
+        KalmanObserver_R2021b_B.estimatedPose[0];
+      KalmanObserver_R2021b_B.estimatedPose[1] =
+        KalmanObserver_R2021b_B.InCameraPose[1] + KalmanObserver_R2021b_B.Sum2[1];
+      KalmanObserver_R2021b_DW.estPoseOld.data[1] =
+        KalmanObserver_R2021b_B.estimatedPose[1];
+      KalmanObserver_R2021b_B.estimatedPose[2] =
+        KalmanObserver_R2021b_B.InCameraPose[2] + KalmanObserver_R2021b_B.Sum2[2];
+      KalmanObserver_R2021b_DW.estPoseOld.data[2] =
+        KalmanObserver_R2021b_B.estimatedPose[2];
+      KalmanObserver_R2021b_DW.estPoseOld_not_empty = true;
+      p1 = 1;
+    } else {
+      if (KalmanObserver_R2021b_DW.estPoseOld.size == 3) {
+        i = KalmanObserver_R2021b_DW.estPoseOld.size;
+        for (p1 = 0; p1 < i; p1++) {
+          KalmanObserver_R2021b_B.estimatedPose[p1] =
+            KalmanObserver_R2021b_DW.estPoseOld.data[p1] +
+            KalmanObserver_R2021b_B.Sum1[p1];
+        }
+      } else {
+        KalmanObserver_R2021b_plus(KalmanObserver_R2021b_B.estimatedPose,
+          KalmanObserver_R2021b_DW.estPoseOld.data,
+          &KalmanObserver_R2021b_DW.estPoseOld.size,
+          KalmanObserver_R2021b_B.Sum1);
+      }
+
+      KalmanObserver_R2021b_DW.estPoseOld.size = 3;
+      KalmanObserver_R2021b_DW.estPoseOld.data[0] =
+        KalmanObserver_R2021b_B.estimatedPose[0];
+      KalmanObserver_R2021b_DW.estPoseOld.data[1] =
+        KalmanObserver_R2021b_B.estimatedPose[1];
+      KalmanObserver_R2021b_DW.estPoseOld.data[2] =
+        KalmanObserver_R2021b_B.estimatedPose[2];
+      KalmanObserver_R2021b_DW.estPoseOld_not_empty = true;
+      p1 = 2;
+    }
+
+    KalmanObserver_R2021b_B.estimatedX = KalmanObserver_R2021b_B.estimatedPose[0];
+    KalmanObserver_R2021b_B.estimatedY = KalmanObserver_R2021b_B.estimatedPose[1];
     KalmanObserver_R2021b_B.estimatedTheta =
-      KalmanObserver_R2021b_DW.estPoseOld[2];
-    KalmanObserver_R2021b_B.estimatedPose[0] =
-      KalmanObserver_R2021b_DW.estPoseOld[0];
-    KalmanObserver_R2021b_B.estimatedPose[1] =
-      KalmanObserver_R2021b_DW.estPoseOld[1];
-    KalmanObserver_R2021b_B.estimatedPose[2] =
-      KalmanObserver_R2021b_DW.estPoseOld[2];
+      KalmanObserver_R2021b_B.estimatedPose[2];
+    KalmanObserver_R2021b_B.debug = p1;
 
     /* End of MATLAB Function: '<S1>/PoseCalculation' */
   }
@@ -471,8 +510,8 @@ void KalmanObserver_R2021b_step(void)
 
       /* Update for S-Function (TcModuleInOut): '<Root>/DEBUG' */
       if (KalmanObserver_R2021b_DW.DEBUG_PWORK != NULL) {
-        *((real_T*)KalmanObserver_R2021b_DW.DEBUG_PWORK) =
-          KalmanObserver_R2021b_B.debug;
+        *((boolean_T*)KalmanObserver_R2021b_DW.DEBUG_PWORK) =
+          KalmanObserver_R2021b_B.newCamDataArrived;
       }
 
       /* Update for S-Function (TcModuleInOut): '<Root>/OutKalmanObsPose' */
@@ -641,12 +680,6 @@ void KalmanObserver_R2021b_initialize(void)
   KalmanObserver_R2021b_X.Integrator_CSTATE[0] =
     KalmanObserver_R2021b_P.Integrator_IC;
 
-  /* SystemInitialize for MATLAB Function: '<S1>/CamFlag' */
-  KalmanObserver_R2021b_DW.oldCamData[0] = 0.0;
-
-  /* SystemInitialize for MATLAB Function: '<S1>/MATLAB Function' */
-  KalmanObserver_R2021b_DW.xHatOld[0] = 0.0;
-
   /* InitializeConditions for Delay: '<S1>/Delay One Step1' */
   KalmanObserver_R2021b_DW.DelayOneStep1_DSTATE[1] =
     KalmanObserver_R2021b_P.DelayOneStep1_InitialCondition;
@@ -654,12 +687,6 @@ void KalmanObserver_R2021b_initialize(void)
   /* InitializeConditions for Integrator: '<S1>/Integrator' */
   KalmanObserver_R2021b_X.Integrator_CSTATE[1] =
     KalmanObserver_R2021b_P.Integrator_IC;
-
-  /* SystemInitialize for MATLAB Function: '<S1>/CamFlag' */
-  KalmanObserver_R2021b_DW.oldCamData[1] = 0.0;
-
-  /* SystemInitialize for MATLAB Function: '<S1>/MATLAB Function' */
-  KalmanObserver_R2021b_DW.xHatOld[1] = 0.0;
 
   /* InitializeConditions for Delay: '<S1>/Delay One Step1' */
   KalmanObserver_R2021b_DW.DelayOneStep1_DSTATE[2] =
@@ -670,16 +697,20 @@ void KalmanObserver_R2021b_initialize(void)
     KalmanObserver_R2021b_P.Integrator_IC;
 
   /* SystemInitialize for MATLAB Function: '<S1>/CamFlag' */
+  KalmanObserver_R2021b_DW.oldCamData[0] = 0.0;
+  KalmanObserver_R2021b_DW.oldCamData[1] = 0.0;
   KalmanObserver_R2021b_DW.oldCamData[2] = 0.0;
+  KalmanObserver_R2021b_DW.oldCamData[3] = 0.0;
 
   /* SystemInitialize for MATLAB Function: '<S1>/MATLAB Function' */
+  KalmanObserver_R2021b_DW.xHatOld[0] = 0.0;
+  KalmanObserver_R2021b_DW.xHatOld[1] = 0.0;
   KalmanObserver_R2021b_DW.xHatOld[2] = 0.0;
   std::memset(&KalmanObserver_R2021b_DW.P[0], 0, 9U * sizeof(real_T));
 
   /* SystemInitialize for MATLAB Function: '<S1>/PoseCalculation' */
-  KalmanObserver_R2021b_DW.estPoseOld[0] = 0.0;
-  KalmanObserver_R2021b_DW.estPoseOld[1] = 0.0;
-  KalmanObserver_R2021b_DW.estPoseOld[2] = 0.0;
+  KalmanObserver_R2021b_DW.estPoseOld_not_empty = false;
+  KalmanObserver_R2021b_DW.estPoseOld.size = 0;
 }
 
 /* Model terminate function */
