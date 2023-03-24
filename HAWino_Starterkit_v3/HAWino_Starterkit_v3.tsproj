@@ -564,6 +564,15 @@
 			</SubItem>
 		</DataType>
 		<DataType>
+			<Name GUID="{E578216D-3219-E810-3DB9-588FC81C5D61}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..143] OF LREAL</Name>
+			<BitSize>9216</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>144</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
 			<Name GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}" IecBaseType="true" AutoDeleteType="true">ARRAY [1..9] OF INT</Name>
 			<BitSize>144</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
@@ -1372,7 +1381,7 @@
 				<Task Id="7" Priority="1" CycleTime="100000" AmsPort="354" AdtTasks="true">
 					<Name>ControlTask</Name>
 				</Task>
-				<Task Id="8" Priority="2" CycleTime="100000" AmsPort="355" AdtTasks="true">
+				<Task Id="8" Priority="2" CycleTime="10000000" AmsPort="355" AdtTasks="true">
 					<Name>A_search</Name>
 				</Task>
 			</Tasks>
@@ -3280,6 +3289,11 @@
 							<Context>
 								<Id>0</Id>
 								<Name>Context0 (1000 ms)</Name>
+								<ManualConfig>
+									<OTCID>#x02010080</OTCID>
+								</ManualConfig>
+								<Priority>2</Priority>
+								<CycleTime>1000000000</CycleTime>
 							</Context>
 						</Contexts>
 						<Interfaces>
@@ -3640,19 +3654,19 @@
 						<ParameterValues>
 							<Value>
 								<Name>TaskOid</Name>
-								<Value>0</Value>
+								<Value>33620096</Value>
 							</Value>
 							<Value>
 								<Name>TaskPriority</Name>
-								<Value>0</Value>
+								<Value>2</Value>
 							</Value>
 							<Value>
 								<Name>TaskCycleTimeNs</Name>
-								<Value>0</Value>
+								<Value>1000000000</Value>
 							</Value>
 							<Value>
 								<Name>TaskPort</Name>
-								<Value>0</Value>
+								<Value>355</Value>
 							</Value>
 							<Value>
 								<Name>TaskSortOrder</Name>
@@ -4020,9 +4034,17 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>MQTT.resetVar</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>MQTT.stMqtt_HAWino_In</Name>
 							<Comment><![CDATA[ Attention! Don't link TIME Variables, otherwise we get an error!]]></Comment>
 							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
+						</Var>
+						<Var>
+							<Name>MQTT.FeedbackToGW1</Name>
+							<Type>STRING(50)</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
@@ -4035,16 +4057,20 @@
 							<Name>MQTT.stMqtt_HAWino_Out</Name>
 							<Type GUID="{AF674DC3-C06A-03AE-A51C-A518FFE766C3}">ST_PwrMgmt_HAWino_Out</Type>
 						</Var>
+						<Var>
+							<Name>MQTT.Auftrag</Name>
+							<Type GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}">Auftrag</Type>
+						</Var>
+						<Var>
+							<Name>MQTT.StatusFromGW1</Name>
+							<Type>STRING(50)</Type>
+						</Var>
 					</Vars>
 					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
 						<Name>PlcTask Inputs</Name>
 						<Var>
 							<Name>PowerManager.shutdownButton</Name>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.batteryVoltageRaw</Name>
-							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.TrajectoryController.yBoArrivedAtDestination</Name>
@@ -4066,14 +4092,6 @@
 							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.requestShutdown</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.closeGripperCommand</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>Fahrauftrag.Auftrag</Name>
 							<Type GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}">Auftrag</Type>
 						</Var>
@@ -4082,8 +4100,22 @@
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
-							<Name>Gripper.slider</Name>
+							<Name>PowerManager.requestShutdown</Name>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.batteryVoltageRaw</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.xPointList</Name>
+							<Comment><![CDATA[xKoordinatenliste]]></Comment>
+							<Type GUID="{E578216D-3219-E810-3DB9-588FC81C5D61}">ARRAY [0..143] OF LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.yPointList</Name>
+							<Comment><![CDATA[yKoordinatenliste]]></Comment>
+							<Type GUID="{E578216D-3219-E810-3DB9-588FC81C5D61}">ARRAY [0..143] OF LREAL</Type>
 						</Var>
 						<Var>
 							<Name>IrDistanceSensors.distanceRaw</Name>
@@ -4096,6 +4128,14 @@
 						<Var>
 							<Name>PowerManager.SOC</Name>
 							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.closeGripperCommand</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.slider</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.partGripped</Name>
@@ -4118,6 +4158,10 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>Fahrauftrag.resetVar</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>Fahrauftrag.TrajectoryController.xBoEnable</Name>
 							<Comment><![CDATA[ Freigabesignal für Fahrt, Roboter stoppt bei FALSE]]></Comment>
 							<Type>BOOL</Type>
@@ -4133,6 +4177,11 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>Fahrauftrag.FeedbackToGW1</Name>
+							<Comment><![CDATA[Schnittstelle zum MQTT_PRG]]></Comment>
+							<Type>STRING(50)</Type>
+						</Var>
+						<Var>
 							<Name>PowerManager.shutdownTrigger</Name>
 							<Type>BOOL</Type>
 						</Var>
@@ -4141,10 +4190,29 @@
 							<Type>REAL</Type>
 						</Var>
 						<Var>
-							<Name>Fahrauftrag.FeedbackToGW1</Name>
-							<Comment><![CDATA[testToSimulink AT%Q*: LREAL;
-testFromSimulink AT%I*: LREAL;]]></Comment>
-							<Type>STRING(50)</Type>
+							<Name>Fahrauftrag.EndNode</Name>
+							<Comment><![CDATA[letzter Knoten]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.xEndvalue</Name>
+							<Comment><![CDATA[Ziel xKoordinate]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.xRobotStartposition</Name>
+							<Comment><![CDATA[aktuelle xKoordinate]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.yEndvalue</Name>
+							<Comment><![CDATA[Ziel yKoordinate]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.yRobotStartposition</Name>
+							<Comment><![CDATA[aktuelle yKoordinate]]></Comment>
+							<Type>LREAL</Type>
 						</Var>
 						<Var>
 							<Name>IrDistanceSensors.distance_mm</Name>
@@ -4171,17 +4239,17 @@ testFromSimulink AT%I*: LREAL;]]></Comment>
 							<Type>REAL</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.stMqtt_HAWino_IN</Name>
+							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
+							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
+						</Var>
+						<Var>
 							<Name>Gripper.driveEnable</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.driveVelocity</Name>
 							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.stMqtt_HAWino_IN</Name>
-							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
-							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.sliderToSimulink</Name>
@@ -4196,6 +4264,24 @@ testFromSimulink AT%I*: LREAL;]]></Comment>
 						<OwnerA Name="InputDst" Prefix="TIPC^HAWino^HAWino Instance" Type="1">
 							<OwnerB Name="TIRC^TcCOM Objects^SoC_Model_Data_Aquisition_2022">
 								<Link VarA="PowerManager.supplyVoltage_filtered" TypeA="REAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Output^VoltageMean" Size="32" RestoreInfo="ANotFound"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+					<UnrestoredVarLinks ImportTime="2023-03-24T11:13:49">
+						<OwnerA Name="InputDst" Prefix="TIPC^HAWino^HAWino Instance" Type="1">
+							<OwnerB Name="TIPC^HAWino^HAWino Instance">
+								<Link VarA="Fahrauftrag.Auftrag" TypeA="Auftrag" InOutA="0" GuidA="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}" VarB="PlcTask Outputs^MQTT.Auftrag1" RestoreInfo="BNotFound"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+					<UnrestoredVarLinks ImportTime="2023-03-24T11:34:43">
+						<OwnerA Name="OutputSrc" Prefix="TIPC^HAWino^HAWino Instance" Type="2">
+							<OwnerB Name="TIPC^HAWino^HAWino Instance">
+								<Link VarA="MQTT.Auftrag1^AbholStation" TypeA="INT" InOutA="1" ParentTypeA="Auftrag" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="PlcTask Inputs^Fahrauftrag.Auftrag^AbholStation" RestoreInfo="ANotFound"/>
+								<Link VarA="MQTT.Auftrag1^AbholTasche" TypeA="INT" InOutA="1" ParentTypeA="Auftrag" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="PlcTask Inputs^Fahrauftrag.Auftrag^AbholTasche" RestoreInfo="ANotFound"/>
+								<Link VarA="MQTT.Auftrag1^AblageStation" TypeA="INT" InOutA="1" ParentTypeA="Auftrag" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="PlcTask Inputs^Fahrauftrag.Auftrag^AblageStation" RestoreInfo="ANotFound"/>
+								<Link VarA="MQTT.Auftrag1^AblageTasche" TypeA="INT" InOutA="1" ParentTypeA="Auftrag" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="PlcTask Inputs^Fahrauftrag.Auftrag^AblageTasche" RestoreInfo="ANotFound"/>
+								<Link VarA="MQTT.Auftrag1^Art" TypeA="STRING(80)" InOutA="1" ParentTypeA="Auftrag" GuidA="{18071995-0000-0000-0000-000100000050}" VarB="PlcTask Inputs^Fahrauftrag.Auftrag^Art" RestoreInfo="ANotFound"/>
 							</OwnerB>
 						</OwnerA>
 					</UnrestoredVarLinks>
@@ -5854,11 +5940,13 @@ testFromSimulink AT%I*: LREAL;]]></Comment>
 							<Pdo Name="Channel 5" Index="#x1a04" Flags="#x0011" SyncMan="0">
 								<Entry Name="Input" Index="#x6040" Sub="#x01">
 									<Type>BIT</Type>
+									<Comment><![CDATA[Slider unter Greifer (0 = greifbereit, weil an Station)]]></Comment>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 6" Index="#x1a05" Flags="#x0011" SyncMan="0">
 								<Entry Name="Input" Index="#x6050" Sub="#x01">
 									<Type>BIT</Type>
+									<Comment><![CDATA[Sensor am Greifer]]></Comment>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 7" Index="#x1a06" Flags="#x0011" SyncMan="0">
@@ -7104,6 +7192,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 		<MappingInfo Identifier="{08502003-0040-0304-0020-500840000403}" Id="#x02030070" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-2003-0850-1000-010102205008}" Id="#x02030090" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-0060-0201-1000-010120000101}" Id="#x02030030" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{02010080-2003-0850-4000-010102205008}" Id="#x020300d0" Watchdog="04000000900100000400000004000000"/>
 		<OwnerA Name="TIPC^HAWino^HAWino Instance">
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Analoge Eingänge A6 (EL3068)">
 				<Link VarA="PlcTask Inputs^IrDistanceSensors.distanceRaw[1]" VarB="AI Standard Channel 1^Value"/>
@@ -7156,9 +7245,17 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="ControlTask Inputs^MotorDrivers.vThetaCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vThetaToRobot"/>
 				<Link VarA="ControlTask Inputs^MotorDrivers.vXCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vXtoRobot"/>
 				<Link VarA="ControlTask Inputs^MotorDrivers.vYCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vYtoRobot"/>
+				<Link VarA="MQTT_1 Inputs^MQTT.FeedbackToGW1" VarB="PlcTask Outputs^Fahrauftrag.FeedbackToGW1"/>
+				<Link VarA="MQTT_1 Inputs^MQTT.resetVar" VarB="PlcTask Outputs^Fahrauftrag.resetVar"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^bComCheckAnswer" VarB="MQTT_1 Outputs^MQTT.bComCheckAnswer"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^nRobotNumber" VarB="PlcTask Outputs^HAWino.Robot_Number"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.txtReadInit" VarB="PlcTask Outputs^HAWino.initDone"/>
+				<Link VarA="PlcTask Inputs^Fahrauftrag.Auftrag^AbholStation" VarB="MQTT_1 Outputs^MQTT.Auftrag^AbholStation"/>
+				<Link VarA="PlcTask Inputs^Fahrauftrag.Auftrag^AbholTasche" VarB="MQTT_1 Outputs^MQTT.Auftrag^AbholTasche"/>
+				<Link VarA="PlcTask Inputs^Fahrauftrag.Auftrag^AblageStation" VarB="MQTT_1 Outputs^MQTT.Auftrag^AblageStation"/>
+				<Link VarA="PlcTask Inputs^Fahrauftrag.Auftrag^AblageTasche" VarB="MQTT_1 Outputs^MQTT.Auftrag^AblageTasche"/>
+				<Link VarA="PlcTask Inputs^Fahrauftrag.Auftrag^Art" VarB="MQTT_1 Outputs^MQTT.Auftrag^Art"/>
+				<Link VarA="PlcTask Inputs^Fahrauftrag.StatusFromGW1" VarB="MQTT_1 Outputs^MQTT.StatusFromGW1"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yBoArrivedAtDestination" VarB="ControlTask Outputs^ControlPRG.yBoArrivedAtDestination"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yControllerState" VarB="ControlTask Outputs^ControlPRG.state"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yRPposition" VarB="ControlTask Outputs^ControlPRG.yRPposition"/>
@@ -7175,6 +7272,15 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^fSoC" VarB="SoC_Model__Data_Processing_20_Y^SoC"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^nEstimatedChargingTime" VarB="SoC_Model__Data_Processing_20_Y^EstimatedChargingTime"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^nEstimatedRunningTime" VarB="SoC_Model__Data_Processing_20_Y^EstimatedRunningTime"/>
+			</OwnerB>
+			<OwnerB Name="TIRC^TcCOM Objects^Object3 (A_search_2021b)">
+				<Link VarA="PlcTask Inputs^Fahrauftrag.xPointList" VarB="AdditionalOutports^TcModuleOutput_xPointList"/>
+				<Link VarA="PlcTask Inputs^Fahrauftrag.yPointList" VarB="AdditionalOutports^TcModuleOutput_yPointList"/>
+				<Link VarA="PlcTask Outputs^Fahrauftrag.EndNode" VarB="AdditionalInports^TcModuleInput_endNode"/>
+				<Link VarA="PlcTask Outputs^Fahrauftrag.xEndvalue" VarB="AdditionalInports^TcModuleInput_xGoalEnd"/>
+				<Link VarA="PlcTask Outputs^Fahrauftrag.xRobotStartposition" VarB="AdditionalInports^TcModuleInput_xRobotStart"/>
+				<Link VarA="PlcTask Outputs^Fahrauftrag.yEndvalue" VarB="AdditionalInports^TcModuleInput_yGoalEnd"/>
+				<Link VarA="PlcTask Outputs^Fahrauftrag.yRobotStartposition" VarB="AdditionalInports^TcModuleInput_yRobotStart"/>
 			</OwnerB>
 		</OwnerA>
 		<OwnerA Name="TIRC^TcCOM Objects^Object2 (SoC_Model_Data_Aquisition_2022)">

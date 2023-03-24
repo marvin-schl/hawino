@@ -70,26 +70,26 @@ VAR
 	//Input synccheck. robotdata has been read and can be used.
 	txtReadInit AT%I* : BOOL := FALSE;
 	
-	
-	// eigene Variablen	
-	//feedback: ARRAY[0..7] OF STRING := ['Verfuegbar', 'Auftrag angenommen', 'Auf Anfahrt', 'Teil aufgenommen', 
-											//'Abmeldung', 'Auf Transport', 'Anmeldung', 'Teil abgelegt'];
+	//eigene Variablen
 	sTopicPubToGW1 : STRING(255);
-	s0: BOOL := 1;
-	s1, s2, s3, s4, s5, s6, s7: BOOL := 0;
-	AuftragDa: BOOL;
-	Timer1 : TON;
-	Timer2 : TON;
-	startTime1: BOOL;
-	startTime2: BOOL;
-	WerkstueckAusgelesen: BOOL;
-	i: INT := 0;
+	//s0: BOOL := 1;
+	//s1, s2, s3, s4, s5, s6, s7: BOOL := 0;
+	//AuftragDa: BOOL;
+	//Timer1 : TON;
+	//Timer2 : TON;
+	//startTime1: BOOL;
+	//startTime2: BOOL;
+	//WerkstueckAusgelesen: BOOL;
+	//i: INT := 0;
 	sPayloadPub1 : STRING(2000);
 	Robotstatus : RobotStatusGW1;
-	Auftrag : Auftrag;
 	sTopicSubToGW1: STRING(255);
 	nPayloadSize:INT;
 	
+	FeedbackToGW1 AT%I*: STRING(50);
+	resetVar AT%I*: BOOL;
+	Auftrag AT%Q*: Auftrag;
+	StatusFromGW1 AT%Q*: STRING(50);
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -256,11 +256,11 @@ IF txtReadInit THEN
 			// Nachricht an GW1 - Produktionsauftrag
 			//
 			//Statemaschine
-			Timer1(IN:= startTime1, PT:=T#10S);
-			Timer2(IN:= startTime2, PT:=T#10S);
+			//Timer1(IN:= startTime1, PT:=T#10S);
+			//Timer2(IN:= startTime2, PT:=T#10S);
 	
 			//Rückmeldung Verfügbar
-			sPayloadPub1 := CONCAT( '{"Status" : ', Var_HAWIno.Feedback);
+			sPayloadPub1 := CONCAT( '{"Status" : ', FeedbackToGW1);
 			sPayloadPub1 := CONCAT( sPayloadPub1,'}');
 			
 			fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
@@ -327,9 +327,6 @@ IF txtReadInit THEN
 				//Rückmeldung Verfügbar
 			//	i:= 0;
 			//END_IF
-			
-	//Hier müsste noch die ankommenden Daten vom GW1 ausglesen und ausgewertet (AuftragDa und WerkstueckAusgelesen schreiben) werden
-	//IN MQTT könnte dann evtl das Auslesen/Subscribe wegfallen fürs erste...
 	
 		END_IF
 	END_IF
@@ -361,26 +358,31 @@ IF txtReadInit THEN
 				fbMessage.GetPayload(pPayload:=ADR(sPayloadRcv_Status), nPayloadSize:=SIZEOF(sPayloadRcv_Status), bSetNullTermination:=true);
 				// Json-String aufteilen und in Variablen schreiben
 				fbJsonDataType.SetSymbolFromJson(sPayloadRcv_Status,'RobotStatusGW1',SIZEOF(RobotStatus),ADR(RobotStatus));
-				.Var_HAWIno.RFID_Status := Robotstatus.Status;
+				StatusFromGW1 := Robotstatus.Status;
 				//IF Robotstatus.Status = 'WerkstueckAusgelesen' THEN
 				//	WerkstueckAusgelesen := 1;
 				//END_IF
 				Robotstatus.Status := '';
 			END_IF
-			//sPayloadRcv_Status := '';
 			
 			IF fbMessage.CompareTopic(sTopic:=sTopicSubToGW1_Auftrag) THEN
 				fbMessage.GetPayload(pPayload:=ADR(sPayloadRcv), nPayloadSize:=SIZEOF(sPayloadRcv), bSetNullTermination:=TRUE);
 			
 			// Json-String aufteilen und in Variablen schreiben
 				fbJsonDataType.SetSymbolFromJson(sPayloadRcv,'Auftrag',SIZEOF(Auftrag),ADR(Auftrag));
-				AuftragDa := 1;
-				.Var_HAWIno.Auftrag:=Auftrag;
+				//AuftragDa := 1;
 			END_IF
 		END_IF
 	END_IF	
 	
-	
+	IF resetVar THEN
+		StatusFromGW1 := '';
+		Auftrag.AbholStation := 0;
+		Auftrag.AbholTasche := 0;
+		Auftrag.AblageStation := 0;
+		Auftrag.AblageTasche := 0;
+		Auftrag.Art := '';
+	END_IF
 	
 	
 	// Evaulierung der empfangenen Daten
@@ -496,8 +498,7 @@ END_IF]]></ST>
       <LineId Id="1141" Count="0" />
       <LineId Id="1188" Count="0" />
       <LineId Id="1142" Count="5" />
-      <LineId Id="1153" Count="3" />
-      <LineId Id="1029" Count="0" />
+      <LineId Id="1153" Count="1" />
       <LineId Id="1038" Count="0" />
       <LineId Id="344" Count="0" />
       <LineId Id="308" Count="0" />
@@ -515,22 +516,24 @@ END_IF]]></ST>
       <LineId Id="1404" Count="0" />
       <LineId Id="1196" Count="0" />
       <LineId Id="1199" Count="0" />
-      <LineId Id="1402" Count="0" />
-      <LineId Id="1200" Count="1" />
+      <LineId Id="1610" Count="1" />
+      <LineId Id="1201" Count="0" />
       <LineId Id="1206" Count="0" />
       <LineId Id="1192" Count="0" />
-      <LineId Id="1401" Count="0" />
       <LineId Id="1212" Count="0" />
       <LineId Id="1214" Count="1" />
       <LineId Id="1312" Count="0" />
       <LineId Id="1216" Count="0" />
       <LineId Id="1213" Count="0" />
-      <LineId Id="1218" Count="0" />
-      <LineId Id="1507" Count="0" />
+      <LineId Id="1613" Count="0" />
       <LineId Id="416" Count="1" />
       <LineId Id="350" Count="0" />
       <LineId Id="419" Count="0" />
       <LineId Id="1400" Count="0" />
+      <LineId Id="1603" Count="0" />
+      <LineId Id="1606" Count="3" />
+      <LineId Id="1605" Count="0" />
+      <LineId Id="1604" Count="0" />
       <LineId Id="423" Count="1" />
       <LineId Id="420" Count="0" />
       <LineId Id="426" Count="3" />

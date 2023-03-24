@@ -10,12 +10,10 @@ VAR_OUTPUT
 	pointsFromSlotToReader : ARRAY[0..100] OF RobotPoseSimple;	//Weg vom Abholort zur Abmeldung 
 	lastPointsToStorage : ARRAY[0..2] OF RobotPoseSimple;		//Weg zum Ablageort (letzte Punkte)
 	pointsFromReaderToSlot : ARRAY[0..100] OF RobotPoseSimple;	//Weg vom Abmelden zur Ablage
-	lastNodePickUp, lastNodeStorage : RobotPoseSimple;			//letzter Knoten vor Abholung/Ablage
+	lastNodePickUp, lastNodeStorage, pickupLocation, readerCheckOut, readerCheckIn, storageLocation : RobotPoseSimple;
 END_VAR
 VAR
-	pickupLocation, readerCheckOut, readerCheckIn, storageLocation : RobotPoseSimple;	//Koordinaten der Stationen
 	Failed : BOOL := FALSE;
-	test: INT := 0;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -28,7 +26,6 @@ END_VAR
 
 //RFID Leser für Abmeldung
 IF assigment.AbholStation = 1 THEN
-	test := 1;
 	IF assigment.AbholTasche = 1 THEN
 		//RFID links anfahren
 		lastNodePickUp := ToRobotPoseSimple(x := 600, y := 3000, theta := -1);
@@ -260,6 +257,7 @@ lastPointsToStorage[1] := readerCheckIn;
 pointsFromReaderToSlot[0] := ToRobotPoseSimple(x := lastNodeStorage.x, y := readerCheckIn.y, theta := readerCheckIn.theta);
 pointsFromReaderToSlot[1] := ToRobotPoseSimple(x := lastNodeStorage.x, y := storageLocation.y, theta := storageLocation.theta);
 pointsFromReaderToSlot[2] := storageLocation;
+
 ]]></ST>
     </Implementation>
     <LineIds Name="ReadAssigment">
@@ -270,7 +268,6 @@ pointsFromReaderToSlot[2] := storageLocation;
       <LineId Id="57" Count="0" />
       <LineId Id="16" Count="0" />
       <LineId Id="15" Count="0" />
-      <LineId Id="370" Count="0" />
       <LineId Id="17" Count="0" />
       <LineId Id="113" Count="0" />
       <LineId Id="117" Count="2" />
@@ -433,6 +430,7 @@ pointsFromReaderToSlot[2] := storageLocation;
       <LineId Id="100" Count="0" />
       <LineId Id="99" Count="0" />
       <LineId Id="146" Count="2" />
+      <LineId Id="392" Count="0" />
       <LineId Id="143" Count="0" />
     </LineIds>
   </POU>
