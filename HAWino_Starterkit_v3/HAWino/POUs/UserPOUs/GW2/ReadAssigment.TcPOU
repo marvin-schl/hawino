@@ -11,6 +11,7 @@ VAR_OUTPUT
 	lastPointsToStorage : ARRAY[0..2] OF RobotPoseSimple;		//Weg zum Ablageort (letzte Punkte)
 	pointsFromReaderToSlot : ARRAY[0..100] OF RobotPoseSimple;	//Weg vom Abmelden zur Ablage
 	lastNodePickUp, lastNodeStorage, pickupLocation, readerCheckOut, readerCheckIn, storageLocation : RobotPoseSimple;
+	xStartposition, yStartposition : LREAL;
 END_VAR
 VAR
 	Failed : BOOL := FALSE;
@@ -258,6 +259,10 @@ pointsFromReaderToSlot[0] := ToRobotPoseSimple(x := lastNodeStorage.x, y := read
 pointsFromReaderToSlot[1] := ToRobotPoseSimple(x := lastNodeStorage.x, y := storageLocation.y, theta := storageLocation.theta);
 pointsFromReaderToSlot[2] := storageLocation;
 
+
+//Kameradaten auslesen für aktuelle Position
+xStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;		//ungleich 0 abfangen
+yStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;		//ungleich 0 abfangen
 ]]></ST>
     </Implementation>
     <LineIds Name="ReadAssigment">
@@ -430,7 +435,9 @@ pointsFromReaderToSlot[2] := storageLocation;
       <LineId Id="100" Count="0" />
       <LineId Id="99" Count="0" />
       <LineId Id="146" Count="2" />
+      <LineId Id="409" Count="1" />
       <LineId Id="392" Count="0" />
+      <LineId Id="412" Count="1" />
       <LineId Id="143" Count="0" />
     </LineIds>
   </POU>

@@ -25,10 +25,9 @@ VAR
 	xRobotStartposition AT%Q*: LREAL;			//aktuelle xKoordinate
 	yEndvalue AT%Q*: LREAL;						//Ziel yKoordinate
 	yRobotStartposition AT%Q*: LREAL;			//aktuelle yKoordinate
-	xPointList AT%I*: ARRAY[0..143] OF LREAL;	//xKoordinatenliste
-	yPointList AT%I*: ARRAY[0..143] OF LREAL;	//yKoordinatenliste
+	xPointList AT%I*: ARRAY[0..100] OF LREAL;	//xKoordinatenliste
+	yPointList AT%I*: ARRAY[0..100] OF LREAL;	//yKoordinatenliste
 	
-	//closeGripper AT%Q*:BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -54,11 +53,11 @@ IF s0 AND NOT s1 AND Auftrag.Art = 'Fahrauftrag' THEN
 	FeedbackToGW1 := 'Auftrag angenommen';
 	//Auftrag auswerten
 	readAssigment(assigment:= Auftrag);
-	EndNode := 92;
+	EndNode := 92;															//todo in matlab
 	xEndvalue := readAssigment.pickupLocation.x;
 	yEndvalue := readAssigment.pickupLocation.y;
-	xRobotStartposition := 1000;
-	yRobotStartposition := 1000;
+	xRobotStartposition := readAssigment.xStartposition;
+	yRobotStartposition := readAssigment.yStartposition;
 	//Bahnplanung
  	//wayPointList[0] := ToRobotPoseSimple(x:= xPointList[0], y:= yPointList[0], theta:= -1);
 	TrajectoryController.setWaypointList(WaypointList);

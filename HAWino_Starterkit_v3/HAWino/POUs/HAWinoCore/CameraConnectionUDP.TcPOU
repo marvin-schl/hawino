@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="CameraConnectionUDP" Id="{3b4b2ae9-c069-42e3-9b69-f42439287066}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'c++_compatible'}
 FUNCTION_BLOCK CameraConnectionUDP IMPLEMENTS ITcIoUdpProtocolRecv
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
+	robotPositionArray : ARRAY [1..8] OF RobotPose; 
 END_VAR
 VAR
 	{attribute 'TcInitSymbol'}
@@ -50,6 +51,7 @@ x5 := robotPosition[5].x;
 y5 := robotPosition[5].y;
 theta5 := robotPosition[5].theta;
 
+robotPositionArray := robotPosition;
 ]]></ST>
     </Implementation>
     <Method Name="FB_exit" Id="{0258286a-12f2-440d-8e54-fd50a76e4c92}">
@@ -247,6 +249,7 @@ METHOD TcRelease : UDINT
       <LineId Id="115" Count="0" />
       <LineId Id="119" Count="1" />
       <LineId Id="118" Count="0" />
+      <LineId Id="176" Count="0" />
       <LineId Id="150" Count="0" />
       <LineId Id="149" Count="0" />
     </LineIds>
