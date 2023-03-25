@@ -26,6 +26,7 @@ classdef TrajectoryPlannerSimple
         dt   
         k
         j
+        idxForward
     end
     
     methods
@@ -58,6 +59,7 @@ classdef TrajectoryPlannerSimple
         obj.currentStep = 1;
         obj.dt = dt;
         while obj.pos(obj.k) < obj.path.length
+            %obj.currentStep
             switch obj.currentStep             
                 case 1
                     obj = obj.step1();
@@ -93,10 +95,14 @@ classdef TrajectoryPlannerSimple
             velMaxAcc    = zeros(length(s),1);
             
             for i=1:length(s)
-                
+                velMaxDZ = obj.qVelMax;
+                if s(i) >= obj.path.length-0.4
+                    velMaxDZ=0.15;
+                end
+                velMax(i) = velMaxDZ;
                 if abs(dphi(i)) > 1e-2
                     %velMax(i) = obj.qVelMax;
-                    velMax(i) = min(obj.qVelMax, obj.phiVelMax/abs(dphi(i)));
+                    velMax(i) = min(velMaxDZ, obj.phiVelMax/abs(dphi(i)));
                 end
                  
                 if (ddx(i)^2+ddy(i)^2) ~= 0
@@ -157,23 +163,22 @@ classdef TrajectoryPlannerSimple
                 obj.velBackward(1) = 0;
                 [accMin, ~] = obj.accLim(obj.path.length, 0);
                 obj.acc(1) = accMin;
-                obj.k = 1;
-            elseif obj.vel(obj.k) > velMax
+                
+                obj.idxForward = obj.k;
+                obj.k = 1; 
+           elseif obj.vel(obj.k) > velMax
                  obj.k              = obj.k - 1;
                  obj.currentStep    = 3;
-            elseif obj.vel(obj.k) > velMaxAcc
-                obj.searchPos = obj.pos(obj.k-2);
-                obj.lastPos   = obj.pos(obj.k-2);
+           elseif obj.vel(obj.k) > velMaxAcc
+                obj.searchPos = obj.pos(obj.k-10);
+                obj.lastPos   = obj.pos(obj.k-10);
                 obj.currentStep = 4;
-
             end
             obj.k = obj.k+1; 
         end    
         
         function obj = step3(obj)
 
-            
-            
              %following limit curve
             %if obj.k > 1    
                 obj.pos(obj.k) = obj.pos(obj.k-1) + obj.vel(obj.k-1)*obj.dt;
@@ -181,10 +186,8 @@ classdef TrajectoryPlannerSimple
                 vel = min(velMax, velMaxAcc);
                 obj.vel(obj.k) = vel;
             %end
-            
             [accMin, accMax]  = obj.accLim(obj.pos(obj.k), vel);
             dvelMaxAcc = obj.dvelMaxAcc(obj.pos(obj.k));
-            
             if obj.pos(obj.k) > obj.path.length
                 obj.posBackward    = zeros(10000,1);
                 obj.velBackward    = zeros(10000,1);
@@ -193,8 +196,10 @@ classdef TrajectoryPlannerSimple
                 obj.velBackward(1) = 0;
                 [accMin, ~] = obj.accLim(obj.path.length, 0);
                 obj.acc(1) = accMin;
+                obj.idxForward = obj.k;
                 obj.k = 1;
-            elseif accMin/obj.vel(obj.k) > dvelMaxAcc
+            elseif accMin/obj.vel(obj.k) > dvelMaxAcc || (obj.vel(obj.k)-obj.vel(obj.k-1))/obj.dt < -obj.qAccMax
+                obj.k
                 obj.searchPos = obj.pos(obj.k-2);
                 obj.lastPos   = obj.pos(obj.k-2);
                 obj.currentStep = 4;
@@ -218,6 +223,7 @@ classdef TrajectoryPlannerSimple
             [accMin, ~] = obj.accLim(obj.posBackward(1), obj.velBackward(1));
             obj.acc(1) = accMin;
             
+            obj.idxForward = obj.k;
             obj.k = 2;
             
             obj.currentStep = 5;
@@ -232,8 +238,36 @@ classdef TrajectoryPlannerSimple
             obj.acc(obj.k) = accMin;
 
             [velMax, ~, velMaxAcc]  = obj.velMax(obj.posBackward(obj.k));   
-            idxPos = find(obj.posBackward(obj.k) < obj.pos, 1, "first");
-            if obj.velBackward(obj.k) > obj.vel(idxPos)
+%           idxPos = find(obj.posBackward(obj.k) < obj.pos, 1, "first");
+%           checkForTrajCrossing = true;
+
+             checkForTrajCrossing = false;
+             idxPos = 1;
+                if obj.posBackward(obj.k) <= obj.pos(obj.idxForward-1)
+                    for i = obj.idxForward-1:-1:1
+                        if obj.posBackward(obj.k) > obj.pos(i)
+                            idxPos = i;
+                            checkForTrajCrossing = true;
+                            break;
+                        end
+                    end            
+                end
+
+            
+        % //check if forward integrated trajectory is crossed and if yes where
+        % IF posBackward[idxBackward] <= pos[idxForward] THEN
+        % 	FOR j := idxForward TO 1 BY -1 DO
+        % 		//search for the corresponding idx in the forward generated trajectory
+        % 		IF	posBackward[idxBackward] > pos[j-1] THEN
+        % 			cpmIdxForward := j; 
+        % 			checkForTrajCrossing := TRUE;
+        % 			EXIT;
+        % 		END_IF
+        % 	END_FOR
+        % END_IF
+        
+            if obj.velBackward(obj.k) > obj.vel(idxPos) & checkForTrajCrossing
+                idxPos
                 obj.pos(idxPos:idxPos+obj.k-2) = flip(obj.posBackward(1:obj.k-1));
                 obj.vel(idxPos:idxPos+obj.k-2) = flip(obj.velBackward(1:obj.k-1));
               
@@ -287,6 +321,7 @@ classdef TrajectoryPlannerSimple
                 end
             end
           swp = sort(swp);
+          swp = [swp; obj.path.length-0.1];
         end     
         
         function plotVelLimPhasePlane(obj, trajectory)
@@ -324,7 +359,7 @@ classdef TrajectoryPlannerSimple
 
         subplot(3,1,1);
         %plot(t,obj.pos,":x")
-        plot(obj.pos,":x")
+        plot(t,obj.pos,":x")
         hold on;
         grid minor;
         title("Trajectory over time","interpreter","latex", "fontsize", 24)
@@ -336,7 +371,7 @@ classdef TrajectoryPlannerSimple
         
         subplot(3,1,2);
         %plot(t,obj.vel,":x")
-        plot(obj.vel,":x")
+        plot(t,obj.vel,":x")
         hold on;
         grid minor;
         %xlim([min(t) max(t)])
@@ -345,7 +380,7 @@ classdef TrajectoryPlannerSimple
                 
         subplot(3,1,3);
         %plot(t, diff([0;obj.vel])/obj.dt,":x")
-        plot(diff([0;obj.vel])/obj.dt,":x")
+        plot(t,diff([0;obj.vel])/obj.dt,":x")
         hold on;
         grid minor;
        % xlim([min(t) max(t)])

@@ -10,6 +10,9 @@
     <Content Include="CameraNoise.tcscopex">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="motorVelocitiesRef.tcscopex">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="ParameterEstimation.tcscopex">
       <SubType>Content</SubType>
     </Content>

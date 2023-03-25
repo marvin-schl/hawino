@@ -12,6 +12,10 @@ VAR_INPUT
 	path:		 	Path;			//path object for which the trajectory should be generated
 	qAccMax: 		LREAL;			//maximum tangential path acceleration
 	qVelMax: 		LREAL;			//maximum tangential path velocity
+	
+	qVelMaxSlow:	LREAL;			//maximum tangential path slow velocity
+	arcLengthSlow:	LREAL;			//arcLength from the end of path where the robots max velocity is further restricted to qVelMaxSlow
+	
 	thetaAccMax: 	LREAL;			//maximum angular acceleration
 	thetaVelMax: 	LREAL; 			//maximum angular velocity
 	deltaT	   :    LREAL := 0.05;	//optional: sampling time of the velocity in [s], default: 50ms
@@ -33,7 +37,7 @@ VAR
 	maxIter				: INT := 100; 				//maximum allowed iterations for while loop of bisection method
 	acc					: LREAL;					//acceleration for the next time step in the algorithm
 	searchPos			: LREAL;					//position from which the swithing point search starts
-	swp					: ARRAY[0..98] OF LREAL;	//array of switching points, not needed entrys are filled with -1
+	swp					: ARRAY[0..99] OF LREAL;	//array of switching points, not needed entrys are filled with -1
 	nmbSWP				: INT;						//number of swichting points
 	
 	pos			: ARRAY[0..500] OF LREAL;			//the i-th element indicates the position on the curve at time t=i*deltaT
@@ -219,30 +223,24 @@ IF trajectoryGenerationFinished THEN
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Method Name="resetFlag" Id="{cdd05716-e05f-4e73-ab88-3631f133ec4e}">
-      <Declaration><![CDATA[METHOD PUBLIC resetFlag
+    <Method Name="reset" Id="{cdd05716-e05f-4e73-ab88-3631f133ec4e}">
+      <Declaration><![CDATA[METHOD PUBLIC reset
 VAR_INPUT
-	flagToReset : STRING[10];
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//CASE flagToReset OF
-//	'trajectoryGenerationFailed' : trajectoryGenerationFailed := FALSE;
-//	"trajectoryGenerationFinished" : trajectoryGenerationFinished := FALSE;
-//	"trajectoriesReady" : trajectoriesReady := FALSE;	
-//END_CASE
+        <ST><![CDATA[trajectoryGenerationFailed 		:= FALSE;
+trajectoryGenerationFinished 	:= FALSE;
+trajectoriesReady 				:= FALSE;
 
-IF (flagToReset = 'failed') THEN
-	trajectoryGenerationFailed 		:= FALSE;
-END_IF
+zeros(pos);
+zeros(posBackward);
+zeros(vel);
+zeros(velBackward);
 
-IF (flagToReset = 'finished') THEN
-	trajectoryGenerationFinished 	:= FALSE;
-END_IF
-
-IF (flagToReset = 'ready') THEN
-	trajectoriesReady 				:= FALSE;
-END_IF]]></ST>
+idxForward 	:= 0;
+idxBackward :=	0;
+currentStep := 1;]]></ST>
       </Implementation>
     </Method>
     <Method Name="step1" Id="{772b0480-83fa-4035-ba7a-a9a78d2f8302}">
@@ -348,7 +346,7 @@ IF pos[idxForward] > path.length THEN
 	//integrate backward
 	idxBackward := 1;
 	currentStep := 5;
-ELSIF currAccMin/vel[idxForward] > currdVelMaxAcc THEN
+ELSIF currAccMin/vel[idxForward] > currdVelMaxAcc THEN //OR (vel[idxForward]-vel[idxForward-1])/deltaT < -qAccMax THEN
 	//search for the next switching point
 	searchPos := pos[idxForward-2];
 	
@@ -473,7 +471,11 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[velMax := qVelMax;]]></ST>
+        <ST><![CDATA[// arcLength > path.length-arcLengthSlow THEN
+//elMax := qVelMaxSlow;
+//ELSE
+	velMax := qVelMax;
+//END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="velMaxAcc" Id="{6c6d04de-b7bf-4af6-952f-23ef36188aad}">
@@ -529,14 +531,16 @@ END_IF]]></ST>
       <LineId Id="33" Count="0" />
       <LineId Id="25" Count="0" />
     </LineIds>
-    <LineIds Name="TrajectoryPlanner.resetFlag">
-      <LineId Id="19" Count="0" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="24" Count="1" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="28" Count="9" />
+    <LineIds Name="TrajectoryPlanner.reset">
+      <LineId Id="28" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="44" Count="2" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="49" Count="1" />
     </LineIds>
     <LineIds Name="TrajectoryPlanner.step1">
       <LineId Id="11" Count="4" />
@@ -559,7 +563,11 @@ END_IF]]></ST>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TrajectoryPlanner.velMax">
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="12" Count="0" />
       <LineId Id="5" Count="0" />
+      <LineId Id="14" Count="0" />
     </LineIds>
     <LineIds Name="TrajectoryPlanner.velMaxAcc">
       <LineId Id="13" Count="6" />
