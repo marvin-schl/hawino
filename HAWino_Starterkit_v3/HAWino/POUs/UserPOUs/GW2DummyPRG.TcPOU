@@ -109,11 +109,10 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-FOR i := 0 TO 100 DO
+        <ST><![CDATA[FOR i := 0 TO 100 DO
 	IF   RechteckX[i] <> -1 AND  RechteckY[i] <> -1  THEN
-		wpl[i].x 		:= RechteckX[i]-1000;
-		wpl[i].y 		:= RechteckY[i]-1000;
+		wpl[i].x 		:= RechteckX[i];
+		wpl[i].y 		:= RechteckY[i];
 		wpl[i].theta	:= Theta[i];
 	ELSE 
 		wpl[i].x 		:= -1;
@@ -148,7 +147,7 @@ generateWPLRect := wpl;]]></ST>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="GW2DummyPRG.generateWPLRect">
-      <LineId Id="16" Count="12" />
+      <LineId Id="43" Count="11" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>

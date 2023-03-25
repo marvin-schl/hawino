@@ -7,6 +7,9 @@
     <PouCall>
       <Name>HAWino</Name>
     </PouCall>
+    <PouCall>
+      <Name>Fahrauftrag</Name>
+    </PouCall>
     <TaskFBGuid>{4b659798-3733-4ac1-af91-f3c21905c5c3}</TaskFBGuid>
     <Fb_init>{56138481-0d3e-4991-8400-49c94ace7ac0}</Fb_init>
     <Fb_exit>{f6107e32-a474-4d63-af91-272eb2e2682c}</Fb_exit>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <DUT Name="Auftrag" Id="{41c235f9-fb6f-4187-b7c7-b7d40aa4b93a}">
+    <Declaration><![CDATA[TYPE Auftrag : //Fahrtauftrag
+STRUCT
+	Art: STRING;					//Fahrtauftag oder Ladeauftrag
+	AbholStation : INT;				//Station 1...4, wo Teil aktuell liegt
+	AbholTasche : INT;				//Tasche 1...4, wo Teil aktuell liegt
+	AblageStation: INT;				//Station 1...4, wo Teil hinsoll
+	AblageTasche : INT;				//Tasche 1...4, wo Teil hinsoll
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -18,6 +18,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ControlTask.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Auftrag.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\ControllerState.TcDUT">
@@ -45,6 +48,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\RobotPoseSimple.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\RobotStatusGW1.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\Sys\DUT_SysState.TcDUT">
@@ -96,7 +102,19 @@
     <Compile Include="POUs\HAWinoCore\HAWino.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\GW2\DS_GW1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\GW2\Fahrauftrag.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\GW2\ReadAssigment.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\NonlinearController.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\NonLinearController.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\Robot.TcPOU">
@@ -121,6 +139,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\GW2DummyPRG.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\TrackingController1.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning\BezierCurve.TcPOU">
@@ -156,6 +177,9 @@
     <Compile Include="POUs\UserPOUs\TestAndMeasurement\Sinusfahrt.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\ArrayToStruct.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\ATAN2.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -177,6 +201,9 @@
     <Compile Include="POUs\UserPOUs\UserFunctions\SI.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\ToRobotPoseSimple.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\World2Robot.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -184,6 +211,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\ZEROS.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\ZEROS_RobotPoseSimple.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -194,6 +224,7 @@
     <Folder Include="GVLs" />
     <Folder Include="POUs\HAWinoCore" />
     <Folder Include="POUs\UserPOUs" />
+    <Folder Include="POUs\UserPOUs\GW2" />
     <Folder Include="POUs\UserPOUs\GW3ControlAlgorithm" />
     <Folder Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning" />
     <Folder Include="POUs\UserPOUs\UserFunctions" />

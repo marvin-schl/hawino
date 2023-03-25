@@ -1,0 +1,927 @@
+<TcModuleClass Hash="{067153F1-C7DA-4BE3-97BA-BBED33A73E84}" GeneratedBy="TE140x-TargetForMatlabSimulink 2.3.1.1, MATLAB 9.11.0.1873467 (R2021b) Update 3 (win64)">
+  <Vendor>
+    <Name>TE140x Module Vendor</Name>
+    <ImageData />
+  </Vendor>
+  <DataTypes>
+    <DataType>
+      <Name GUID="{EADECA89-F2D8-A6D8-A334-82517D69F781}">ITcPfadplanung_Simulink</Name>
+      <BitSize X64="64">32</BitSize>
+      <BaseType GUID="{00000001-0000-0000-E000-000000000064}">ITcUnknown</BaseType>
+      <Method>
+        <Name VTableIndex="0">Pfadplanung_Simulink_step</Name>
+        <ReturnType GUID="{18071995-0000-0000-0000-000000000019}">HRESULT</ReturnType>
+        <ReturnBitSize>32</ReturnBitSize>
+      </Method>
+    </DataType>
+    <DataType>
+      <Name GUID="{D94EAD20-451D-4AE0-87CC-9A9884043E25}" Namespace="TcMgSdk" CName="TcMgSdk::ModuleCaller">ModuleCaller</Name>
+      <BitSize>32</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+      <EnumInfo>
+        <Text><![CDATA[CyclicTask]]></Text>
+        <Enum>0</Enum>
+        <Comment><![CDATA[Add to the specified cyclic caller tasks.]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[Module]]></Text>
+        <Enum>1</Enum>
+        <Comment><![CDATA[Don't add to cyclic callers. The module can be called from other TwinCAT modules (e. g. a PLC).]]></Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{1F89595E-59E5-47C7-9A58-A611A4C98DEC}" Namespace="TcMgSdk" CName="TcMgSdk::CallerVerification">CallerVerification</Name>
+      <BitSize>32</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+      <EnumInfo>
+        <Text><![CDATA[Default]]></Text>
+        <Enum>0</Enum>
+        <Comment><![CDATA[Verify the caller task only if the "ModuleCaller" parameter is set to "Module" but not when added to cyclic caller tasks.]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[Always]]></Text>
+        <Enum>1</Enum>
+        <Comment><![CDATA[Always verify the caller context to prevent concurrent execution of model code and corresponding DataArea mappings.]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[Never]]></Text>
+        <Enum>2</Enum>
+        <Comment><![CDATA[Skip caller verification to reduce execution times.]]></Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{65804E5D-07CA-41C0-AEDC-C5051585B216}" Namespace="TcMgSdk" CName="TcMgSdk::StepSizeAdaptation">StepSizeAdaptation</Name>
+      <BitSize>32</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+      <EnumInfo>
+        <Text><![CDATA[RequireMatchingTaskCycleTime]]></Text>
+        <Enum>0</Enum>
+        <Comment><![CDATA[Don't accept task cycle times other than the Simulink step sizes.]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[UseTaskCycleTime]]></Text>
+        <Enum>1</Enum>
+        <Comment><![CDATA[Adapt the Smulink step sizes to the task cycle times.]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[UseModelStepSize]]></Text>
+        <Enum>2</Enum>
+        <Comment><![CDATA[Keep the Smulink step sizes, independent of the callers cycle time.]]></Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{3856C4C8-CCAF-403F-A7C8-4E1502F2FFFC}" Namespace="TcMgSdk" CName="TcMgSdk::ExecutionSequence1">ExecutionSequence1</Name>
+      <BitSize>32</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+      <EnumInfo>
+        <Text><![CDATA[UpdateBeforeOutputMapping]]></Text>
+        <Enum>0</Enum>
+        <Comment><![CDATA[Input mapping -> State and output update -> Output mapping -> ADS processing]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[IoAtTaskBegin]]></Text>
+        <Enum>1</Enum>
+        <Comment><![CDATA[Input mapping -> Code execution -> Output update -> ADS processing]]></Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{18071995-0000-0000-0000-000000000061}" TcBaseType="true" CName="TCOM_STATE">TCOM_STATE</Name>
+      <BitSize>32</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+      <EnumInfo>
+        <Text><![CDATA[TCOM_STATE_INIT]]></Text>
+        <Enum>1</Enum>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[TCOM_STATE_PREOP]]></Text>
+        <Enum>2</Enum>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[TCOM_STATE_SAFEOP]]></Text>
+        <Enum>4</Enum>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[TCOM_STATE_OP]]></Text>
+        <Enum>8</Enum>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{53CDED75-D12E-408E-B06D-0E50F6A35065}" Namespace="TcMgSdk" CName="TcMgSdk::FpExcptCtrlSet">FpExcptCtrlSet</Name>
+      <BitSize>8</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000002}">USINT</BaseType>
+      <EnumInfo>
+        <Text><![CDATA[CallerExceptions]]></Text>
+        <Enum>1</Enum>
+        <Comment><![CDATA[Use the floating point exception settings provided by the caller]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[ThrowExceptions]]></Text>
+        <Enum>3</Enum>
+        <Comment><![CDATA[Enable floating point exceptions on invalid operations and divisions by zero]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[SuppressExceptions]]></Text>
+        <Enum>12</Enum>
+        <Comment><![CDATA[Disable floating point exceptions.]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[LogExceptions]]></Text>
+        <Enum>19</Enum>
+        <Comment><![CDATA[Log exception information.]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[LogAndHold]]></Text>
+        <Enum>51</Enum>
+        <Comment><![CDATA[Log exception information and puase execution of the cyclic code after completion of the actual cycle]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[LogAndCatch]]></Text>
+        <Enum>83</Enum>
+        <Comment><![CDATA[Log exception information and immediately terminate execution of the cyclic code. Reinitialization is required to restart.]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[LogAndDump]]></Text>
+        <Enum>147</Enum>
+        <Comment><![CDATA[Log exception information, create a dump file with detailed exception information and try to continue execution of the cyclic code]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[LogHoldAndDump]]></Text>
+        <Enum>179</Enum>
+        <Comment><![CDATA[Log exception information, create a dump file with detailed exception information and puase execution of the cyclic code after completion of the actual cycle]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text><![CDATA[LogCatchAndDump]]></Text>
+        <Enum>211</Enum>
+        <Comment><![CDATA[Log exception information, create a dump file with detailed exception information and immediately terminate execution of the cyclic code. Reinitialization is required to restart.]]></Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{0564A6B7-D0A7-47F6-9375-C2F05C960A28}" Namespace="TcMgSdk" CName="TcMgSdk::ModuleBuildInfo">ModuleBuildInfo</Name>
+      <BitSize>96</BitSize>
+      <SubItem>
+        <Name>TcBuild</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>TcRevision</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>32</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>Debug</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>64</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name GUID="{241597CD-DFF8-4569-90EE-6B470D7A1D92}" Namespace="TcMgSdk" CName="TcMgSdk::ExceptionInfo">ExceptionInfo</Name>
+      <BitSize>1376</BitSize>
+      <SubItem>
+        <Name>ExceptionCode</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000009}">DINT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>TmxName</Name>
+        <Type GUID="{18071995-0000-0000-0000-00010000007F}">STRING(127)</Type>
+        <BitSize>1024</BitSize>
+        <BitOffs>32</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>TmxVersion</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>4</Elements>
+        </ArrayInfo>
+        <BitSize>128</BitSize>
+        <BitOffs>1056</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>InstructionAddr</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>1184</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>ReturnAddr</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>4</Elements>
+        </ArrayInfo>
+        <BitSize>128</BitSize>
+        <BitOffs>1216</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DumpCreated</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>1344</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name GUID="{D7C847AA-1EBF-AAF1-AE11-B5480C1717F1}">matrix_100x1_real_T</Name>
+      <BitSize>6400</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>1</Elements>
+      </ArrayInfo>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>100</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{D0F56EF0-95CF-E728-1E71-558E0DA8BA2F}" HideSubItems="true">matrix_85849_real_T</Name>
+      <BitSize>5494336</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>85849</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{BD49C40F-8648-896F-4E25-81408F4EF109}" HideSubItems="true">matrix_3000_real_T</Name>
+      <BitSize>192000</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>3000</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{5DF35610-8BB4-756D-D22A-B77FA21DB7B4}" HideSubItems="true">matrix_1100_real_T</Name>
+      <BitSize>70400</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>1100</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{D2B91B5E-69D9-C7F3-2117-354E6567B556}" HideSubItems="true">matrix_1000_real_T</Name>
+      <BitSize>64000</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>1000</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{B63B0CBD-03B3-3850-365E-BB58AC13D058}">emxArray_real_T_1000_Pfadplan_T</Name>
+      <BitSize>64064</BitSize>
+      <SubItem>
+        <Name>data</Name>
+        <Type GUID="{D2B91B5E-69D9-C7F3-2117-354E6567B556}">matrix_1000_real_T</Type>
+        <BitSize>64000</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>size</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000009}">DINT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>64000</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name GUID="{DA696B68-7BB1-E811-67D6-2098C1493AFE}">cell_wrap_4_Pfadplanung_Simul_T</Name>
+      <BitSize>64064</BitSize>
+      <SubItem>
+        <Name>f1</Name>
+        <Type GUID="{B63B0CBD-03B3-3850-365E-BB58AC13D058}">emxArray_real_T_1000_Pfadplan_T</Type>
+        <BitSize>64064</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name GUID="{AF2BD4FD-296D-6B61-4647-951E18B08C62}" HideSubItems="true">matrix_999_real_T</Name>
+      <BitSize>63936</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>999</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{6D706C76-6C26-92DE-410F-F0A4392B6BF7}" HideSubItems="true">matrix_586_real_T</Name>
+      <BitSize>37504</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>586</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{7BA6754F-DD74-362A-E7BB-1AA3E6CF4E05}" HideSubItems="true">matrix_1000_int32_T</Name>
+      <BitSize>32000</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>1000</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{493D21B9-ADB8-1BC1-9CEA-5F979E92202F}" HideSubItems="true">matrix_293_real_T</Name>
+      <BitSize>18752</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>293</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{AA20257C-9755-505A-03CA-F39B0A052371}">matrix_100_real_T</Name>
+      <BitSize>6400</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>100</Elements>
+      </ArrayInfo>
+    </DataType>
+  </DataTypes>
+  <Licenses />
+  <Groups>
+    <Group SortOrder="101">
+      <Name>TE140x</Name>
+      <DisplayName>TE140x</DisplayName>
+      <ImageData>424d3603000000000000360000002800000010000000100000000100180000000000000300000000000000000000000000000000000023542c32784c31784b3077493076482f75462e74442d72422c71402b703e2a6e3c296c3a286b372769352667331d4a1e337b4f3d94833c93803a917d398f7a378d76358a7233886f31856a2f81662d7e612b7b5d29775827735424704f266733357d5340998a3f98873d97843c95813a927d389079368d75348a7032876c3083672d7f622b7c5d297859277454276935378056439e913c8f712e66232e66232e66232e66232e66232e66232e66232e66232e66232e66233d7c50297759286b3838835946a5982e6623419d8d409b893e98863c96823a927d388f78358c7333876f31836a2e7c622e6623468b6f296c3a3a855b4caa9e2e66234ba99b397e4f57ad9c42a08d409d883c99833a957d389178368d7333886d2e6623478c702a6e3c4289605eb5aa2e662360b7ac2b6421326a29519d7f43a390409e893d9a833b967e389078358c732e6623488f732b703f4a8f6670bfb52e662373c3b82c65225ea997326c36407e4953a996409e893d99833a947e378f782e66234a91782c724153936b81c9c02e662385ccc42d65237cc8be70c1b5488a6e31682a539b7c409d893d98833a937d2e66234b947b2d73435b987092d2c92e662397d6ce2e66238cd1c980cbc172c2b659a79a3473453977404fa28e3c96812e66234d967f2e7445629b74a2d9d22e6623a8ded72e65229ad9d18dd1c97ec9bf6dbeb25ab2a43d8d702a612a4d92712e66234e98822f7647699e77b1dfd92e6623bce6e02d6520abdfd89bd7d08acfc67bc5bc68baae55ad9f49a2923977532e66234b98833077496ea079bde4df87aa942e66232e66232e66232e66232e66232e66232e66232e66232e66232e662332794f3c928031784b6fa07ac2e6e1d3edead2ede9c2e7e2b1e0d9a0d8d08dcfc77bc5bb69bab056afa446a497439f91409a8a3d948332784c6d9f79bde3dec9e8e4c8e8e4bde3deadddd79dd5ce8bcdc57ac3ba67b9ae54aea247a59945a093419b8c3e958633794e3e66416f9f7973a27c73a27c6fa07a689d76609a7258956e4f9169468b633d865d388259378157367e54347b5123542d</ImageData>
+    </Group>
+    <Group SortOrder="101" ParentGroup="TE140x">
+      <Name>TE140x|Simulink Modules</Name>
+      <DisplayName>Simulink Modules</DisplayName>
+      <ImageData>424d3603000000000000360000002800000010000000100000000100180000000000000300000000000000000000000000000000000023542c32784c31784b3077493076482f75462e74442d72422c71402b703e2a6e3c296c3a286b372769352667331d4a1e337b4f3d94833c93803a917d398f7a378d76358a7233886f31856a2f81662d7e612b7b5d29775827735424704f266733357d5340998a3f98873d97843c95813a927d389079368d75348a7032876c3083672d7f622b7c5d297859277454276935378056439e913c8f712e66232e66232e66232e66232e66232e66232e66232e66232e66232e66233d7c50297759286b3838835946a5982e6623419d8d409b893e98863c96823a927d388f78358c7333876f31836a2e7c622e6623468b6f296c3a3a855b4caa9e2e66234ba99b397e4f57ad9c42a08d409d883c99833a957d389178368d7333886d2e6623478c702a6e3c4289605eb5aa2e662360b7ac2b6421326a29519d7f43a390409e893d9a833b967e389078358c732e6623488f732b703f4a8f6670bfb52e662373c3b82c65225ea997326c36407e4953a996409e893d99833a947e378f782e66234a91782c724153936b81c9c02e662385ccc42d65237cc8be70c1b5488a6e31682a539b7c409d893d98833a937d2e66234b947b2d73435b987092d2c92e662397d6ce2e66238cd1c980cbc172c2b659a79a3473453977404fa28e3c96812e66234d967f2e7445629b74a2d9d22e6623a8ded72e65229ad9d18dd1c97ec9bf6dbeb25ab2a43d8d702a612a4d92712e66234e98822f7647699e77b1dfd92e6623bce6e02d6520abdfd89bd7d08acfc67bc5bc68baae55ad9f49a2923977532e66234b98833077496ea079bde4df87aa942e66232e66232e66232e66232e66232e66232e66232e66232e66232e662332794f3c928031784b6fa07ac2e6e1d3edead2ede9c2e7e2b1e0d9a0d8d08dcfc77bc5bb69bab056afa446a497439f91409a8a3d948332784c6d9f79bde3dec9e8e4c8e8e4bde3deadddd79dd5ce8bcdc57ac3ba67b9ae54aea247a59945a093419b8c3e958633794e3e66416f9f7973a27c73a27c6fa07a689d76609a7258956e4f9169468b633d865d388259378157367e54347b5123542d</ImageData>
+    </Group>
+  </Groups>
+  <Modules>
+    <Module GUID="{93BCF1DC-52C8-44C3-CC58-077487933A1B}" Group="TE140x|Simulink Modules">
+      <Name>Pfadplanung_Simulink</Name>
+      <CLSID ClassFactory="Pfadplanung_Simulink" RealTimeInstantiable="true">{93BCF1DC-52C8-44C3-CC58-077487933A1B}</CLSID>
+      <Info>
+        <TabExtension GUID="{BB6DDFDC-900F-473F-83FC-D83513217B55}" />
+        <ImageData>424d3603000000000000360000002800000010000000100000000100180000000000000300000000000000000000000000000000000023542c32784c31784b3077493076482f75462e74442d72422c71402b703e2a6e3c296c3a286b372769352667331d4a1e337b4f3d94833c93803a917d398f7a378d76358a7233886f31856a2f81662d7e612b7b5d29775827735424704f266733357d5340998a3f98873d97843c95813a927d389079368d75348a7032876c3083672d7f622b7c5d297859277454276935378056439e913c8f712e66232e66232e66232e66232e66232e66232e66232e66232e66232e66233d7c50297759286b3838835946a5982e6623419d8d409b893e98863c96823a927d388f78358c7333876f31836a2e7c622e6623468b6f296c3a3a855b4caa9e2e66234ba99b397e4f57ad9c42a08d409d883c99833a957d389178368d7333886d2e6623478c702a6e3c4289605eb5aa2e662360b7ac2b6421326a29519d7f43a390409e893d9a833b967e389078358c732e6623488f732b703f4a8f6670bfb52e662373c3b82c65225ea997326c36407e4953a996409e893d99833a947e378f782e66234a91782c724153936b81c9c02e662385ccc42d65237cc8be70c1b5488a6e31682a539b7c409d893d98833a937d2e66234b947b2d73435b987092d2c92e662397d6ce2e66238cd1c980cbc172c2b659a79a3473453977404fa28e3c96812e66234d967f2e7445629b74a2d9d22e6623a8ded72e65229ad9d18dd1c97ec9bf6dbeb25ab2a43d8d702a612a4d92712e66234e98822f7647699e77b1dfd92e6623bce6e02d6520abdfd89bd7d08acfc67bc5bc68baae55ad9f49a2923977532e66234b98833077496ea079bde4df87aa942e66232e66232e66232e66232e66232e66232e66232e66232e66232e662332794f3c928031784b6fa07ac2e6e1d3edead2ede9c2e7e2b1e0d9a0d8d08dcfc77bc5bb69bab056afa446a497439f91409a8a3d948332784c6d9f79bde3dec9e8e4c8e8e4bde3deadddd79dd5ce8bcdc57ac3ba67b9ae54aea247a59945a093419b8c3e958633794e3e66416f9f7973a27c73a27c6fa07a689d76609a7258956e4f9169468b633d865d388259378157367e54347b5123542d</ImageData>
+      </Info>
+      <Licenses>
+        <License>
+          <LicenseId>{AD7F40C3-F160-4413-83E3-6B7656A795A2}</LicenseId>
+        </License>
+      </Licenses>
+      <InitSequence>PSO</InitSequence>
+      <Contexts>
+        <Context>
+          <Id>0</Id>
+          <Name>Context0 (20 ms)</Name>
+          <CycleTime>20000000</CycleTime>
+        </Context>
+      </Contexts>
+      <Interfaces>
+        <Interface>
+          <Type GUID="{00000001-0000-0000-E000-000000000064}">ITcUnknown</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{00000002-0000-0000-E000-000000000064}">ITcPersist</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{00000012-0000-0000-E000-000000000064}">ITComObject</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{03000018-0000-0000-E000-000000000064}">ITcWatchSource</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{03000010-0000-0000-E000-000000000064}">ITcCyclic</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{03000025-0000-0000-E000-000000000064}">ITcPostCyclic</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{03000012-0000-0000-E000-000000000064}">ITcADI</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{EADECA89-F2D8-A6D8-A334-82517D69F781}">ITcPfadplanung_Simulink</Type>
+          <ContextId>0</ContextId>
+        </Interface>
+      </Interfaces>
+      <Parameters>
+        <Parameter HideParameter="true" CreateSymbol="true">
+          <Name>TaskOid</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-00000000000F}">OTCID</BaseType>
+          <PTCID>#x03002060</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true" CreateSymbol="true">
+          <Name>TaskPriority</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+          <PTCID>#x03002070</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true" CreateSymbol="true">
+          <Name>TaskCycleTimeNs</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+          <PTCID>#x03002080</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true" CreateSymbol="true">
+          <Name>TaskPort</Name>
+          <BitSize>16</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000005}">UINT</BaseType>
+          <PTCID>#x03002090</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true" CreateSymbol="true">
+          <Name>TaskSortOrder</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+          <PTCID>#x030020b0</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true">
+          <Name>TraceLevelMax</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{8007AE3B-86BB-40F2-B385-EF87FCC239A4}">TcTraceLevel</BaseType>
+          <Default>
+            <EnumText>tlInfo</EnumText>
+          </Default>
+          <PTCID>#x00000001</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="true">
+          <Name>ModuleCaller</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{D94EAD20-451D-4AE0-87CC-9A9884043E25}" Namespace="TcMgSdk">ModuleCaller</BaseType>
+          <Default>
+            <EnumText>CyclicTask</EnumText>
+          </Default>
+          <PTCID>#x00000002</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true">
+          <Name>CallerVerification</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{1F89595E-59E5-47C7-9A58-A611A4C98DEC}" Namespace="TcMgSdk">CallerVerification</BaseType>
+          <Default>
+            <EnumText>Default</EnumText>
+          </Default>
+          <PTCID>#x00000003</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="true">
+          <Name>StepSizeAdaptation</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{65804E5D-07CA-41C0-AEDC-C5051585B216}" Namespace="TcMgSdk">StepSizeAdaptation</BaseType>
+          <Default>
+            <EnumText>RequireMatchingTaskCycleTime</EnumText>
+          </Default>
+          <PTCID>#x00000004</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="true">
+          <Name>ExecutionSequence</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{3856C4C8-CCAF-403F-A7C8-4E1502F2FFFC}" Namespace="TcMgSdk">ExecutionSequence1</BaseType>
+          <Default>
+            <EnumText>UpdateBeforeOutputMapping</EnumText>
+          </Default>
+          <PTCID>#x00000005</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="true">
+          <Name>Execute</Name>
+          <BitSize>8</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+          <Default>
+            <EnumText>TRUE</EnumText>
+          </Default>
+          <PTCID>#x00000006</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true">
+          <Name>AccessLockState</Name>
+          <BitSize>32</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000061}">TCOM_STATE</BaseType>
+          <Default>
+            <EnumText>TCOM_STATE_OP</EnumText>
+          </Default>
+          <PTCID>#x00000007</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true">
+          <Name>InitExceptionHandling</Name>
+          <BitSize>8</BitSize>
+          <BaseType GUID="{53CDED75-D12E-408E-B06D-0E50F6A35065}" Namespace="TcMgSdk">FpExcptCtrlSet</BaseType>
+          <Default>
+            <EnumText>CallerExceptions</EnumText>
+          </Default>
+          <PTCID>#x00000008</PTCID>
+        </Parameter>
+        <Parameter HideParameter="true">
+          <Name>UpdateExceptionHandling</Name>
+          <BitSize>8</BitSize>
+          <BaseType GUID="{53CDED75-D12E-408E-B06D-0E50F6A35065}" Namespace="TcMgSdk">FpExcptCtrlSet</BaseType>
+          <Default>
+            <EnumText>CallerExceptions</EnumText>
+          </Default>
+          <PTCID>#x00000009</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
+          <Name>ModuleBuildInfo</Name>
+          <BitSize>96</BitSize>
+          <BaseType GUID="{0564A6B7-D0A7-47F6-9375-C2F05C960A28}" Namespace="TcMgSdk">ModuleBuildInfo</BaseType>
+          <PTCID>#x0000000a</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
+          <Name>Initialized</Name>
+          <BitSize>8</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+          <Default>
+            <EnumText>FALSE</EnumText>
+          </Default>
+          <PTCID>#x0000000b</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="true" HideParameter="true" CreateSymbol="true" ReadOnly="true">
+          <Name>InitExceptionInfo</Name>
+          <BitSize>1376</BitSize>
+          <BaseType GUID="{241597CD-DFF8-4569-90EE-6B470D7A1D92}" Namespace="TcMgSdk">ExceptionInfo</BaseType>
+          <PTCID>#x0000000c</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
+          <Name>CycleCount</Name>
+          <BitSize>64</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-00000000000B}">ULINT</BaseType>
+          <PTCID>#x0000000d</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="true" HideParameter="true" CreateSymbol="true" ReadOnly="true">
+          <Name>ExceptionCount</Name>
+          <BitSize>64</BitSize>
+          <BaseType GUID="{18071995-0000-0000-0000-00000000000B}">ULINT</BaseType>
+          <PTCID>#x0000000e</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="true" HideParameter="true" CreateSymbol="true" ReadOnly="true">
+          <Name>ExeceptionInfo</Name>
+          <BitSize>1376</BitSize>
+          <BaseType GUID="{241597CD-DFF8-4569-90EE-6B470D7A1D92}" Namespace="TcMgSdk">ExceptionInfo</BaseType>
+          <PTCID>#x0000000f</PTCID>
+        </Parameter>
+      </Parameters>
+      <DataAreas>
+        <DataArea>
+          <AreaNo AreaType="InputDst" CreateSymbols="true">0</AreaNo>
+          <Name>AdditionalInports</Name>
+          <ContextId>0</ContextId>
+          <ByteSize>72</ByteSize>
+          <Symbol>
+            <Name>TcModuleInput_Robotx</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x80000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_Roboty</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x80000008</PTCID>
+            <BitOffs>64</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_boolSimu</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x80000010</PTCID>
+            <BitOffs>128</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_collisionRobotX</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x80000018</PTCID>
+            <BitOffs>192</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_collisionRobotY</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x80000020</PTCID>
+            <BitOffs>256</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_enableBahn</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x80000028</PTCID>
+            <BitOffs>320</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_endNode</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x80000030</PTCID>
+            <BitOffs>384</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_nodeEntfernen</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x80000038</PTCID>
+            <BitOffs>448</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleInput_robotNumber</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x80000040</PTCID>
+            <BitOffs>512</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="OutputSrc" CreateSymbols="true">1</AreaNo>
+          <Name>AdditionalOutports</Name>
+          <ContextId>0</ContextId>
+          <ByteSize>1608</ByteSize>
+          <Symbol>
+            <Name>TcModuleOutput_boolTC</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x81000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_error</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x81000001</PTCID>
+            <BitOffs>8</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_xKoordinaten</Name>
+            <BitSize>6400</BitSize>
+            <BaseType GUID="{D7C847AA-1EBF-AAF1-AE11-B5480C1717F1}">matrix_100x1_real_T</BaseType>
+            <PTCID>#x81000008</PTCID>
+            <BitOffs>64</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TcModuleOutput_yKoordinaten</Name>
+            <BitSize>6400</BitSize>
+            <BaseType GUID="{D7C847AA-1EBF-AAF1-AE11-B5480C1717F1}">matrix_100x1_real_T</BaseType>
+            <PTCID>#x81000328</PTCID>
+            <BitOffs>6464</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="Internal" CreateSymbols="true">2</AreaNo>
+          <Name>Pfadplanung_Simulink_B</Name>
+          <ContextId>0</ContextId>
+          <ByteSize>1508576</ByteSize>
+          <Symbol>
+            <Name>adjMatrixAlt</Name>
+            <BitSize>5494336</BitSize>
+            <BaseType GUID="{D0F56EF0-95CF-E728-1E71-558E0DA8BA2F}">matrix_85849_real_T</BaseType>
+            <PTCID>#x82000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>closedList</Name>
+            <BitSize>192000</BitSize>
+            <BaseType GUID="{BD49C40F-8648-896F-4E25-81408F4EF109}">matrix_3000_real_T</BaseType>
+            <PTCID>#x820a7ac8</PTCID>
+            <BitOffs>5494336</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>openList</Name>
+            <BitSize>192000</BitSize>
+            <BaseType GUID="{BD49C40F-8648-896F-4E25-81408F4EF109}">matrix_3000_real_T</BaseType>
+            <PTCID>#x820ad888</PTCID>
+            <BitOffs>5686336</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>closedList_m</Name>
+            <BitSize>192000</BitSize>
+            <BaseType GUID="{BD49C40F-8648-896F-4E25-81408F4EF109}">matrix_3000_real_T</BaseType>
+            <PTCID>#x820b3648</PTCID>
+            <BitOffs>5878336</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>zwischenListe_data</Name>
+            <BitSize>70400</BitSize>
+            <BaseType GUID="{5DF35610-8BB4-756D-D22A-B77FA21DB7B4}">matrix_1100_real_T</BaseType>
+            <PTCID>#x820b9408</PTCID>
+            <BitOffs>6070336</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>f</Name>
+            <BitSize>64064</BitSize>
+            <BaseType GUID="{DA696B68-7BB1-E811-67D6-2098C1493AFE}">cell_wrap_4_Pfadplanung_Simul_T</BaseType>
+            <PTCID>#x820bb668</PTCID>
+            <BitOffs>6140736</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>openList_c</Name>
+            <BitSize>64000</BitSize>
+            <BaseType GUID="{D2B91B5E-69D9-C7F3-2117-354E6567B556}">matrix_1000_real_T</BaseType>
+            <PTCID>#x820bd5b0</PTCID>
+            <BitOffs>6204800</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>xwork</Name>
+            <BitSize>64000</BitSize>
+            <BaseType GUID="{D2B91B5E-69D9-C7F3-2117-354E6567B556}">matrix_1000_real_T</BaseType>
+            <PTCID>#x820bf4f0</PTCID>
+            <BitOffs>6268800</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>openList_data</Name>
+            <BitSize>63936</BitSize>
+            <BaseType GUID="{AF2BD4FD-296D-6B61-4647-951E18B08C62}">matrix_999_real_T</BaseType>
+            <PTCID>#x820c1430</PTCID>
+            <BitOffs>6332800</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>y</Name>
+            <BitSize>37504</BitSize>
+            <BaseType GUID="{6D706C76-6C26-92DE-410F-F0A4392B6BF7}">matrix_586_real_T</BaseType>
+            <PTCID>#x820c3368</PTCID>
+            <BitOffs>6396736</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>x</Name>
+            <BitSize>37504</BitSize>
+            <BaseType GUID="{6D706C76-6C26-92DE-410F-F0A4392B6BF7}">matrix_586_real_T</BaseType>
+            <PTCID>#x820c45b8</PTCID>
+            <BitOffs>6434240</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>iidx</Name>
+            <BitSize>32000</BitSize>
+            <BaseType GUID="{7BA6754F-DD74-362A-E7BB-1AA3E6CF4E05}">matrix_1000_int32_T</BaseType>
+            <PTCID>#x820c5808</PTCID>
+            <BitOffs>6471744</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>iwork</Name>
+            <BitSize>32000</BitSize>
+            <BaseType GUID="{7BA6754F-DD74-362A-E7BB-1AA3E6CF4E05}">matrix_1000_int32_T</BaseType>
+            <PTCID>#x820c67a8</PTCID>
+            <BitOffs>6503744</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>distances</Name>
+            <BitSize>18752</BitSize>
+            <BaseType GUID="{493D21B9-ADB8-1BC1-9CEA-5F979E92202F}">matrix_293_real_T</BaseType>
+            <PTCID>#x820c7748</PTCID>
+            <BitOffs>6535744</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Robotx</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820c8070</PTCID>
+            <BitOffs>6554496</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Roboty</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820c8078</PTCID>
+            <BitOffs>6554560</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>endNode</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820c8080</PTCID>
+            <BitOffs>6554624</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>collisionRobotX</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820c8088</PTCID>
+            <BitOffs>6554688</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>collisionRobotY</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820c8090</PTCID>
+            <BitOffs>6554752</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>robotNumber</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820c8098</PTCID>
+            <BitOffs>6554816</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>startNode</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820c80a0</PTCID>
+            <BitOffs>6554880</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>nodeZumEntfernen</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820c80a8</PTCID>
+            <BitOffs>6554944</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>xKoord</Name>
+            <BitSize>6400</BitSize>
+            <BaseType GUID="{AA20257C-9755-505A-03CA-F39B0A052371}">matrix_100_real_T</BaseType>
+            <PTCID>#x820c80b0</PTCID>
+            <BitOffs>6555008</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>yKoord</Name>
+            <BitSize>6400</BitSize>
+            <BaseType GUID="{AA20257C-9755-505A-03CA-F39B0A052371}">matrix_100_real_T</BaseType>
+            <PTCID>#x820c83d0</PTCID>
+            <BitOffs>6561408</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>besuchteNodes</Name>
+            <BitSize>6400</BitSize>
+            <BaseType GUID="{AA20257C-9755-505A-03CA-F39B0A052371}">matrix_100_real_T</BaseType>
+            <PTCID>#x820c86f0</PTCID>
+            <BitOffs>6567808</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>adjMatrix</Name>
+            <BitSize>5494336</BitSize>
+            <BaseType GUID="{D0F56EF0-95CF-E728-1E71-558E0DA8BA2F}">matrix_85849_real_T</BaseType>
+            <PTCID>#x820c8a10</PTCID>
+            <BitOffs>6574208</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>nodeEntfernen</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x821704d8</PTCID>
+            <BitOffs>12068544</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>boolSimu</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x821704d9</PTCID>
+            <BitOffs>12068552</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>enableBahn</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x821704da</PTCID>
+            <BitOffs>12068560</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>boolSimOut</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x821704db</PTCID>
+            <BitOffs>12068568</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>boolTC</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x821704dc</PTCID>
+            <BitOffs>12068576</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>boolSimOut_k</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x821704dd</PTCID>
+            <BitOffs>12068584</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>error</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x821704de</PTCID>
+            <BitOffs>12068592</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>boolSimOut_i</Name>
+            <BitSize>8</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+            <PTCID>#x821704df</PTCID>
+            <BitOffs>12068600</BitOffs>
+          </Symbol>
+        </DataArea>
+      </DataAreas>
+      <Properties>
+        <Property>
+          <Name>CoderLicense</Name>
+          <Value>{73C71EBD-104A-4EE6-955D-ADE86A37EFC3}</Value>
+        </Property>
+      </Properties>
+      <Xml>
+        <GeneratedModuleInfoFile>Pfadplanung_Simulink_ModuleInfo.xml</GeneratedModuleInfoFile>
+      </Xml>
+    </Module>
+  </Modules>
+  <Configurations />
+  <Library>
+    <Name>Pfadplanung_Simulink</Name>
+    <Version>0.0.0.1</Version>
+  </Library>
+</TcModuleClass>

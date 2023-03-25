@@ -20,9 +20,12 @@ VAR
 	robot		: Robot;							//link to physical I/O of roboter or simulation model of the roboter
 	robotPoses 	AT%I*: ARRAY [1..8] OF RobotPose;	//input from camera
 	
-	state AT%Q*: ControllerState := ControllerState.init;//sets controller state
+
 	
 	CONTROL_ERROR_THRESH : LREAL := 5;
+	
+	FFLin: BOOL := FALSE;
+	thetaLin: LREAL;
 	
 	///////////////////////////////////////////////
 	///////////// LINKS TO GW2  ///////////////////
@@ -30,17 +33,15 @@ VAR
 	
 	//inputs from GW2, uncomment and link when needed
 	xBoEnable AT%I*: BOOL := FALSE;							// implemented, Freigabesignal für Fahrt, Roboter stoppt bei FALSE
-	xIntMoveToEndPosition AT%I*: INT := 0;					// unused,		Anfahrt (in Sperrzone vor Tasche oder Ladestation) = 1, Fahrt = 0
 	waypointList AT%I*: ARRAY[0..100] OF RobotPoseSimple;	// implemented, Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)
 	newWaypointListAvailable AT%I*: BOOL := FALSE;			// implemented, Status-Bit zur Signalisierung einer neuen WP-Liste
 	
-	//outputs to GW2, uncomment and link when needed
-	yBoDriving AT%Q*: BOOL;									// implemented, TRUE, wenn Roboter fährt				
+	//outputs to GW2, uncomment and link when needed				
 	yBoArrivedAtDestination AT%Q*:	BOOL := FALSE;			// implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP
-	yUintWaypointIndex AT%Q*: INT  := 0;						// implemented, COUNTER zur Anzeige, des Indexes des nächstes WP
+	yUintWaypointIndex AT%Q*: INT  := 0;					// implemented, COUNTER zur Anzeige, des Indexes des nächstes WP
 	yRPposition AT%Q*: RobotPoseSimple;						// implemented, aktuelle Roboterposition, für Simulationszwecke
-	FFLin: BOOL := FALSE;
-	thetaLin: LREAL;
+	state AT%Q*: ControllerState := ControllerState.init;	// controller state
+
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -48,7 +49,6 @@ END_VAR
 robot.enable			:= FALSE;
 
 //outputs to GW2
-yBoDriving	 			:= robot.enable;
 yRPposition 			:= observer.yObserverdPose;
 yUintWaypointIndex 		:= trajectory.WPLidx;
 
@@ -202,7 +202,8 @@ END_VAR]]></Declaration>
       </Implementation>
     </Method>
     <LineIds Name="ControlPRG">
-      <LineId Id="895" Count="18" />
+      <LineId Id="895" Count="3" />
+      <LineId Id="900" Count="13" />
       <LineId Id="1059" Count="0" />
       <LineId Id="914" Count="26" />
       <LineId Id="1061" Count="1" />
