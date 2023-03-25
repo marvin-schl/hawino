@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <Task Name="PlcTask" Id="{83d23ca0-9820-4948-bba8-8243b2450f90}">
+    <!--CycleTime in micro seconds.-->
+    <CycleTime>10000</CycleTime>
+    <Priority>20</Priority>
+    <PouCall>
+      <Name>HAWino</Name>
+    </PouCall>
+    <TaskFBGuid>{4b659798-3733-4ac1-af91-f3c21905c5c3}</TaskFBGuid>
+    <Fb_init>{56138481-0d3e-4991-8400-49c94ace7ac0}</Fb_init>
+    <Fb_exit>{f6107e32-a474-4d63-af91-272eb2e2682c}</Fb_exit>
+    <CycleUpdate>{88bc2df2-c6aa-471b-bd31-977e65c12537}</CycleUpdate>
+    <PostCycleUpdate>{b9ca18ec-a3e0-4767-9d96-ebb14d858851}</PostCycleUpdate>
+  </Task>
+</TcPlcObject>

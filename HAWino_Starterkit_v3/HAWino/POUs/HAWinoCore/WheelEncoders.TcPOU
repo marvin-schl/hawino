@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="WheelEncoders" Id="{bfdecdb6-85cd-45e5-8fd3-068aaa1edc04}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM WheelEncoders
+VAR
+zaehler : UINT := 0;
+
+//ENC Daten Differenzieren für Geschwindigkeit
+diffConst:LREAL:=0.01;//SECONDS
+encDataOldMotor1:UINT:=0;
+encDataOldMotor2:UINT:=0;
+encDataOldMotor3:UINT:=0;
+
+//Koordinatentransformation Weg
+skalEnc:LREAL:=0.00766990393;
+
+//Koordinatentransformation Geschwindigkeit
+v1:LREAL:=0;
+v2:LREAL:=0;
+v3:LREAL:=0;
+velocityFromMotor1:LREAL:=0;
+velocityFromMotor2:LREAL:=0;
+velocityFromMotor3:LREAL:=0;
+
+//INPUTS
+encDataFromMotor1 AT%I*  :UINT:=0;
+encDataFromMotor2 AT%I*  :UINT:=0;
+encDataFromMotor3 AT%I*  :UINT:=0;
+
+diff1: INT := 0;
+diff2: INT := 0;
+diff3: INT := 0;
+
+//OUTPUTS
+vXCartesianFromMotors AT%Q*:LREAL:=0;
+vYCartesianFromMotors AT%Q*:LREAL:=0;
+vthetaCartesianFromMotors AT%Q*:LREAL:=0;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF MotorDrivers.state = CoreDriveState.Init THEN
+	encDataOldMotor1 := encDataFromMotor1;
+	encDataOldMotor2 := encDataFromMotor2;
+	encDataOldMotor3 := encDataFromMotor3;
+END_IF
+
+// Encoder Wegberechnung und Differenzierung für Geschwindigkeit
+diff1:=UINT_TO_INT(encDataFromMotor1) - UINT_TO_INT(encDataOldMotor1);
+IF diff1 >= 32767 OR diff1 <= -32767 THEN
+	diff1 := 0;
+	zaehler := zaehler + 1;
+END_IF
+diff2:=UINT_TO_INT(encDataFromMotor2) - UINT_TO_INT(encDataOldMotor2);
+IF diff2 >= 32767 OR diff2 <= -32767 THEN
+	diff2 := 0;
+END_IF
+diff3:=UINT_TO_INT(encDataFromMotor3) - UINT_TO_INT(encDataOldMotor3);
+IF diff3 >= 32767 OR diff3 <= -32767 THEN
+	diff3 := 0;
+END_IF
+
+velocityFromMotor1:=diff1/diffConst*skalEnc;
+velocityFromMotor2:=diff2/diffConst*skalEnc;
+velocityFromMotor3:=diff3/diffConst*skalEnc;
+
+// Koordinatentransformation Geschwindigkeit
+v1:=-velocityFromMotor1;
+v2:=-velocityFromMotor2;
+v3:=-velocityFromMotor3;
+
+vXCartesianFromMotors:=(v3 - v1) / (2.0 * COS(30.0*PI/180));  //in mm / s
+vYCartesianFromMotors:=(v1 - 2.0 * v2 + v3) / 3.0;            //in mm / s
+vThetaCartesianFromMotors:=(v1 + v2 + v3) / (3.0 * 135.0);    //in rad / s
+
+// Alte Encoderdaten speichern
+encDataOldMotor1:=encDataFromMotor1;
+encDataOldMotor2:=encDataFromMotor2;
+encDataOldMotor3:=encDataFromMotor3;]]></ST>
+    </Implementation>
+    <LineIds Name="WheelEncoders">
+      <LineId Id="128" Count="0" />
+      <LineId Id="132" Count="0" />
+      <LineId Id="134" Count="1" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="402" Count="0" />
+      <LineId Id="374" Count="1" />
+      <LineId Id="391" Count="1" />
+      <LineId Id="450" Count="0" />
+      <LineId Id="393" Count="0" />
+      <LineId Id="376" Count="0" />
+      <LineId Id="396" Count="1" />
+      <LineId Id="395" Count="0" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="399" Count="1" />
+      <LineId Id="398" Count="0" />
+      <LineId Id="390" Count="0" />
+      <LineId Id="182" Count="0" />
+      <LineId Id="327" Count="0" />
+      <LineId Id="329" Count="0" />
+      <LineId Id="326" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="119" Count="0" />
+      <LineId Id="116" Count="0" />
+      <LineId Id="123" Count="1" />
+      <LineId Id="121" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

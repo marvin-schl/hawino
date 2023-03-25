@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <POU Name="IrDistanceFromRaw" Id="{4b6affe3-0174-4995-bec2-7d9f1324cc0a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION IrDistanceFromRaw : REAL
+VAR_INPUT
+	rawValue : INT;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[	IrDistanceFromRaw := 123.15 / EXPT( INT_TO_REAL(rawValue) * (10.0 / 32767.0), 1.119 );
+	]]></ST>
+    </Implementation>
+    <LineIds Name="IrDistanceFromRaw">
+      <LineId Id="24" Count="0" />
+      <LineId Id="11" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

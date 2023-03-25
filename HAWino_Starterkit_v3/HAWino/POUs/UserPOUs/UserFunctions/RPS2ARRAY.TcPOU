@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="RPS2ARRAY" Id="{300ce0ab-c6c2-43a9-865f-504abeefb5be}" SpecialFunc="None">
+    <Declaration><![CDATA[//Converts a RobotPoseSimple to a ARRAY [0..2] OF LREAL
+FUNCTION RPS2ARRAY : ARRAY [0..2] OF LREAL
+VAR_INPUT
+	pose: RobotPoseSimple;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[RPS2ARRAY[0] := pose.x;
+RPS2ARRAY[1] := pose.y;
+RPS2ARRAY[2] := pose.theta;]]></ST>
+    </Implementation>
+    <LineIds Name="RPS2ARRAY">
+      <LineId Id="7" Count="0" />
+      <LineId Id="13" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

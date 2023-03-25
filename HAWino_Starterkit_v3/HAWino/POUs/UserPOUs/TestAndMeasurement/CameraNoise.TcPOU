@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="CameraNoise" Id="{749b7e08-890f-4518-9d96-a6b65d3482d0}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM CameraNoise
+VAR
+	//Inputs
+	cam2x, cam2y, cam2theta, cam4x, cam4y, cam4theta, cam3x, cam3y, cam3theta, cam2e, cam3e, cam4e AT%I*: LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <LineIds Name="CameraNoise">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

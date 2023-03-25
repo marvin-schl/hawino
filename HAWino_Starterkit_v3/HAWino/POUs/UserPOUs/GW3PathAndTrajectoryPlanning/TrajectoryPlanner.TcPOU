@@ -1,0 +1,569 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="TrajectoryPlanner" Id="{24389ec8-f78b-46de-8c41-6a6b853d9bed}" SpecialFunc="None">
+    <Declaration><![CDATA[(*TrajectoryPlanner:
+This class implements a Trajectory planning algorithm for time optimal generation of velocity profiles along a two times continous differentiable path. The key idea was taken from the paper "Time-Optimal Trajectory Generation for Path
+Following with Bounded Acceleration and Velocity" by Tobias Kunz and Mike Stilman (Georgia Institute of Technology). The approach in the paper was adapted to fit the contraints given from a omni-directional
+robot.
+TODO: implement Method for VAR_OUTPUT generation after trajectory generation has finished.
+*)
+FUNCTION_BLOCK TrajectoryPlanner
+VAR_INPUT
+	path:		 	Path;			//path object for which the trajectory should be generated
+	qAccMax: 		LREAL;			//maximum tangential path acceleration
+	qVelMax: 		LREAL;			//maximum tangential path velocity
+	thetaAccMax: 	LREAL;			//maximum angular acceleration
+	thetaVelMax: 	LREAL; 			//maximum angular velocity
+	deltaT	   :    LREAL := 0.05;	//optional: sampling time of the velocity in [s], default: 50ms
+END_VAR
+VAR_OUTPUT
+	posTrajectory: 		ARRAY[0..500] OF RobotPoseSimple; //reference position profile. position in global coordinates pver time
+	velTrajectory:		ARRAY[0..500] OF RobotPoseSimple; //reference velocity profile, velocity over time
+	
+	trajectoryGenerationFinished:	BOOL := FALSE; //TRUE if trajectory generation finished successfully
+	trajectoryGenerationFailed: 	BOOL := FALSE; //TRUE if trajectory generation failed, most likely because something went wrong while integrating backward
+	trajectoriesReady:				BOOL := FALSE; //TRUE if the generated path trajectories are transformed back into xy-theta-Coordinates
+END_VAR
+VAR
+	searchTol 	: LREAL := 1E-4;	//tolerance for switching point search, switching points are determined by bisection method
+	zeroTol		: LREAL := 1E-10;	//numerical zero tolerance
+	diffDelta   : LREAL := 1E-6; 	//dt for calculation of dVelMaxAcc
+	currentStep : INT 	:= 1;		//indicates current algorithm step
+	
+	maxIter				: INT := 100; 				//maximum allowed iterations for while loop of bisection method
+	acc					: LREAL;					//acceleration for the next time step in the algorithm
+	searchPos			: LREAL;					//position from which the swithing point search starts
+	swp					: ARRAY[0..98] OF LREAL;	//array of switching points, not needed entrys are filled with -1
+	nmbSWP				: INT;						//number of swichting points
+	
+	pos			: ARRAY[0..500] OF LREAL;			//the i-th element indicates the position on the curve at time t=i*deltaT
+	vel			: ARRAY[0..500] OF LREAL;			//the i-th element indicates the tangential path velocity on the curve at time t=i*deltaT
+	idxForward  : INT := 0;							//index Variable for writing into pos and vel, i-th element represents t=i*deltaT
+	
+	posBackward	: ARRAY[0..500] OF LREAL;			//temp array for backward integrartion, after backward integration is finished the values are written into pos
+	velBackward	: ARRAY[0..500] OF LREAL; 			//temp array for backward integrartion, after backward integration is finished the values are written into vel
+	idxBackward : INT := 0;							//temp index Variable for writing into posBackward and velBackward, i-th element indicates time t_bw=i*deltaT since backward integration started
+
+	integratingBWfromPathEnd: 		BOOL := FALSE;	//indicates that the last backward integration process started, needed internally for setting trajectoryGenerationFinished-Flag appropriate
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[calculateSWP();]]></ST>
+    </Implementation>
+    <Method Name="accMax" Id="{a381c150-06f0-4463-bf20-1f79ec07f962}">
+      <Declaration><![CDATA[METHOD PRIVATE accMax : LREAL
+VAR_INPUT
+	arcLength: LREAL;
+	velocity: LREAL;
+END_VAR
+VAR
+	accMaxSquare: LREAL;
+	ddPos: RobotPoseSimple;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ddPos := path.diff(arcLength, 2);
+
+accMaxSquare := EXPT(qAccMax,2)-EXPT(velocity,4)*(EXPT(ddPos.x,2)+EXPT(ddPos.y,2));
+IF accMaxSquare > -zeroTol THEN
+	accMax := SQRT(ABS(accMaxSquare));
+ELSE
+	accMax := 0;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="accMin" Id="{baa11c7e-2de2-49ff-9f0e-c9430b8133e2}">
+      <Declaration><![CDATA[METHOD PRIVATE accMin : LREAL
+VAR_INPUT
+	arcLength: LREAL;
+	velocity: LREAL;
+END_VAR
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[accMin := -accMax(arcLength, velocity);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="calculateSWP" Id="{d932d011-3635-47e3-8cfa-754df4aa1b47}">
+      <Declaration><![CDATA[METHOD PRIVATE calculateSWP : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	swpIntervals : ARRAY[0..98] OF LREAL;
+	i, k: 	INT;
+	maxIdx: INT;
+	
+	left, right, center, distance: LREAL;
+END_VAR
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[swpIntervals := path.getSwitchingPointIntervals();
+
+//check how many swps there are
+FOR i := 0 TO 98 DO
+	IF swpIntervals[i] = -1 THEN
+		maxIdx := i-1;
+		nmbSWP := i/2;
+		EXIT;
+	END_IF
+END_FOR
+
+//find exact SWP by bisection in corresponding interval
+FOR i := 0 TO maxIdx BY 2 DO
+	left 		:= swpIntervals[i];
+	right 		:= swpIntervals[i+1];
+	//distance 	:= ABS(right-left);
+	
+	//improved init because swp is near center of interval
+	//left 		:= left+distance/4;
+	//right 		:= left-distance/4;
+	k := 0;
+	WHILE ABS(right-left) > searchTol AND k <= maxIter DO
+		center 	:= (left+right)/2;
+		IF dVelMaxAcc(left,1)*dVelMaxAcc(center,1) < 0 THEN
+			right := center;
+		ELSE
+			left := center;
+		END_IF
+		k := k+1;
+	END_WHILE
+	swp[i/2] := (right+left)/2;
+END_FOR
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="dVelMaxAcc" Id="{c81c62a0-e9ff-4569-b679-77ae09ea7d30}">
+      <Declaration><![CDATA[METHOD PRIVATE dVelMaxAcc : LREAL
+VAR_INPUT
+	arcLength	: LREAL;
+	order		: INT 		:= 1;
+END_VAR
+VAR
+	velMaxAccM, velMaxAccP, velMaxAccVal: LREAL;
+	dVelMaxAccM, dVelMaxAccP: LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[velMaxAccM := velMaxAcc(arcLength-diffDelta);
+velMaxAccP := velMaxAcc(arcLength+diffDelta);
+CASE order OF
+	1:
+		dVelMaxAcc := (velMaxAccP-velMaxAccM)/(2*diffDelta);
+	2:
+		velMaxAccVal := velMaxAcc(arcLength);
+		dVelMaxAccM  := (velMaxAccM-velMaxAccVal)/diffDelta;
+		dVelMaxAccP  := (velMaxAccVal-velMaxAccP)/diffDelta;
+		dVelMaxAcc := (dVelMaxAccP-dVelMaxAccM)/diffDelta;
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="generateOutputTrajectories" Id="{b2616483-5db0-41a7-9e37-6647b68709b1}">
+      <Declaration><![CDATA[METHOD PRIVATE generateOutputTrajectories
+VAR_INPUT
+END_VAR
+VAR
+	i: INT := 0;
+	tmpPos, dPos: RobotPoseSimple;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := 0 TO idxForward-1 BY 1 DO
+	tmpPos 					:= path.getPoint(arcLength := pos[i]);
+	posTrajectory[i].x		:= tmpPos.x*1000;
+	posTrajectory[i].y		:= tmpPos.y*1000;
+	posTrajectory[i].theta	:= tmpPos.theta;
+	dPos 					:= path.diff(arcLength := pos[i], 1);
+	
+	velTrajectory[i].x 		:= vel[i]*dPos.x*1000; 
+	velTrajectory[i].y  	:= vel[i]*dPos.y*1000;
+	velTrajectory[i].theta	:= vel[i]*dPos.theta;
+END_FOR
+
+FOR i := idxForward TO 500  BY 1 DO
+	posTrajectory[i].x 		:= -1;
+	posTrajectory[i].y		:= -1;
+	posTrajectory[i].theta	:= -1;
+	velTrajectory[i].x 		:= -1; 
+	velTrajectory[i].y  	:= -1;
+	velTrajectory[i].theta	:= -1;
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="generateTrajectory" Id="{2707b87b-03b0-465a-89e9-1776d78127f3}">
+      <Declaration><![CDATA[METHOD PUBLIC generateTrajectory : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT trajectoryGenerationFinished AND NOT trajectoryGenerationFailed THEN
+	CASE currentStep OF
+		1:
+			step1();
+		2:
+			step2();
+		3:
+			step3();
+		4:
+			step4();
+		5:
+			step5();
+	END_CASE
+END_IF
+
+IF trajectoryGenerationFinished THEN
+	generateOutputTrajectories();
+	trajectoriesReady := TRUE;
+	trajectoryGenerationFinished := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="resetFlag" Id="{cdd05716-e05f-4e73-ab88-3631f133ec4e}">
+      <Declaration><![CDATA[METHOD PUBLIC resetFlag
+VAR_INPUT
+	flagToReset : STRING[10];
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//CASE flagToReset OF
+//	'trajectoryGenerationFailed' : trajectoryGenerationFailed := FALSE;
+//	"trajectoryGenerationFinished" : trajectoryGenerationFinished := FALSE;
+//	"trajectoriesReady" : trajectoriesReady := FALSE;	
+//END_CASE
+
+IF (flagToReset = 'failed') THEN
+	trajectoryGenerationFailed 		:= FALSE;
+END_IF
+
+IF (flagToReset = 'finished') THEN
+	trajectoryGenerationFinished 	:= FALSE;
+END_IF
+
+IF (flagToReset = 'ready') THEN
+	trajectoriesReady 				:= FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="step1" Id="{772b0480-83fa-4035-ba7a-a9a78d2f8302}">
+      <Declaration><![CDATA[//initilize algorithm
+METHOD PRIVATE step1 : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[vel[0] 	:= 0;
+pos[0] 	:= 0;
+acc 	:= accMax(0,0);
+
+idxForward 		:= 1;
+currentStep		:= 2;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="step2" Id="{456abf40-68db-4a52-883b-7d7258112777}">
+      <Declaration><![CDATA[//integrate forward until a limit curve is hit
+METHOD PRIVATE step2 : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	currVelMax, currVelMaxAcc: LREAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//calculate new positions and velocities, integrate
+//TODO: check if more advanced numerical integration is needed, ATM: euler1
+pos[idxForward] := pos[idxForward-1] + vel[idxForward-1]*deltaT;
+vel[idxForward] := vel[idxForward-1] + acc*deltaT;
+
+//set acceleration for the new time step
+acc := accMax(pos[idxForward], vel[idxForward]);
+
+//transitions
+currVelMax 		:= velMax(pos[idxForward]);
+currVelMaxAcc	:= velMaxAcc(pos[idxForward]);
+IF pos[idxForward] > path.length THEN
+	//crossed end of path
+	zeros(arr := posBackward);
+	zeros(arr := velBackward);
+	
+	//start integrating backward from the end of the path and velocity 0	
+	posBackward[0] := path.length;
+	velBackward[0] := 0;
+	acc := accMin(posBackward[0], velBackward[0]);
+	integratingBWfromPathEnd := TRUE;
+	
+	//integrate backward
+	idxBackward := 1;
+	currentStep := 5;
+ELSIF vel[idxForward] > currVelMax THEN
+	//crossed max velocity
+	//follow combined limit curve
+	currentStep := 3;
+ELSIF vel[idxForward] > currVelMaxAcc THEN
+	//crossed max velocity caused by acc limit
+
+	searchPos := pos[idxForward-2];
+	
+	//get next switching point
+	currentStep := 4;
+ELSE 
+	//if no boundaries are crosesd keep integrating forward
+	idxForward := idxForward + 1;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="step3" Id="{8c5a6a86-827c-4771-b67c-3dc333269807}">
+      <Declaration><![CDATA[//follow limit curve until one of the transitions fire
+METHOD PRIVATE step3 : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	currVelMax, currVelMaxAcc, currdVelMaxAcc: LREAL;
+	currAccMin, currAccMax: LREAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//integrate forward, with last valid velocity
+pos[idxForward] := pos[idxForward-1] + vel[idxForward-1]*deltaT;
+
+//follow the combined velocity limit curve
+currVelMax 		:= velMax(pos[idxForward]);
+currVelMaxAcc	:= velMaxAcc(pos[idxForward]);
+vel[idxForward] := MIN(currVelMax, currVelMaxAcc);
+
+currAccMin		   := accMin(pos[idxForward], vel[idxForward]);
+currAccMax		   := accMax(pos[idxForward], vel[idxForward]);
+currdVelMaxAcc 	   := dVelMaxAcc(pos[idxForward],1);
+
+//transitions
+IF pos[idxForward] > path.length THEN
+	//crossed end of path
+	zeros(arr := posBackward);
+	zeros(arr := velBackward);
+	
+	//start integrating backward from the end of the path and velocity 0	
+	posBackward[0] := path.length;
+	velBackward[0] := 0;
+	acc := accMin(posBackward[0], velBackward[0]);
+	integratingBWfromPathEnd := TRUE;
+	
+	//integrate backward
+	idxBackward := 1;
+	currentStep := 5;
+ELSIF currAccMin/vel[idxForward] > currdVelMaxAcc THEN
+	//search for the next switching point
+	searchPos := pos[idxForward-2];
+	
+	//get next switching point
+	currentStep := 4;
+ELSIF currAccMax/vel[idxForward] < currdVelMaxAcc THEN
+	//start integrating forward with maxAcc in the next timestep
+	currentStep := 2;
+	idxForward := idxForward + 1;
+ELSE
+	//keep following the combined velocity limit curve in the next timestep
+	idxForward := idxForward + 1;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="step4" Id="{c1ff574d-da67-4f72-97ca-d6143c8e6b19}">
+      <Declaration><![CDATA[//search for the next switching point
+METHOD PRIVATE step4 : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	nextSWP, currVelMax, currVelMaxAcc : LREAL;
+	i : INT := 0;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//find next swp
+FOR i := 0 TO nmbSWP-1 BY 1 DO
+	IF  searchPos-swp[i] < 0 THEN
+		nextSWP := swp[i];
+		EXIT;
+	END_IF
+END_FOR
+
+//prepare backward integration
+zeros(arr := posBackward);
+zeros(arr := velBackward);
+idxBackward := 0;
+
+//get inital velocity, pos and acc
+posBackward[0] := nextSWP;
+
+currVelMax 		:= velMax(posBackward[0]);
+currVelMaxAcc 	:= velMaxAcc(posBackward[0]);
+velBackward[0]  := MIN(currVelMax, currVelMaxAcc);
+
+acc := accMin(posBackward[0], velBackward[0]);
+
+//integrate backward from switching point
+idxBackward := 1;
+currentStep := 5;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="step5" Id="{7f94cb62-ae58-4756-93c5-3c78eeddf88e}">
+      <Declaration><![CDATA[//integrate backward (from swithcing point or path end) until trajectory is crossed
+METHOD PRIVATE step5 : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	j:				INT 				:= 0;
+	cpmIdxForward:	INT 				:= 0;
+	currVelMax, currVelMaxAcc: LREAL;
+	checkForTrajCrossing: BOOL := FALSE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//integrate backward
+posBackward[idxBackward] := posBackward[idxBackward-1] - velBackward[idxBackward-1]*deltaT;
+velBackward[idxBackward] := velBackward[idxBackward-1] - acc*deltaT;
+
+//get new minimum acceleration
+acc := accMin(posBackward[idxBackward], velBackward[idxBackward]);
+
+//check if forward integrated trajectory is crossed and if yes where
+IF posBackward[idxBackward] <= pos[idxForward] THEN
+	FOR j := idxForward TO 1 BY -1 DO
+		//search for the corresponding idx in the forward generated trajectory
+		IF	posBackward[idxBackward] > pos[j-1] THEN
+			cpmIdxForward := j; 
+			checkForTrajCrossing := TRUE;
+			EXIT;
+		END_IF
+	END_FOR
+END_IF
+
+currVelMax		:= velMax(posBackward[idxBackward]);
+currVelMaxAcc	:= velMaxAcc(posBackward[idxBackward]);
+//check velocites of the corresponding point on the forward generated trajectry is crossed
+// while integrating backward
+IF vel[cpmIdxForward] < velBackward[idxBackward] AND checkForTrajCrossing THEN
+	//interchange crossed  part of the forward integrated velocities with the 
+	//backward integrated trajectory which is below the crossed part
+	FOR j := 0 TO idxBackward-1 DO
+		vel[cpmIdxForward+j] := velBackward[idxBackward-1-j];
+		pos[cpmIdxForward+j] := posBackward[idxBackward-1-j];
+	END_FOR
+	
+	//initlize velocity, acc, and pos for next step
+	idxForward 		:= cpmIdxForward+idxBackward-1;
+	currVelMax 		:= velMax(pos[idxForward]);
+	currVelMaxAcc	:= velMaxAcc(pos[idxForward]);
+	acc				:= accMax(pos[idxForward], MIN(currVelMax, currVelMaxAcc));
+	
+	//integrate forward in the next iteration step
+	idxForward 		:= idxForward + 1;
+	currentStep 	:= 2;
+	
+	IF integratingBWfromPathEnd THEN
+		integratingBWfromPathEnd 	 := FALSE;
+		trajectoryGenerationFinished := TRUE;
+	END_IF
+ELSIF ABS(currVelMax- velBackward[idxBackward]) < zeroTol OR ABS(currVelMaxAcc-velBackward[idxBackward]) < zeroTol THEN
+	trajectoryGenerationFailed := TRUE;
+ELSE
+	idxBackward := idxBackward + 1;
+END_IF ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="velMax" Id="{a65f5240-6c59-447b-adfb-574f9f9758f6}">
+      <Declaration><![CDATA[METHOD PRIVATE velMax : LREAL
+VAR_INPUT
+	arcLength: LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[velMax := qVelMax;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="velMaxAcc" Id="{6c6d04de-b7bf-4af6-952f-23ef36188aad}">
+      <Declaration><![CDATA[METHOD PRIVATE velMaxAcc : LREAL;
+VAR_INPUT
+	arcLength: LREAL;
+END_VAR
+VAR
+	ddPos: RobotPoseSimple;
+	den: LREAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ddPos := path.diff(arcLength:= arcLength, order := 2);
+
+den := EXPT(ddPos.x,2)+EXPT(ddPos.y,2);
+IF ABS(den) > zeroTol THEN
+	velMaxAcc := MIN(velMax(arcLength), SQRT(qAccMax/SQRT(den)));
+ELSE
+	velMaxAcc := velMax(arcLength);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="TrajectoryPlanner">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="TrajectoryPlanner.accMax">
+      <LineId Id="15" Count="6" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="TrajectoryPlanner.accMin">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="TrajectoryPlanner.calculateSWP">
+      <LineId Id="17" Count="33" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="TrajectoryPlanner.dVelMaxAcc">
+      <LineId Id="26" Count="9" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="TrajectoryPlanner.generateOutputTrajectories">
+      <LineId Id="12" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="34" Count="1" />
+      <LineId Id="14" Count="13" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="TrajectoryPlanner.generateTrajectory">
+      <LineId Id="12" Count="12" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="26" Count="3" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="25" Count="0" />
+    </LineIds>
+    <LineIds Name="TrajectoryPlanner.resetFlag">
+      <LineId Id="19" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="28" Count="9" />
+    </LineIds>
+    <LineIds Name="TrajectoryPlanner.step1">
+      <LineId Id="11" Count="4" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="TrajectoryPlanner.step2">
+      <LineId Id="12" Count="38" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="TrajectoryPlanner.step3">
+      <LineId Id="13" Count="39" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="TrajectoryPlanner.step4">
+      <LineId Id="14" Count="23" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="TrajectoryPlanner.step5">
+      <LineId Id="15" Count="48" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="TrajectoryPlanner.velMax">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="TrajectoryPlanner.velMaxAcc">
+      <LineId Id="13" Count="6" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

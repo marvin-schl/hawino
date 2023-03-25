@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TctGeneratedModules>
+   <ModuleInfo CLSID="{C1C4334E-9E10-28EA-7041-36838E6F17C9}" GUID="{C1C4334E-9E10-28EA-7041-36838E6F17C9}" LibraryId="TE140x Module Vendor|TestModel|0.0.0.1">
+      <BlockDiagram>
+         <Name>TestModel</Name>
+         <Identifier>&lt;Root&gt;</Identifier>
+         <Type>root</Type>
+         <Position h="0" w="0" x="0" y="0"/>
+         <BlockDesign/>
+         <Block>
+            <Name>Input</Name>
+            <Identifier>&lt;Root&gt;/Input</Identifier>
+            <Type>Inport</Type>
+            <Position h="14" w="30" x="315" y="158"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+               <Image>
+                  <Placeholder Name="Port" Value="1"/>
+               </Image>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="350" y="165"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="350" y="165"/>
+                  <Point x="445" y="165"/>
+               </Line>
+               <Signal Category="Input" Name="Input" ReadOnly="true">
+                  <GlobalName>TestModel_U.Input</GlobalName>
+                  <AdsIdxOffs>#x80000000</AdsIdxOffs>
+               </Signal>
+            </Port>
+         </Block>
+         <Block>
+            <Name>Output</Name>
+            <Identifier>&lt;Root&gt;/Output</Identifier>
+            <Type>Outport</Type>
+            <Position h="14" w="30" x="450" y="158"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+               <Image>
+                  <Placeholder Name="Port" Value="1"/>
+               </Image>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Inport</Type>
+               <Position x="435" y="165"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;Root&gt;/Input</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+               <Signal Category="Output" Name="Output" ReadOnly="true">
+                  <GlobalName>TestModel_Y.Output</GlobalName>
+                  <AdsIdxOffs>#x81000000</AdsIdxOffs>
+               </Signal>
+            </Port>
+         </Block>
+         <SubsystemHierarchy>
+            <Subsystem>
+               <ID>&lt;Root&gt;</ID>
+            </Subsystem>
+         </SubsystemHierarchy>
+         <DebugInfo/>
+      </BlockDiagram>
+      <DefaultValues>
+         <Value>
+            <Name>TaskOid</Name>
+         </Value>
+         <Value>
+            <Name>TaskPriority</Name>
+            <Value>0</Value>
+         </Value>
+         <Value>
+            <Name>TaskCycleTimeNs</Name>
+            <Value>0</Value>
+         </Value>
+         <Value>
+            <Name>TaskPort</Name>
+            <Value>0</Value>
+         </Value>
+         <Value>
+            <Name>TaskSortOrder</Name>
+            <Value>0</Value>
+         </Value>
+         <Value>
+            <Name>TraceLevelMax</Name>
+            <EnumText>tlInfo</EnumText>
+         </Value>
+         <Value>
+            <Name>ModuleCaller</Name>
+            <EnumText>CyclicTask</EnumText>
+         </Value>
+         <Value>
+            <Name>CallerVerification</Name>
+            <EnumText>Default</EnumText>
+         </Value>
+         <Value>
+            <Name>StepSizeAdaptation</Name>
+            <EnumText>RequireMatchingTaskCycleTime</EnumText>
+         </Value>
+         <Value>
+            <Name>ExecutionSequence</Name>
+            <EnumText>UpdateBeforeOutputMapping</EnumText>
+         </Value>
+         <Value>
+            <Name>Execute</Name>
+            <EnumText>TRUE</EnumText>
+         </Value>
+         <Value>
+            <Name>AccessLockState</Name>
+            <EnumText>TCOM_STATE_OP</EnumText>
+         </Value>
+         <Value>
+            <Name>InitExceptionHandling</Name>
+            <EnumText>CallerExceptions</EnumText>
+         </Value>
+         <Value>
+            <Name>UpdateExceptionHandling</Name>
+            <EnumText>CallerExceptions</EnumText>
+         </Value>
+      </DefaultValues>
+      <ModuleParameters>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="WRITE">
+            <Name>CallBy</Name>
+            <Category>Module parameters</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="WRITE">
+            <Name>ExecutionSequence</Name>
+            <Category>Module parameters</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="WRITE">
+            <Name>StepSizeAdaptation</Name>
+            <Category>Module parameters</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="">
+            <Name>Initialized</Name>
+            <Category>Monitoring</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="">
+            <Name>CycleUpdateExecuted</Name>
+            <Category>Monitoring</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="" StartupValueAccess="">
+            <Name>ModuleInfo</Name>
+            <Category>Module identification</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="" OnlineValueAccess="READONLY" StartupValueAccess="">
+            <Name>ModuleBuildInfo</Name>
+            <Category>Module identification</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="WRITE" StartupValueAccess="WRITE">
+            <Name>Execute</Name>
+            <Category>Module parameters</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="">
+            <Name>SimulinkTime</Name>
+            <Category>Monitoring</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="">
+            <Name>AccessLockState</Name>
+            <Category>Module parameters</Category>
+         </Parameter>
+      </ModuleParameters>
+      <BlockDesigns>
+         <BlockDesign>
+            <Type>Inport</Type>
+            <Border>
+               <svg height="30" id="svg3009" version="1.1" width="60">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <g id="layer1" transform="translate(0,-1022.3622)">
+                     <rect height="28.121166" id="rect2996" ry="14.060583" style="fill:none;stroke:#000000;stroke-width:1.87883461;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none" width="58.121166" x="0.9394173" y="1023.3016"/>
+                  </g>
+               </svg>
+            </Border>
+            <Image>
+               <svg height="30" id="svg3009" version="1.1" width="60">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <text id="text3010" style="font-size:8px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans" x="30" xml:space="preserve" y="15"><tspan id="tspan3012" x="30" y="15">Block::Port</tspan></text></svg>
+            </Image>
+         </BlockDesign>
+         <BlockDesign>
+            <Type>Outport</Type>
+            <Border>
+               <svg height="30" id="svg3009" version="1.1" width="60">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <g id="layer1" transform="translate(0,-1022.3622)">
+                     <rect height="28.121166" id="rect2996" ry="14.060583" style="fill:none;stroke:#000000;stroke-width:1.87883461;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none" width="58.121166" x="0.9394173" y="1023.3016"/>
+                  </g>
+               </svg>
+            </Border>
+            <Image>
+               <svg height="30" id="svg3009" version="1.1" width="60">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <text id="text3010" style="font-size:8px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans" x="30" xml:space="preserve" y="15"><tspan id="tspan3012" x="30" y="15">Block::Port</tspan></text></svg>
+            </Image>
+         </BlockDesign>
+      </BlockDesigns>
+   </ModuleInfo>
+</TctGeneratedModules>
