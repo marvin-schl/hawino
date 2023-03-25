@@ -126,7 +126,8 @@ trajectoryPlanner(path := path,
 				  thetaAccMax := maxRotAcc,
 				  thetaVelMax := maxRotVel,
 				  qVelMaxSlow := maxSlowVel,
-				  arcLengthSlow := arcLengthSlow);
+				  arcLengthSlow := arcLengthSlow,
+				  deltaT := samplingTime);
 				  
 ]]></ST>
       </Implementation>
@@ -166,6 +167,7 @@ trajectoryPlanner(path := path,
       <LineId Id="21" Count="0" />
       <LineId Id="23" Count="0" />
       <LineId Id="34" Count="1" />
+      <LineId Id="108" Count="0" />
       <LineId Id="30" Count="0" />
       <LineId Id="24" Count="0" />
     </LineIds>
