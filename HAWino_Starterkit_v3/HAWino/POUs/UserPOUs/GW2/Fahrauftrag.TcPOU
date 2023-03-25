@@ -27,7 +27,7 @@ VAR
 	yRobotStartposition AT%Q*: LREAL;			//aktuelle yKoordinate
 	xPointList AT%I*: ARRAY[0..100] OF LREAL;	//xKoordinatenliste
 	yPointList AT%I*: ARRAY[0..100] OF LREAL;	//yKoordinatenliste
-	
+	enable_ASearch AT%Q* : BOOL;	//enable signal for a search
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -58,6 +58,7 @@ IF s0 AND NOT s1 AND Auftrag.Art = 'Fahrauftrag' THEN
 	yEndvalue := readAssigment.pickupLocation.y;
 	xRobotStartposition := readAssigment.xStartposition;
 	yRobotStartposition := readAssigment.yStartposition;
+	enable_ASearch := TRUE;
 	//Bahnplanung
  	//wayPointList[0] := ToRobotPoseSimple(x:= xPointList[0], y:= yPointList[0], theta:= -1);
 	TrajectoryController.setWaypointList(WaypointList);
@@ -257,6 +258,7 @@ END_IF
       <LineId Id="427" Count="0" />
       <LineId Id="377" Count="0" />
       <LineId Id="422" Count="4" />
+      <LineId Id="492" Count="0" />
       <LineId Id="94" Count="0" />
       <LineId Id="226" Count="0" />
       <LineId Id="230" Count="0" />

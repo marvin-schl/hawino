@@ -268,31 +268,35 @@
 			</SubItem>
 		</DataType>
 		<DataType>
-			<Name GUID="{78189268-4DCA-E0BC-718B-D361EFD0087C}">ITcA_search_2021b</Name>
+			<Name GUID="{9379B375-26F9-13B0-F7DF-46BB4E9DF38E}">ITcA_Search</Name>
 			<BitSize X64="64">32</BitSize>
 			<BaseType GUID="{00000001-0000-0000-E000-000000000064}">ITcUnknown</BaseType>
 			<Method>
-				<Name VTableIndex="0">step</Name>
+				<Name VTableIndex="0">A_Search_step</Name>
 				<ReturnType GUID="{18071995-0000-0000-0000-000000000019}">HRESULT</ReturnType>
 				<ReturnBitSize>32</ReturnBitSize>
 			</Method>
 		</DataType>
 		<DataType>
-			<Name GUID="{F943D866-5CCA-8252-A4DE-C3B2588A676E}">matrix_144_real_T</Name>
-			<BitSize>9216</BitSize>
+			<Name GUID="{52DBFE87-3AFB-2D09-48C9-A9D296DAA97A}">matrix_101x1_real_T</Name>
+			<BitSize>6464</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 			<ArrayInfo>
 				<LBound>0</LBound>
-				<Elements>144</Elements>
+				<Elements>1</Elements>
+			</ArrayInfo>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>101</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{7D36307D-4D1F-1968-DDE2-C60825B06EF5}" HideSubItems="true">matrix_720_real_T</Name>
-			<BitSize>46080</BitSize>
+			<Name GUID="{A241177B-78D6-7DCE-7BE6-870A650A50EF}">matrix_101_real_T</Name>
+			<BitSize>6464</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 			<ArrayInfo>
 				<LBound>0</LBound>
-				<Elements>720</Elements>
+				<Elements>101</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
@@ -311,6 +315,15 @@
 			<ArrayInfo>
 				<LBound>0</LBound>
 				<Elements>12</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{F943D866-5CCA-8252-A4DE-C3B2588A676E}">matrix_144_real_T</Name>
+			<BitSize>9216</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>144</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
@@ -564,12 +577,12 @@
 			</SubItem>
 		</DataType>
 		<DataType>
-			<Name GUID="{E578216D-3219-E810-3DB9-588FC81C5D61}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..143] OF LREAL</Name>
-			<BitSize>9216</BitSize>
+			<Name GUID="{160298A9-1AA9-6076-6FE5-D331BEDC2A7F}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..100] OF LREAL</Name>
+			<BitSize>6464</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 			<ArrayInfo>
 				<LBound>0</LBound>
-				<Elements>144</Elements>
+				<Elements>101</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
@@ -1358,7 +1371,7 @@
 		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1006">424de6000000000000007600000028000000100000000e000000010004000000000070000000000000000000000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffff788833338887ffff78883bb38887ffffffff3bb3ffffffffffff8778fffffffffffffffffffffffffffffffff999ffff78f78fffffffffff78f78ffff999ffff78f7888fffffffff78f78f78f999ffff78f78f78ffffffff78f7888ff999ffffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.214.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.207.184.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="2">
 				<Cpu BaseTime="1000"/>
@@ -1381,7 +1394,7 @@
 				<Task Id="7" Priority="1" CycleTime="100000" AmsPort="354" AdtTasks="true">
 					<Name>ControlTask</Name>
 				</Task>
-				<Task Id="8" Priority="22" CycleTime="10000000" AmsPort="355" DisableFpExceptions="true" AdtTasks="true">
+				<Task Id="8" Priority="22" CycleTime="200000" AmsPort="355" DisableFpExceptions="true" AdtTasks="true">
 					<Name>A_search</Name>
 				</Task>
 			</Tasks>
@@ -3270,12 +3283,12 @@
 						</ParameterValues>
 					</TmcDesc>
 				</Module>
-				<Module Id="#x01010040" KeepUnrestoredLinks="2" ClassFactoryId="TE140x Module Vendor|A_search_2021b|0.0.0.12">
-					<Name>Object3 (A_search_2021b)</Name>
+				<Module Id="#x01010040" KeepUnrestoredLinks="2" ClassFactoryId="TE140x Module Vendor|A_Search|0.0.0.3">
+					<Name>Object3 (A_Search)</Name>
 					<ImageId>1000</ImageId>
-					<TmcDesc GUID="{D3CF0C5B-72ED-6E6F-924C-D778A775A0C2}">
-						<Name>A_search_2021b</Name>
-						<CLSID ClassFactory="A_search_2021b" RealTimeInstantiable="true">{D3CF0C5B-72ED-6E6F-924C-D778A775A0C2}</CLSID>
+					<TmcDesc GUID="{E8159DBE-F88B-7273-C6B3-6E0BE540CBDA}">
+						<Name>A_Search</Name>
+						<CLSID ClassFactory="A_Search" RealTimeInstantiable="true">{E8159DBE-F88B-7273-C6B3-6E0BE540CBDA}</CLSID>
 						<Info>
 							<TabExtension GUID="{BB6DDFDC-900F-473F-83FC-D83513217B55}"/>
 						</Info>
@@ -3288,12 +3301,12 @@
 						<Contexts>
 							<Context>
 								<Id>0</Id>
-								<Name>Context0 (1000 ms)</Name>
+								<Name>Context0 (20 ms)</Name>
 								<ManualConfig>
 									<OTCID>#x02010080</OTCID>
 								</ManualConfig>
 								<Priority>22</Priority>
-								<CycleTime>1000000000</CycleTime>
+								<CycleTime>20000000</CycleTime>
 							</Context>
 						</Contexts>
 						<Interfaces>
@@ -3319,7 +3332,7 @@
 								<Type GUID="{03000012-0000-0000-E000-000000000064}">ITcADI</Type>
 							</Interface>
 							<Interface>
-								<Type GUID="{78189268-4DCA-E0BC-718B-D361EFD0087C}">ITcA_search_2021b</Type>
+								<Type GUID="{9379B375-26F9-13B0-F7DF-46BB4E9DF38E}">ITcA_Search</Type>
 								<ContextId>0</ContextId>
 							</Interface>
 						</Interfaces>
@@ -3480,165 +3493,172 @@
 								<AreaNo AreaType="InputDst" CreateSymbols="true">0</AreaNo>
 								<Name>AdditionalInports</Name>
 								<ContextId>0</ContextId>
-								<ByteSize>40</ByteSize>
+								<ByteSize>48</ByteSize>
 								<Symbol>
-									<Name>TcModuleInput_endNode</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<Name>TcModuleInput_enable</Name>
+									<BitSize>8</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
 									<PTCID>#x80000000</PTCID>
 									<BitOffs>0</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>TcModuleInput_xGoalEnd</Name>
+									<Name>TcModuleInput_endNode</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 									<PTCID>#x80000008</PTCID>
 									<BitOffs>64</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>TcModuleInput_xRobotStart</Name>
+									<Name>TcModuleInput_xRobotEnd</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 									<PTCID>#x80000010</PTCID>
 									<BitOffs>128</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>TcModuleInput_yGoalEnd</Name>
+									<Name>TcModuleInput_xRobotStart</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 									<PTCID>#x80000018</PTCID>
 									<BitOffs>192</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>TcModuleInput_yRobotStart</Name>
+									<Name>TcModuleInput_yRobotEnd</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 									<PTCID>#x80000020</PTCID>
 									<BitOffs>256</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>TcModuleInput_yRobotStart</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<PTCID>#x80000028</PTCID>
+									<BitOffs>320</BitOffs>
 								</Symbol>
 							</DataArea>
 							<DataArea>
 								<AreaNo AreaType="OutputSrc" CreateSymbols="true">1</AreaNo>
 								<Name>AdditionalOutports</Name>
 								<ContextId>0</ContextId>
-								<ByteSize>2304</ByteSize>
+								<ByteSize>1616</ByteSize>
 								<Symbol>
-									<Name>TcModuleOutput_xPointList</Name>
-									<BitSize>9216</BitSize>
-									<BaseType GUID="{F943D866-5CCA-8252-A4DE-C3B2588A676E}">matrix_144_real_T</BaseType>
+									<Name>TcModuleOutput_xCoordinates</Name>
+									<BitSize>6464</BitSize>
+									<BaseType GUID="{52DBFE87-3AFB-2D09-48C9-A9D296DAA97A}">matrix_101x1_real_T</BaseType>
 									<PTCID>#x81000000</PTCID>
 									<BitOffs>0</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>TcModuleOutput_yPointList</Name>
-									<BitSize>9216</BitSize>
-									<BaseType GUID="{F943D866-5CCA-8252-A4DE-C3B2588A676E}">matrix_144_real_T</BaseType>
-									<PTCID>#x81000480</PTCID>
-									<BitOffs>9216</BitOffs>
+									<Name>TcModuleOutput_yCoordinates</Name>
+									<BitSize>6464</BitSize>
+									<BaseType GUID="{52DBFE87-3AFB-2D09-48C9-A9D296DAA97A}">matrix_101x1_real_T</BaseType>
+									<PTCID>#x81000328</PTCID>
+									<BitOffs>6464</BitOffs>
 								</Symbol>
 							</DataArea>
 							<DataArea>
 								<AreaNo AreaType="Internal" CreateSymbols="true">2</AreaNo>
-								<Name>A_search_2021b_B</Name>
+								<Name>A_Search_B</Name>
 								<ContextId>0</ContextId>
-								<ByteSize>177552</ByteSize>
-								<Symbol>
-									<Name>closedList</Name>
-									<BitSize>46080</BitSize>
-									<BaseType GUID="{7D36307D-4D1F-1968-DDE2-C60825B06EF5}">matrix_720_real_T</BaseType>
-									<PTCID>#x82000000</PTCID>
-									<BitOffs>0</BitOffs>
-								</Symbol>
+								<ByteSize>170768</ByteSize>
 								<Symbol>
 									<Name>xRobotStart</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x82001680</PTCID>
-									<BitOffs>46080</BitOffs>
+									<PTCID>#x82000000</PTCID>
+									<BitOffs>0</BitOffs>
 								</Symbol>
 								<Symbol>
 									<Name>yRobotStart</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x82001688</PTCID>
-									<BitOffs>46144</BitOffs>
+									<PTCID>#x82000008</PTCID>
+									<BitOffs>64</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>xGoalEnd</Name>
+									<Name>xRobotEnd</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x82001690</PTCID>
-									<BitOffs>46208</BitOffs>
+									<PTCID>#x82000010</PTCID>
+									<BitOffs>128</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>yGoalEnd</Name>
+									<Name>yRobotEnd</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x82001698</PTCID>
-									<BitOffs>46272</BitOffs>
+									<PTCID>#x82000018</PTCID>
+									<BitOffs>192</BitOffs>
 								</Symbol>
 								<Symbol>
 									<Name>endNode</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x820016a0</PTCID>
-									<BitOffs>46336</BitOffs>
+									<PTCID>#x82000020</PTCID>
+									<BitOffs>256</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>startNode</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<PTCID>#x82000028</PTCID>
+									<BitOffs>320</BitOffs>
 								</Symbol>
 								<Symbol>
 									<Name>xKoordinaten</Name>
-									<BitSize>9216</BitSize>
-									<BaseType GUID="{F943D866-5CCA-8252-A4DE-C3B2588A676E}">matrix_144_real_T</BaseType>
-									<PTCID>#x820016a8</PTCID>
-									<BitOffs>46400</BitOffs>
+									<BitSize>6464</BitSize>
+									<BaseType GUID="{A241177B-78D6-7DCE-7BE6-870A650A50EF}">matrix_101_real_T</BaseType>
+									<PTCID>#x82000030</PTCID>
+									<BitOffs>384</BitOffs>
 								</Symbol>
 								<Symbol>
 									<Name>yKoordinaten</Name>
-									<BitSize>9216</BitSize>
-									<BaseType GUID="{F943D866-5CCA-8252-A4DE-C3B2588A676E}">matrix_144_real_T</BaseType>
-									<PTCID>#x82001b28</PTCID>
-									<BitOffs>55616</BitOffs>
+									<BitSize>6464</BitSize>
+									<BaseType GUID="{A241177B-78D6-7DCE-7BE6-870A650A50EF}">matrix_101_real_T</BaseType>
+									<PTCID>#x82000358</PTCID>
+									<BitOffs>6848</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>startKnoten</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x82001fa8</PTCID>
-									<BitOffs>64832</BitOffs>
+									<Name>wayPointList</Name>
+									<BitSize>6464</BitSize>
+									<BaseType GUID="{A241177B-78D6-7DCE-7BE6-870A650A50EF}">matrix_101_real_T</BaseType>
+									<PTCID>#x82000680</PTCID>
+									<BitOffs>13312</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>A</Name>
+									<Name>matrix</Name>
 									<BitSize>1327104</BitSize>
 									<BaseType GUID="{84F14F01-1544-F8A7-772F-08338F3898B9}">matrix_20736_real_T</BaseType>
-									<PTCID>#x82001fb0</PTCID>
-									<BitOffs>64896</BitOffs>
+									<PTCID>#x820009a8</PTCID>
+									<BitOffs>19776</BitOffs>
 								</Symbol>
 								<Symbol>
 									<Name>removeNode</Name>
 									<BitSize>768</BitSize>
 									<BaseType GUID="{96759023-969C-4C54-91CF-54C1F04F81ED}">matrix_12_real_T</BaseType>
-									<PTCID>#x8202a7b0</PTCID>
-									<BitOffs>1392000</BitOffs>
+									<PTCID>#x820291a8</PTCID>
+									<BitOffs>1346880</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>xKnoten</Name>
+									<Name>xNode</Name>
 									<BitSize>9216</BitSize>
 									<BaseType GUID="{F943D866-5CCA-8252-A4DE-C3B2588A676E}">matrix_144_real_T</BaseType>
-									<PTCID>#x8202a810</PTCID>
-									<BitOffs>1392768</BitOffs>
+									<PTCID>#x82029208</PTCID>
+									<BitOffs>1347648</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>yKnoten</Name>
+									<Name>yNode</Name>
 									<BitSize>9216</BitSize>
 									<BaseType GUID="{F943D866-5CCA-8252-A4DE-C3B2588A676E}">matrix_144_real_T</BaseType>
-									<PTCID>#x8202ac90</PTCID>
-									<BitOffs>1401984</BitOffs>
+									<PTCID>#x82029688</PTCID>
+									<BitOffs>1356864</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>wayPointList</Name>
-									<BitSize>9216</BitSize>
-									<BaseType GUID="{F943D866-5CCA-8252-A4DE-C3B2588A676E}">matrix_144_real_T</BaseType>
-									<PTCID>#x8202b110</PTCID>
-									<BitOffs>1411200</BitOffs>
+									<Name>enable</Name>
+									<BitSize>8</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+									<PTCID>#x82029b08</PTCID>
+									<BitOffs>1366080</BitOffs>
 								</Symbol>
 							</DataArea>
 						</DataAreas>
@@ -3649,7 +3669,7 @@
 							</Property>
 						</Properties>
 						<Xml>
-							<GeneratedModuleInfoFile>A_search_2021b_ModuleInfo.xml</GeneratedModuleInfoFile>
+							<GeneratedModuleInfoFile>A_Search_ModuleInfo.xml</GeneratedModuleInfoFile>
 						</Xml>
 						<ParameterValues>
 							<Value>
@@ -3662,7 +3682,7 @@
 							</Value>
 							<Value>
 								<Name>TaskCycleTimeNs</Name>
-								<Value>1000000000</Value>
+								<Value>20000000</Value>
 							</Value>
 							<Value>
 								<Name>TaskPort</Name>
@@ -4069,10 +4089,6 @@
 					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
 						<Name>PlcTask Inputs</Name>
 						<Var>
-							<Name>PowerManager.shutdownButton</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>Fahrauftrag.TrajectoryController.yBoArrivedAtDestination</Name>
 							<Comment><![CDATA[ TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
 							<Type>BOOL</Type>
@@ -4092,6 +4108,10 @@
 							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.shutdownButton</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>Fahrauftrag.Auftrag</Name>
 							<Type GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}">Auftrag</Type>
 						</Var>
@@ -4100,22 +4120,18 @@
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.requestShutdown</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>PowerManager.batteryVoltageRaw</Name>
 							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.xPointList</Name>
 							<Comment><![CDATA[xKoordinatenliste]]></Comment>
-							<Type GUID="{E578216D-3219-E810-3DB9-588FC81C5D61}">ARRAY [0..143] OF LREAL</Type>
+							<Type GUID="{160298A9-1AA9-6076-6FE5-D331BEDC2A7F}">ARRAY [0..100] OF LREAL</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.yPointList</Name>
 							<Comment><![CDATA[yKoordinatenliste]]></Comment>
-							<Type GUID="{E578216D-3219-E810-3DB9-588FC81C5D61}">ARRAY [0..143] OF LREAL</Type>
+							<Type GUID="{160298A9-1AA9-6076-6FE5-D331BEDC2A7F}">ARRAY [0..100] OF LREAL</Type>
 						</Var>
 						<Var>
 							<Name>IrDistanceSensors.distanceRaw</Name>
@@ -4128,6 +4144,10 @@
 						<Var>
 							<Name>PowerManager.SOC</Name>
 							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.requestShutdown</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.slider</Name>
@@ -4156,6 +4176,11 @@
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.resetVar</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.enable_ASearch</Name>
+							<Comment><![CDATA[enable signal for a search]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -4216,31 +4241,6 @@
 							<Type GUID="{E653CDAE-1A31-0819-E492-0347803C1564}">ARRAY [1..9] OF REAL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.supplyCurrent_A</Name>
-							<Type>REAL</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.stMqtt_HAWino_IN</Name>
-							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
-							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.driveEnable</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.driveVelocity</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.sliderToSimulink</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.partInGripperToSimulink</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
 							<Name>Camera.cameraData.robotPosition</Name>
 							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
 						</Var>
@@ -4255,6 +4255,31 @@
 						<Var>
 							<Name>Camera.cameraData.SS</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.supplyCurrent_A</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.driveEnable</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.stMqtt_HAWino_IN</Name>
+							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
+							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.sliderToSimulink</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.partInGripperToSimulink</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.driveVelocity</Name>
+							<Type>INT</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2022-04-26T16:44:07">
@@ -4330,7 +4355,7 @@
 			<PlcAuxTask Affinity="#x00000002"/>
 		</Plc>
 		<Io>
-			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="5.53.205.214.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
+			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="5.53.207.184.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
 				<Name>Gerät 1 (EtherCAT)</Name>
 				<AddressInfo>
 					<Ccat>
@@ -7188,7 +7213,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 		<MappingInfo Identifier="{08502002-0060-0201-0120-500820000101}" Id="#x020300b0" Watchdog="04000000280000000400000004000000"/>
 		<MappingInfo Identifier="{08502003-0010-0304-0020-500810000403}" Id="#x02030020" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{08502003-0040-0304-0020-500840000403}" Id="#x02030070" Watchdog="04000000040000000400000004000000"/>
-		<MappingInfo Identifier="{08502003-0080-0201-0220-500840000101}" Id="#x020300d0" Watchdog="90010000040000000400000004000000"/>
+		<MappingInfo Identifier="{08502003-0080-0201-0220-500840000101}" Id="#x020300d0" Watchdog="08000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-2003-0850-1000-010102205008}" Id="#x02030090" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-0060-0201-1000-010120000101}" Id="#x02030030" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIPC^HAWino^HAWino Instance">
@@ -7271,13 +7296,14 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^nEstimatedChargingTime" VarB="SoC_Model__Data_Processing_20_Y^EstimatedChargingTime"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^nEstimatedRunningTime" VarB="SoC_Model__Data_Processing_20_Y^EstimatedRunningTime"/>
 			</OwnerB>
-			<OwnerB Name="TIRC^TcCOM Objects^Object3 (A_search_2021b)">
-				<Link VarA="PlcTask Inputs^Fahrauftrag.xPointList" VarB="AdditionalOutports^TcModuleOutput_xPointList"/>
-				<Link VarA="PlcTask Inputs^Fahrauftrag.yPointList" VarB="AdditionalOutports^TcModuleOutput_yPointList"/>
+			<OwnerB Name="TIRC^TcCOM Objects^Object3 (A_Search)">
+				<Link VarA="PlcTask Inputs^Fahrauftrag.xPointList" VarB="AdditionalOutports^TcModuleOutput_xCoordinates"/>
+				<Link VarA="PlcTask Inputs^Fahrauftrag.yPointList" VarB="AdditionalOutports^TcModuleOutput_yCoordinates"/>
 				<Link VarA="PlcTask Outputs^Fahrauftrag.EndNode" VarB="AdditionalInports^TcModuleInput_endNode"/>
-				<Link VarA="PlcTask Outputs^Fahrauftrag.xEndvalue" VarB="AdditionalInports^TcModuleInput_xGoalEnd"/>
+				<Link VarA="PlcTask Outputs^Fahrauftrag.enable_ASearch" VarB="AdditionalInports^TcModuleInput_enable"/>
+				<Link VarA="PlcTask Outputs^Fahrauftrag.xEndvalue" VarB="AdditionalInports^TcModuleInput_xRobotEnd"/>
 				<Link VarA="PlcTask Outputs^Fahrauftrag.xRobotStartposition" VarB="AdditionalInports^TcModuleInput_xRobotStart"/>
-				<Link VarA="PlcTask Outputs^Fahrauftrag.yEndvalue" VarB="AdditionalInports^TcModuleInput_yGoalEnd"/>
+				<Link VarA="PlcTask Outputs^Fahrauftrag.yEndvalue" VarB="AdditionalInports^TcModuleInput_yRobotEnd"/>
 				<Link VarA="PlcTask Outputs^Fahrauftrag.yRobotStartposition" VarB="AdditionalInports^TcModuleInput_yRobotStart"/>
 			</OwnerB>
 		</OwnerA>
