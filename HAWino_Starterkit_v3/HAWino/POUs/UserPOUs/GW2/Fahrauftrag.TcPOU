@@ -27,6 +27,8 @@ VAR
 	yRobotStartposition AT%Q*: LREAL;			//aktuelle yKoordinate
 	xPointList AT%I*: ARRAY[0..143] OF LREAL;	//xKoordinatenliste
 	yPointList AT%I*: ARRAY[0..143] OF LREAL;	//yKoordinatenliste
+	
+	//closeGripper AT%Q*:BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -89,13 +91,14 @@ IF s4 AND NOT s5 AND trajectoryController.yBoArrivedAtDestination THEN
 	s4 := 0; s5 := 1;
 	trajectoryController.xBoEnable := FALSE;
 	//	Greifersteuerung
-																		//----------todo
+	Gripper.closeGripperCommand := TRUE;												// hier könnte noch slider und Lichtschranke abgefragt werden zur Sicherheit
 	//	RückmeldungGW1 Teil aufgenommen setzen
 	FeedbackToGW1 := 'Teil aufgenommen';
 	//	Fahrauftrag zu Lesekopf
 	TrajectoryController.setWaypointList(readAssigment.pointsFromSlotToReader);
 	trajectoryController.newWaypointListAvailable := TRUE;
 END_IF
+
 
 /////////////////////////////////////////////////////FahrtZumLesekopf/////////////////////////////////////////////////////////
 
@@ -197,7 +200,7 @@ IF s18 AND NOT s19 AND trajectoryController.yBoArrivedAtDestination THEN
 	s18 := 0; s19 := 1;
 	trajectoryController.xBoEnable := FALSE;
 	//	Greifersteuerung
-																		//----------todo
+	Gripper.closeGripperCommand := FALSE;																	//----------todo
 	//	RückmeldungGW1 Teil abgelegt
 	FeedbackToGW1 := 'Teil abgelegt';
 	//	Fahrauftrag zum Parkplatz
@@ -280,12 +283,13 @@ END_IF
       <LineId Id="66" Count="0" />
       <LineId Id="120" Count="1" />
       <LineId Id="268" Count="0" />
-      <LineId Id="123" Count="0" />
       <LineId Id="125" Count="0" />
+      <LineId Id="460" Count="0" />
       <LineId Id="124" Count="0" />
       <LineId Id="126" Count="1" />
       <LineId Id="354" Count="1" />
       <LineId Id="122" Count="0" />
+      <LineId Id="463" Count="0" />
       <LineId Id="290" Count="0" />
       <LineId Id="269" Count="0" />
       <LineId Id="291" Count="0" />
