@@ -5,9 +5,6 @@
     <CycleTime>10000</CycleTime>
     <Priority>1</Priority>
     <PouCall>
-      <Name>ControlPRG</Name>
-    </PouCall>
-    <PouCall>
       <Name>MotorDrivers</Name>
     </PouCall>
     <PouCall>
