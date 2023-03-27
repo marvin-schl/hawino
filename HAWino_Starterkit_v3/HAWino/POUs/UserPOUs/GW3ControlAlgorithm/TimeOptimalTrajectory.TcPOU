@@ -19,12 +19,12 @@ VAR
 	wayPointListRaw		: ARRAY [0..100] OF RobotPoseSimple;
 	cnt					: INT 				:= 0;
 	
-	maxRadius				: LREAL				:= 0.1;
+    maxRadius		    : LREAL				:= 0.1;
 	
 	samplingTime		: LREAL				:= 0.05;
 	
-	maxVel				: LREAL				:= 0.7;
-	maxAcc				: LREAL				:= 0.8;
+	maxVel				: LREAL				:= 0.5;
+	maxAcc				: LREAL				:= 0.4;
 	
 	arcLengthSlow		: LREAL				:= 0.1;
 	maxSlowVel			: LREAL				:= 0.15;
@@ -45,12 +45,8 @@ IF  trajectoryPlanner.posTrajectory[WPLidx].x = -1 AND trajectoryPlanner.posTraj
 END_IF
 
 IF drive AND NOT finished AND ready THEN
-	referencePose.y := trajectoryPlanner.posTrajectory[WPLidx].y;
-	referencePose.x := trajectoryPlanner.posTrajectory[WPLidx].x;
-	referencePose.theta := trajectoryPlanner.posTrajectory[WPLidx].theta;
-	referenceVelocities.x := trajectoryPlanner.velTrajectory[WPLidx].x;
-	referenceVelocities.y := trajectoryPlanner.velTrajectory[WPLidx].y;
-	referenceVelocities.theta := trajectoryPlanner.velTrajectory[WPLidx].theta;
+	referencePose := trajectoryPlanner.posTrajectory[WPLidx];
+	referenceVelocities := trajectoryPlanner.velTrajectory[WPLidx];
 	cnt := cnt +1;	
 END_IF
 
@@ -134,10 +130,9 @@ trajectoryPlanner(path := path,
     </Method>
     <LineIds Name="TimeOptimalTrajectory">
       <LineId Id="124" Count="7" />
-      <LineId Id="133" Count="5" />
-      <LineId Id="172" Count="0" />
-      <LineId Id="174" Count="1" />
-      <LineId Id="139" Count="2" />
+      <LineId Id="133" Count="2" />
+      <LineId Id="207" Count="0" />
+      <LineId Id="138" Count="3" />
       <LineId Id="71" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.generateTrajectory">

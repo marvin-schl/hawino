@@ -7,9 +7,9 @@
  *
  * Code generation for model "simpleObserver2".
  *
- * Model version              : 1.3
+ * Model version              : 1.46
  * Simulink Coder version : 9.6 (R2021b) 14-May-2021
- * C++ source code generated on : Mon Mar 27 16:08:52 2023
+ * C++ source code generated on : Mon Mar 27 19:08:06 2023
  *
  * Target selection: TwinCatGrt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -61,7 +61,11 @@ void simpleObserver2_step(RT_MODEL_simpleObserver2_T *const simpleObserver2_M)
 
   X_simpleObserver2_T *simpleObserver2_X{ simpleObserver2_M->contStates };
 
+  PrevZCX_simpleObserver2_T *simpleObserver2_PrevZCX{
+    simpleObserver2_M->prevZCSigState };
+
   int32_T k;
+  boolean_T y;
   if (rtmIsMajorTimeStep(simpleObserver2_M)) {
     /* set solver stop time */
     if (!(simpleObserver2_M->Timing.clockTick0+1)) {
@@ -91,18 +95,45 @@ void simpleObserver2_step(RT_MODEL_simpleObserver2_T *const simpleObserver2_M)
            simpleObserver2_DW->InCameraPose_PWORK, 24);
   }
 
+  /* S-Function (TcModuleInOut): '<S1>/Reset' */
+  if (simpleObserver2_DW->Reset_PWORK != NULL) {
+    simpleObserver2_B->Reset = *((boolean_T*)simpleObserver2_DW->Reset_PWORK);
+  }
+
   if (rtmIsMajorTimeStep(simpleObserver2_M)) {
     boolean_T exitg1;
     boolean_T guard1{ false };
 
-    boolean_T y;
+    /* MATLAB Function: '<S1>/denormalizeCamData' */
+    simpleObserver2_B->angleDenormalizedCamData[0] =
+      simpleObserver2_B->InCameraPose[0];
+    simpleObserver2_B->angleDenormalizedCamData[1] =
+      simpleObserver2_B->InCameraPose[1];
+    simpleObserver2_B->angleDenormalizedCamData[2] =
+      simpleObserver2_B->InCameraPose[2];
+    if ((!simpleObserver2_B->Reset) && (std::abs(simpleObserver2_DW->oldTheta -
+          simpleObserver2_B->InCameraPose[2]) > 3.1415926535897931)) {
+      if ((simpleObserver2_DW->oldTheta > 0.0) &&
+          (simpleObserver2_B->InCameraPose[2] < 0.0)) {
+        simpleObserver2_B->angleDenormalizedCamData[2] =
+          simpleObserver2_B->InCameraPose[2] + 6.2831853071795862;
+      } else if ((simpleObserver2_DW->oldTheta < 0.0) &&
+                 (simpleObserver2_B->InCameraPose[2] > 0.0)) {
+        simpleObserver2_B->angleDenormalizedCamData[2] =
+          simpleObserver2_B->InCameraPose[2] - 6.2831853071795862;
+      }
+    }
+
+    simpleObserver2_DW->oldTheta = simpleObserver2_B->angleDenormalizedCamData[2];
+
+    /* End of MATLAB Function: '<S1>/denormalizeCamData' */
 
     /* MATLAB Function: '<S1>/CamFlag' */
     y = true;
     k = 0;
     exitg1 = false;
     while ((!exitg1) && (k < 2)) {
-      if (simpleObserver2_B->InCameraPose[k] == 0.0) {
+      if (simpleObserver2_B->angleDenormalizedCamData[k] == 0.0) {
         y = false;
         exitg1 = true;
       } else {
@@ -115,7 +146,7 @@ void simpleObserver2_step(RT_MODEL_simpleObserver2_T *const simpleObserver2_M)
       k = 0;
       exitg1 = false;
       while ((!exitg1) && (k < 3)) {
-        if (!(simpleObserver2_B->InCameraPose[k] !=
+        if (!(simpleObserver2_B->angleDenormalizedCamData[k] !=
               simpleObserver2_DW->oldCamData[k])) {
           y = false;
           exitg1 = true;
@@ -135,71 +166,131 @@ void simpleObserver2_step(RT_MODEL_simpleObserver2_T *const simpleObserver2_M)
 
     if (guard1) {
       simpleObserver2_B->newCamDataArrived = false;
-      simpleObserver2_DW->oldCamData[0] = simpleObserver2_B->InCameraPose[0];
-      simpleObserver2_DW->oldCamData[1] = simpleObserver2_B->InCameraPose[1];
-      simpleObserver2_DW->oldCamData[2] = simpleObserver2_B->InCameraPose[2];
+      simpleObserver2_DW->oldCamData[0] =
+        simpleObserver2_B->angleDenormalizedCamData[0];
+      simpleObserver2_DW->oldCamData[1] =
+        simpleObserver2_B->angleDenormalizedCamData[1];
+      simpleObserver2_DW->oldCamData[2] =
+        simpleObserver2_B->angleDenormalizedCamData[2];
     }
 
     /* End of MATLAB Function: '<S1>/CamFlag' */
-
-    /* Delay: '<S1>/CameraDelay' */
-    simpleObserver2_B->CameraDelay[0] = simpleObserver2_DW->CameraDelay_DSTATE[0];
-    simpleObserver2_B->CameraDelay[1] = simpleObserver2_DW->CameraDelay_DSTATE[1];
-    simpleObserver2_B->CameraDelay[2] = simpleObserver2_DW->CameraDelay_DSTATE[2];
   }
 
   /* Integrator: '<S1>/Integrator' */
-  if (simpleObserver2_DW->Integrator_IWORK != 0) {
-    simpleObserver2_X->Integrator_CSTATE[0] = simpleObserver2_B->InCameraPose[0];
-    simpleObserver2_X->Integrator_CSTATE[1] = simpleObserver2_B->InCameraPose[1];
-    simpleObserver2_X->Integrator_CSTATE[2] = simpleObserver2_B->InCameraPose[2];
+  if (rtmIsMajorTimeStep(simpleObserver2_M)) {
+    y = (simpleObserver2_B->Reset &&
+         (simpleObserver2_PrevZCX->Integrator_Reset_ZCE != POS_ZCSIG));
+    simpleObserver2_PrevZCX->Integrator_Reset_ZCE = simpleObserver2_B->Reset;
+
+    /* evaluate zero-crossings */
+    if (y || (simpleObserver2_DW->Integrator_IWORK != 0)) {
+      simpleObserver2_X->Integrator_CSTATE[0] = simpleObserver2_B->InCameraPose
+        [0];
+      simpleObserver2_X->Integrator_CSTATE[1] = simpleObserver2_B->InCameraPose
+        [1];
+      simpleObserver2_X->Integrator_CSTATE[2] = simpleObserver2_B->InCameraPose
+        [2];
+    }
   }
 
   /* Integrator: '<S1>/Integrator' */
   simpleObserver2_B->Odometry[0] = simpleObserver2_X->Integrator_CSTATE[0];
   simpleObserver2_B->Odometry[1] = simpleObserver2_X->Integrator_CSTATE[1];
   simpleObserver2_B->Odometry[2] = simpleObserver2_X->Integrator_CSTATE[2];
+  if (rtmIsMajorTimeStep(simpleObserver2_M)) {
+    /* S-Function (TcModuleInOut): '<S1>/cameraDelayCylces' */
+    if (simpleObserver2_DW->cameraDelayCylces_PWORK != NULL) {
+      simpleObserver2_B->cameraDelayCylces = *((int8_T*)
+        simpleObserver2_DW->cameraDelayCylces_PWORK);
+    }
+
+    /* Delay: '<S1>/CameraDelay' */
+    if (simpleObserver2_B->cameraDelayCylces <= 0) {
+      /* Delay: '<S1>/CameraDelay' incorporates:
+       *  Integrator: '<S1>/Integrator'
+       */
+      simpleObserver2_B->CameraDelay[0] = simpleObserver2_B->Odometry[0];
+      simpleObserver2_B->CameraDelay[1] = simpleObserver2_B->Odometry[1];
+      simpleObserver2_B->CameraDelay[2] = simpleObserver2_B->Odometry[2];
+    } else {
+      int8_T tmp;
+      if (simpleObserver2_B->cameraDelayCylces > 100) {
+        tmp = 100;
+      } else {
+        tmp = simpleObserver2_B->cameraDelayCylces;
+      }
+
+      k = static_cast<int8_T>(100 - tmp) * 3;
+
+      /* Delay: '<S1>/CameraDelay' */
+      simpleObserver2_B->CameraDelay[0] = simpleObserver2_DW->
+        CameraDelay_DSTATE[k];
+      simpleObserver2_B->CameraDelay[1] = simpleObserver2_DW->
+        CameraDelay_DSTATE[k + 1];
+      simpleObserver2_B->CameraDelay[2] = simpleObserver2_DW->
+        CameraDelay_DSTATE[k + 2];
+    }
+
+    /* End of Delay: '<S1>/CameraDelay' */
+  }
 
   /* S-Function (TcModuleInOut): '<S1>/K' */
   if (simpleObserver2_DW->K_PWORK != NULL) {
     memcpy(&simpleObserver2_B->K[0], simpleObserver2_DW->K_PWORK, 72);
   }
 
-  /* Switch: '<S1>/Switch' */
-  if (simpleObserver2_B->newCamDataArrived) {
-    /* Sum: '<S1>/Sum1' */
-    simpleObserver2_B->Sum1[0] = simpleObserver2_B->InCameraPose[0] -
-      simpleObserver2_B->CameraDelay[0];
-
+  if (rtmIsMajorTimeStep(simpleObserver2_M)) {
     /* Switch: '<S1>/Switch' */
-    simpleObserver2_B->Switch[0] = simpleObserver2_B->Sum1[0];
+    if (simpleObserver2_B->newCamDataArrived) {
+      /* Sum: '<S1>/Sum1' incorporates:
+       *  Delay: '<S1>/CameraDelay'
+       */
+      simpleObserver2_B->Sum1[0] = simpleObserver2_B->angleDenormalizedCamData[0]
+        - simpleObserver2_B->CameraDelay[0];
 
-    /* Sum: '<S1>/Sum1' */
-    simpleObserver2_B->Sum1[1] = simpleObserver2_B->InCameraPose[1] -
-      simpleObserver2_B->CameraDelay[1];
+      /* Switch: '<S1>/Switch' incorporates:
+       *  Sum: '<S1>/Sum1'
+       */
+      simpleObserver2_B->Switch[0] = simpleObserver2_B->Sum1[0];
 
-    /* Switch: '<S1>/Switch' */
-    simpleObserver2_B->Switch[1] = simpleObserver2_B->Sum1[1];
+      /* Sum: '<S1>/Sum1' incorporates:
+       *  Delay: '<S1>/CameraDelay'
+       */
+      simpleObserver2_B->Sum1[1] = simpleObserver2_B->angleDenormalizedCamData[1]
+        - simpleObserver2_B->CameraDelay[1];
 
-    /* Sum: '<S1>/Sum1' */
-    simpleObserver2_B->Sum1[2] = simpleObserver2_B->InCameraPose[2] -
-      simpleObserver2_B->CameraDelay[2];
+      /* Switch: '<S1>/Switch' incorporates:
+       *  Sum: '<S1>/Sum1'
+       */
+      simpleObserver2_B->Switch[1] = simpleObserver2_B->Sum1[1];
 
-    /* Switch: '<S1>/Switch' */
-    simpleObserver2_B->Switch[2] = simpleObserver2_B->Sum1[2];
-  } else {
-    /* Switch: '<S1>/Switch' incorporates:
-     *  Constant: '<S1>/Constant'
-     */
-    simpleObserver2_B->Switch[0] = 0.0;
-    simpleObserver2_B->Switch[1] = 0.0;
-    simpleObserver2_B->Switch[2] = 0.0;
+      /* Sum: '<S1>/Sum1' incorporates:
+       *  Delay: '<S1>/CameraDelay'
+       */
+      simpleObserver2_B->Sum1[2] = simpleObserver2_B->angleDenormalizedCamData[2]
+        - simpleObserver2_B->CameraDelay[2];
+
+      /* Switch: '<S1>/Switch' incorporates:
+       *  Sum: '<S1>/Sum1'
+       */
+      simpleObserver2_B->Switch[2] = simpleObserver2_B->Sum1[2];
+    } else {
+      /* Switch: '<S1>/Switch' incorporates:
+       *  Constant: '<S1>/Constant'
+       */
+      simpleObserver2_B->Switch[0] = 0.0;
+      simpleObserver2_B->Switch[1] = 0.0;
+      simpleObserver2_B->Switch[2] = 0.0;
+    }
+
+    /* End of Switch: '<S1>/Switch' */
   }
 
-  /* End of Switch: '<S1>/Switch' */
   for (k = 0; k < 3; k++) {
     /* Product: '<S1>/Product1' incorporates:
      *  S-Function (TcModuleInOut): '<S1>/K'
+     *  Switch: '<S1>/Switch'
      */
     simpleObserver2_B->Product1[k] = 0.0;
     simpleObserver2_B->Product1[k] += simpleObserver2_B->K[k] *
@@ -228,7 +319,9 @@ void simpleObserver2_step(RT_MODEL_simpleObserver2_T *const simpleObserver2_M)
       simpleObserver2_DW->InVThetaworld_PWORK);
   }
 
-  /* Sum: '<S1>/Sum' */
+  /* Sum: '<S1>/Sum' incorporates:
+   *  Product: '<S1>/Product1'
+   */
   simpleObserver2_B->Sum[0] = simpleObserver2_B->Product1[0] +
     simpleObserver2_B->InVXworld;
   simpleObserver2_B->Sum[1] = simpleObserver2_B->Product1[1] +
@@ -241,13 +334,14 @@ void simpleObserver2_step(RT_MODEL_simpleObserver2_T *const simpleObserver2_M)
        *  Constant: '<Root>/Constant'
        */
       if (simpleObserver2_DW->version_PWORK != NULL) {
-        *((real_T*)simpleObserver2_DW->version_PWORK) = 0.6;
+        *((real_T*)simpleObserver2_DW->version_PWORK) = 0.7;
       }
-    }
 
-    /* Update for S-Function (TcModuleInOut): '<Root>/DEBUG' */
-    if (simpleObserver2_DW->DEBUG_PWORK != NULL) {
-      memcpy(simpleObserver2_DW->DEBUG_PWORK, &simpleObserver2_B->Switch[0], 24);
+      /* Update for S-Function (TcModuleInOut): '<Root>/DEBUG' */
+      if (simpleObserver2_DW->DEBUG_PWORK != NULL) {
+        memcpy(simpleObserver2_DW->DEBUG_PWORK, &simpleObserver2_B->Switch[0],
+               24);
+      }
     }
 
     /* Update for S-Function (TcModuleInOut): '<Root>/OutEstimatedPose' */
@@ -256,9 +350,13 @@ void simpleObserver2_step(RT_MODEL_simpleObserver2_T *const simpleObserver2_M)
              &simpleObserver2_B->Odometry[0], 24);
     }
 
+    /* Update for Integrator: '<S1>/Integrator' */
+    simpleObserver2_DW->Integrator_IWORK = 0;
     if (rtmIsMajorTimeStep(simpleObserver2_M)) {
-      /* Update for Delay: '<S1>/CameraDelay' */
-      for (int_T idxDelay{0}; idxDelay < 13; idxDelay++) {
+      /* Update for Delay: '<S1>/CameraDelay' incorporates:
+       *  Integrator: '<S1>/Integrator'
+       */
+      for (int_T idxDelay{0}; idxDelay < 99; idxDelay++) {
         int32_T CameraDelay_DSTATE_tmp;
         CameraDelay_DSTATE_tmp = (idxDelay + 1) * 3;
         simpleObserver2_DW->CameraDelay_DSTATE[idxDelay * 3] =
@@ -269,15 +367,15 @@ void simpleObserver2_step(RT_MODEL_simpleObserver2_T *const simpleObserver2_M)
           simpleObserver2_DW->CameraDelay_DSTATE[CameraDelay_DSTATE_tmp + 2];
       }
 
-      simpleObserver2_DW->CameraDelay_DSTATE[39] = simpleObserver2_B->Odometry[0];
-      simpleObserver2_DW->CameraDelay_DSTATE[40] = simpleObserver2_B->Odometry[1];
-      simpleObserver2_DW->CameraDelay_DSTATE[41] = simpleObserver2_B->Odometry[2];
+      simpleObserver2_DW->CameraDelay_DSTATE[297] = simpleObserver2_B->Odometry
+        [0];
+      simpleObserver2_DW->CameraDelay_DSTATE[298] = simpleObserver2_B->Odometry
+        [1];
+      simpleObserver2_DW->CameraDelay_DSTATE[299] = simpleObserver2_B->Odometry
+        [2];
 
       /* End of Update for Delay: '<S1>/CameraDelay' */
     }
-
-    /* Update for Integrator: '<S1>/Integrator' */
-    simpleObserver2_DW->Integrator_IWORK = 0;
   }                                    /* end MajorTimeStep */
 
   if (rtmIsMajorTimeStep(simpleObserver2_M)) {
@@ -327,7 +425,9 @@ void simpleObserver2_derivatives(RT_MODEL_simpleObserver2_T *const
   XDot_simpleObserver2_T *_rtXdot;
   _rtXdot = ((XDot_simpleObserver2_T *) simpleObserver2_M->derivs);
 
-  /* Derivatives for Integrator: '<S1>/Integrator' */
+  /* Derivatives for Integrator: '<S1>/Integrator' incorporates:
+   *  Sum: '<S1>/Sum'
+   */
   _rtXdot->Integrator_CSTATE[0] = simpleObserver2_B->Sum[0];
   _rtXdot->Integrator_CSTATE[1] = simpleObserver2_B->Sum[1];
   _rtXdot->Integrator_CSTATE[2] = simpleObserver2_B->Sum[2];
@@ -341,9 +441,6 @@ void simpleObserver2_initialize(RT_MODEL_simpleObserver2_T *const
 
   X_simpleObserver2_T *simpleObserver2_X{ simpleObserver2_M->contStates };
 
-  /* InitializeConditions for Delay: '<S1>/CameraDelay' */
-  std::memset(&simpleObserver2_DW->CameraDelay_DSTATE[0], 0, 42U * sizeof(real_T));
-
   /* InitializeConditions for Integrator: '<S1>/Integrator' */
   if (rtmIsFirstInitCond(simpleObserver2_M)) {
     simpleObserver2_X->Integrator_CSTATE[0] = 0.0;
@@ -354,6 +451,13 @@ void simpleObserver2_initialize(RT_MODEL_simpleObserver2_T *const
   simpleObserver2_DW->Integrator_IWORK = 1;
 
   /* End of InitializeConditions for Integrator: '<S1>/Integrator' */
+
+  /* InitializeConditions for Delay: '<S1>/CameraDelay' */
+  std::memset(&simpleObserver2_DW->CameraDelay_DSTATE[0], 0, 300U * sizeof
+              (real_T));
+
+  /* SystemInitialize for MATLAB Function: '<S1>/denormalizeCamData' */
+  simpleObserver2_DW->oldTheta = 0.0;
 
   /* SystemInitialize for MATLAB Function: '<S1>/CamFlag' */
   simpleObserver2_DW->oldCamData[0] = 0.0;
@@ -375,6 +479,7 @@ void simpleObserver2_terminate(RT_MODEL_simpleObserver2_T * simpleObserver2_M)
   rt_FREE(simpleObserver2_M->blockIO);
   rt_FREE(simpleObserver2_M->contStates);
   rt_FREE(simpleObserver2_M->dwork);
+  rt_FREE(simpleObserver2_M->prevZCSigState);
   delete simpleObserver2_M;
 }
 
@@ -444,12 +549,24 @@ RT_MODEL_simpleObserver2_T *simpleObserver2(void)
     simpleObserver2_M->dwork = (dwork);
   }
 
+  /* previous zero-crossing states */
+  {
+    PrevZCX_simpleObserver2_T *zc{ (PrevZCX_simpleObserver2_T *) malloc(sizeof
+      (PrevZCX_simpleObserver2_T)) };
+
+    rt_VALIDATE_MEMORY(simpleObserver2_M,zc);
+    simpleObserver2_M->prevZCSigState = (zc);
+  }
+
   {
     B_simpleObserver2_T *simpleObserver2_B{ simpleObserver2_M->blockIO };
 
     DW_simpleObserver2_T *simpleObserver2_DW{ simpleObserver2_M->dwork };
 
     X_simpleObserver2_T *simpleObserver2_X{ simpleObserver2_M->contStates };
+
+    PrevZCX_simpleObserver2_T *simpleObserver2_PrevZCX{
+      simpleObserver2_M->prevZCSigState };
 
     rtsiSetSimTimeStep(simpleObserver2_M->solverInfo, MAJOR_TIME_STEP);
     simpleObserver2_M->intgData.f[0] = simpleObserver2_M->odeF[0];
@@ -473,6 +590,11 @@ RT_MODEL_simpleObserver2_T *simpleObserver2(void)
     /* states (dwork) */
     (void) std::memset(static_cast<void *>(simpleObserver2_DW), 0,
                        sizeof(DW_simpleObserver2_T));
+
+    /* previous zero-crossing states */
+    {
+      simpleObserver2_PrevZCX->Integrator_Reset_ZCE = UNINITIALIZED_ZCSIG;
+    }
   }
 
   return simpleObserver2_M;

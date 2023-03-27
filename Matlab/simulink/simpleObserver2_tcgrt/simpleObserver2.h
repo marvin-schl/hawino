@@ -7,9 +7,9 @@
  *
  * Code generation for model "simpleObserver2".
  *
- * Model version              : 1.3
+ * Model version              : 1.46
  * Simulink Coder version : 9.6 (R2021b) 14-May-2021
- * C++ source code generated on : Mon Mar 27 16:08:52 2023
+ * C++ source code generated on : Mon Mar 27 19:08:06 2023
  *
  * Target selection: TwinCatGrt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -20,9 +20,11 @@
 
 #ifndef RTW_HEADER_simpleObserver2_h_
 #define RTW_HEADER_simpleObserver2_h_
+#include <cmath>
 #include <cstring>
 #include <stdlib.h>
 #include "rtwtypes.h"
+#include "zero_crossing_types.h"
 #include "rtw_continuous.h"
 #include "rtw_solver.h"
 #include "string.h"
@@ -104,6 +106,14 @@
 #define rtmSetPeriodicContStateRanges(rtm, val) ((rtm)->periodicContStateRanges = (val))
 #endif
 
+#ifndef rtmGetPrevZCSigState
+#define rtmGetPrevZCSigState(rtm)      ((rtm)->prevZCSigState)
+#endif
+
+#ifndef rtmSetPrevZCSigState
+#define rtmSetPrevZCSigState(rtm, val) ((rtm)->prevZCSigState = (val))
+#endif
+
 #ifndef rtmGetRootDWork
 #define rtmGetRootDWork(rtm)           ((rtm)->dwork)
 #endif
@@ -161,27 +171,33 @@
 /* Block signals (default storage) */
 struct B_simpleObserver2_T {
   real_T InCameraPose[3];              /* '<Root>/InCameraPose' */
-  real_T CameraDelay[3];               /* '<S1>/CameraDelay' */
   real_T Odometry[3];                  /* '<S1>/Integrator' */
+  real_T CameraDelay[3];               /* '<S1>/CameraDelay' */
   real_T K[9];                         /* '<S1>/K' */
   real_T Switch[3];                    /* '<S1>/Switch' */
   real_T InVXworld;                    /* '<Root>/InVXworld' */
   real_T InVYworld;                    /* '<Root>/InVYworld' */
   real_T InVThetaworld;                /* '<Root>/InVThetaworld' */
   real_T Sum[3];                       /* '<S1>/Sum' */
+  real_T angleDenormalizedCamData[3];  /* '<S1>/denormalizeCamData' */
   real_T Sum1[3];                      /* '<S1>/Sum1' */
   real_T Product1[3];                  /* '<S1>/Product1' */
+  int8_T cameraDelayCylces;            /* '<S1>/cameraDelayCylces' */
+  boolean_T Reset;                     /* '<S1>/Reset' */
   boolean_T newCamDataArrived;         /* '<S1>/CamFlag' */
 };
 
 /* Block states (default storage) for system '<Root>' */
 struct DW_simpleObserver2_T {
-  real_T CameraDelay_DSTATE[42];       /* '<S1>/CameraDelay' */
+  real_T CameraDelay_DSTATE[300];      /* '<S1>/CameraDelay' */
+  real_T oldTheta;                     /* '<S1>/denormalizeCamData' */
   real_T oldCamData[3];                /* '<S1>/CamFlag' */
   void *version_PWORK;                 /* '<Root>/version' */
   void *DEBUG_PWORK;                   /* '<Root>/DEBUG' */
   void *OutEstimatedPose_PWORK;        /* '<Root>/OutEstimatedPose' */
   void *InCameraPose_PWORK;            /* '<Root>/InCameraPose' */
+  void *Reset_PWORK;                   /* '<S1>/Reset' */
+  void *cameraDelayCylces_PWORK;       /* '<S1>/cameraDelayCylces' */
   void *K_PWORK;                       /* '<S1>/K' */
   void *InVXworld_PWORK;               /* '<Root>/InVXworld' */
   void *InVYworld_PWORK;               /* '<Root>/InVYworld' */
@@ -204,6 +220,11 @@ struct XDis_simpleObserver2_T {
   boolean_T Integrator_CSTATE[3];      /* '<S1>/Integrator' */
 };
 
+/* Zero-crossing (trigger) state */
+struct PrevZCX_simpleObserver2_T {
+  ZCSigState Integrator_Reset_ZCE;     /* '<S1>/Integrator' */
+};
+
 #ifndef ODE1_INTG
 #define ODE1_INTG
 
@@ -219,6 +240,7 @@ struct tag_RTM_simpleObserver2_T {
   const char_T *errorStatus;
   RTWSolverInfo *solverInfo;
   B_simpleObserver2_T *blockIO;
+  PrevZCX_simpleObserver2_T *prevZCSigState;
   X_simpleObserver2_T *contStates;
   int_T *periodicContStateIndices;
   real_T *periodicContStateRanges;
@@ -313,5 +335,6 @@ extern "C" {
  * '<Root>' : 'simpleObserver2'
  * '<S1>'   : 'simpleObserver2/Estimator1'
  * '<S2>'   : 'simpleObserver2/Estimator1/CamFlag'
+ * '<S3>'   : 'simpleObserver2/Estimator1/denormalizeCamData'
  */
 #endif                                 /* RTW_HEADER_simpleObserver2_h_ */

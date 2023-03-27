@@ -7,9 +7,9 @@
  *
  * Code generation for model "simpleObserver2".
  *
- * Model version              : 1.3
+ * Model version              : 1.46
  * Simulink Coder version : 9.6 (R2021b) 14-May-2021
- * C++ source code generated on : Mon Mar 27 16:08:52 2023
+ * C++ source code generated on : Mon Mar 27 19:08:06 2023
  *
  * Target selection: TwinCatGrt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -22,6 +22,7 @@
 #define RTW_HEADER_simpleObserver2_private_h_
 #include "rtwtypes.h"
 #include "multiword_types.h"
+#include "zero_crossing_types.h"
 
 /* Private macros used by the generated code to access rtModel */
 #ifndef rtmSetFirstInitCond

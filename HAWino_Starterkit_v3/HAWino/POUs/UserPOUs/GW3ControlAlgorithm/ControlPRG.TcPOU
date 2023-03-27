@@ -63,8 +63,7 @@ CASE state OF
 	ControllerState.idle:
 		//if new waypointlist available reset trajectory and go into set trajectory state
 		IF newWaypointListAvailable THEN
-			controller.reset();
-			trajectory.reset(); //reset trajectory before setTrajectory to ensure all flags are resetted properly
+			reset();
 			state := ControllerState.setTrajectory;
 		END_IF
 	
@@ -77,7 +76,6 @@ CASE state OF
 		//go into calcTrajectory as soon as GW2 resets the new waypointlist flag to avoid looping through
 		//ready --> setTrajectory --> calcTrajectory
 		IF NOT newWaypointListAvailable THEN
-			trajectory.reset(); //reset trajectory before setTrajectory to ensure all flags are resetted properly
 			state := ControllerState.calcTrajectory;
 		END_IF
 		
@@ -91,8 +89,7 @@ CASE state OF
 	ControllerState.ready:
 		IF newWaypointListAvailable THEN
 			//stop and calculate new trajectory
-			controller.reset();
-			trajectory.reset(); //reset trajectory before setTrajectory to ensure all flags are resetted properly
+			reset();
 			state := ControllerState.setTrajectory;
 		ELSIF xBoEnable THEN
 			state := ControllerState.driving;
@@ -100,15 +97,13 @@ CASE state OF
 	
 	ControllerState.driving:
 		IF newWaypointListAvailable THEN
-			controller.reset();
-			trajectory.reset(); //reset trajectory before setTrajectory to ensure all flags are resetted properly
+			reset();
 			//stop and calculate new trajectory
 			state := ControllerState.setTrajectory;
 		ELSIF yBoArrivedAtDestination THEN
 			//got back to idle and set arrived flag for GW2, method needed?
 			state := ControllerState.idle;
-			controller.reset();
-			trajectory.reset();
+			reset();
 		ELSIF xBoEnable THEN
 			//do the driving
 			drive();
@@ -201,14 +196,27 @@ END_VAR]]></Declaration>
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
+    <Method Name="reset" Id="{e003a78c-6e00-4634-b66e-70531c747626}">
+      <Declaration><![CDATA[METHOD reset : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[controller.reset();
+trajectory.reset();
+observer.reset();]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="ControlPRG">
       <LineId Id="895" Count="18" />
       <LineId Id="1059" Count="0" />
-      <LineId Id="914" Count="26" />
-      <LineId Id="1061" Count="1" />
+      <LineId Id="915" Count="11" />
+      <LineId Id="928" Count="12" />
+      <LineId Id="1061" Count="0" />
       <LineId Id="941" Count="6" />
       <LineId Id="1058" Count="0" />
-      <LineId Id="948" Count="46" />
+      <LineId Id="949" Count="5" />
+      <LineId Id="956" Count="38" />
       <LineId Id="1060" Count="0" />
       <LineId Id="995" Count="21" />
       <LineId Id="94" Count="0" />
@@ -221,6 +229,9 @@ END_VAR]]></Declaration>
     </LineIds>
     <LineIds Name="ControlPRG.init">
       <LineId Id="26" Count="0" />
+    </LineIds>
+    <LineIds Name="ControlPRG.reset">
+      <LineId Id="5" Count="2" />
     </LineIds>
   </POU>
 </TcPlcObject>

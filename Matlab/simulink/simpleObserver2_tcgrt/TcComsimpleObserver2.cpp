@@ -62,7 +62,7 @@ BEGIN_OBJDATAAREA_MAP(CTcComsimpleObserver2)
 	OBJDATAAREA_SPAN_PTR_SIZE_FLAGS( 1, 1, &(AdditionalOutports), sizeof(AdditionalOutports), OBJDATAAREA_DISABLE_SET)
 	OBJDATAAREA_SPAN_PTR_SIZE_FLAGS( 2, 1, PsimpleObserver2_M->blockIO, sizeof(*(PsimpleObserver2_M->blockIO)), OBJDATAAREA_DISABLE_SET)
 	OBJDATAAREA_SPAN_PTR_SIZE_FLAGS( 3, 1, PsimpleObserver2_M->contStates, sizeof(*(PsimpleObserver2_M->contStates)), OBJDATAAREA_DISABLE_SET)
-	OBJDATAAREA_SPAN_PTR_SIZE_FLAGS( 4, 1, &(PsimpleObserver2_M->dwork->CameraDelay_DSTATE), 360, OBJDATAAREA_DISABLE_SET)
+	OBJDATAAREA_SPAN_PTR_SIZE_FLAGS( 4, 1, &(PsimpleObserver2_M->dwork->CameraDelay_DSTATE), 2432, OBJDATAAREA_DISABLE_SET)
 	OBJDATAAREA_SPAN_PTR_SIZE_FLAGS( 5, 1, &(PsimpleObserver2_M->dwork->Integrator_IWORK), sizeof(PsimpleObserver2_M->dwork->Integrator_IWORK), OBJDATAAREA_DISABLE_SET)
 END_OBJDATAAREA_MAP()
 
@@ -158,6 +158,8 @@ HRESULT CTcComsimpleObserver2::SetObjStateIP(ITComObjectServer* ipSrv, TComInitD
 		AdditionalInports.TcModuleInput_Estimator1_K[2][0] = 0;
 		AdditionalInports.TcModuleInput_Estimator1_K[2][1] = 0;
 		AdditionalInports.TcModuleInput_Estimator1_K[2][2] = 1;
+		AdditionalInports.TcModuleInput_Estimator1_Reset = 0;
+		AdditionalInports.TcModuleInput_Estimator1_cameraDelayCylces = 0;
 		AdditionalInports.TcModuleInput_InCameraPose[0] = 0;
 		AdditionalInports.TcModuleInput_InCameraPose[1] = 0;
 		AdditionalInports.TcModuleInput_InCameraPose[2] = 0;
@@ -184,6 +186,8 @@ HRESULT CTcComsimpleObserver2::SetObjStatePS(TComInitDataHdr* pInitData)
 		auto fpState = FpControl(FpCtrlSection::Init);
 		::simpleObserver2_initialize(PsimpleObserver2_M);
 		PsimpleObserver2_M->dwork->K_PWORK = reinterpret_cast<PVOID>(&(AdditionalInports.TcModuleInput_Estimator1_K));
+		PsimpleObserver2_M->dwork->Reset_PWORK = reinterpret_cast<PVOID>(&(AdditionalInports.TcModuleInput_Estimator1_Reset));
+		PsimpleObserver2_M->dwork->cameraDelayCylces_PWORK = reinterpret_cast<PVOID>(&(AdditionalInports.TcModuleInput_Estimator1_cameraDelayCylces));
 		PsimpleObserver2_M->dwork->InCameraPose_PWORK = reinterpret_cast<PVOID>(&(AdditionalInports.TcModuleInput_InCameraPose));
 		PsimpleObserver2_M->dwork->InVThetaworld_PWORK = reinterpret_cast<PVOID>(&(AdditionalInports.TcModuleInput_InVThetaworld));
 		PsimpleObserver2_M->dwork->InVXworld_PWORK = reinterpret_cast<PVOID>(&(AdditionalInports.TcModuleInput_InVXworld));

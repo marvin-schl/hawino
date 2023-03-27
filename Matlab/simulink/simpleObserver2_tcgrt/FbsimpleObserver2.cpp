@@ -123,6 +123,8 @@ bool CFbsimpleObserver2::FB_init(bool bInitRetains, bool bInCopyCode)
 		TcModuleInput_Estimator1_K[2][0] = 0;
 		TcModuleInput_Estimator1_K[2][1] = 0;
 		TcModuleInput_Estimator1_K[2][2] = 1;
+		TcModuleInput_Estimator1_Reset = 0;
+		TcModuleInput_Estimator1_cameraDelayCylces = 0;
 		TcModuleInput_InCameraPose[0] = 0;
 		TcModuleInput_InCameraPose[1] = 0;
 		TcModuleInput_InCameraPose[2] = 0;
@@ -148,6 +150,8 @@ bool CFbsimpleObserver2::FB_init(bool bInitRetains, bool bInCopyCode)
 		auto fpState = FpControl(FpCtrlSection::Init);
 		::simpleObserver2_initialize(((RT_MODEL_simpleObserver2_T*)PsimpleObserver2_M));
 		((RT_MODEL_simpleObserver2_T*)PsimpleObserver2_M)->dwork->K_PWORK = reinterpret_cast<PVOID>(&(TcModuleInput_Estimator1_K));
+		((RT_MODEL_simpleObserver2_T*)PsimpleObserver2_M)->dwork->Reset_PWORK = reinterpret_cast<PVOID>(&(TcModuleInput_Estimator1_Reset));
+		((RT_MODEL_simpleObserver2_T*)PsimpleObserver2_M)->dwork->cameraDelayCylces_PWORK = reinterpret_cast<PVOID>(&(TcModuleInput_Estimator1_cameraDelayCylces));
 		((RT_MODEL_simpleObserver2_T*)PsimpleObserver2_M)->dwork->InCameraPose_PWORK = reinterpret_cast<PVOID>(&(TcModuleInput_InCameraPose));
 		((RT_MODEL_simpleObserver2_T*)PsimpleObserver2_M)->dwork->InVThetaworld_PWORK = reinterpret_cast<PVOID>(&(TcModuleInput_InVThetaworld));
 		((RT_MODEL_simpleObserver2_T*)PsimpleObserver2_M)->dwork->InVXworld_PWORK = reinterpret_cast<PVOID>(&(TcModuleInput_InVXworld));

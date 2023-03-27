@@ -103,6 +103,7 @@
 		<ClInclude Include="$(Simulink_simpleObserver2_START_DIR)\simpleObserver2_tcgrt\simpleObserver2.h"/>
 		<ClInclude Include="$(Simulink_simpleObserver2_START_DIR)\simpleObserver2_tcgrt\simpleObserver2_private.h"/>
 		<ClInclude Include="$(Simulink_simpleObserver2_START_DIR)\simpleObserver2_tcgrt\simpleObserver2_types.h"/>
+		<ClInclude Include="$(Simulink_simpleObserver2_START_DIR)\simpleObserver2_tcgrt\zero_crossing_types.h"/>
 	</ItemGroup>
 	<ItemGroup>
 		<ClCompile Include="TcPch.cpp">

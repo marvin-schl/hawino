@@ -41,6 +41,8 @@ public:
 
 
 	matrix_3x3_real_T TcModuleInput_Estimator1_K;
+	bool TcModuleInput_Estimator1_Reset;
+	char TcModuleInput_Estimator1_cameraDelayCylces;
 	matrix_3_real_T TcModuleInput_InCameraPose;
 	double TcModuleInput_InVThetaworld;
 	double TcModuleInput_InVXworld;
@@ -52,7 +54,7 @@ public:
 
 
 };
-TYPESIZE_VALIDATION2(CFbsimpleObserver2,192,200);
+TYPESIZE_VALIDATION2(CFbsimpleObserver2,200,208);
 
 			
 #endif // _FbsimpleObserver2__h_INCLUDED

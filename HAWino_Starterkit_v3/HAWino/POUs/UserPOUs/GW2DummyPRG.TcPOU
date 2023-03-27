@@ -14,9 +14,12 @@ VAR
 	circle: BOOL	:= FALSE;
 	square: BOOL	:= FALSE;
 	point: BOOL 	:= FALSE;
+	cyclic: BOOL 	:= FALSE;
 	station : BOOL  := FALSE;
 	enable: BOOL 	:= FALSE;
 	
+	state: INT := 0;
+	toStation: BOOL := TRUE;
 	wpl: ARRAY [0..100] OF RobotPoseSimple;
 
 	//Point
@@ -37,6 +40,8 @@ ELSIF point THEN
 	wpl := generateWPLPoint();
 ELSIF station THEN
 	wpl := generateWPLStation();
+ELSIF cyclic THEN
+	driveCyclic();
 ELSIF set THEN
 	roboter.setWaypointList(wpl);
 	IF roboter.yControllerState = ControllerState.calcTrajectory THEN
@@ -44,8 +49,54 @@ ELSIF set THEN
 	END_IF
 END_IF
 
+
+
+
 ]]></ST>
     </Implementation>
+    <Method Name="driveCyclic" Id="{730ce0cc-f3e4-41f5-934b-0a2023a9ef7d}">
+      <Declaration><![CDATA[METHOD driveCyclic : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF state = 0 THEN	
+	xRef  		:= 1000;
+	yRef 		:= 1000;
+	thetaRef  	:= pi;
+	wpl := generateWPLPoint();
+	toStation := TRUE;
+	state := 89;
+ELSIF state = 1 THEN
+	wpl := generateWPLStation();
+	toStation := FALSE;
+	state := 89;
+ELSIF state = 89 THEN
+	roboter.setWaypointList(wpl);
+	set := TRUE;
+	state := 90;
+ELSIF state = 90 THEN
+	IF roboter.yControllerState = ControllerState.setTrajectory THEN
+		set := FALSE;
+		state := 91;
+	END_IF
+ELSIF state = 91 THEN
+	IF roboter.yControllerState = ControllerState.ready THEN
+		enable := TRUE;
+		state := 92;
+	END_IF
+ELSIF state = 92 THEN
+	IF roboter.yControllerState = ControllerState.idle AND roboter.yBoArrivedAtDestination THEN
+		enable := FALSE;
+		IF toStation THEN
+			state := 1;
+		ELSE
+			state := 0;
+		END_IF
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="generateWPLCircle" Id="{723e581b-c10b-48a5-af6d-0cb88e71c220}">
       <Declaration><![CDATA[METHOD generateWPLCircle : ARRAY[0..100] OF RobotPoseSimple 
 VAR
@@ -131,7 +182,7 @@ generateWPLRect := wpl;]]></ST>
     <Method Name="generateWPLStation" Id="{72e79a22-8f7a-4c32-8372-d9d95c309729}">
       <Declaration><![CDATA[METHOD generateWPLStation : ARRAY[0..100] OF RobotPoseSimple
 VAR
-	x: ARRAY[0..10] OF LREAL := 		[1000, 1650, 1650, 2099, -1,3000,1000,1000,1000, -1];
+	x: ARRAY[0..10] OF LREAL := 		[1000, 1650, 1650, 2102, -1,3000,1000,1000,1000, -1];
 	y: ARRAY[0..10] OF LREAL := 		[1000, 1000, 2829, 2829, -1,2000,2000,1500,1000, -1];
 	theta:	   ARRAY[0..10] OF LREAL := [-1,   1000, 1000, 0,   2000,2000,2000,1500, pi, -1];
 	wpl:  ARRAY[0..100] OF RobotPoseSimple;
@@ -163,11 +214,42 @@ generateWPLStation := wpl;]]></ST>
       <LineId Id="73" Count="1" />
       <LineId Id="59" Count="0" />
       <LineId Id="148" Count="1" />
+      <LineId Id="178" Count="1" />
       <LineId Id="60" Count="1" />
       <LineId Id="122" Count="2" />
       <LineId Id="48" Count="0" />
+      <LineId Id="174" Count="1" />
+      <LineId Id="173" Count="0" />
       <LineId Id="97" Count="0" />
       <LineId Id="95" Count="0" />
+    </LineIds>
+    <LineIds Name="GW2DummyPRG.driveCyclic">
+      <LineId Id="5" Count="0" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="43" Count="1" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="29" Count="2" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="35" Count="2" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="GW2DummyPRG.generateWPLCircle">
       <LineId Id="11" Count="12" />
