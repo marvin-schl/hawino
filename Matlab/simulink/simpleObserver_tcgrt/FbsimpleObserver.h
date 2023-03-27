@@ -44,16 +44,13 @@ public:
 	double TcModuleInput_InVThetaworld;
 	double TcModuleInput_InVXworld;
 	double TcModuleInput_InVYworld;
-	double TcModuleInput_omegaToRobot;
-	double TcModuleInput_vxToRobot;
-	double TcModuleInput_vyToRobot;
 	double TcModuleOutput_DEBUG;
 	matrix_3_real_T TcModuleOutput_OutEstimatedPose;
 	double TcModuleOutput_version;
 
 
 };
-TYPESIZE_VALIDATION2(CFbsimpleObserver,120,128);
+TYPESIZE_VALIDATION2(CFbsimpleObserver,96,104);
 
 			
 #endif // _FbsimpleObserver__h_INCLUDED

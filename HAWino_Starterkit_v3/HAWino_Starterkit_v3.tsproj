@@ -278,8 +278,8 @@
 			</Method>
 		</DataType>
 		<DataType>
-			<Name GUID="{73AA2330-6FC3-51C2-891C-59161E8F14E7}">P_simpleObserver_T</Name>
-			<BitSize>320</BitSize>
+			<Name GUID="{009AB79F-853F-30BE-51E0-69FB8CF7E8C4}">P_simpleObserver_T</Name>
+			<BitSize>256</BitSize>
 			<SubItem>
 				<Name>Constant_Value</Name>
 				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
@@ -304,12 +304,6 @@
 				<BitSize>64</BitSize>
 				<BitOffs>192</BitOffs>
 			</SubItem>
-			<SubItem>
-				<Name>Integrator_IC_g</Name>
-				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
-				<BitSize>64</BitSize>
-				<BitOffs>256</BitOffs>
-			</SubItem>
 		</DataType>
 		<DataType>
 			<Name GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</Name>
@@ -319,6 +313,25 @@
 				<LBound>0</LBound>
 				<Elements>3</Elements>
 			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{D66A6CF3-92AF-F198-AE29-9C504D923AF2}">matrix_42_real_T</Name>
+			<BitSize>2688</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>42</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{A98A1411-C399-C245-D300-12BBDE4B2E4C}">ITcsimpleObserver2</Name>
+			<BitSize X64="64">32</BitSize>
+			<BaseType GUID="{00000001-0000-0000-E000-000000000064}">ITcUnknown</BaseType>
+			<Method>
+				<Name VTableIndex="0">simpleObserver2_step</Name>
+				<ReturnType GUID="{18071995-0000-0000-0000-000000000019}">HRESULT</ReturnType>
+				<ReturnBitSize>32</ReturnBitSize>
+			</Method>
 		</DataType>
 		<DataType>
 			<Name GUID="{001C11BC-8935-E2E2-173B-24C634D18FCC}">matrix_3x3_real_T</Name>
@@ -334,13 +347,18 @@
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{D66A6CF3-92AF-F198-AE29-9C504D923AF2}">matrix_42_real_T</Name>
-			<BitSize>2688</BitSize>
+			<Name GUID="{72A91784-953A-FD09-4E66-5B1F6549B49B}">matrix_9_real_T</Name>
+			<BitSize>576</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 			<ArrayInfo>
 				<LBound>0</LBound>
-				<Elements>42</Elements>
+				<Elements>9</Elements>
 			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{7CC55797-31DD-5AB7-296E-2DB7BE6FD367}">int_T</Name>
+			<BitSize>32</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
 		</DataType>
 		<DataType>
 			<Name GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..2] OF LREAL</Name>
@@ -3248,7 +3266,7 @@
 						</ParameterValues>
 					</TmcDesc>
 				</Module>
-				<Module Id="#x01010040" KeepUnrestoredLinks="2" ClassFactoryId="TE140x Module Vendor|simpleObserver|0.0.0.16">
+				<Module Id="#x01010040" Disabled="true" KeepUnrestoredLinks="2" ClassFactoryId="TE140x Module Vendor|simpleObserver|0.0.0.21">
 					<Name>Object3 (simpleObserver)</Name>
 					<ImageId>1000</ImageId>
 					<TmcDesc GUID="{7AF170C5-4C89-043A-5FA2-5E2CF044C0E3}">
@@ -3436,8 +3454,8 @@
 							</Parameter>
 							<Parameter CreateSymbol="true">
 								<Name>simpleObserver_P</Name>
-								<BitSize>320</BitSize>
-								<BaseType GUID="{73AA2330-6FC3-51C2-891C-59161E8F14E7}">P_simpleObserver_T</BaseType>
+								<BitSize>256</BitSize>
+								<BaseType GUID="{009AB79F-853F-30BE-51E0-69FB8CF7E8C4}">P_simpleObserver_T</BaseType>
 								<Default>
 									<SubItem>
 										<Name>.Constant_Value</Name>
@@ -3453,10 +3471,6 @@
 									</SubItem>
 									<SubItem>
 										<Name>.Integrator_IC</Name>
-										<Value>0</Value>
-									</SubItem>
-									<SubItem>
-										<Name>.Integrator_IC_g</Name>
 										<Value>0</Value>
 									</SubItem>
 								</Default>
@@ -3492,7 +3506,7 @@
 								<AreaNo AreaType="InputDst" CreateSymbols="true">0</AreaNo>
 								<Name>AdditionalInports</Name>
 								<ContextId>0</ContextId>
-								<ByteSize>144</ByteSize>
+								<ByteSize>48</ByteSize>
 								<Symbol>
 									<Name>TcModuleInput_InCameraPose</Name>
 									<BitSize>192</BitSize>
@@ -3521,40 +3535,12 @@
 									<PTCID>#x80000028</PTCID>
 									<BitOffs>320</BitOffs>
 								</Symbol>
-								<Symbol>
-									<Name>TcModuleInput_K</Name>
-									<BitSize>576</BitSize>
-									<BaseType GUID="{001C11BC-8935-E2E2-173B-24C634D18FCC}">matrix_3x3_real_T</BaseType>
-									<PTCID>#x80000030</PTCID>
-									<BitOffs>384</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>TcModuleInput_omegaToRobot</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x80000078</PTCID>
-									<BitOffs>960</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>TcModuleInput_vxToRobot</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x80000080</PTCID>
-									<BitOffs>1024</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>TcModuleInput_vyToRobot</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x80000088</PTCID>
-									<BitOffs>1088</BitOffs>
-								</Symbol>
 							</DataArea>
 							<DataArea>
 								<AreaNo AreaType="OutputSrc" CreateSymbols="true">1</AreaNo>
 								<Name>AdditionalOutports</Name>
 								<ContextId>0</ContextId>
-								<ByteSize>112</ByteSize>
+								<ByteSize>40</ByteSize>
 								<Symbol>
 									<Name>TcModuleOutput_DEBUG</Name>
 									<BitSize>64</BitSize>
@@ -3563,32 +3549,25 @@
 									<BitOffs>0</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>TcModuleOutput_Kout</Name>
-									<BitSize>576</BitSize>
-									<BaseType GUID="{001C11BC-8935-E2E2-173B-24C634D18FCC}">matrix_3x3_real_T</BaseType>
-									<PTCID>#x81000008</PTCID>
-									<BitOffs>64</BitOffs>
-								</Symbol>
-								<Symbol>
 									<Name>TcModuleOutput_OutEstimatedPose</Name>
 									<BitSize>192</BitSize>
 									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
-									<PTCID>#x81000050</PTCID>
-									<BitOffs>640</BitOffs>
+									<PTCID>#x81000008</PTCID>
+									<BitOffs>64</BitOffs>
 								</Symbol>
 								<Symbol>
 									<Name>TcModuleOutput_version</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x81000068</PTCID>
-									<BitOffs>832</BitOffs>
+									<PTCID>#x81000020</PTCID>
+									<BitOffs>256</BitOffs>
 								</Symbol>
 							</DataArea>
 							<DataArea>
 								<AreaNo AreaType="Internal" CreateSymbols="true">2</AreaNo>
 								<Name>simpleObserver_P</Name>
 								<ContextId>0</ContextId>
-								<ByteSize>40</ByteSize>
+								<ByteSize>32</ByteSize>
 								<Symbol>
 									<Name>Constant_Value</Name>
 									<BitSize>64</BitSize>
@@ -3616,13 +3595,6 @@
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 									<PTCID>#x82000018</PTCID>
 									<BitOffs>192</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>Integrator_IC_g</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x82000020</PTCID>
-									<BitOffs>256</BitOffs>
 								</Symbol>
 							</DataArea>
 							<DataArea>
@@ -3767,7 +3739,623 @@
 								<Value>0</Value>
 							</Value>
 							<Value>
-								<Name>simpleObserver_P.Integrator_IC_g</Name>
+								<Name>InitExceptionInfo.ExceptionCode</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>InitExceptionInfo.TmxName</Name>
+								<String></String>
+							</Value>
+							<Value>
+								<Name>InitExceptionInfo.TmxVersion[0]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>InitExceptionInfo.TmxVersion[1]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>InitExceptionInfo.TmxVersion[2]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>InitExceptionInfo.TmxVersion[3]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>InitExceptionInfo.InstructionAddr</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>InitExceptionInfo.ReturnAddr[0]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>InitExceptionInfo.ReturnAddr[1]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>InitExceptionInfo.ReturnAddr[2]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>InitExceptionInfo.ReturnAddr[3]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>InitExceptionInfo.DumpCreated</Name>
+								<EnumText>FALSE</EnumText>
+							</Value>
+							<Value>
+								<Name>CycleCount</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ExceptionCount</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ExeceptionInfo.ExceptionCode</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ExeceptionInfo.TmxName</Name>
+								<String></String>
+							</Value>
+							<Value>
+								<Name>ExeceptionInfo.TmxVersion[0]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ExeceptionInfo.TmxVersion[1]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ExeceptionInfo.TmxVersion[2]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ExeceptionInfo.TmxVersion[3]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ExeceptionInfo.InstructionAddr</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ExeceptionInfo.ReturnAddr[0]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ExeceptionInfo.ReturnAddr[1]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ExeceptionInfo.ReturnAddr[2]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ExeceptionInfo.ReturnAddr[3]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ExeceptionInfo.DumpCreated</Name>
+								<EnumText>FALSE</EnumText>
+							</Value>
+						</ParameterValues>
+					</TmcDesc>
+					<UnrestoredVarLinks ImportTime="2023-03-27T15:05:17">
+						<OwnerA Name="AdditionalInports" Prefix="TIRC^TcCOM Objects^Object3 (simpleObserver)" Type="1">
+							<OwnerB Name="TIPC^HAWino^HAWino Instance">
+								<Link VarA="TcModuleInput_K" GrpA="AdditionalInports" TypeA="matrix_3x3_real_T" InOutA="0" GuidA="{001C11BC-8935-E2E2-173B-24C634D18FCC}" VarB="ControlTask Outputs^ControlPRG.observer.K"/>
+								<Link VarA="TcModuleInput_omegaToRobot" GrpA="AdditionalInports" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="ControlTask Outputs^ControlPRG.observer.omegaToRobotWorldToSimulink"/>
+								<Link VarA="TcModuleInput_vxToRobot" GrpA="AdditionalInports" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="ControlTask Outputs^ControlPRG.observer.vXtoRobotWorldToSimulink"/>
+								<Link VarA="TcModuleInput_vyToRobot" GrpA="AdditionalInports" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="ControlTask Outputs^ControlPRG.observer.vYtoRobotWorldToSimulink"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+				</Module>
+				<Module Id="#x01010050" KeepUnrestoredLinks="2" ClassFactoryId="TE140x Module Vendor|simpleObserver2|0.0.0.6">
+					<Name>Object4 (simpleObserver2)</Name>
+					<ImageId>1000</ImageId>
+					<TmcDesc GUID="{4AFB6DB7-3994-EEF8-77F0-40A79A4D8923}">
+						<Name>simpleObserver2</Name>
+						<CLSID ClassFactory="simpleObserver2" RealTimeInstantiable="true">{4AFB6DB7-3994-EEF8-77F0-40A79A4D8923}</CLSID>
+						<Info>
+							<TabExtension GUID="{BB6DDFDC-900F-473F-83FC-D83513217B55}"/>
+						</Info>
+						<Licenses>
+							<License>
+								<LicenseId>{AD7F40C3-F160-4413-83E3-6B7656A795A2}</LicenseId>
+							</License>
+						</Licenses>
+						<InitSequence>PSO</InitSequence>
+						<Contexts>
+							<Context>
+								<Id>0</Id>
+								<Name>Context0 (10 ms)</Name>
+								<ManualConfig>
+									<OTCID>#x02010070</OTCID>
+								</ManualConfig>
+								<Priority>1</Priority>
+								<CycleTime>10000000</CycleTime>
+							</Context>
+						</Contexts>
+						<Interfaces>
+							<Interface>
+								<Type GUID="{00000001-0000-0000-E000-000000000064}">ITcUnknown</Type>
+							</Interface>
+							<Interface>
+								<Type GUID="{00000002-0000-0000-E000-000000000064}">ITcPersist</Type>
+							</Interface>
+							<Interface>
+								<Type GUID="{00000012-0000-0000-E000-000000000064}">ITComObject</Type>
+							</Interface>
+							<Interface>
+								<Type GUID="{03000018-0000-0000-E000-000000000064}">ITcWatchSource</Type>
+							</Interface>
+							<Interface>
+								<Type GUID="{03000010-0000-0000-E000-000000000064}">ITcCyclic</Type>
+							</Interface>
+							<Interface>
+								<Type GUID="{03000025-0000-0000-E000-000000000064}">ITcPostCyclic</Type>
+							</Interface>
+							<Interface>
+								<Type GUID="{03000012-0000-0000-E000-000000000064}">ITcADI</Type>
+							</Interface>
+							<Interface>
+								<Type GUID="{A98A1411-C399-C245-D300-12BBDE4B2E4C}">ITcsimpleObserver2</Type>
+								<ContextId>0</ContextId>
+							</Interface>
+						</Interfaces>
+						<Parameters>
+							<Parameter HideParameter="true" CreateSymbol="true">
+								<Name>TaskOid</Name>
+								<BitSize>32</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-00000000000F}">OTCID</BaseType>
+								<PTCID>#x03002060</PTCID>
+							</Parameter>
+							<Parameter HideParameter="true" CreateSymbol="true">
+								<Name>TaskPriority</Name>
+								<BitSize>32</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+								<PTCID>#x03002070</PTCID>
+							</Parameter>
+							<Parameter HideParameter="true" CreateSymbol="true">
+								<Name>TaskCycleTimeNs</Name>
+								<BitSize>32</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+								<PTCID>#x03002080</PTCID>
+							</Parameter>
+							<Parameter HideParameter="true" CreateSymbol="true">
+								<Name>TaskPort</Name>
+								<BitSize>16</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-000000000005}">UINT</BaseType>
+								<PTCID>#x03002090</PTCID>
+							</Parameter>
+							<Parameter HideParameter="true" CreateSymbol="true">
+								<Name>TaskSortOrder</Name>
+								<BitSize>32</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+								<PTCID>#x030020b0</PTCID>
+							</Parameter>
+							<Parameter HideParameter="true">
+								<Name>TraceLevelMax</Name>
+								<BitSize>32</BitSize>
+								<BaseType GUID="{8007AE3B-86BB-40F2-B385-EF87FCC239A4}">TcTraceLevel</BaseType>
+								<Default>
+									<EnumText>tlInfo</EnumText>
+								</Default>
+								<PTCID>#x00000001</PTCID>
+							</Parameter>
+							<Parameter CreateSymbol="true">
+								<Name>ModuleCaller</Name>
+								<BitSize>32</BitSize>
+								<BaseType GUID="{D94EAD20-451D-4AE0-87CC-9A9884043E25}" Namespace="TcMgSdk">ModuleCaller</BaseType>
+								<Default>
+									<EnumText>CyclicTask</EnumText>
+								</Default>
+								<PTCID>#x00000002</PTCID>
+							</Parameter>
+							<Parameter HideParameter="true">
+								<Name>CallerVerification</Name>
+								<BitSize>32</BitSize>
+								<BaseType GUID="{1F89595E-59E5-47C7-9A58-A611A4C98DEC}" Namespace="TcMgSdk">CallerVerification</BaseType>
+								<Default>
+									<EnumText>Default</EnumText>
+								</Default>
+								<PTCID>#x00000003</PTCID>
+							</Parameter>
+							<Parameter CreateSymbol="true">
+								<Name>StepSizeAdaptation</Name>
+								<BitSize>32</BitSize>
+								<BaseType GUID="{65804E5D-07CA-41C0-AEDC-C5051585B216}" Namespace="TcMgSdk">StepSizeAdaptation</BaseType>
+								<Default>
+									<EnumText>RequireMatchingTaskCycleTime</EnumText>
+								</Default>
+								<PTCID>#x00000004</PTCID>
+							</Parameter>
+							<Parameter CreateSymbol="true">
+								<Name>ExecutionSequence</Name>
+								<BitSize>32</BitSize>
+								<BaseType GUID="{3856C4C8-CCAF-403F-A7C8-4E1502F2FFFC}" Namespace="TcMgSdk">ExecutionSequence1</BaseType>
+								<Default>
+									<EnumText>UpdateBeforeOutputMapping</EnumText>
+								</Default>
+								<PTCID>#x00000005</PTCID>
+							</Parameter>
+							<Parameter CreateSymbol="true">
+								<Name>Execute</Name>
+								<BitSize>8</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+								<Default>
+									<EnumText>TRUE</EnumText>
+								</Default>
+								<PTCID>#x00000006</PTCID>
+							</Parameter>
+							<Parameter HideParameter="true">
+								<Name>AccessLockState</Name>
+								<BitSize>32</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-000000000061}">TCOM_STATE</BaseType>
+								<Default>
+									<EnumText>TCOM_STATE_OP</EnumText>
+								</Default>
+								<PTCID>#x00000007</PTCID>
+							</Parameter>
+							<Parameter HideParameter="true">
+								<Name>InitExceptionHandling</Name>
+								<BitSize>8</BitSize>
+								<BaseType GUID="{53CDED75-D12E-408E-B06D-0E50F6A35065}" Namespace="TcMgSdk">FpExcptCtrlSet</BaseType>
+								<Default>
+									<EnumText>CallerExceptions</EnumText>
+								</Default>
+								<PTCID>#x00000008</PTCID>
+							</Parameter>
+							<Parameter HideParameter="true">
+								<Name>UpdateExceptionHandling</Name>
+								<BitSize>8</BitSize>
+								<BaseType GUID="{53CDED75-D12E-408E-B06D-0E50F6A35065}" Namespace="TcMgSdk">FpExcptCtrlSet</BaseType>
+								<Default>
+									<EnumText>CallerExceptions</EnumText>
+								</Default>
+								<PTCID>#x00000009</PTCID>
+							</Parameter>
+							<Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
+								<Name>ModuleBuildInfo</Name>
+								<BitSize>96</BitSize>
+								<BaseType GUID="{0564A6B7-D0A7-47F6-9375-C2F05C960A28}" Namespace="TcMgSdk">ModuleBuildInfo</BaseType>
+								<PTCID>#x0000000a</PTCID>
+							</Parameter>
+							<Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
+								<Name>Initialized</Name>
+								<BitSize>8</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+								<Default>
+									<EnumText>FALSE</EnumText>
+								</Default>
+								<PTCID>#x0000000b</PTCID>
+							</Parameter>
+							<Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
+								<Name>SimulationTime</Name>
+								<BitSize>64</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+								<PTCID>#x0000000c</PTCID>
+							</Parameter>
+							<Parameter OnlineParameter="true" HideParameter="true" CreateSymbol="true" ReadOnly="true">
+								<Name>InitExceptionInfo</Name>
+								<BitSize>1376</BitSize>
+								<BaseType GUID="{241597CD-DFF8-4569-90EE-6B470D7A1D92}" Namespace="TcMgSdk">ExceptionInfo</BaseType>
+								<PTCID>#x0000000d</PTCID>
+							</Parameter>
+							<Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
+								<Name>CycleCount</Name>
+								<BitSize>64</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-00000000000B}">ULINT</BaseType>
+								<PTCID>#x0000000e</PTCID>
+							</Parameter>
+							<Parameter OnlineParameter="true" HideParameter="true" CreateSymbol="true" ReadOnly="true">
+								<Name>ExceptionCount</Name>
+								<BitSize>64</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-00000000000B}">ULINT</BaseType>
+								<PTCID>#x0000000f</PTCID>
+							</Parameter>
+							<Parameter OnlineParameter="true" HideParameter="true" CreateSymbol="true" ReadOnly="true">
+								<Name>ExeceptionInfo</Name>
+								<BitSize>1376</BitSize>
+								<BaseType GUID="{241597CD-DFF8-4569-90EE-6B470D7A1D92}" Namespace="TcMgSdk">ExceptionInfo</BaseType>
+								<PTCID>#x00000010</PTCID>
+							</Parameter>
+						</Parameters>
+						<DataAreas>
+							<DataArea>
+								<AreaNo AreaType="InputDst" CreateSymbols="true">0</AreaNo>
+								<Name>AdditionalInports</Name>
+								<ContextId>0</ContextId>
+								<ByteSize>120</ByteSize>
+								<Symbol>
+									<Name>TcModuleInput_Estimator1_K</Name>
+									<BitSize>576</BitSize>
+									<BaseType GUID="{001C11BC-8935-E2E2-173B-24C634D18FCC}">matrix_3x3_real_T</BaseType>
+									<PTCID>#x80000000</PTCID>
+									<BitOffs>0</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>TcModuleInput_InCameraPose</Name>
+									<BitSize>192</BitSize>
+									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+									<PTCID>#x80000048</PTCID>
+									<BitOffs>576</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>TcModuleInput_InVThetaworld</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<PTCID>#x80000060</PTCID>
+									<BitOffs>768</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>TcModuleInput_InVXworld</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<PTCID>#x80000068</PTCID>
+									<BitOffs>832</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>TcModuleInput_InVYworld</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<PTCID>#x80000070</PTCID>
+									<BitOffs>896</BitOffs>
+								</Symbol>
+							</DataArea>
+							<DataArea>
+								<AreaNo AreaType="OutputSrc" CreateSymbols="true">1</AreaNo>
+								<Name>AdditionalOutports</Name>
+								<ContextId>0</ContextId>
+								<ByteSize>56</ByteSize>
+								<Symbol>
+									<Name>TcModuleOutput_DEBUG</Name>
+									<BitSize>192</BitSize>
+									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+									<PTCID>#x81000000</PTCID>
+									<BitOffs>0</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>TcModuleOutput_OutEstimatedPose</Name>
+									<BitSize>192</BitSize>
+									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+									<PTCID>#x81000018</PTCID>
+									<BitOffs>192</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>TcModuleOutput_version</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<PTCID>#x81000030</PTCID>
+									<BitOffs>384</BitOffs>
+								</Symbol>
+							</DataArea>
+							<DataArea>
+								<AreaNo AreaType="Internal" CreateSymbols="true">2</AreaNo>
+								<Name>simpleObserver2_B</Name>
+								<ContextId>0</ContextId>
+								<ByteSize>272</ByteSize>
+								<Symbol>
+									<Name>InCameraPose</Name>
+									<BitSize>192</BitSize>
+									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+									<PTCID>#x82000000</PTCID>
+									<BitOffs>0</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>CameraDelay</Name>
+									<BitSize>192</BitSize>
+									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+									<PTCID>#x82000018</PTCID>
+									<BitOffs>192</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>Odometry</Name>
+									<BitSize>192</BitSize>
+									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+									<PTCID>#x82000030</PTCID>
+									<BitOffs>384</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>K</Name>
+									<BitSize>576</BitSize>
+									<BaseType GUID="{72A91784-953A-FD09-4E66-5B1F6549B49B}">matrix_9_real_T</BaseType>
+									<PTCID>#x82000048</PTCID>
+									<BitOffs>576</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>Switch</Name>
+									<BitSize>192</BitSize>
+									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+									<PTCID>#x82000090</PTCID>
+									<BitOffs>1152</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>InVXworld</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<PTCID>#x820000a8</PTCID>
+									<BitOffs>1344</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>InVYworld</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<PTCID>#x820000b0</PTCID>
+									<BitOffs>1408</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>InVThetaworld</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<PTCID>#x820000b8</PTCID>
+									<BitOffs>1472</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>Sum</Name>
+									<BitSize>192</BitSize>
+									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+									<PTCID>#x820000c0</PTCID>
+									<BitOffs>1536</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>Sum1</Name>
+									<BitSize>192</BitSize>
+									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+									<PTCID>#x820000d8</PTCID>
+									<BitOffs>1728</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>Product1</Name>
+									<BitSize>192</BitSize>
+									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+									<PTCID>#x820000f0</PTCID>
+									<BitOffs>1920</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>newCamDataArrived</Name>
+									<BitSize>8</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+									<PTCID>#x82000108</PTCID>
+									<BitOffs>2112</BitOffs>
+								</Symbol>
+							</DataArea>
+							<DataArea>
+								<AreaNo AreaType="Internal" CreateSymbols="true">3</AreaNo>
+								<Name>simpleObserver2_X</Name>
+								<ContextId>0</ContextId>
+								<ByteSize>24</ByteSize>
+								<Symbol>
+									<Name>Integrator_CSTATE</Name>
+									<BitSize>192</BitSize>
+									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+									<PTCID>#x83000000</PTCID>
+									<BitOffs>0</BitOffs>
+								</Symbol>
+							</DataArea>
+							<DataArea>
+								<AreaNo AreaType="Internal" CreateSymbols="true">4</AreaNo>
+								<Name>simpleObserver2_DW1</Name>
+								<ContextId>0</ContextId>
+								<ByteSize>360</ByteSize>
+								<Symbol>
+									<Name>CameraDelay_DSTATE</Name>
+									<BitSize>2688</BitSize>
+									<BaseType GUID="{D66A6CF3-92AF-F198-AE29-9C504D923AF2}">matrix_42_real_T</BaseType>
+									<PTCID>#x84000000</PTCID>
+									<BitOffs>0</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>oldCamData</Name>
+									<BitSize>192</BitSize>
+									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+									<PTCID>#x84000150</PTCID>
+									<BitOffs>2688</BitOffs>
+								</Symbol>
+							</DataArea>
+							<DataArea>
+								<AreaNo AreaType="Internal" CreateSymbols="true">5</AreaNo>
+								<Name>simpleObserver2_DW3</Name>
+								<ContextId>0</ContextId>
+								<ByteSize>4</ByteSize>
+								<Symbol>
+									<Name>Integrator_IWORK</Name>
+									<BitSize>32</BitSize>
+									<BaseType GUID="{7CC55797-31DD-5AB7-296E-2DB7BE6FD367}">int_T</BaseType>
+									<PTCID>#x85000000</PTCID>
+									<BitOffs>0</BitOffs>
+								</Symbol>
+							</DataArea>
+						</DataAreas>
+						<Properties>
+							<Property>
+								<Name>CoderLicense</Name>
+								<Value>{73C71EBD-104A-4EE6-955D-ADE86A37EFC3}</Value>
+							</Property>
+						</Properties>
+						<Xml>
+							<GeneratedModuleInfoFile>simpleObserver2_ModuleInfo.xml</GeneratedModuleInfoFile>
+						</Xml>
+						<ParameterValues>
+							<Value>
+								<Name>TaskOid</Name>
+								<Value>33620080</Value>
+							</Value>
+							<Value>
+								<Name>TaskPriority</Name>
+								<Value>1</Value>
+							</Value>
+							<Value>
+								<Name>TaskCycleTimeNs</Name>
+								<Value>10000000</Value>
+							</Value>
+							<Value>
+								<Name>TaskPort</Name>
+								<Value>354</Value>
+							</Value>
+							<Value>
+								<Name>TaskSortOrder</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>TraceLevelMax</Name>
+								<EnumText>tlInfo</EnumText>
+							</Value>
+							<Value>
+								<Name>ModuleCaller</Name>
+								<EnumText>CyclicTask</EnumText>
+							</Value>
+							<Value>
+								<Name>CallerVerification</Name>
+								<EnumText>Default</EnumText>
+							</Value>
+							<Value>
+								<Name>StepSizeAdaptation</Name>
+								<EnumText>RequireMatchingTaskCycleTime</EnumText>
+							</Value>
+							<Value>
+								<Name>ExecutionSequence</Name>
+								<EnumText>UpdateBeforeOutputMapping</EnumText>
+							</Value>
+							<Value>
+								<Name>Execute</Name>
+								<EnumText>TRUE</EnumText>
+							</Value>
+							<Value>
+								<Name>AccessLockState</Name>
+								<EnumText>TCOM_STATE_OP</EnumText>
+							</Value>
+							<Value>
+								<Name>InitExceptionHandling</Name>
+								<EnumText>CallerExceptions</EnumText>
+							</Value>
+							<Value>
+								<Name>UpdateExceptionHandling</Name>
+								<EnumText>CallerExceptions</EnumText>
+							</Value>
+							<Value>
+								<Name>ModuleBuildInfo.TcBuild</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleBuildInfo.TcRevision</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleBuildInfo.Debug</Name>
+								<EnumText>FALSE</EnumText>
+							</Value>
+							<Value>
+								<Name>Initialized</Name>
+								<EnumText>FALSE</EnumText>
+							</Value>
+							<Value>
+								<Name>SimulationTime</Name>
 								<Value>0</Value>
 							</Value>
 							<Value>
@@ -7291,8 +7879,8 @@ Bit1: Value smaller than Limit2]]></Comment>
 		<MappingInfo Identifier="{00000000-2002-0850-0020-500800205008}" Id="#x02030090"/>
 		<MappingInfo Identifier="{00000000-2003-0850-0020-500800205008}" Id="#x02030010"/>
 		<MappingInfo Identifier="{00000000-2003-0850-0020-500810000403}" Id="#x02030020"/>
-		<MappingInfo Identifier="{00000000-2003-0850-0020-500840000101}" Id="#x02030030"/>
 		<MappingInfo Identifier="{00000000-2003-0850-0020-500842000403}" Id="#x02030080"/>
+		<MappingInfo Identifier="{00000000-2003-0850-0020-500850000101}" Id="#x02030030"/>
 		<MappingInfo Identifier="{08502001-2002-0850-0120-500802205008}" Id="#x020300c0" Watchdog="04000000280000000400000004000000"/>
 		<MappingInfo Identifier="{08502001-0060-0201-0120-500820000101}" Id="#x02030110" Watchdog="04000000280000000400000004000000"/>
 		<MappingInfo Identifier="{08502002-0010-0304-0020-500810000403}" Id="#x02030040" Watchdog="04000000040000000400000004000000"/>
@@ -7377,12 +7965,17 @@ Bit1: Value smaller than Limit2]]></Comment>
 			</OwnerB>
 			<OwnerB Name="TIRC^TcCOM Objects^Object3 (simpleObserver)">
 				<Link VarA="ControlTask Inputs^ControlPRG.observer.estimatedPoseFromSimlink" VarB="AdditionalOutports^TcModuleOutput_OutEstimatedPose"/>
-				<Link VarA="ControlTask Outputs^ControlPRG.observer.K" VarB="AdditionalInports^TcModuleInput_K"/>
-				<Link VarA="ControlTask Outputs^ControlPRG.observer.omegaToRobotWorldToSimulink" VarB="AdditionalInports^TcModuleInput_omegaToRobot"/>
+				<Link VarA="ControlTask Outputs^ControlPRG.observer.cameraPoseToSimulink" VarB="AdditionalInports^TcModuleInput_InCameraPose"/>
 				<Link VarA="ControlTask Outputs^ControlPRG.observer.omegaWorldToSimulink" VarB="AdditionalInports^TcModuleInput_InVThetaworld"/>
-				<Link VarA="ControlTask Outputs^ControlPRG.observer.vXtoRobotWorldToSimulink" VarB="AdditionalInports^TcModuleInput_vxToRobot"/>
 				<Link VarA="ControlTask Outputs^ControlPRG.observer.vXworldToSimulink" VarB="AdditionalInports^TcModuleInput_InVXworld"/>
-				<Link VarA="ControlTask Outputs^ControlPRG.observer.vYtoRobotWorldToSimulink" VarB="AdditionalInports^TcModuleInput_vyToRobot"/>
+				<Link VarA="ControlTask Outputs^ControlPRG.observer.vYworldToSimulink" VarB="AdditionalInports^TcModuleInput_InVYworld"/>
+			</OwnerB>
+			<OwnerB Name="TIRC^TcCOM Objects^Object4 (simpleObserver2)">
+				<Link VarA="ControlTask Inputs^ControlPRG.observer.estimatedPoseFromSimlink" VarB="AdditionalOutports^TcModuleOutput_OutEstimatedPose"/>
+				<Link VarA="ControlTask Outputs^ControlPRG.observer.K" VarB="AdditionalInports^TcModuleInput_Estimator1_K"/>
+				<Link VarA="ControlTask Outputs^ControlPRG.observer.cameraPoseToSimulink" VarB="AdditionalInports^TcModuleInput_InCameraPose"/>
+				<Link VarA="ControlTask Outputs^ControlPRG.observer.omegaWorldToSimulink" VarB="AdditionalInports^TcModuleInput_InVThetaworld"/>
+				<Link VarA="ControlTask Outputs^ControlPRG.observer.vXworldToSimulink" VarB="AdditionalInports^TcModuleInput_InVXworld"/>
 				<Link VarA="ControlTask Outputs^ControlPRG.observer.vYworldToSimulink" VarB="AdditionalInports^TcModuleInput_InVYworld"/>
 			</OwnerB>
 		</OwnerA>

@@ -35,31 +35,16 @@
 				</Property>
 			</Properties>
 		</DataType>
-		<DataType>
-			<Name GUID="{604235A4-A2A0-D57A-6901-30D8DE89A468}" IecLibraryType="true" CName="matrix_9_real_T">T_matrix_9_real_T</Name>
-			<BitSize>576</BitSize>
-			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-			<ArrayInfo>
-				<LBound>0</LBound>
-				<Elements>9</Elements>
-			</ArrayInfo>
-			<Properties>
-				<Property>
-					<Name>ModuleGenerator_DutShadow</Name>
-					<Value>{72A91784-953A-FD09-4E66-5B1F6549B49B}</Value>
-				</Property>
-			</Properties>
-		</DataType>
 	</DataTypes>
 	<Licenses/>
 	<Library>
 		<Name>simpleObserver</Name>
-		<Version>0.0.0.16</Version>
+		<Version>0.0.0.21</Version>
 		<Group GUID="{5E25B681-A0D1-32F4-3E69-0CFC9DC6C42C}">TE140x Module Vendor</Group>
 		<POUs>
 			<POU Folder="Pous">
-				<Name GUID="{A4FF6679-1B88-0E02-A1DC-1CEE34AE3822}" IecLibraryType="true">FB_simpleObserver</Name>
-				<BitSize X64="1024">960</BitSize>
+				<Name GUID="{E67214DA-2FD5-CBCE-E7D1-2EE1B33A891B}" IecLibraryType="true">FB_simpleObserver</Name>
+				<BitSize X64="832">768</BitSize>
 				<SubItem>
 					<Name>_internal_data</Name>
 					<Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
@@ -123,46 +108,10 @@
 					</Properties>
 				</SubItem>
 				<SubItem>
-					<Name>fTcModuleInput_omegaToRobot</Name>
-					<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
-					<BitSize>64</BitSize>
-					<BitOffs X64="512">448</BitOffs>
-					<Properties>
-						<Property>
-							<Name>ItemType</Name>
-							<Value>Input</Value>
-						</Property>
-					</Properties>
-				</SubItem>
-				<SubItem>
-					<Name>fTcModuleInput_vxToRobot</Name>
-					<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
-					<BitSize>64</BitSize>
-					<BitOffs X64="576">512</BitOffs>
-					<Properties>
-						<Property>
-							<Name>ItemType</Name>
-							<Value>Input</Value>
-						</Property>
-					</Properties>
-				</SubItem>
-				<SubItem>
-					<Name>fTcModuleInput_vyToRobot</Name>
-					<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
-					<BitSize>64</BitSize>
-					<BitOffs X64="640">576</BitOffs>
-					<Properties>
-						<Property>
-							<Name>ItemType</Name>
-							<Value>Input</Value>
-						</Property>
-					</Properties>
-				</SubItem>
-				<SubItem>
 					<Name>fTcModuleOutput_DEBUG</Name>
 					<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
 					<BitSize>64</BitSize>
-					<BitOffs X64="704">640</BitOffs>
+					<BitOffs X64="512">448</BitOffs>
 					<Properties>
 						<Property>
 							<Name>ItemType</Name>
@@ -174,7 +123,7 @@
 					<Name>aTcModuleOutput_OutEstimatedPose</Name>
 					<Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
 					<BitSize>192</BitSize>
-					<BitOffs X64="768">704</BitOffs>
+					<BitOffs X64="576">512</BitOffs>
 					<Properties>
 						<Property>
 							<Name>ItemType</Name>
@@ -186,7 +135,7 @@
 					<Name>fTcModuleOutput_version</Name>
 					<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
 					<BitSize>64</BitSize>
-					<BitOffs X64="960">896</BitOffs>
+					<BitOffs X64="768">704</BitOffs>
 					<Properties>
 						<Property>
 							<Name>ItemType</Name>
@@ -409,8 +358,8 @@
 				</Properties>
 			</DUT>
 			<DUT Folder="Duts">
-				<Name GUID="{07918D91-B409-6AED-E05B-9FAE3A9A63C1}" IecLibraryType="true" CName="DW_simpleObserver_T">ST_DW_simpleObserver_T</Name>
-				<BitSize X64="3904">3584</BitSize>
+				<Name GUID="{E530800D-CCFD-EA86-5335-CAF26F907CF8}" IecLibraryType="true" CName="DW_simpleObserver_T">ST_DW_simpleObserver_T</Name>
+				<BitSize X64="3712">3520</BitSize>
 				<SubItem>
 					<Name>aCameraDelay_DSTATE</Name>
 					<Type GUID="{3B650EBB-75ED-1FC7-263C-FCD544F601BA}">T_matrix_42_real_T</Type>
@@ -477,49 +426,16 @@
 					<BitSize X64="64">32</BitSize>
 					<BitOffs X64="3648">3456</BitOffs>
 				</SubItem>
-				<SubItem>
-					<Name>pvxToRobot_PWORK</Name>
-					<Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
-					<BitSize X64="64">32</BitSize>
-					<BitOffs X64="3712">3488</BitOffs>
-				</SubItem>
-				<SubItem>
-					<Name>pvyToRobot_PWORK</Name>
-					<Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
-					<BitSize X64="64">32</BitSize>
-					<BitOffs X64="3776">3520</BitOffs>
-				</SubItem>
-				<SubItem>
-					<Name>pomegaToRobot_PWORK</Name>
-					<Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
-					<BitSize X64="64">32</BitSize>
-					<BitOffs X64="3840">3552</BitOffs>
-				</SubItem>
 				<Properties>
 					<Property>
 						<Name>ModuleGenerator_DutShadow</Name>
-						<Value>{9ED3AA1C-BD87-4FD8-E749-87C5ADB2C0AE}</Value>
+						<Value>{F6E50A61-EE91-9597-D274-39FBAA860C3B}</Value>
 					</Property>
 				</Properties>
 			</DUT>
 			<DUT Folder="Duts">
-				<Name GUID="{604235A4-A2A0-D57A-6901-30D8DE89A468}" IecLibraryType="true" CName="matrix_9_real_T">T_matrix_9_real_T</Name>
-				<BitSize>576</BitSize>
-				<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-				<ArrayInfo>
-					<LBound>0</LBound>
-					<Elements>9</Elements>
-				</ArrayInfo>
-				<Properties>
-					<Property>
-						<Name>ModuleGenerator_DutShadow</Name>
-						<Value>{72A91784-953A-FD09-4E66-5B1F6549B49B}</Value>
-					</Property>
-				</Properties>
-			</DUT>
-			<DUT Folder="Duts">
-				<Name GUID="{521E3180-100B-A19D-FA17-9BEDA5E53160}" IecLibraryType="true" CName="P_simpleObserver_T">ST_P_simpleObserver_T</Name>
-				<BitSize>896</BitSize>
+				<Name GUID="{337929FF-1DF2-5067-CAE4-5122433CB571}" IecLibraryType="true" CName="P_simpleObserver_T">ST_P_simpleObserver_T</Name>
+				<BitSize>256</BitSize>
 				<SubItem>
 					<Name>fConstant_Value</Name>
 					<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
@@ -544,22 +460,10 @@
 					<BitSize>64</BitSize>
 					<BitOffs>192</BitOffs>
 				</SubItem>
-				<SubItem>
-					<Name>fIntegrator_IC_i</Name>
-					<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
-					<BitSize>64</BitSize>
-					<BitOffs>256</BitOffs>
-				</SubItem>
-				<SubItem>
-					<Name>aGain_Gain</Name>
-					<Type GUID="{604235A4-A2A0-D57A-6901-30D8DE89A468}">T_matrix_9_real_T</Type>
-					<BitSize>576</BitSize>
-					<BitOffs>320</BitOffs>
-				</SubItem>
 				<Properties>
 					<Property>
 						<Name>ModuleGenerator_DutShadow</Name>
-						<Value>{0BACD104-E5F9-CCF2-8797-9495C4BBAEBD}</Value>
+						<Value>{009AB79F-853F-30BE-51E0-69FB8CF7E8C4}</Value>
 					</Property>
 				</Properties>
 			</DUT>

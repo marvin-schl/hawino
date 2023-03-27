@@ -151,9 +151,6 @@ HRESULT CTcComsimpleObserver::SetObjStateIP(ITComObjectServer* ipSrv, TComInitDa
 		AdditionalInports.TcModuleInput_InVThetaworld = 0;
 		AdditionalInports.TcModuleInput_InVXworld = 0;
 		AdditionalInports.TcModuleInput_InVYworld = 0;
-		AdditionalInports.TcModuleInput_omegaToRobot = 0;
-		AdditionalInports.TcModuleInput_vxToRobot = 0;
-		AdditionalInports.TcModuleInput_vyToRobot = 0;
 
 	}
 	if (FAILED(hr))
@@ -177,9 +174,6 @@ HRESULT CTcComsimpleObserver::SetObjStatePS(TComInitDataHdr* pInitData)
 		simpleObserver_DW.InVThetaworld_PWORK = reinterpret_cast<PVOID>(&(AdditionalInports.TcModuleInput_InVThetaworld));
 		simpleObserver_DW.InVXworld_PWORK = reinterpret_cast<PVOID>(&(AdditionalInports.TcModuleInput_InVXworld));
 		simpleObserver_DW.InVYworld_PWORK = reinterpret_cast<PVOID>(&(AdditionalInports.TcModuleInput_InVYworld));
-		simpleObserver_DW.omegaToRobot_PWORK = reinterpret_cast<PVOID>(&(AdditionalInports.TcModuleInput_omegaToRobot));
-		simpleObserver_DW.vxToRobot_PWORK = reinterpret_cast<PVOID>(&(AdditionalInports.TcModuleInput_vxToRobot));
-		simpleObserver_DW.vyToRobot_PWORK = reinterpret_cast<PVOID>(&(AdditionalInports.TcModuleInput_vyToRobot));
 		simpleObserver_DW.DEBUG_PWORK = reinterpret_cast<PVOID>(&(AdditionalOutports.TcModuleOutput_DEBUG));
 		simpleObserver_DW.OutEstimatedPose_PWORK = reinterpret_cast<PVOID>(&(AdditionalOutports.TcModuleOutput_OutEstimatedPose));
 		simpleObserver_DW.version_PWORK = reinterpret_cast<PVOID>(&(AdditionalOutports.TcModuleOutput_version));
