@@ -27,13 +27,16 @@ VAR
 	yRobotStartposition AT%Q*: LREAL;			//aktuelle yKoordinate
 	xPointList AT%I*: ARRAY[0..100] OF LREAL;	//xKoordinatenliste
 	yPointList AT%I*: ARRAY[0..100] OF LREAL;	//yKoordinatenliste
-	enable_ASearch AT%Q* : BOOL;	//enable signal for a search
+	enable_ASearch AT%Q* : BOOL;				//enable signal for a search
+	finished_ASearch AT%Q* : BOOL;//TODO
+	i: INT;
+	zeile: INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//vorläufig für Tests
-wayPointList[0] := ToRobotPoseSimple(x:= 200, y:= 500, theta:= -1);
-wayPointList[1] := ToRobotPoseSimple(x:= 300, y:= 500, theta:= -1);
+//wayPointList[0] := ToRobotPoseSimple(x:= 200, y:= 500, theta:= -1);
+//wayPointList[1] := ToRobotPoseSimple(x:= 300, y:= 500, theta:= -1);
 
 
 //Frage: Setzt GW3 die Variablen zurück? - jeder setzt seine variablen zurück
@@ -60,9 +63,25 @@ IF s0 AND NOT s1 AND Auftrag.Art = 'Fahrauftrag' THEN
 	yRobotStartposition := readAssigment.yStartposition;
 	enable_ASearch := TRUE;
 	//Bahnplanung
- 	//wayPointList[0] := ToRobotPoseSimple(x:= xPointList[0], y:= yPointList[0], theta:= -1);
-	TrajectoryController.setWaypointList(WaypointList);
+	
+	
+END_IF
+
+//vorübergehend
+IF xPointList[0] <> 0 THEN
+	FOR i := 0 TO 100 BY 1 DO
+ 		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i], y:= yPointList[i], theta:= -1);
+		IF xPointList[i] = 0 THEN
+			zeile := i;
+			EXIT;
+		END_IF
+	END_FOR
+	wayPointList[zeile] := readAssigment.lastPointsToPickup[0];
+	wayPointList[zeile+1] := readAssigment.lastPointsToPickup[1];
+	wayPointList[zeile+2] := readAssigment.lastPointsToPickup[2];
+	TrajectoryController.setWaypointList(waypointList);
 	trajectoryController.newWaypointListAvailable := TRUE;
+	s1:=1;
 END_IF
 
 ///////////////////////////////////////////////FahrtZumAbholort///////////////////////////////////////////////////
@@ -71,6 +90,7 @@ END_IF
 IF s1 AND NOT s2 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
 	s1 := 0; s2 := 1;
 	trajectoryController.newWaypointListAvailable := FALSE;
+	enable_ASearch := FALSE;
 END_IF
 
 // 	RückmeldungGW3 ready abwarten
@@ -88,7 +108,7 @@ END_IF
 
 //	RückmeldungGW3 am Ziel abwarten
 IF s4 AND NOT s5 AND trajectoryController.yBoArrivedAtDestination THEN
-	s4 := 0; s5 := 1;
+	s4 := 0; //s5 := 1;
 	trajectoryController.xBoEnable := FALSE;
 	//	Greifersteuerung
 	Gripper.closeGripperCommand := TRUE;												// hier könnte noch slider und Lichtschranke abgefragt werden zur Sicherheit
@@ -129,11 +149,20 @@ END_IF
 
 //	Warten auf Werkstück ausgelesen
 IF s9 AND NOT s10 AND StatusFromGW1 = 'WerkstueckAusgelesen' THEN
-	s9 := 0; s10 := 1;
+	s9 := 0; //s10 := 1;
 	resetVar := TRUE;
+	
+	//Auftrag auswerten
+	EndNode := 116;															//todo in matlab
+	xEndvalue := readAssigment.storageLocation.x;
+	yEndvalue := readAssigment.storageLocation.y;
+	xRobotStartposition := readAssigment.xStartposition;
+	yRobotStartposition := readAssigment.yStartposition;
+	enable_ASearch := TRUE;
+	
 	//	Bahnplanung
-	TrajectoryController.setWaypointList(WaypointList);
-	trajectoryController.newWaypointListAvailable := TRUE;
+	//TrajectoryController.setWaypointList(WaypointList);
+	//trajectoryController.newWaypointListAvailable := TRUE;
 END_IF
 
 /////////////////////////////////////////////////FahrtZurAblageStation///////////////////////////////////////////////////
@@ -142,6 +171,7 @@ END_IF
 IF s10 AND NOT s11 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
 	s10 := 0; s11 := 1;
 	trajectoryController.newWaypointListAvailable := FALSE;
+	enable_ASearch := FALSE;
 END_IF
 
 // 	RückmeldungGW3 ready abwarten
@@ -197,16 +227,16 @@ END_IF
 
 //	RückmeldungGW3 am Ziel abwarten
 IF s18 AND NOT s19 AND trajectoryController.yBoArrivedAtDestination THEN
-	s18 := 0; s19 := 1;
+	s18 := 0; //s19 := 1;
 	trajectoryController.xBoEnable := FALSE;
 	//	Greifersteuerung
 	Gripper.closeGripperCommand := FALSE;																	//----------todo
 	//	RückmeldungGW1 Teil abgelegt
 	FeedbackToGW1 := 'Teil abgelegt';
 	//	Fahrauftrag zum Parkplatz
-	
-	TrajectoryController.setWaypointList(WaypointList);
-	trajectoryController.newWaypointListAvailable := TRUE;
+	s22 := 1;																							//wieder rausnehmen
+	//TrajectoryController.setWaypointList(WaypointList);
+	//trajectoryController.newWaypointListAvailable := TRUE;
 END_IF
 
 ///////////////////////////////////////////////////FahrtZumParkplatz////////////////////////////////////////////////////////
@@ -260,10 +290,21 @@ END_IF
       <LineId Id="422" Count="4" />
       <LineId Id="492" Count="0" />
       <LineId Id="94" Count="0" />
-      <LineId Id="226" Count="0" />
+      <LineId Id="523" Count="0" />
       <LineId Id="230" Count="0" />
-      <LineId Id="248" Count="0" />
       <LineId Id="91" Count="0" />
+      <LineId Id="527" Count="0" />
+      <LineId Id="526" Count="0" />
+      <LineId Id="528" Count="0" />
+      <LineId Id="531" Count="1" />
+      <LineId Id="557" Count="2" />
+      <LineId Id="556" Count="0" />
+      <LineId Id="534" Count="0" />
+      <LineId Id="549" Count="1" />
+      <LineId Id="554" Count="0" />
+      <LineId Id="552" Count="1" />
+      <LineId Id="555" Count="0" />
+      <LineId Id="530" Count="0" />
       <LineId Id="288" Count="0" />
       <LineId Id="249" Count="0" />
       <LineId Id="289" Count="0" />
@@ -271,6 +312,7 @@ END_IF
       <LineId Id="251" Count="0" />
       <LineId Id="250" Count="0" />
       <LineId Id="254" Count="0" />
+      <LineId Id="573" Count="0" />
       <LineId Id="252" Count="0" />
       <LineId Id="263" Count="4" />
       <LineId Id="262" Count="0" />
@@ -307,13 +349,20 @@ END_IF
       <LineId Id="37" Count="0" />
       <LineId Id="139" Count="1" />
       <LineId Id="204" Count="0" />
+      <LineId Id="570" Count="0" />
+      <LineId Id="563" Count="0" />
+      <LineId Id="565" Count="4" />
+      <LineId Id="562" Count="0" />
+      <LineId Id="571" Count="0" />
       <LineId Id="142" Count="0" />
       <LineId Id="356" Count="1" />
       <LineId Id="141" Count="0" />
       <LineId Id="292" Count="0" />
       <LineId Id="72" Count="0" />
       <LineId Id="293" Count="0" />
-      <LineId Id="298" Count="14" />
+      <LineId Id="298" Count="3" />
+      <LineId Id="572" Count="0" />
+      <LineId Id="302" Count="10" />
       <LineId Id="399" Count="0" />
       <LineId Id="313" Count="1" />
       <LineId Id="40" Count="0" />
