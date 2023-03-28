@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="normalizeAngle" Id="{dcf0afd6-8216-4551-a2e7-b170fbea7d1e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION normalizeAngle : LREAL
+VAR_INPUT
+	angle: LREAL;
+	upperBound:LREAL := pi;
+	lowerBound:LREAL := -pi;
+END_VAR
+VAR
+END_VAR	
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF angle > upperBound THEN
+	normalizeAngle := angle - 2*pi;
+ELSIF angle < lowerBound THEN
+	normalizeAngle := angle + 2*pi;
+ELSE
+	normalizeAngle := angle;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="normalizeAngle">
+      <LineId Id="7" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
