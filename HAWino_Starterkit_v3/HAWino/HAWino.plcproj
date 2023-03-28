@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -96,6 +96,9 @@
     <Compile Include="POUs\HAWinoCore\HAWino.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\ArrayToStruct.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\NonlinearController.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -154,6 +157,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\TestAndMeasurement\Sinusfahrt.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\TrajectoryController.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\ATAN2.TcPOU">

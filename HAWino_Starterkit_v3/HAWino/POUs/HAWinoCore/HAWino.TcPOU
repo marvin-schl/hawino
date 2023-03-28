@@ -12,6 +12,8 @@ VAR
 	SysGUID : GUID;
 	start : BOOL:= TRUE;
 	initDone AT%Q* : BOOL := FALSE;
+	
+	Test: DS_TrajectoryController;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -37,14 +39,8 @@ END_VAR
 		Camera();
 		PowerManager();
 		Gripper();
-		GW2DummyPRG();
-		//ParameterEstimation();
-		//MeasureVariance();
-		//Sinusfahrt();
-		//CameraNoise();
-		//ParameterEstimation_1();
-		//SimpleObserver();
-		//TrackingController();
+		
+		Test();
 END_CASE
 ]]></ST>
     </Implementation>
@@ -128,12 +124,7 @@ CASE state OF
       </Implementation>
     </Method>
     <LineIds Name="HAWino">
-      <LineId Id="248" Count="21" />
-      <LineId Id="291" Count="0" />
-      <LineId Id="270" Count="4" />
-      <LineId Id="278" Count="0" />
-      <LineId Id="277" Count="0" />
-      <LineId Id="276" Count="0" />
+      <LineId Id="318" Count="24" />
       <LineId Id="98" Count="0" />
     </LineIds>
     <LineIds Name="HAWino.InitSysId">
