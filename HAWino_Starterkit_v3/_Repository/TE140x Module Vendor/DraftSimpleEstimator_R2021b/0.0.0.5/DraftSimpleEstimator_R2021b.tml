@@ -1,0 +1,777 @@
+<?xml version="1.0"?>
+<TcModuleLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2009/05/TcModuleLibrary">
+  <Vendor>
+    <Name>TE140x Module Vendor</Name>
+    <ImageData>
+    </ImageData>
+  </Vendor>
+  <DataTypes>
+    <DataType>
+      <Name GUID="{7AD45FAF-7773-45AE-E908-6EFBD71C9A79}" IecLibraryType="true" CName="matrix_4_real_T">T_matrix_4_real_T</Name>
+      <BitSize>256</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>4</Elements>
+      </ArrayInfo>
+      <Properties>
+        <Property>
+          <Name>ModuleGenerator_DutShadow</Name>
+          <Value>{3C223E90-82DD-E25C-5FC3-58C4D6D8B8B9}</Value>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
+      <Name GUID="{3B650EBB-75ED-1FC7-263C-FCD544F601BA}" IecLibraryType="true" CName="matrix_42_real_T">T_matrix_42_real_T</Name>
+      <BitSize>2688</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>42</Elements>
+      </ArrayInfo>
+      <Properties>
+        <Property>
+          <Name>ModuleGenerator_DutShadow</Name>
+          <Value>{D66A6CF3-92AF-F198-AE29-9C504D923AF2}</Value>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
+      <Name GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}" IecLibraryType="true" CName="matrix_3_real_T">T_matrix_3_real_T</Name>
+      <BitSize>192</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>3</Elements>
+      </ArrayInfo>
+      <Properties>
+        <Property>
+          <Name>ModuleGenerator_DutShadow</Name>
+          <Value>{610A2D24-A761-AE0B-B518-D70554B2A821}</Value>
+        </Property>
+      </Properties>
+    </DataType>
+  </DataTypes>
+  <Licenses />
+  <Library>
+    <Name>DraftSimpleEstimator_R2021b</Name>
+    <Version>0.0.0.5</Version>
+    <Group GUID="{5E25B681-A0D1-32F4-3E69-0CFC9DC6C42C}">TE140x Module Vendor</Group>
+    <POUs>
+      <POU Folder="Pous">
+        <Name GUID="{2E26894B-363E-D55D-5702-CF5CEC2AC8A0}" IecLibraryType="true">FB_DraftSimpleEstimator_R2021b</Name>
+        <BitSize X64="832">768</BitSize>
+        <SubItem>
+          <Name>_internal_data</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
+          <BitSize X64="64">32</BitSize>
+          <BitOffs X64="64">32</BitOffs>
+          <Properties>
+            <Property>
+              <Name>plcAttribute_hide</Name>
+            </Property>
+            <Property>
+              <Name>plcAttribute_no_copy</Name>
+            </Property>
+          </Properties>
+        </SubItem>
+        <SubItem>
+          <Name>aTcModuleInput_InCameraPose</Name>
+          <Type GUID="{7AD45FAF-7773-45AE-E908-6EFBD71C9A79}">T_matrix_4_real_T</Type>
+          <BitSize>256</BitSize>
+          <BitOffs X64="128">64</BitOffs>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Input</Value>
+            </Property>
+          </Properties>
+        </SubItem>
+        <SubItem>
+          <Name>fTcModuleInput_InVThetafromMotors</Name>
+          <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+          <BitSize>64</BitSize>
+          <BitOffs X64="384">320</BitOffs>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Input</Value>
+            </Property>
+          </Properties>
+        </SubItem>
+        <SubItem>
+          <Name>fTcModuleInput_InVXfromMotors</Name>
+          <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+          <BitSize>64</BitSize>
+          <BitOffs X64="448">384</BitOffs>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Input</Value>
+            </Property>
+          </Properties>
+        </SubItem>
+        <SubItem>
+          <Name>fTcModuleInput_InVYfromMotors</Name>
+          <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+          <BitSize>64</BitSize>
+          <BitOffs X64="512">448</BitOffs>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Input</Value>
+            </Property>
+          </Properties>
+        </SubItem>
+        <SubItem>
+          <Name>fTcModuleOutput_OutEstTheta</Name>
+          <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+          <BitSize>64</BitSize>
+          <BitOffs X64="576">512</BitOffs>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Output</Value>
+            </Property>
+          </Properties>
+        </SubItem>
+        <SubItem>
+          <Name>fTcModuleOutput_OutEstX</Name>
+          <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+          <BitSize>64</BitSize>
+          <BitOffs X64="640">576</BitOffs>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Output</Value>
+            </Property>
+          </Properties>
+        </SubItem>
+        <SubItem>
+          <Name>fTcModuleOutput_OutEstY</Name>
+          <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+          <BitSize>64</BitSize>
+          <BitOffs X64="704">640</BitOffs>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Output</Value>
+            </Property>
+          </Properties>
+        </SubItem>
+        <SubItem>
+          <Name>pPDraftSimpleEstimator_R2021b_M</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
+          <BitSize X64="64">32</BitSize>
+          <BitOffs X64="768">704</BitOffs>
+        </SubItem>
+        <Method>
+          <Name>FB_exit</Name>
+          <ReturnType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</ReturnType>
+          <ReturnBitSize>8</ReturnBitSize>
+          <Parameter>
+            <Name>bInCopyCode</Name>
+            <Type GUID="{18071995-0000-0000-0000-000000000030}" Direction="in">BOOL</Type>
+            <BitSize>8</BitSize>
+          </Parameter>
+        </Method>
+        <Method>
+          <Name>FB_init</Name>
+          <ReturnType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</ReturnType>
+          <ReturnBitSize>8</ReturnBitSize>
+          <Parameter>
+            <Name>bInitRetains</Name>
+            <Type GUID="{18071995-0000-0000-0000-000000000030}" Direction="in">BOOL</Type>
+            <BitSize>8</BitSize>
+          </Parameter>
+          <Parameter>
+            <Name>bInCopyCode</Name>
+            <Type GUID="{18071995-0000-0000-0000-000000000030}" Direction="in">BOOL</Type>
+            <BitSize>8</BitSize>
+          </Parameter>
+        </Method>
+        <Properties>
+          <Property>
+            <Name>PouType</Name>
+            <Value>FunctionBlock</Value>
+          </Property>
+          <Property>
+            <Name>TcExternalPou</Name>
+          </Property>
+        </Properties>
+        <Licenses>
+          <License>
+            <LicenseId>{AD7F40C3-F160-4413-83E3-6B7656A795A2}</LicenseId>
+            <Comment><![CDATA[MatSIM License]]></Comment>
+          </License>
+        </Licenses>
+      </POU>
+    </POUs>
+    <DUTs>
+      <DUT Folder="Duts">
+        <Name GUID="{4695B4A7-CDCF-6A26-8010-D0B7889E22EC}" IecLibraryType="true">ST_FB_Main_FB_DraftSimpleEstimator_R2021b</Name>
+        <BitSize X64="128">64</BitSize>
+        <SubItem>
+          <Name>pInst</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
+          <BitSize X64="64">32</BitSize>
+          <BitOffs>0</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>result</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+          <BitSize>8</BitSize>
+          <BitOffs X64="64">32</BitOffs>
+        </SubItem>
+        <Properties>
+          <Property>
+            <Name>plcAttribute_hide</Name>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{D3794EF4-6E07-758E-EF57-C281C8949E7A}" IecLibraryType="true">ST_FB_exit_FB_DraftSimpleEstimator_R2021b</Name>
+        <BitSize X64="128">64</BitSize>
+        <SubItem>
+          <Name>pInst</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
+          <BitSize X64="64">32</BitSize>
+          <BitOffs>0</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>bInCopyCode</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+          <BitSize>8</BitSize>
+          <BitOffs X64="64">32</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>result</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+          <BitSize>8</BitSize>
+          <BitOffs X64="72">40</BitOffs>
+        </SubItem>
+        <Properties>
+          <Property>
+            <Name>plcAttribute_hide</Name>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{C693D957-D469-5170-EDC3-AFCCAD2CE57B}" IecLibraryType="true">ST_FB_init_FB_DraftSimpleEstimator_R2021b</Name>
+        <BitSize X64="128">64</BitSize>
+        <SubItem>
+          <Name>pInst</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
+          <BitSize X64="64">32</BitSize>
+          <BitOffs>0</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>bInitRetains</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+          <BitSize>8</BitSize>
+          <BitOffs X64="64">32</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>bInCopyCode</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+          <BitSize>8</BitSize>
+          <BitOffs X64="72">40</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>result</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+          <BitSize>8</BitSize>
+          <BitOffs X64="80">48</BitOffs>
+        </SubItem>
+        <Properties>
+          <Property>
+            <Name>plcAttribute_hide</Name>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{7AD45FAF-7773-45AE-E908-6EFBD71C9A79}" IecLibraryType="true" CName="matrix_4_real_T">T_matrix_4_real_T</Name>
+        <BitSize>256</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>4</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{3C223E90-82DD-E25C-5FC3-58C4D6D8B8B9}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{7AD45FAF-7773-45AE-E908-6EFBD71C9A79}" IecLibraryType="true" CName="matrix_4_real_T">T_matrix_4_real_T</Name>
+        <BitSize>256</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>4</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{3C223E90-82DD-E25C-5FC3-58C4D6D8B8B9}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{7AD45FAF-7773-45AE-E908-6EFBD71C9A79}" IecLibraryType="true" CName="matrix_4_real_T">T_matrix_4_real_T</Name>
+        <BitSize>256</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>4</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{3C223E90-82DD-E25C-5FC3-58C4D6D8B8B9}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{7AD45FAF-7773-45AE-E908-6EFBD71C9A79}" IecLibraryType="true" CName="matrix_4_real_T">T_matrix_4_real_T</Name>
+        <BitSize>256</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>4</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{3C223E90-82DD-E25C-5FC3-58C4D6D8B8B9}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}" IecLibraryType="true" CName="matrix_3_real_T">T_matrix_3_real_T</Name>
+        <BitSize>192</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>3</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{610A2D24-A761-AE0B-B518-D70554B2A821}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}" IecLibraryType="true" CName="matrix_3_real_T">T_matrix_3_real_T</Name>
+        <BitSize>192</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>3</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{610A2D24-A761-AE0B-B518-D70554B2A821}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}" IecLibraryType="true" CName="matrix_3_real_T">T_matrix_3_real_T</Name>
+        <BitSize>192</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>3</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{610A2D24-A761-AE0B-B518-D70554B2A821}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}" IecLibraryType="true" CName="matrix_3_real_T">T_matrix_3_real_T</Name>
+        <BitSize>192</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>3</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{610A2D24-A761-AE0B-B518-D70554B2A821}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}" IecLibraryType="true" CName="matrix_3_real_T">T_matrix_3_real_T</Name>
+        <BitSize>192</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>3</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{610A2D24-A761-AE0B-B518-D70554B2A821}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}" IecLibraryType="true" CName="matrix_3_real_T">T_matrix_3_real_T</Name>
+        <BitSize>192</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>3</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{610A2D24-A761-AE0B-B518-D70554B2A821}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}" IecLibraryType="true" CName="matrix_3_real_T">T_matrix_3_real_T</Name>
+        <BitSize>192</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>3</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{610A2D24-A761-AE0B-B518-D70554B2A821}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}" IecLibraryType="true" CName="matrix_3_real_T">T_matrix_3_real_T</Name>
+        <BitSize>192</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>3</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{610A2D24-A761-AE0B-B518-D70554B2A821}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}" IecLibraryType="true" CName="matrix_3_real_T">T_matrix_3_real_T</Name>
+        <BitSize>192</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>3</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{610A2D24-A761-AE0B-B518-D70554B2A821}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{7AD45FAF-7773-45AE-E908-6EFBD71C9A79}" IecLibraryType="true" CName="matrix_4_real_T">T_matrix_4_real_T</Name>
+        <BitSize>256</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>4</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{3C223E90-82DD-E25C-5FC3-58C4D6D8B8B9}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{4CEAA92F-DB4F-6406-C763-DDF7C6009F17}" IecLibraryType="true" CName="B_DraftSimpleEstimator_R2021b_T">ST_B_DraftSimpleEstimator_R2021b_T</Name>
+        <BitSize>2944</BitSize>
+        <SubItem>
+          <Name>aInCameraPose</Name>
+          <Type GUID="{7AD45FAF-7773-45AE-E908-6EFBD71C9A79}">T_matrix_4_real_T</Type>
+          <BitSize>256</BitSize>
+          <BitOffs>0</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>aCameraPOse</Name>
+          <Type GUID="{7AD45FAF-7773-45AE-E908-6EFBD71C9A79}">T_matrix_4_real_T</Type>
+          <BitSize>256</BitSize>
+          <BitOffs>256</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>aCamFlag</Name>
+          <Type GUID="{7AD45FAF-7773-45AE-E908-6EFBD71C9A79}">T_matrix_4_real_T</Type>
+          <BitSize>256</BitSize>
+          <BitOffs>512</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>aCameraDelay</Name>
+          <Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
+          <BitSize>192</BitSize>
+          <BitOffs>768</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>aDelayOneStep1</Name>
+          <Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
+          <BitSize>192</BitSize>
+          <BitOffs>960</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>aOdometry</Name>
+          <Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
+          <BitSize>192</BitSize>
+          <BitOffs>1152</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>aSubtract2</Name>
+          <Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
+          <BitSize>192</BitSize>
+          <BitOffs>1344</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>aSubtract1</Name>
+          <Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
+          <BitSize>192</BitSize>
+          <BitOffs>1536</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>fInVXfromMotors</Name>
+          <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+          <BitSize>64</BitSize>
+          <BitOffs>1728</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>fInVYfromMotors</Name>
+          <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+          <BitSize>64</BitSize>
+          <BitOffs>1792</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>fInVThetafromMotors</Name>
+          <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+          <BitSize>64</BitSize>
+          <BitOffs>1856</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>aTranspose</Name>
+          <Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
+          <BitSize>192</BitSize>
+          <BitOffs>1920</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>avelW</Name>
+          <Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
+          <BitSize>192</BitSize>
+          <BitOffs>2112</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>aestimatedPose</Name>
+          <Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
+          <BitSize>192</BitSize>
+          <BitOffs>2304</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>aTmpSignalConversionAtTransposeI</Name>
+          <Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
+          <BitSize>192</BitSize>
+          <BitOffs>2496</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>aSubtract</Name>
+          <Type GUID="{7AD45FAF-7773-45AE-E908-6EFBD71C9A79}">T_matrix_4_real_T</Type>
+          <BitSize>256</BitSize>
+          <BitOffs>2688</BitOffs>
+        </SubItem>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{656738C3-DD52-F5A2-2FDE-1AFC4E742F50}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{7AD45FAF-7773-45AE-E908-6EFBD71C9A79}" IecLibraryType="true" CName="matrix_4_real_T">T_matrix_4_real_T</Name>
+        <BitSize>256</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>4</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{3C223E90-82DD-E25C-5FC3-58C4D6D8B8B9}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{3B650EBB-75ED-1FC7-263C-FCD544F601BA}" IecLibraryType="true" CName="matrix_42_real_T">T_matrix_42_real_T</Name>
+        <BitSize>2688</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>42</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{D66A6CF3-92AF-F198-AE29-9C504D923AF2}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}" IecLibraryType="true" CName="matrix_3_real_T">T_matrix_3_real_T</Name>
+        <BitSize>192</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>3</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{610A2D24-A761-AE0B-B518-D70554B2A821}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}" IecLibraryType="true" CName="matrix_3_real_T">T_matrix_3_real_T</Name>
+        <BitSize>192</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>3</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{610A2D24-A761-AE0B-B518-D70554B2A821}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{13BFC834-B35E-70EA-59D5-5B960F076EB2}" IecLibraryType="true" CName="DW_DraftSimpleEstimator_R2021_T">ST_DW_DraftSimpleEstimator_R2021_T</Name>
+        <BitSize X64="3776">3584</BitSize>
+        <SubItem>
+          <Name>aDelayOneStep_DSTATE</Name>
+          <Type GUID="{7AD45FAF-7773-45AE-E908-6EFBD71C9A79}">T_matrix_4_real_T</Type>
+          <BitSize>256</BitSize>
+          <BitOffs>0</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>aCameraDelay_DSTATE</Name>
+          <Type GUID="{3B650EBB-75ED-1FC7-263C-FCD544F601BA}">T_matrix_42_real_T</Type>
+          <BitSize>2688</BitSize>
+          <BitOffs>256</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>aDelayOneStep1_DSTATE</Name>
+          <Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
+          <BitSize>192</BitSize>
+          <BitOffs>2944</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>aestPoseOld</Name>
+          <Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
+          <BitSize>192</BitSize>
+          <BitOffs>3136</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>pOutEstTheta_PWORK</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
+          <BitSize X64="64">32</BitSize>
+          <BitOffs>3328</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>pOutEstX_PWORK</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
+          <BitSize X64="64">32</BitSize>
+          <BitOffs X64="3392">3360</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>pOutEstY_PWORK</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
+          <BitSize X64="64">32</BitSize>
+          <BitOffs X64="3456">3392</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>pInCameraPose_PWORK</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
+          <BitSize X64="64">32</BitSize>
+          <BitOffs X64="3520">3424</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>pInVXfromMotors_PWORK</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
+          <BitSize X64="64">32</BitSize>
+          <BitOffs X64="3584">3456</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>pInVYfromMotors_PWORK</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
+          <BitSize X64="64">32</BitSize>
+          <BitOffs X64="3648">3488</BitOffs>
+        </SubItem>
+        <SubItem>
+          <Name>pInVThetafromMotors_PWORK</Name>
+          <Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
+          <BitSize X64="64">32</BitSize>
+          <BitOffs X64="3712">3520</BitOffs>
+        </SubItem>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{71A5A6A8-30FA-4E3D-3B9D-1AA3218434E6}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}" IecLibraryType="true" CName="matrix_3_real_T">T_matrix_3_real_T</Name>
+        <BitSize>192</BitSize>
+        <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+        <ArrayInfo>
+          <LBound>0</LBound>
+          <Elements>3</Elements>
+        </ArrayInfo>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{610A2D24-A761-AE0B-B518-D70554B2A821}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+      <DUT Folder="Duts">
+        <Name GUID="{37209F33-2F45-A892-8F6F-3BBA93D6B696}" IecLibraryType="true" CName="X_DraftSimpleEstimator_R2021b_T">ST_X_DraftSimpleEstimator_R2021b_T</Name>
+        <BitSize>192</BitSize>
+        <SubItem>
+          <Name>aIntegrator_CSTATE</Name>
+          <Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
+          <BitSize>192</BitSize>
+          <BitOffs>0</BitOffs>
+        </SubItem>
+        <Properties>
+          <Property>
+            <Name>ModuleGenerator_DutShadow</Name>
+            <Value>{B747A2A2-AA58-16AA-1D11-02FC053FB41F}</Value>
+          </Property>
+        </Properties>
+      </DUT>
+    </DUTs>
+  </Library>
+</TcModuleLibrary>

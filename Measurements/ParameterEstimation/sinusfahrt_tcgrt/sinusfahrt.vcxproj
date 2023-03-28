@@ -1,0 +1,164 @@
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Condition="Exists('$(TWINCATSDK)\Sdk.props')" Project="$(TWINCATSDK)\Sdk.props"/>
+	<Import Condition="Exists('$(TWINCATSDK)\MsBuild\TwinCAT Common')" Project="$(TWINCATSDK)\MsBuild\TwinCAT Common\*.targets"/>
+	<ItemGroup Label="ProjectConfigurations">
+		<ProjectConfiguration Include="Debug|TwinCAT RT (x86)">
+			<Configuration>Debug</Configuration>
+			<Platform>TwinCAT RT (x86)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|TwinCAT RT (x86)">
+			<Configuration>Release</Configuration>
+			<Platform>TwinCAT RT (x86)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|TwinCAT RT (x64)">
+			<Configuration>Debug</Configuration>
+			<Platform>TwinCAT RT (x64)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|TwinCAT RT (x64)">
+			<Configuration>Release</Configuration>
+			<Platform>TwinCAT RT (x64)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|TwinCAT OS (x64)">
+			<Configuration>Debug</Configuration>
+			<Platform>TwinCAT OS (x64)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|TwinCAT OS (x64)">
+			<Configuration>Release</Configuration>
+			<Platform>TwinCAT OS (x64)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|TwinCAT UM (x86)">
+			<Configuration>Debug</Configuration>
+			<Platform>TwinCAT UM (x86)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|TwinCAT UM (x86)">
+			<Configuration>Release</Configuration>
+			<Platform>TwinCAT UM (x86)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|TwinCAT UM (x64)">
+			<Configuration>Debug</Configuration>
+			<Platform>TwinCAT UM (x64)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|TwinCAT UM (x64)">
+			<Configuration>Release</Configuration>
+			<Platform>TwinCAT UM (x64)</Platform>
+		</ProjectConfiguration>
+	</ItemGroup>
+	<PropertyGroup Label="Globals">
+		<RootNamespace>sinusfahrt</RootNamespace>
+		<AutomaticRetargetPlatformVersion>true</AutomaticRetargetPlatformVersion>
+		<TcPublishAddFiles>sinusfahrt_ModuleInfo.xml;;$(TcPublishAddFiles)</TcPublishAddFiles>
+		<PreferredToolArchitecture>x64</PreferredToolArchitecture>
+		<_IsNativeEnvironment>true</_IsNativeEnvironment>
+		<ProjectGuid>{7823EB67-E7BE-466F-8BA3-3DD2CE599C00}</ProjectGuid>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
+	<Import Project="sinusfahrtArtifacts.props"/>
+	<PropertyGroup Label="Configuration">
+		<ModuleGeneratorSdk Condition="'$(ModuleGeneratorSdk)'==''">C:\TwinCAT\Functions\TE14xx-ToolsForMatlabAndSimulink\TE140x\SDK</ModuleGeneratorSdk>
+		<PlatformToolset>v142</PlatformToolset>
+		<MATLAB_ROOT Condition="'$(MATLAB_ROOT)'==''">C:\Program Files\MATLAB\R2021b</MATLAB_ROOT>
+		<TE140xSdk Condition="'$(TE140xSdk)'==''">C:\TwinCAT\Functions\TE14xx-ToolsForMatlabAndSimulink\TE140x\SDK</TE140xSdk>
+		<TcGeneralUseTmx>true</TcGeneralUseTmx>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
+	<ImportGroup Label="ExtensionSettings">
+		<Import Project="$(ModuleGeneratorSdk)\MsBuild\Targets\*.props"/>
+		<Import Project="$(TE140xSdk)\MsBuild\Targets\*.props" Condition="'$(TE140xSdk)'!='$(ModuleGeneratorSdk)'"/>
+	</ImportGroup>
+	<ImportGroup Label="PropertySheets">
+		<Import Project="$(ModuleGeneratorSdk)\MsBuild\Props\*.props"/>
+		<Import Project="$(TE140xSdk)\MsBuild\Props\*.props" Condition="'$(TE140xSdk)'!='$(ModuleGeneratorSdk)'"/>
+	</ImportGroup>
+	<PropertyGroup Label="UserMacros"/>
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<AdditionalIncludeDirectories Condition="$(Platform.StartsWith('TwinCAT RT'))">$(ProjectDir)\TwinCAT RT\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories Condition="$(Platform.StartsWith('TwinCAT OS'))">$(ProjectDir)\TwinCAT OS\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories Condition="$(Platform.StartsWith('TwinCAT UM'))">$(ProjectDir)\TwinCAT UM\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories Condition="$(Platform.StartsWith('TwinCAT CE'))">$(ProjectDir)\TwinCAT CE\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PreprocessorDefinitions>TCMATH_BLOCK_STANDARDLIB=0;TC_BUILD_MIN=4024;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+		</ClCompile>
+		<Link>
+			<AdditionalDependencies>TcMgFramework.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies>TcMgFramework.lib;%(AdditionalDependencies)</AdditionalDependencies>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemGroup>
+		<ClInclude Include="TcPch.h"/>
+		<ClInclude Include="sinusfahrtServices.h"/>
+		<ClInclude Include="sinusfahrtDuts.h"/>
+		<ClInclude Include="sinusfahrtInterfaces.h"/>
+		<ClInclude Include="sinusfahrtClassFactory.h"/>
+		<ClInclude Include="sinusfahrtDrv.h"/>
+		<ClInclude Include="sinusfahrtCtrl.h"/>
+		<ClInclude Include="sinusfahrtW32.h"/>
+		<ClInclude Include="sinusfahrtW32Resource.h"/>
+		<ClInclude Include="TcComsinusfahrt.h"/>
+		<ClInclude Include="Fbsinusfahrt.h"/>
+		<ClInclude Include="sinusfahrtInternal.h"/>
+		<ClInclude Include="$(Simulink_sinusfahrt_START_DIR)\sinusfahrt_tcgrt\multiword_types.h"/>
+		<ClInclude Include="$(Simulink_sinusfahrt_START_DIR)\sinusfahrt_tcgrt\rtmodel.h"/>
+		<ClInclude Include="$(Simulink_sinusfahrt_START_DIR)\sinusfahrt_tcgrt\rtwtypes.h"/>
+		<ClInclude Include="$(Simulink_sinusfahrt_START_DIR)\sinusfahrt_tcgrt\sinusfahrt.h"/>
+		<ClInclude Include="$(Simulink_sinusfahrt_START_DIR)\sinusfahrt_tcgrt\sinusfahrt_private.h"/>
+		<ClInclude Include="$(Simulink_sinusfahrt_START_DIR)\sinusfahrt_tcgrt\sinusfahrt_types.h"/>
+	</ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="TcPch.cpp">
+			<PrecompiledHeader>Create</PrecompiledHeader>
+		</ClCompile>
+		<ClCompile Include="sinusfahrtClassFactory.cpp"/>
+		<ClCompile Include="sinusfahrtDrv.cpp">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT RT'))">true</ExcludedFromBuild>
+		</ClCompile>
+		<ClCompile Include="sinusfahrtModulesMain.cpp">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT OS'))">true</ExcludedFromBuild>
+		</ClCompile>
+		<ClCompile Include="sinusfahrtCtrl.cpp">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT UM'))">true</ExcludedFromBuild>
+		</ClCompile>
+		<ClCompile Include="sinusfahrtW32.cpp">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT UM'))">true</ExcludedFromBuild>
+		</ClCompile>
+		<ClCompile Include="TcComsinusfahrt.cpp">
+			<PreprocessorDefinitions>$(Simulink_sinusfahrt_Definitions)%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>$(Simulink_sinusfahrt_IncludeDir)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+		<ClCompile Include="Fbsinusfahrt.cpp">
+			<PreprocessorDefinitions>$(Simulink_sinusfahrt_Definitions)%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>$(Simulink_sinusfahrt_IncludeDir)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_sinusfahrt_START_DIR)\sinusfahrt_tcgrt\sinusfahrt.cpp">
+			<PreprocessorDefinitions>$(Simulink_sinusfahrt_Definitions)%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>$(Simulink_sinusfahrt_IncludeDir)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PrecompiledHeader>NotUsing</PrecompiledHeader>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_sinusfahrt_MATLAB_ROOT)\rtw\c\src\common\rt_malloc_main.cpp">
+			<PreprocessorDefinitions>$(Simulink_sinusfahrt_Definitions)%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>$(Simulink_sinusfahrt_IncludeDir)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PrecompiledHeader>NotUsing</PrecompiledHeader>
+			<ExcludedFromBuild>true</ExcludedFromBuild>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="sinusfahrtW32.rc">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT UM'))">true</ExcludedFromBuild>
+		</ResourceCompile>
+		<ResourceCompile Include="sinusfahrt.rc"/>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="sinusfahrtArtifacts.props"/>
+		<None Include="sinusfahrtW32.def">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT UM'))">true</ExcludedFromBuild>
+		</None>
+		<None Include="sinusfahrt_ModuleInfo.xml"/>
+		<None Include="sinusfahrt.libcat.xml"/>
+		<None Include="sinusfahrt.tmc"/>
+		<None Include="sinusfahrt.tml"/>
+	</ItemGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
+	<ImportGroup Label="ExtensionTargets">
+		<Import Project="$(ModuleGeneratorSdk)\MsBuild\Targets\*.targets"/>
+		<Import Project="$(TE140xSdk)\MsBuild\Targets\*.targets" Condition="'$(TE140xSdk)'!='$(ModuleGeneratorSdk)'"/>
+	</ImportGroup>
+</Project>

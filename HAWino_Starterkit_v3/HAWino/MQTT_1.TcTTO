@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <Task Name="MQTT_1" Id="{e68f51c1-647d-4997-bc78-6d449820c757}">
     <!--CycleTime in micro seconds.-->
     <CycleTime>100000</CycleTime>

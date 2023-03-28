@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="HAWino" Id="{19efa873-38c9-4bfb-a6cf-5d3d5e993a21}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM HAWino
 VAR
@@ -31,12 +31,20 @@ END_VAR
 		END_IF
 	DUT_SysState.Op:
 	//Operate System
-		MotorDrivers();
-		WheelEncoders();
+		//MotorDrivers();
+		//WheelEncoders();
 		IrDistanceSensors();
 		Camera();
 		PowerManager();
 		Gripper();
+		GW2DummyPRG();
+		//ParameterEstimation();
+		//MeasureVariance();
+		//Sinusfahrt();
+		//CameraNoise();
+		//ParameterEstimation_1();
+		//SimpleObserver();
+		//TrackingController();
 END_CASE
 ]]></ST>
     </Implementation>
@@ -120,22 +128,12 @@ CASE state OF
       </Implementation>
     </Method>
     <LineIds Name="HAWino">
-      <LineId Id="153" Count="0" />
-      <LineId Id="180" Count="0" />
-      <LineId Id="155" Count="0" />
-      <LineId Id="161" Count="0" />
-      <LineId Id="158" Count="0" />
-      <LineId Id="162" Count="1" />
-      <LineId Id="157" Count="0" />
-      <LineId Id="181" Count="0" />
-      <LineId Id="165" Count="0" />
-      <LineId Id="175" Count="0" />
-      <LineId Id="178" Count="0" />
-      <LineId Id="166" Count="1" />
-      <LineId Id="164" Count="0" />
-      <LineId Id="182" Count="0" />
-      <LineId Id="169" Count="5" />
-      <LineId Id="156" Count="0" />
+      <LineId Id="248" Count="21" />
+      <LineId Id="291" Count="0" />
+      <LineId Id="270" Count="4" />
+      <LineId Id="278" Count="0" />
+      <LineId Id="277" Count="0" />
+      <LineId Id="276" Count="0" />
       <LineId Id="98" Count="0" />
     </LineIds>
     <LineIds Name="HAWino.InitSysId">

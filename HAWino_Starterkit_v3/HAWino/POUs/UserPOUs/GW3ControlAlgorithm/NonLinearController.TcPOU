@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="NonlinearController" Id="{5ff6b0a7-4be6-429b-a60b-d6bad624dc52}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK NonlinearController
+VAR_INPUT
+	robotPose				: RobotPoseSimple;		// Actual robot pose [x, y, theta] in global frame
+	robotPoseRef			: RobotPoseSimple;		// Reference robot pose [x, y, theta] in global frame
+	robotVelocitiesRef		: RobotPoseSimple;		// Reference robot velocites [vX, vY, omega] in global frame
+	vRef					: LREAL;				// Reference linear velocity along path
+	enable					: BOOL;
+END_VAR
+
+VAR_OUTPUT
+	vX						: LREAL;				// Output reference x-velocity in global frame for low-level controller
+	vY						: LREAL;				// Output reference y-velocity in global frame for low-level controller
+	omega					: LREAL;				// Output refernce angular velocity for low-level controller
+	reachedReference		: BOOL;
+END_VAR
+
+VAR
+	k1, k2, k3				: LREAL;				// Control parameters
+	xE, yE, thetaE			: LREAL;				// Robot pose error
+	u1, u2					: LREAL;				// Control variables
+	xRef, yRef, thetaRef	: LREAL;				// 
+	omegaRef				: LREAL;				//
+	xAct, yAct, thetaAct	: LREAL;	
+	vTransMax				: LREAL := 0.93;
+	vRotMax					: LREAL := 1.57;
+	positionTolerance		: LREAL := 0.002;
+	orientationTolerance	: LREAL := 0.01;
+	vRef					: LREAL;				// Reference linear velocity along path
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Reset effective control varibales
+vX := 0;
+vY := 0;
+omega := 0;
+
+k1 := 10;
+k3 := 1;
+
+IF enable THEN
+	xRef := robotPoseRef.x / 1000;
+	yRef := robotPoseRef.y / 1000;
+	thetaRef := robotPoseRef.theta;
+	omegaRef := robotVelocitiesRef.theta;
+	xAct := robotPose.x / 1000;
+	yAct := robotPose.y / 1000;
+	thetaAct := robotPose.theta;
+	
+	vRef := SQRT(EXPT(xRef, 2) + EXPT(yRef, 2));
+
+	// Suggested value for k2
+	k2 := 2 * ABS(vRef) * SQRT(k3);
+	
+	// Control errors in mobile reference frame
+	xE := COS(thetaAct) * (xRef - xAct) + SIN(thetaAct) * (yRef - yAct);
+	yE := -SIN(thetaAct) * (xRef - xAct) + COS(thetaAct) * (yRef - yAct);
+	thetaE := -(thetaRef - thetaAct);
+	
+	// Control law
+	u2 := -k2 * thetaE + k3 * vRef * yE * SI(thetaE);
+	u1 := vRef * (COS(thetaE) - 1) + yE * (omegaRef + u2) + k1 * xE;
+	
+	// Write effective control variables
+	vX := (u1 + vRef) * COS(thetaAct);
+	vY := (u1 + vRef) * SIN(thetaAct);
+	omega := u2 + omegaRef;
+	
+	// Limit effective control variables
+	IF (vX > vTransMax) THEN
+		vX := vTransMax;
+	ELSIF (vX < - vTransMax) THEN
+		vX := - vTransMax;
+	END_IF
+	
+	IF (vY > vTransMax) THEN
+		vY := vTransMax;
+	ELSIF (vY < - vTransMax) THEN
+		vY := - vTransMax;
+	END_IF
+	
+	IF (omega > vRotMax) THEN
+		omega := vRotMax;
+	ELSIF (omega < - vRotMax) THEN
+		omega := - vRotMax;
+	END_IF
+	
+	reachedReference := (SQRT(EXPT(xE, 2) + EXPT(yE, 2)) < positionTolerance) AND (ABS(thetaE) < orientationTolerance);
+	
+	// Scale back to mm / s
+	vX := vX * 1000;
+	vY := vY * 1000;
+END_IF
+
+]]></ST>
+    </Implementation>
+    <Method Name="reset" Id="{857ea841-3f2b-49f1-aa5c-fcb1987df13c}">
+      <Declaration><![CDATA[METHOD reset : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[reachedReference := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="NonlinearController">
+      <LineId Id="154" Count="3" />
+      <LineId Id="297" Count="0" />
+      <LineId Id="296" Count="0" />
+      <LineId Id="298" Count="0" />
+      <LineId Id="158" Count="0" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="161" Count="6" />
+      <LineId Id="294" Count="1" />
+      <LineId Id="171" Count="11" />
+      <LineId Id="203" Count="4" />
+      <LineId Id="239" Count="0" />
+      <LineId Id="241" Count="18" />
+      <LineId Id="240" Count="0" />
+      <LineId Id="288" Count="3" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="153" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="NonlinearController.reset">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
