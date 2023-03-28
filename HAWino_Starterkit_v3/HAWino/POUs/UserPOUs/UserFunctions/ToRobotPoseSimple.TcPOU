@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="ToRobotPoseSimple" Id="{d05a4df5-43b5-4944-96ea-d18cffe31b55}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ToRobotPoseSimple
+VAR_INPUT
+	x, y, theta : LREAL;
+END_VAR
+VAR
+END_VAR
+VAR_OUTPUT
+	RobotPose : RobotPoseSimple;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[RobotPose.x := x;
+RobotPose.y := y;
+RobotPose.theta := theta;]]></ST>
+    </Implementation>
+    <LineIds Name="ToRobotPoseSimple">
+      <LineId Id="9" Count="0" />
+      <LineId Id="26" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

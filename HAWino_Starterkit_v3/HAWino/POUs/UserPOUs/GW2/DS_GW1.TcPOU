@@ -1,0 +1,438 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="DS_GW1" Id="{7e9462bd-5363-4324-b3f5-baf8741cfe0a}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM DS_GW1
+VAR
+// Identifikation des Roboters
+    //Robot_Number	AT%I*	: INT;	
+
+// Local Variables for Mqtt Client handling
+	fbIotMqttClient : FB_IotMqttClient;
+	//ClientId : STRING(255);
+    //ClientId : STRING(255) := CONCAT('HAWino_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
+	bSetParameter 	: BOOL := TRUE;
+	bConnect 		: BOOL := TRUE;	
+	
+// Publish message
+	initMQTT : BOOL := FALSE;
+	sTopicPubToPowerMgmt : STRING(255); //:= CONCAT('Robots/PowerMgmt/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number)); 	// ToDo: Bisher ist die Nummer des HAWino fest kodiert
+	sTopicPubToPowerMgmt_SOC : STRING(255);// := CONCAT('Robots/PowerMgmt/SoC_Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number)); 
+	sPayloadPub : STRING(2000);
+	sPayloadPub1 : STRING(2000);		
+	fbTimerPub 	: TON := (PT:=T#500MS);									// Intervall für das Senden des Akku-Status
+	
+//Received message
+	bSubscribed    : BOOL;
+	sTopicSubToPowerMgmt : STRING(255);// := CONCAT('PowerMgmt/Robots/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));	// ToDo: Bisher ist die Nummer des HAWino fest kodiert
+	sTopicRcv      : STRING(255);
+	sPayloadRcv    : STRING(255);
+	fbMessageQueue : FB_IotMqttMessageQueue;
+    fbMessage      : FB_IotMqttMessage;
+	hrErrorOccurred : HRESULT; 			// Enthlt dern letzten augetretenen Fehler
+	
+	//wir geändert
+	//sTopicSubToGW1: STRING(255);
+	
+// Variables for JSON
+	fbJson			: FB_JsonSaxWriter;
+	fbJsonDataType 	: FB_JsonReadWriteDataType;
+	sJsonDoc       	: STRING(2000); 
+	
+// Local Variables for TwinCAT IoT Communication (TF6701) with direct link to EK1200 and TcCom
+	//stMqtt_HAWino_In	AT%I*	: ST_PwrMgmt_HAWino_In;		// Attention! Don't link TIME Variables, otherwise we get an error!
+	//stMqtt_HAWino_Out	AT%Q*	: ST_PwrMgmt_HAWino_Out;
+	
+	stMqtt_HAWino_In	 AT%I*: ST_PwrMgmt_HAWino_In;		// Attention! Don't link TIME Variables, otherwise we get an error!
+	stMqtt_HAWino_Out	 AT%Q*: ST_PwrMgmt_HAWino_Out;
+	
+	SOC_Out : STRING(255);
+	nBatteryTemperature	AT%I*	: INT;
+	
+	bComCheckAnswer	AT%Q*	: BOOL;
+	
+	stMqtt_HAWinoValues	: ST_PwrMgmt_HAWino;
+	
+	
+// Timer to create a time stamp
+	fbTimerTimestamp : TON := (PT:=T#71582M47S295MS);
+	
+// Local Vaiables to evaluate and act to input
+	fbComCheckFlag	: RS;
+	
+	
+	
+	sTopicSubToFleetMgmt: STRING;
+	Reset1: BOOL;
+	//Input synccheck. robotdata has been read and can be used.
+	txtReadInit AT%I* : BOOL := FALSE;
+	
+	// eigene Variablen	
+	feedback: ARRAY[0..7] OF STRING := ['Verfügbar', 'Auftrag angenommen', 'Auf Anfahrt', 'Teil aufgenommen', 
+											'Abmeldung', 'Auf Transport', 'Anmeldung', 'Teil abgelegt'];
+	sTopicPubToGW1: STRING(255) := CONCAT('VPJ/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
+	s0: BOOL := 1;
+	s1, s2, s3, s4, s5, s6, s7: BOOL := 0;
+	AuftragDa: BOOL;
+	Timer1 : TON;
+	Timer2 : TON;
+	startTime1: BOOL;
+	startTime2: BOOL;
+	WerkstueckAusgelesen: BOOL;
+	i: INT := 0;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Case machen! preop op
+txtReadInit := MQTT.txtReadInit;
+IF txtReadInit THEN
+	IF NOT initMQTT THEN
+		sTopicPubToPowerMgmt  := CONCAT('Robots/PowerMgmt/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number)); 	
+		sTopicPubToPowerMgmt_SOC  := CONCAT('Robots/PowerMgmt/SoC_Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number)); 
+		sTopicSubToPowerMgmt  := CONCAT('PowerMgmt/Robots/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
+		//sTopicSubToGW1  := CONCAT('VPJ/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
+		initMQTT:= TRUE;
+	END_IF
+	
+	stMqtt_HAWinoValues.Output.nRobotNumber := .Var_HAWIno.Robot_Number;			// Anpassen für jeden HAWino
+	
+	fbTimerTimestamp(In:= NOT fbTimerTimestamp.Q, ET=>stMqtt_HAWinoValues.Output.tTimestamp);
+	
+	stMqtt_HAWinoValues.Output.fSoC := stMqtt_HAWino_In.fSoC;
+	
+	stMqtt_HAWinoValues.Output.fActualBatteryCurrent := stMqtt_HAWino_In.fActualBatteryCurrent;
+	stMqtt_HAWinoValues.Output.fActualBatteryVoltage := stMqtt_HAWino_In.fActualBatteryVoltage;
+	
+	//stMqtt_HAWinoValues.Output.fActualBatteryCurrent := stMqtt_HAWino_In.fActualBatteryCurrent;
+	//stMqtt_HAWinoValues.Output.fActualBatteryVoltage := stMqtt_HAWino_In.fActualBatteryVoltage;
+	
+	
+	
+	
+	// Skalierung der Temperaturwerte des Akkus
+	stMqtt_HAWinoValues.Output.fBatteryTemperature := FKT_Scale(Rohwert := nBatteryTemperature, 
+																	X1 := -500,
+																	X2 := 1500, 
+																	Y1 := -50,
+																	Y2 := 150);
+																	
+	// Ausgabe der erwarteten Laufzeit des Roboters
+	stMqtt_HAWinoValues.Output.nEstimatedRunningTime	:= LIMIT(0,stMqtt_HAWino_In.nEstimatedRunningTime,172800);		// Max. 48 Stunden sollen dargestellt werden
+	stMqtt_HAWinoValues.Output.nEstimatedChargingTime	:= LIMIT(0,stMqtt_HAWino_In.nEstimatedChargingTime,172800);		// Max. 48 Stunden sollen dargestellt werden
+	
+	
+	// Antworten auf den Kommunikationstest und des Ladetests
+	stMqtt_HAWinoValues.Output.bCheckCurrentDetected := stMqtt_HAWino_In.bCheckCurrentDetected;
+	stMqtt_HAWinoValues.Output.bComCheckAnswer := stMqtt_HAWino_In.bComCheckAnswer;
+	
+	
+			
+	
+	
+	
+	
+	//
+	// Setting the parameters for establishing the connection to the Mqtt Broker and initializing the connection.
+	//
+	IF bSetParameter THEN
+		fbIotMqttClient.sHostName := '192.168.0.11';	// IP-Adresse des Servers
+		fbIotMqttClient.nHostPort := 1883;
+		//fbIotMqttClient.sClientId := ClientId;
+		fbIotMqttClient.sClientId := CONCAT('Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
+		fbIotMqttClient.sTopicPrefix := '';
+		//fbIotMqttClient.nKeepAlive:= 60; 
+		fbIotMqttClient.sUserName:= 'VPJ';
+		fbIotMqttClient.sUserPassword:= 'R462';
+		//fbIotMqttClient.stWill:= ; 
+		//fbIotMqttClient.stTLS:= ;
+		fbIotMqttClient.ipMessageQueue := fbMessageQueue;
+	
+		bSetParameter := FALSE;
+	END_IF
+	
+	
+	//
+	// This method -> MUST BE CALLED CYCLICALLY <- to ensure background communication with the MQTT broker.
+	//
+	fbIotMqttClient.Execute(bConnect);
+	
+	IF fbIotMqttClient.bError THEN
+		// ToDo: add error logging here
+		hrErrorOccurred := fbIotMqttClient.hrErrorCode;
+	END_IF
+	
+		
+	IF fbIotMqttClient.bConnected THEN		// Kontrolle, ob der Broker verbunden ist
+		IF NOT bSubscribed THEN
+			//
+			// Abbonieren der Toopics, welche vom PowerMgmt kommen
+			//
+			bSubscribed := fbIotMqttClient.Subscribe(sTopic:=sTopicSubToPowerMgmt, eQoS:=TcIotMqttQos.AtMostOnceDelivery);
+			IF fbIotMqttClient.bError THEN
+				// ToDo: add my error logging here
+				hrErrorOccurred := fbIotMqttClient.hrErrorCode;
+			END_IF
+			
+			//
+			// Abbonieren der Toopics, welche vom Gewerk 1 kommen
+			//
+			//Abbonieren von Topic: VPJ/Roboter
+			//bSubscribed := fbIotMqttClient.Subscribe(sTopic:=sTopicSubToGW1, eQoS:=TcIotMqttQos.AtMostOnceDelivery);
+			
+			
+			//bSubscribed := fbIotMqttClient.Subscribe(sTopic:=sTopicSubToFleetMgmt, eQoS:=TcIotMqttQos.AtMostOnceDelivery);
+			//IF fbIotMqttClient.bError THEN
+				// ToDo: add my error logging here
+			//	hrErrorOccurred := fbIotMqttClient.hrErrorCode;
+			//END_IF
+			
+		END_IF
+	END_IF	
+	
+	
+	
+	// Senden der MQTT- Nachrichten
+	
+	
+	IF fbIotMqttClient.bConnected THEN			// Kontrolle, ob Broker verbunden ist
+		fbTimerPub(IN:=TRUE);
+		
+		//
+		// publish new paylod every 500 MS
+		//
+		IF fbTimerPub.Q THEN					// Abwarten des oben eingestellten Intervalls
+			fbTimerPub(IN:=FALSE);
+			
+			//
+			// Nachricht an PowerMgmt
+			//
+			fbJson.ResetDocument();
+			fbJsonDataType.AddJsonValueFromSymbol(fbJson, 'ST_PwrMgmt_HAWino_In', SIZEOF(stMqtt_HAWinoValues.Output), ADR(stMqtt_HAWinoValues.Output));
+			//sJsonDoc := fbJson.GetDocument();
+			fbJson.CopyDocument(sJsonDoc, SIZEOF(sJsonDoc));
+			
+			sPayloadPub := sJsonDoc;	
+			fbIotMqttClient.Publish(sTopic:= sTopicPubToPowerMgmt, 
+										pPayload:= ADR(sPayloadPub), 
+										nPayloadSize:= LEN2(ADR(sPayloadPub))+1, 										
+										eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+										bRetain:= FALSE, 
+										bQueue:= FALSE);
+									
+			
+			SOC_Out	:= CONCAT( '{"SoC" : ',LREAL_TO_STRING(stMqtt_HAWinoValues.Output.fSoC));
+			SOC_Out	:= CONCAT( SOC_Out,'}');
+			
+			
+			
+			
+			//SOC_Out := 	LREAL_TO_STRING(stMqtt_HAWinoValues.Output.fSoC);
+			
+						
+			fbIotMqttClient.Publish(sTopic:= sTopicPubToPowerMgmt_SOC, 
+										pPayload:=ADR(SOC_Out), 
+										nPayloadSize:= INT_TO_UDINT(LEN(SOC_Out)),
+										eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+										bRetain:= FALSE, 
+										bQueue:= FALSE);
+										
+										
+			IF fbIotMqttClient.bError THEN
+				// ToDo: add error logging here
+				hrErrorOccurred := fbIotMqttClient.hrErrorCode;
+			END_IF	
+			
+			//
+			// ...
+			//	
+			//
+			// Nachricht an GW1 - Produktionsauftrag
+			//
+			//Statemaschine
+			Timer1(IN:= startTime1, PT:=T#10S);
+			Timer2(IN:= startTime2, PT:=T#10S);
+	
+			//Rückmeldung Verfügbar
+			sPayloadPub1 := CONCAT( '{"status" : ', feedback[i]);
+			sPayloadPub1 := CONCAT( sPayloadPub1,'}');
+			
+			fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+											pPayload:=ADR(sPayloadPub1), 
+											nPayloadSize:= INT_TO_UDINT(LEN(sPayloadPub1)),
+											eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+											bRetain:= FALSE, 
+											bQueue:= FALSE);
+											
+			i := 2;
+											
+			//Warten auf Auftrag
+			IF s0 AND NOT s1 AND AuftragDa THEN
+				s0 := 0; s1 := 1;
+				//Rückmeldung Auftrag angenommen
+				i := 1;
+				//fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+											//pPayload:=ADR(feedback[1]), 
+											//nPayloadSize:= INT_TO_UDINT(LEN(feedback[1])),
+											//eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+											//bRetain:= FALSE, 
+											//bQueue:= FALSE);
+				startTime1 := 1;
+			END_IF
+			IF s1 AND NOT s2 AND Timer1.Q THEN
+				startTime1 := 0;
+				s1 := 0; s2 := 1;
+				//Rückmeldung Auf Anfahrt
+				i := 2;
+				//fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+											//pPayload:=ADR(feedback[2]), 
+											//nPayloadSize:= INT_TO_UDINT(LEN(feedback[2])),
+											//eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+											//bRetain:= FALSE, 
+											//bQueue:= FALSE);
+				startTime2 := 1;
+			END_IF
+			IF s2 AND NOT s3 AND Timer2.Q THEN
+				startTime2 := 0;
+				s2 := 0; s3 := 1;
+				//Rückmeldung Teil aufgenommen
+				i := 3;
+				fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+											pPayload:=ADR(feedback[3]), 
+											nPayloadSize:= INT_TO_UDINT(LEN(feedback[3])),
+											eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+											bRetain:= FALSE, 
+											bQueue:= FALSE);
+				startTime1 := 1;
+			END_IF
+			IF s3 AND NOT s4 AND Timer1.Q THEN
+				startTime1 := 0;
+				s3 := 0; s4 := 1;
+				//Rückmeldung Abmeldung
+				i := 4;
+				//fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+											//pPayload:=ADR(feedback[4]), 
+											//nPayloadSize:= INT_TO_UDINT(LEN(feedback[4])),
+											//eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+											//bRetain:= FALSE, 
+											//bQueue:= FALSE);
+			END_IF
+			//Warten auf Werkstück ausgelesen
+			IF s4 AND NOT s5 AND WerkstueckAusgelesen THEN
+				s4 := 0; s5 := 1;
+				//Rückmeldung Auf Transport
+				fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+											pPayload:=ADR(feedback[5]), 
+											nPayloadSize:= INT_TO_UDINT(LEN(feedback[5])),
+											eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+											bRetain:= FALSE, 
+											bQueue:= FALSE);
+				startTime2 := 1;
+			END_IF
+			IF s5 AND NOT s6 AND Timer2.Q THEN
+				startTime2 := 0;
+				s2 := 0; s3 := 1;
+				//Rückmeldung Anmeldung
+				fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+											pPayload:=ADR(feedback[6]), 
+											nPayloadSize:= INT_TO_UDINT(LEN(feedback[6])),
+											eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+											bRetain:= FALSE, 
+											bQueue:= FALSE);
+			END_IF
+			//Warten auf Werkstück ausgelesen
+			IF s6 AND NOT s7 AND WerkstueckAusgelesen THEN
+				s6 := 0; s7 := 1;
+				//Rückmeldung Teil abgelegt
+				fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+											pPayload:=ADR(feedback[7]), 
+											nPayloadSize:= INT_TO_UDINT(LEN(feedback[7])),
+											eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+											bRetain:= FALSE, 
+											bQueue:= FALSE);
+				startTime1 := 1;
+			END_IF
+			IF s7 AND NOT s0 AND Timer1.Q THEN
+				startTime1 := 0;
+				s7 := 0; s0 := 1;
+				//Rückmeldung Verfügbar
+				fbIotMqttClient.Publish(sTopic:= sTopicPubToGW1, 
+											pPayload:=ADR(feedback[0]), 
+											nPayloadSize:= INT_TO_UDINT(LEN(feedback[0])),
+											eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+											bRetain:= FALSE, 
+											bQueue:= FALSE);
+			END_IF
+			
+	//Hier müsste noch die ankommenden Daten vom GW1 ausglesen und ausgewertet (AuftragDa und WerkstueckAusgelesen schreiben) werden
+	//IN MQTT könnte dann evtl das Auslesen/Subscribe wegfallen fürs erste...
+
+
+		END_IF
+	END_IF
+	
+	
+	
+	// Verarbeiten der Subscriptions
+	
+	
+	IF fbMessageQueue.nQueuedMessages > 0 THEN			// Kontrolle, ob neue Daten vorliegen
+		IF fbMessageQueue.Dequeue(fbMessage:=fbMessage) THEN
+			fbMessage.GetTopic(pTopic:=ADR(sTopicRcv), nTopicSize:=SIZEOF(sTopicRcv) );
+			fbMessage.GetPayload(pPayload:=ADR(sPayloadRcv), nPayloadSize:=SIZEOF(sPayloadRcv), bSetNullTermination:=FALSE);
+				
+			//
+			// Message from PowerMgmt
+			//
+			IF fbMessage.CompareTopic(sTopic:=sTopicSubToPowerMgmt) THEN		// Wenn die Daten vom PowerMgmt kommen, dann führe folgenede Aktion aus
+				
+			// Json-String aufteilen und in Variablen schreiben
+				fbJsonDataType.SetSymbolFromJson(sPayloadRcv,'ST_PwrMgmt_HAWino_Out',SIZEOF(stMqtt_HAWinoValues.Input),ADR(stMqtt_HAWinoValues.Input));
+			END_IF
+		
+			//
+			// Hier werden weitere Topics verarbeitet
+			//
+			
+		END_IF
+	END_IF		
+	
+	
+	
+	
+	// Evaulierung der empfangenen Daten
+	
+	//
+	// ToDo: Plausibilitätsprüfung von stMqtt_HAWinoValues.Input und evt. TypConversion
+	// Attention! The assignment of input to output is correct. Don `t change!
+	//	
+	
+	stMqtt_HAWino_Out.bChargingActive := stMqtt_HAWinoValues.Input.bChargingActive;
+	stMqtt_HAWino_Out.bExternalRecalibrationTrigger := stMqtt_HAWinoValues.Input.bExternalRecalibrationTrigger;
+	stMqtt_HAWino_Out.fExternalRecalibrationValue := stMqtt_HAWinoValues.Input.fExternalRecalibrationValue;
+	
+	
+	// Hier Communication Check einbauen
+	
+	//fbComCheckFlag(Set:= stMqtt_HAWinoValues.Input.bComCheckRequest, 
+	//					Reset1:= NOT stMqtt_HAWinoValues.Input.bComCheckRequest,
+	//					Q1 => bComCheckAnswer);
+	bComCheckAnswer	:= TRUE;
+					
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="DS_GW1">
+      <LineId Id="1004" Count="161" />
+      <LineId Id="1232" Count="7" />
+      <LineId Id="1347" Count="0" />
+      <LineId Id="1354" Count="1" />
+      <LineId Id="1240" Count="5" />
+      <LineId Id="1357" Count="1" />
+      <LineId Id="1246" Count="43" />
+      <LineId Id="1356" Count="0" />
+      <LineId Id="1290" Count="56" />
+      <LineId Id="1231" Count="0" />
+      <LineId Id="1166" Count="50" />
+      <LineId Id="251" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

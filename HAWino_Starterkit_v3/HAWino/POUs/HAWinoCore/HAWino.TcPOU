@@ -40,7 +40,6 @@ END_VAR
 		PowerManager();
 		Gripper();
 		
-		Test();
 END_CASE
 ]]></ST>
     </Implementation>
@@ -124,7 +123,7 @@ CASE state OF
       </Implementation>
     </Method>
     <LineIds Name="HAWino">
-      <LineId Id="318" Count="24" />
+      <LineId Id="357" Count="23" />
       <LineId Id="98" Count="0" />
     </LineIds>
     <LineIds Name="HAWino.InitSysId">

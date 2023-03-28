@@ -1,0 +1,180 @@
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<Filter Include="TwinCAT">
+			<UniqueIdentifier>{9FFCDB4B-50C5-F036-2CFA-7748219C214F}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\ClassFactory">
+			<UniqueIdentifier>{12714833-8677-F36B-144F-4C334949B2C5}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\RT">
+			<UniqueIdentifier>{D771B166-455A-5B64-8D71-B4EAFD7331FB}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\OS">
+			<UniqueIdentifier>{F8EAA648-153D-0C7C-2506-9DE589EFF9D3}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\UM">
+			<UniqueIdentifier>{F474D200-B82F-FC81-8A26-2CDBF953C436}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\Classes">
+			<UniqueIdentifier>{9B434CB9-E169-FC90-FE64-DEE322F760CA}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\Classes\A_search_2021b">
+			<UniqueIdentifier>{B0D841B2-F8CA-92AE-71F9-353C876E325A}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Resource Files">
+			<UniqueIdentifier>{A9E83110-63B2-2ABE-0304-6F104E53AD8A}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink">
+			<UniqueIdentifier>{ADA1E5E4-3EB0-FA7F-8E7B-98E5BDA8F60C}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink\A_search_2021b">
+			<UniqueIdentifier>{F7441B93-43A0-3437-B410-E17CC98EB17E}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink\A_search_2021b\Sources">
+			<UniqueIdentifier>{749177B8-6880-7D64-4233-5AE0CE7F1A49}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink\A_search_2021b\Includes">
+			<UniqueIdentifier>{B8044D98-9B1A-BFA7-0876-8B6A8EA64166}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="xml">
+			<UniqueIdentifier>{B53E3DA8-A8AE-C7AC-A33F-55924F2FBAFC}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TMx">
+			<UniqueIdentifier>{CE78CB1E-D9EC-3B9B-2EA5-311904577FC6}</UniqueIdentifier>
+		</Filter>
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="TcPch.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="A_search_2021bServices.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="A_search_2021bDuts.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="A_search_2021bInterfaces.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="A_search_2021bClassFactory.h">
+			<Filter>TwinCAT\ClassFactory</Filter>
+		</ClInclude>
+		<ClInclude Include="A_search_2021bDrv.h">
+			<Filter>TwinCAT\RT</Filter>
+		</ClInclude>
+		<ClInclude Include="A_search_2021bCtrl.h">
+			<Filter>TwinCAT\UM</Filter>
+		</ClInclude>
+		<ClInclude Include="A_search_2021bW32.h">
+			<Filter>TwinCAT\UM</Filter>
+		</ClInclude>
+		<ClInclude Include="A_search_2021bW32Resource.h">
+			<Filter>TwinCAT\UM</Filter>
+		</ClInclude>
+		<ClInclude Include="TcComA_search_2021b.h">
+			<Filter>TwinCAT\Classes\A_search_2021b</Filter>
+		</ClInclude>
+		<ClInclude Include="FbA_search_2021b.h">
+			<Filter>TwinCAT\Classes\A_search_2021b</Filter>
+		</ClInclude>
+		<ClInclude Include="A_search_2021bInternal.h">
+			<Filter>TwinCAT\Classes\A_search_2021b</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_search_2021b_START_DIR)\A_search_2021b_tcgrt\rtGetInf.h">
+			<Filter>Simulink\A_search_2021b\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_search_2021b_START_DIR)\A_search_2021b_tcgrt\rtGetNaN.h">
+			<Filter>Simulink\A_search_2021b\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_search_2021b_START_DIR)\A_search_2021b_tcgrt\rt_nonfinite.h">
+			<Filter>Simulink\A_search_2021b\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_search_2021b_START_DIR)\A_search_2021b_tcgrt\A_search_2021b.h">
+			<Filter>Simulink\A_search_2021b\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_search_2021b_START_DIR)\A_search_2021b_tcgrt\A_search_2021b_private.h">
+			<Filter>Simulink\A_search_2021b\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_search_2021b_START_DIR)\A_search_2021b_tcgrt\A_search_2021b_types.h">
+			<Filter>Simulink\A_search_2021b\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_search_2021b_START_DIR)\A_search_2021b_tcgrt\multiword_types.h">
+			<Filter>Simulink\A_search_2021b\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_search_2021b_START_DIR)\A_search_2021b_tcgrt\rtmodel.h">
+			<Filter>Simulink\A_search_2021b\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_search_2021b_START_DIR)\A_search_2021b_tcgrt\rtwtypes.h">
+			<Filter>Simulink\A_search_2021b\Includes</Filter>
+		</ClInclude>
+	</ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="TcPch.cpp">
+			<Filter>TwinCAT</Filter>
+		</ClCompile>
+		<ClCompile Include="A_search_2021bClassFactory.cpp">
+			<Filter>TwinCAT\ClassFactory</Filter>
+		</ClCompile>
+		<ClCompile Include="A_search_2021bDrv.cpp">
+			<Filter>TwinCAT\RT</Filter>
+		</ClCompile>
+		<ClCompile Include="A_search_2021bModulesMain.cpp">
+			<Filter>TwinCAT\OS</Filter>
+		</ClCompile>
+		<ClCompile Include="A_search_2021bCtrl.cpp">
+			<Filter>TwinCAT\UM</Filter>
+		</ClCompile>
+		<ClCompile Include="A_search_2021bW32.cpp">
+			<Filter>TwinCAT\UM</Filter>
+		</ClCompile>
+		<ClCompile Include="TcComA_search_2021b.cpp">
+			<Filter>TwinCAT\Classes\A_search_2021b</Filter>
+		</ClCompile>
+		<ClCompile Include="FbA_search_2021b.cpp">
+			<Filter>TwinCAT\Classes\A_search_2021b</Filter>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_A_search_2021b_START_DIR)\A_search_2021b_tcgrt\A_search_2021b.cpp">
+			<Filter>Simulink\A_search_2021b\Sources</Filter>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_A_search_2021b_START_DIR)\A_search_2021b_tcgrt\rtGetInf.cpp">
+			<Filter>Simulink\A_search_2021b\Sources</Filter>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_A_search_2021b_START_DIR)\A_search_2021b_tcgrt\rtGetNaN.cpp">
+			<Filter>Simulink\A_search_2021b\Sources</Filter>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_A_search_2021b_START_DIR)\A_search_2021b_tcgrt\rt_nonfinite.cpp">
+			<Filter>Simulink\A_search_2021b\Sources</Filter>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_A_search_2021b_MATLAB_ROOT)\rtw\c\src\common\rt_cppclass_main.cpp">
+			<Filter>Simulink\A_search_2021b\Sources</Filter>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="A_search_2021bW32.rc">
+			<Filter>TwinCAT\UM</Filter>
+		</ResourceCompile>
+		<ResourceCompile Include="A_search_2021b.rc">
+			<Filter>Resource Files</Filter>
+		</ResourceCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="A_search_2021bArtifacts.props">
+			<Filter>A_search_2021b.vcxproj</Filter>
+		</None>
+		<None Include="A_search_2021bW32.def">
+			<Filter>TwinCAT\UM</Filter>
+		</None>
+		<None Include="A_search_2021b_ModuleInfo.xml">
+			<Filter>TwinCAT\Classes\A_search_2021b</Filter>
+		</None>
+		<None Include="A_search_2021b.libcat.xml">
+			<Filter>xml</Filter>
+		</None>
+		<None Include="A_search_2021b.tmc">
+			<Filter>TMx</Filter>
+		</None>
+		<None Include="A_search_2021b.tml">
+			<Filter>TMx</Filter>
+		</None>
+	</ItemGroup>
+</Project>

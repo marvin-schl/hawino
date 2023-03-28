@@ -20,6 +20,9 @@
     <Compile Include="ControlTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\Auftrag.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\ControllerState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -45,6 +48,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\RobotPoseSimple.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\RobotStatusGW1.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\Sys\DUT_SysState.TcDUT">
@@ -99,7 +105,13 @@
     <Compile Include="POUs\UserPOUs\ArrayToStruct.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\NonlinearController.TcPOU">
+    <Compile Include="POUs\UserPOUs\GW2\DS_GW1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\GW2\Fahrauftrag.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\GW2\ReadAssigment.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\Robot.TcPOU">
@@ -162,6 +174,9 @@
     <Compile Include="POUs\UserPOUs\TrajectoryController.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\ArrayToStruct.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\ATAN2.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -195,6 +210,9 @@
     <Compile Include="POUs\UserPOUs\UserFunctions\ZEROS.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\ZEROS_RobotPoseSimple.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
@@ -203,6 +221,7 @@
     <Folder Include="GVLs" />
     <Folder Include="POUs\HAWinoCore" />
     <Folder Include="POUs\UserPOUs" />
+    <Folder Include="POUs\UserPOUs\GW2" />
     <Folder Include="POUs\UserPOUs\GW3ControlAlgorithm" />
     <Folder Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning" />
     <Folder Include="POUs\UserPOUs\UserFunctions" />
