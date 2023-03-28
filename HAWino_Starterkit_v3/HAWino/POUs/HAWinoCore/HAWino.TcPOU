@@ -12,8 +12,6 @@ VAR
 	SysGUID : GUID;
 	start : BOOL:= TRUE;
 	initDone AT%Q* : BOOL := FALSE;
-	
-	Test: DS_TrajectoryController;
 END_VAR
 ]]></Declaration>
     <Implementation>

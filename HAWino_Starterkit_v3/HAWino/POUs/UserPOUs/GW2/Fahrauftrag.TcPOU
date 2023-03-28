@@ -31,6 +31,7 @@ VAR
 	finished_ASearch AT%Q* : BOOL;//TODO
 	i: INT;
 	zeile: INT;
+	init: BOOL := FALSE;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -68,7 +69,7 @@ IF s0 AND NOT s1 AND Auftrag.Art = 'Fahrauftrag' THEN
 END_IF
 
 //vorübergehend
-IF xPointList[0] <> 0 THEN
+IF xPointList[0] <> 0 AND NOT init THEN
 	FOR i := 0 TO 100 BY 1 DO
  		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i], y:= yPointList[i], theta:= -1);
 		IF xPointList[i] = 0 THEN
@@ -88,6 +89,7 @@ END_IF
 
 // 	RückmeldungGW3 Wegpunkte erhalten abwarten
 IF s1 AND NOT s2 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
+	init := TRUE;
 	s1 := 0; s2 := 1;
 	trajectoryController.newWaypointListAvailable := FALSE;
 	enable_ASearch := FALSE;
@@ -310,6 +312,7 @@ END_IF
       <LineId Id="289" Count="0" />
       <LineId Id="110" Count="0" />
       <LineId Id="251" Count="0" />
+      <LineId Id="607" Count="0" />
       <LineId Id="250" Count="0" />
       <LineId Id="254" Count="0" />
       <LineId Id="573" Count="0" />

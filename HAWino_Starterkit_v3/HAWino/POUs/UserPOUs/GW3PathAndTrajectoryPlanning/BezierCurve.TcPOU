@@ -274,7 +274,7 @@ END_VAR
 
 VAR
 	t_prev: LREAL;
-	tol: LREAL := 1E-4;
+	tol: LREAL := 1E-3;
 	i: INT := 0;
 	t: LREAL;
 END_VAR]]></Declaration>

@@ -102,9 +102,6 @@
     <Compile Include="POUs\HAWinoCore\HAWino.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\ArrayToStruct.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\UserPOUs\GW2\DS_GW1.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -171,9 +168,6 @@
     <Compile Include="POUs\UserPOUs\TestAndMeasurement\Sinusfahrt.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\TrajectoryController.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\ArrayToStruct.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -199,6 +193,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\SI.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\ToRobotPoseSimple.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\World2Robot.TcPOU">
