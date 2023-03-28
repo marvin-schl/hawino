@@ -4089,6 +4089,10 @@
 					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
 						<Name>PlcTask Inputs</Name>
 						<Var>
+							<Name>PowerManager.shutdownButton</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>Fahrauftrag.TrajectoryController.yBoArrivedAtDestination</Name>
 							<Comment><![CDATA[ TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
 							<Type>BOOL</Type>
@@ -4108,10 +4112,6 @@
 							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.shutdownButton</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>Fahrauftrag.Auftrag</Name>
 							<Type GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}">Auftrag</Type>
 						</Var>
@@ -4120,8 +4120,8 @@
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.batteryVoltageRaw</Name>
-							<Type>INT</Type>
+							<Name>PowerManager.requestShutdown</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.xPointList</Name>
@@ -4138,16 +4138,16 @@
 							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.batteryVoltageRaw</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
 							<Name>PowerManager.supplyCurrentRaw</Name>
 							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.SOC</Name>
 							<Type>REAL</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.requestShutdown</Name>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.slider</Name>
@@ -4184,6 +4184,11 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>Fahrauftrag.finished_ASearch</Name>
+							<Comment><![CDATA[TODO]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>Fahrauftrag.TrajectoryController.xBoEnable</Name>
 							<Comment><![CDATA[ Freigabesignal für Fahrt, Roboter stoppt bei FALSE]]></Comment>
 							<Type>BOOL</Type>
@@ -4206,10 +4211,6 @@
 						<Var>
 							<Name>PowerManager.shutdownTrigger</Name>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.batteryVoltage_V</Name>
-							<Type>REAL</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.EndNode</Name>
@@ -4257,17 +4258,25 @@
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.batteryVoltage_V</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
 							<Name>PowerManager.supplyCurrent_A</Name>
 							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.stMqtt_HAWino_IN</Name>
+							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
+							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.driveEnable</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.stMqtt_HAWino_IN</Name>
-							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
-							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
+							<Name>Gripper.driveVelocity</Name>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.sliderToSimulink</Name>
@@ -4276,15 +4285,6 @@
 						<Var>
 							<Name>Gripper.partInGripperToSimulink</Name>
 							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.driveVelocity</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.finished_ASearch</Name>
-							<Comment><![CDATA[TODO]]></Comment>
-							<Type>BOOL</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2022-04-26T16:44:07">

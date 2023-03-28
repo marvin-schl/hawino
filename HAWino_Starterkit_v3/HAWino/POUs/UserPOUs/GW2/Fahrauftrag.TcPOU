@@ -240,7 +240,7 @@ IF s18 AND NOT s19 AND trajectoryController.yBoArrivedAtDestination THEN
 END_IF
 
 ///////////////////////////////////////////////////FahrtZumParkplatz////////////////////////////////////////////////////////
-
+ 
 // 	RückmeldungGW3 Wegpunkte erhalten abwarten
 IF s19 AND NOT s20 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
 	s19 := 0; s20 := 1;
