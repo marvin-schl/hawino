@@ -123,8 +123,9 @@ END_IF
 
 //initilizing and linking of control algorithm individual components
 //init observer
-observer(xCameraPose 	:= robotPoses[Var_HAWIno.Robot_Number],	//extraxt roboter coordinates based on roboter number
-		 xVxRobot    	:= robot.vXfromRobot,						//link x-velocity with measured velocity
+//shift camera angles
+observer.xCameraPose := shiftCamAngle(camData := robotPoses[Var_HAWIno.Robot_Number], path:=trajectory.path);
+observer(xVxRobot    	:= robot.vXfromRobot,						//link x-velocity with measured velocity
 		 xVyRobot    	:= robot.vYfromRobot,						//link y-velocity with measured velocity
 		 xOmegaRobot    := robot.vThetaFromRobot,
  		 xVxToRobot		:= controller.vXrobot,
@@ -216,7 +217,14 @@ observer.reset();]]></ST>
       <LineId Id="941" Count="6" />
       <LineId Id="1058" Count="0" />
       <LineId Id="949" Count="5" />
-      <LineId Id="956" Count="38" />
+      <LineId Id="956" Count="14" />
+      <LineId Id="1103" Count="0" />
+      <LineId Id="972" Count="1" />
+      <LineId Id="1109" Count="0" />
+      <LineId Id="1106" Count="0" />
+      <LineId Id="1108" Count="0" />
+      <LineId Id="975" Count="0" />
+      <LineId Id="977" Count="17" />
       <LineId Id="1060" Count="0" />
       <LineId Id="995" Count="21" />
       <LineId Id="94" Count="0" />

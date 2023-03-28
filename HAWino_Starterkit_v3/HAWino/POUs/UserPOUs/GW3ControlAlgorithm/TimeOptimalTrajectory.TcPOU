@@ -12,9 +12,9 @@ VAR_OUTPUT
 	referencePose		: RobotPoseSimple;
 	referenceVelocities	: RobotPoseSimple;
 	WPLidx 				: INT 				:= 0;
+	path				: Path;
 END_VAR
 VAR
-	path				: Path;
 	trajectoryPlanner	: TrajectoryPlanner;
 	wayPointListRaw		: ARRAY [0..100] OF RobotPoseSimple;
 	cnt					: INT 				:= 0;

@@ -111,8 +111,8 @@ bool CFbsimpleObserver2::FB_init(bool bInitRetains, bool bInCopyCode)
 		PsimpleObserver2_M = ::simpleObserver2();
 		memset(&(TcModuleInput_Estimator1_K),0,sizeof(TcModuleInput_Estimator1_K));
 		memset(&(TcModuleInput_InCameraPose),0,sizeof(TcModuleInput_InCameraPose));
-		memset(&(TcModuleOutput_DEBUG),0,sizeof(TcModuleOutput_DEBUG));
 		memset(&(TcModuleOutput_OutEstimatedPose),0,sizeof(TcModuleOutput_OutEstimatedPose));
+		memset(&(TcModuleOutput_ThetaDenormalized),0,sizeof(TcModuleOutput_ThetaDenormalized));
 		memset(&(TcModuleOutput_version),0,sizeof(TcModuleOutput_version));
 		TcModuleInput_Estimator1_K[0][0] = 1;
 		TcModuleInput_Estimator1_K[0][1] = 0;
@@ -156,8 +156,8 @@ bool CFbsimpleObserver2::FB_init(bool bInitRetains, bool bInCopyCode)
 		((RT_MODEL_simpleObserver2_T*)PsimpleObserver2_M)->dwork->InVThetaworld_PWORK = reinterpret_cast<PVOID>(&(TcModuleInput_InVThetaworld));
 		((RT_MODEL_simpleObserver2_T*)PsimpleObserver2_M)->dwork->InVXworld_PWORK = reinterpret_cast<PVOID>(&(TcModuleInput_InVXworld));
 		((RT_MODEL_simpleObserver2_T*)PsimpleObserver2_M)->dwork->InVYworld_PWORK = reinterpret_cast<PVOID>(&(TcModuleInput_InVYworld));
-		((RT_MODEL_simpleObserver2_T*)PsimpleObserver2_M)->dwork->DEBUG_PWORK = reinterpret_cast<PVOID>(&(TcModuleOutput_DEBUG));
 		((RT_MODEL_simpleObserver2_T*)PsimpleObserver2_M)->dwork->OutEstimatedPose_PWORK = reinterpret_cast<PVOID>(&(TcModuleOutput_OutEstimatedPose));
+		((RT_MODEL_simpleObserver2_T*)PsimpleObserver2_M)->dwork->ThetaDenormalized_PWORK = reinterpret_cast<PVOID>(&(TcModuleOutput_ThetaDenormalized));
 		((RT_MODEL_simpleObserver2_T*)PsimpleObserver2_M)->dwork->version_PWORK = reinterpret_cast<PVOID>(&(TcModuleOutput_version));
 
 		FpRestore(fpState);

@@ -47,14 +47,14 @@ public:
 	double TcModuleInput_InVThetaworld;
 	double TcModuleInput_InVXworld;
 	double TcModuleInput_InVYworld;
-	matrix_3_real_T TcModuleOutput_DEBUG;
 	matrix_3_real_T TcModuleOutput_OutEstimatedPose;
+	double TcModuleOutput_ThetaDenormalized;
 	double TcModuleOutput_version;
 	PVOID PsimpleObserver2_M;
 
 
 };
-TYPESIZE_VALIDATION2(CFbsimpleObserver2,200,208);
+TYPESIZE_VALIDATION2(CFbsimpleObserver2,184,192);
 
 			
 #endif // _FbsimpleObserver2__h_INCLUDED

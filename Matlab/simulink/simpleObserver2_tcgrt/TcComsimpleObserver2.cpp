@@ -62,7 +62,7 @@ BEGIN_OBJDATAAREA_MAP(CTcComsimpleObserver2)
 	OBJDATAAREA_SPAN_PTR_SIZE_FLAGS( 1, 1, &(AdditionalOutports), sizeof(AdditionalOutports), OBJDATAAREA_DISABLE_SET)
 	OBJDATAAREA_SPAN_PTR_SIZE_FLAGS( 2, 1, PsimpleObserver2_M->blockIO, sizeof(*(PsimpleObserver2_M->blockIO)), OBJDATAAREA_DISABLE_SET)
 	OBJDATAAREA_SPAN_PTR_SIZE_FLAGS( 3, 1, PsimpleObserver2_M->contStates, sizeof(*(PsimpleObserver2_M->contStates)), OBJDATAAREA_DISABLE_SET)
-	OBJDATAAREA_SPAN_PTR_SIZE_FLAGS( 4, 1, &(PsimpleObserver2_M->dwork->CameraDelay_DSTATE), 2432, OBJDATAAREA_DISABLE_SET)
+	OBJDATAAREA_SPAN_PTR_SIZE_FLAGS( 4, 1, &(PsimpleObserver2_M->dwork->CameraDelay_DSTATE), 2424, OBJDATAAREA_DISABLE_SET)
 	OBJDATAAREA_SPAN_PTR_SIZE_FLAGS( 5, 1, &(PsimpleObserver2_M->dwork->Integrator_IWORK), sizeof(PsimpleObserver2_M->dwork->Integrator_IWORK), OBJDATAAREA_DISABLE_SET)
 END_OBJDATAAREA_MAP()
 
@@ -146,8 +146,8 @@ HRESULT CTcComsimpleObserver2::SetObjStateIP(ITComObjectServer* ipSrv, TComInitD
 		PsimpleObserver2_M = ::simpleObserver2();
 		memset(&(AdditionalInports.TcModuleInput_Estimator1_K),0,sizeof(AdditionalInports.TcModuleInput_Estimator1_K));
 		memset(&(AdditionalInports.TcModuleInput_InCameraPose),0,sizeof(AdditionalInports.TcModuleInput_InCameraPose));
-		memset(&(AdditionalOutports.TcModuleOutput_DEBUG),0,sizeof(AdditionalOutports.TcModuleOutput_DEBUG));
 		memset(&(AdditionalOutports.TcModuleOutput_OutEstimatedPose),0,sizeof(AdditionalOutports.TcModuleOutput_OutEstimatedPose));
+		memset(&(AdditionalOutports.TcModuleOutput_ThetaDenormalized),0,sizeof(AdditionalOutports.TcModuleOutput_ThetaDenormalized));
 		memset(&(AdditionalOutports.TcModuleOutput_version),0,sizeof(AdditionalOutports.TcModuleOutput_version));
 		AdditionalInports.TcModuleInput_Estimator1_K[0][0] = 1;
 		AdditionalInports.TcModuleInput_Estimator1_K[0][1] = 0;
@@ -192,8 +192,8 @@ HRESULT CTcComsimpleObserver2::SetObjStatePS(TComInitDataHdr* pInitData)
 		PsimpleObserver2_M->dwork->InVThetaworld_PWORK = reinterpret_cast<PVOID>(&(AdditionalInports.TcModuleInput_InVThetaworld));
 		PsimpleObserver2_M->dwork->InVXworld_PWORK = reinterpret_cast<PVOID>(&(AdditionalInports.TcModuleInput_InVXworld));
 		PsimpleObserver2_M->dwork->InVYworld_PWORK = reinterpret_cast<PVOID>(&(AdditionalInports.TcModuleInput_InVYworld));
-		PsimpleObserver2_M->dwork->DEBUG_PWORK = reinterpret_cast<PVOID>(&(AdditionalOutports.TcModuleOutput_DEBUG));
 		PsimpleObserver2_M->dwork->OutEstimatedPose_PWORK = reinterpret_cast<PVOID>(&(AdditionalOutports.TcModuleOutput_OutEstimatedPose));
+		PsimpleObserver2_M->dwork->ThetaDenormalized_PWORK = reinterpret_cast<PVOID>(&(AdditionalOutports.TcModuleOutput_ThetaDenormalized));
 		PsimpleObserver2_M->dwork->version_PWORK = reinterpret_cast<PVOID>(&(AdditionalOutports.TcModuleOutput_version));
 
 		if (SUCCEEDED(hr))

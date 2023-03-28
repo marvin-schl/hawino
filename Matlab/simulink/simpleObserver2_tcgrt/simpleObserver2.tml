@@ -54,12 +54,12 @@
 	<Licenses/>
 	<Library>
 		<Name>simpleObserver2</Name>
-		<Version>0.0.0.14</Version>
+		<Version>0.0.0.18</Version>
 		<Group GUID="{5E25B681-A0D1-32F4-3E69-0CFC9DC6C42C}">TE140x Module Vendor</Group>
 		<POUs>
 			<POU Folder="Pous">
-				<Name GUID="{EA19FA39-55C0-132D-EB34-BD2327D2AD5A}" IecLibraryType="true">FB_simpleObserver2</Name>
-				<BitSize X64="1664">1600</BitSize>
+				<Name GUID="{314E6885-408F-F78F-5144-D22ED829A8D7}" IecLibraryType="true">FB_simpleObserver2</Name>
+				<BitSize X64="1536">1472</BitSize>
 				<SubItem>
 					<Name>_internal_data</Name>
 					<Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
@@ -159,7 +159,7 @@
 					</Properties>
 				</SubItem>
 				<SubItem>
-					<Name>aTcModuleOutput_DEBUG</Name>
+					<Name>aTcModuleOutput_OutEstimatedPose</Name>
 					<Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
 					<BitSize>192</BitSize>
 					<BitOffs X64="1152">1088</BitOffs>
@@ -171,9 +171,9 @@
 					</Properties>
 				</SubItem>
 				<SubItem>
-					<Name>aTcModuleOutput_OutEstimatedPose</Name>
-					<Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
-					<BitSize>192</BitSize>
+					<Name>fTcModuleOutput_ThetaDenormalized</Name>
+					<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+					<BitSize>64</BitSize>
 					<BitOffs X64="1344">1280</BitOffs>
 					<Properties>
 						<Property>
@@ -186,7 +186,7 @@
 					<Name>fTcModuleOutput_version</Name>
 					<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
 					<BitSize>64</BitSize>
-					<BitOffs X64="1536">1472</BitOffs>
+					<BitOffs X64="1408">1344</BitOffs>
 					<Properties>
 						<Property>
 							<Name>ItemType</Name>
@@ -198,7 +198,7 @@
 					<Name>pPsimpleObserver2_M</Name>
 					<Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
 					<BitSize X64="64">32</BitSize>
-					<BitOffs X64="1600">1536</BitOffs>
+					<BitOffs X64="1472">1408</BitOffs>
 				</SubItem>
 				<Method>
 					<Name>FB_exit</Name>
@@ -419,21 +419,6 @@
 				</Properties>
 			</DUT>
 			<DUT Folder="Duts">
-				<Name GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}" IecLibraryType="true" CName="matrix_3_real_T">T_matrix_3_real_T</Name>
-				<BitSize>192</BitSize>
-				<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-				<ArrayInfo>
-					<LBound>0</LBound>
-					<Elements>3</Elements>
-				</ArrayInfo>
-				<Properties>
-					<Property>
-						<Name>ModuleGenerator_DutShadow</Name>
-						<Value>{610A2D24-A761-AE0B-B518-D70554B2A821}</Value>
-					</Property>
-				</Properties>
-			</DUT>
-			<DUT Folder="Duts">
 				<Name GUID="{604235A4-A2A0-D57A-6901-30D8DE89A468}" IecLibraryType="true" CName="matrix_9_real_T">T_matrix_9_real_T</Name>
 				<BitSize>576</BitSize>
 				<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
@@ -509,23 +494,8 @@
 				</Properties>
 			</DUT>
 			<DUT Folder="Duts">
-				<Name GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}" IecLibraryType="true" CName="matrix_3_real_T">T_matrix_3_real_T</Name>
-				<BitSize>192</BitSize>
-				<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-				<ArrayInfo>
-					<LBound>0</LBound>
-					<Elements>3</Elements>
-				</ArrayInfo>
-				<Properties>
-					<Property>
-						<Name>ModuleGenerator_DutShadow</Name>
-						<Value>{610A2D24-A761-AE0B-B518-D70554B2A821}</Value>
-					</Property>
-				</Properties>
-			</DUT>
-			<DUT Folder="Duts">
-				<Name GUID="{177A6369-4728-E087-A953-4BDFF4D40167}" IecLibraryType="true" CName="B_simpleObserver2_T">ST_B_simpleObserver2_T</Name>
-				<BitSize>2368</BitSize>
+				<Name GUID="{A7BC92B4-5243-D06B-364C-36FF33A67C99}" IecLibraryType="true" CName="B_simpleObserver2_T">ST_B_simpleObserver2_T</Name>
+				<BitSize>2176</BitSize>
 				<SubItem>
 					<Name>aInCameraPose</Name>
 					<Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
@@ -551,75 +521,69 @@
 					<BitOffs>576</BitOffs>
 				</SubItem>
 				<SubItem>
-					<Name>aSwitch</Name>
-					<Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
-					<BitSize>192</BitSize>
-					<BitOffs>1152</BitOffs>
-				</SubItem>
-				<SubItem>
 					<Name>fInVXworld</Name>
 					<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
 					<BitSize>64</BitSize>
-					<BitOffs>1344</BitOffs>
+					<BitOffs>1152</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>fInVYworld</Name>
 					<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
 					<BitSize>64</BitSize>
-					<BitOffs>1408</BitOffs>
+					<BitOffs>1216</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>fInVThetaworld</Name>
 					<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
 					<BitSize>64</BitSize>
-					<BitOffs>1472</BitOffs>
+					<BitOffs>1280</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>aSum</Name>
 					<Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
 					<BitSize>192</BitSize>
-					<BitOffs>1536</BitOffs>
-				</SubItem>
-				<SubItem>
-					<Name>aangleDenormalizedCamData</Name>
-					<Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
-					<BitSize>192</BitSize>
-					<BitOffs>1728</BitOffs>
+					<BitOffs>1344</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>aSum1</Name>
 					<Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
 					<BitSize>192</BitSize>
-					<BitOffs>1920</BitOffs>
+					<BitOffs>1536</BitOffs>
+				</SubItem>
+				<SubItem>
+					<Name>aSwitch</Name>
+					<Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
+					<BitSize>192</BitSize>
+					<BitOffs>1728</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>aProduct1</Name>
 					<Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
 					<BitSize>192</BitSize>
-					<BitOffs>2112</BitOffs>
+					<BitOffs>1920</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>ncameraDelayCylces</Name>
 					<Type GUID="{18071995-0000-0000-0000-000000000003}">SINT</Type>
 					<BitSize>8</BitSize>
-					<BitOffs>2304</BitOffs>
+					<BitOffs>2112</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>bReset</Name>
 					<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
 					<BitSize>8</BitSize>
-					<BitOffs>2312</BitOffs>
+					<BitOffs>2120</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>bnewCamDataArrived</Name>
 					<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
 					<BitSize>8</BitSize>
-					<BitOffs>2320</BitOffs>
+					<BitOffs>2128</BitOffs>
 				</SubItem>
 				<Properties>
 					<Property>
 						<Name>ModuleGenerator_DutShadow</Name>
-						<Value>{73FD96A7-D550-7E96-CEE2-1953181D0505}</Value>
+						<Value>{241E6470-A491-CC15-A5EB-88E32F46B8D8}</Value>
 					</Property>
 				</Properties>
 			</DUT>
@@ -665,8 +629,8 @@
 				</Properties>
 			</DUT>
 			<DUT Folder="Duts">
-				<Name GUID="{2E4A7D58-ED83-E6BC-A1EA-B9B7AFA8CCB6}" IecLibraryType="true" CName="DW_simpleObserver2_T">ST_DW_simpleObserver2_T</Name>
-				<BitSize X64="20160">19840</BitSize>
+				<Name GUID="{B8614453-CCD8-01DD-15A1-634AEFA3B4F0}" IecLibraryType="true" CName="DW_simpleObserver2_T">ST_DW_simpleObserver2_T</Name>
+				<BitSize X64="20096">19776</BitSize>
 				<SubItem>
 					<Name>aCameraDelay_DSTATE</Name>
 					<Type GUID="{0259E40E-39EA-95A9-A13E-A47F7AA13F87}">T_matrix_300_real_T</Type>
@@ -674,87 +638,81 @@
 					<BitOffs>0</BitOffs>
 				</SubItem>
 				<SubItem>
-					<Name>foldTheta</Name>
-					<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
-					<BitSize>64</BitSize>
-					<BitOffs>19200</BitOffs>
-				</SubItem>
-				<SubItem>
 					<Name>aoldCamData</Name>
 					<Type GUID="{C4C1327F-42A8-56E6-1A71-B594AD96B502}">T_matrix_3_real_T</Type>
 					<BitSize>192</BitSize>
-					<BitOffs>19264</BitOffs>
+					<BitOffs>19200</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>pversion_PWORK</Name>
 					<Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
 					<BitSize X64="64">32</BitSize>
-					<BitOffs>19456</BitOffs>
-				</SubItem>
-				<SubItem>
-					<Name>pDEBUG_PWORK</Name>
-					<Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
-					<BitSize X64="64">32</BitSize>
-					<BitOffs X64="19520">19488</BitOffs>
+					<BitOffs>19392</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>pOutEstimatedPose_PWORK</Name>
 					<Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
 					<BitSize X64="64">32</BitSize>
-					<BitOffs X64="19584">19520</BitOffs>
+					<BitOffs X64="19456">19424</BitOffs>
+				</SubItem>
+				<SubItem>
+					<Name>pThetaDenormalized_PWORK</Name>
+					<Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
+					<BitSize X64="64">32</BitSize>
+					<BitOffs X64="19520">19456</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>pInCameraPose_PWORK</Name>
 					<Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
 					<BitSize X64="64">32</BitSize>
-					<BitOffs X64="19648">19552</BitOffs>
+					<BitOffs X64="19584">19488</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>pReset_PWORK</Name>
 					<Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
 					<BitSize X64="64">32</BitSize>
-					<BitOffs X64="19712">19584</BitOffs>
+					<BitOffs X64="19648">19520</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>pcameraDelayCylces_PWORK</Name>
 					<Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
 					<BitSize X64="64">32</BitSize>
-					<BitOffs X64="19776">19616</BitOffs>
+					<BitOffs X64="19712">19552</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>pK_PWORK</Name>
 					<Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
 					<BitSize X64="64">32</BitSize>
-					<BitOffs X64="19840">19648</BitOffs>
+					<BitOffs X64="19776">19584</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>pInVXworld_PWORK</Name>
 					<Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
 					<BitSize X64="64">32</BitSize>
-					<BitOffs X64="19904">19680</BitOffs>
+					<BitOffs X64="19840">19616</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>pInVYworld_PWORK</Name>
 					<Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
 					<BitSize X64="64">32</BitSize>
-					<BitOffs X64="19968">19712</BitOffs>
+					<BitOffs X64="19904">19648</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>pInVThetaworld_PWORK</Name>
 					<Type GUID="{18071995-0000-0000-0000-000000000018}">PVOID</Type>
 					<BitSize X64="64">32</BitSize>
-					<BitOffs X64="20032">19744</BitOffs>
+					<BitOffs X64="19968">19680</BitOffs>
 				</SubItem>
 				<SubItem>
 					<Name>nIntegrator_IWORK</Name>
 					<Type GUID="{CEFD56F1-7569-ACB6-5212-CA87301B6A23}">T_int_T</Type>
 					<BitSize>32</BitSize>
-					<BitOffs X64="20096">19776</BitOffs>
+					<BitOffs X64="20032">19712</BitOffs>
 				</SubItem>
 				<Properties>
 					<Property>
 						<Name>ModuleGenerator_DutShadow</Name>
-						<Value>{B603CC15-F136-A9C3-2312-49C9BEC94637}</Value>
+						<Value>{E5A86AEF-3E98-CC38-8D11-9C94B58A2508}</Value>
 					</Property>
 				</Properties>
 			</DUT>

@@ -21,8 +21,8 @@
 
 // TcCOM-ClassID of CTcComsimpleObserver2: {4AFB6DB7-3994-EEF8-77F0-40A79A4D8923}
 const CTCID CID_SIMPLEOBSERVER2 = {0x4AFB6DB7, 0x3994, 0xEEF8, {0x77, 0xF0, 0x40, 0xA7, 0x9A, 0x4D, 0x89, 0x23}};
-// TcCOM-ClassID of CFbsimpleObserver2: {EA19FA39-55C0-132D-EB34-BD2327D2AD5A}
-const CTCID CID_FB_SIMPLEOBSERVER2 = {0xEA19FA39, 0x55C0, 0x132D, {0xEB, 0x34, 0xBD, 0x23, 0x27, 0xD2, 0xAD, 0x5A}};
+// TcCOM-ClassID of CFbsimpleObserver2: {314E6885-408F-F78F-5144-D22ED829A8D7}
+const CTCID CID_FB_SIMPLEOBSERVER2 = {0x314E6885, 0x408F, 0xF78F, {0x51, 0x44, 0xD2, 0x2E, 0xD8, 0x29, 0xA8, 0xD7}};
 
 
 #ifndef simpleObserver2_IGNORE_SERVICES_TYPES
@@ -51,15 +51,15 @@ typedef struct _simpleObserver2_AdditionalInports
 } simpleObserver2_AdditionalInports, *PsimpleObserver2_AdditionalInports;
 #endif // !defined(_TC_TYPE_105BE5BC_5E41_2501_B274_6D2166683295_INCLUDED_)
 
-#if !defined(_TC_TYPE_160A4979_FFE8_AD2A_4440_9C7FED3A7A3A_INCLUDED_)
-#define _TC_TYPE_160A4979_FFE8_AD2A_4440_9C7FED3A7A3A_INCLUDED_
+#if !defined(_TC_TYPE_AAF7B477_8D2C_1709_D70C_ECA5D7A3101E_INCLUDED_)
+#define _TC_TYPE_AAF7B477_8D2C_1709_D70C_ECA5D7A3101E_INCLUDED_
 typedef struct _simpleObserver2_AdditionalOutports
 {
-	matrix_3_real_T TcModuleOutput_DEBUG;
 	matrix_3_real_T TcModuleOutput_OutEstimatedPose;
+	double TcModuleOutput_ThetaDenormalized;
 	double TcModuleOutput_version;
 } simpleObserver2_AdditionalOutports, *PsimpleObserver2_AdditionalOutports;
-#endif // !defined(_TC_TYPE_160A4979_FFE8_AD2A_4440_9C7FED3A7A3A_INCLUDED_)
+#endif // !defined(_TC_TYPE_AAF7B477_8D2C_1709_D70C_ECA5D7A3101E_INCLUDED_)
 
 #if !defined(_TC_TYPE_18071995_0000_0000_0000_00010000007F_INCLUDED_)
 #define _TC_TYPE_18071995_0000_0000_0000_00010000007F_INCLUDED_
@@ -71,28 +71,27 @@ typedef CHAR STRING127[128];
 typedef double matrix_9_real_T[9];
 #endif // !defined(_TC_TYPE_72A91784_953A_FD09_4E66_5B1F6549B49B_INCLUDED_)
 
-#if !defined(_TC_TYPE_73FD96A7_D550_7E96_CEE2_1953181D0505_INCLUDED_)
-#define _TC_TYPE_73FD96A7_D550_7E96_CEE2_1953181D0505_INCLUDED_
+#if !defined(_TC_TYPE_241E6470_A491_CC15_A5EB_88E32F46B8D8_INCLUDED_)
+#define _TC_TYPE_241E6470_A491_CC15_A5EB_88E32F46B8D8_INCLUDED_
 typedef struct _B_simpleObserver2_T
 {
 	matrix_3_real_T InCameraPose;
 	matrix_3_real_T Odometry;
 	matrix_3_real_T CameraDelay;
 	matrix_9_real_T K;
-	matrix_3_real_T Switch;
 	double InVXworld;
 	double InVYworld;
 	double InVThetaworld;
 	matrix_3_real_T Sum;
-	matrix_3_real_T angleDenormalizedCamData;
 	matrix_3_real_T Sum1;
+	matrix_3_real_T Switch;
 	matrix_3_real_T Product1;
 	char cameraDelayCylces;
 	bool Reset;
 	bool newCamDataArrived;
 	unsigned char reserved1[5];
 } B_simpleObserver2_T, *PB_simpleObserver2_T;
-#endif // !defined(_TC_TYPE_73FD96A7_D550_7E96_CEE2_1953181D0505_INCLUDED_)
+#endif // !defined(_TC_TYPE_241E6470_A491_CC15_A5EB_88E32F46B8D8_INCLUDED_)
 
 #if !defined(_TC_TYPE_215CB797_EAAD_C81F_4E4B_84CF0E28D3B7_INCLUDED_)
 #define _TC_TYPE_215CB797_EAAD_C81F_4E4B_84CF0E28D3B7_INCLUDED_
@@ -107,15 +106,14 @@ typedef struct _X_simpleObserver2_T
 typedef double matrix_300_real_T[300];
 #endif // !defined(_TC_TYPE_0A7316D4_BFFE_C731_DEA9_110616289DBB_INCLUDED_)
 
-#if !defined(_TC_TYPE_0FCF3B12_189C_2A20_2D55_BB4A8D9FACC4_INCLUDED_)
-#define _TC_TYPE_0FCF3B12_189C_2A20_2D55_BB4A8D9FACC4_INCLUDED_
+#if !defined(_TC_TYPE_11A484A5_CF41_08B1_91EE_E4A08117E1FF_INCLUDED_)
+#define _TC_TYPE_11A484A5_CF41_08B1_91EE_E4A08117E1FF_INCLUDED_
 typedef struct _simpleObserver2_simpleObserver2_DW1_Type
 {
 	matrix_300_real_T CameraDelay_DSTATE;
-	double oldTheta;
 	matrix_3_real_T oldCamData;
 } simpleObserver2_simpleObserver2_DW1_Type, *PsimpleObserver2_simpleObserver2_DW1_Type;
-#endif // !defined(_TC_TYPE_0FCF3B12_189C_2A20_2D55_BB4A8D9FACC4_INCLUDED_)
+#endif // !defined(_TC_TYPE_11A484A5_CF41_08B1_91EE_E4A08117E1FF_INCLUDED_)
 
 #if !defined(_TC_TYPE_7CC55797_31DD_5AB7_296E_2DB7BE6FD367_INCLUDED_)
 #define _TC_TYPE_7CC55797_31DD_5AB7_296E_2DB7BE6FD367_INCLUDED_

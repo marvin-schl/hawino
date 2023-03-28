@@ -7,9 +7,9 @@
  *
  * Code generation for model "simpleObserver2".
  *
- * Model version              : 1.46
+ * Model version              : 1.47
  * Simulink Coder version : 9.6 (R2021b) 14-May-2021
- * C++ source code generated on : Mon Mar 27 19:08:06 2023
+ * C++ source code generated on : Tue Mar 28 18:15:14 2023
  *
  * Target selection: TwinCatGrt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -20,7 +20,6 @@
 
 #ifndef RTW_HEADER_simpleObserver2_h_
 #define RTW_HEADER_simpleObserver2_h_
-#include <cmath>
 #include <cstring>
 #include <stdlib.h>
 #include "rtwtypes.h"
@@ -174,13 +173,12 @@ struct B_simpleObserver2_T {
   real_T Odometry[3];                  /* '<S1>/Integrator' */
   real_T CameraDelay[3];               /* '<S1>/CameraDelay' */
   real_T K[9];                         /* '<S1>/K' */
-  real_T Switch[3];                    /* '<S1>/Switch' */
   real_T InVXworld;                    /* '<Root>/InVXworld' */
   real_T InVYworld;                    /* '<Root>/InVYworld' */
   real_T InVThetaworld;                /* '<Root>/InVThetaworld' */
   real_T Sum[3];                       /* '<S1>/Sum' */
-  real_T angleDenormalizedCamData[3];  /* '<S1>/denormalizeCamData' */
   real_T Sum1[3];                      /* '<S1>/Sum1' */
+  real_T Switch[3];                    /* '<S1>/Switch' */
   real_T Product1[3];                  /* '<S1>/Product1' */
   int8_T cameraDelayCylces;            /* '<S1>/cameraDelayCylces' */
   boolean_T Reset;                     /* '<S1>/Reset' */
@@ -190,11 +188,10 @@ struct B_simpleObserver2_T {
 /* Block states (default storage) for system '<Root>' */
 struct DW_simpleObserver2_T {
   real_T CameraDelay_DSTATE[300];      /* '<S1>/CameraDelay' */
-  real_T oldTheta;                     /* '<S1>/denormalizeCamData' */
   real_T oldCamData[3];                /* '<S1>/CamFlag' */
   void *version_PWORK;                 /* '<Root>/version' */
-  void *DEBUG_PWORK;                   /* '<Root>/DEBUG' */
   void *OutEstimatedPose_PWORK;        /* '<Root>/OutEstimatedPose' */
+  void *ThetaDenormalized_PWORK;       /* '<Root>/ThetaDenormalized' */
   void *InCameraPose_PWORK;            /* '<Root>/InCameraPose' */
   void *Reset_PWORK;                   /* '<S1>/Reset' */
   void *cameraDelayCylces_PWORK;       /* '<S1>/cameraDelayCylces' */
@@ -335,6 +332,5 @@ extern "C" {
  * '<Root>' : 'simpleObserver2'
  * '<S1>'   : 'simpleObserver2/Estimator1'
  * '<S2>'   : 'simpleObserver2/Estimator1/CamFlag'
- * '<S3>'   : 'simpleObserver2/Estimator1/denormalizeCamData'
  */
 #endif                                 /* RTW_HEADER_simpleObserver2_h_ */

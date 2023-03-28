@@ -1,4 +1,4 @@
-<TcModuleClass Hash="{F23A9DDE-71D9-454A-BBB0-4847EE02DD43}" GeneratedBy="TE140x-TargetForMatlabSimulink 2.3.1.1, MATLAB 9.11.0.2022996 (R2021b) Update 4 (win64)">
+<TcModuleClass Hash="{544C8FF1-CB5B-4D7D-9EE0-01DF08FBCB46}" GeneratedBy="TE140x-TargetForMatlabSimulink 2.3.1.1, MATLAB 9.11.0.2022996 (R2021b) Update 4 (win64)">
 	<Vendor>
 		<Name>TE140x Module Vendor</Name>
 		<ImageData/>
@@ -550,18 +550,18 @@
 					<AreaNo AreaType="OutputSrc" CreateSymbols="true">1</AreaNo>
 					<Name>AdditionalOutports</Name>
 					<ContextId>0</ContextId>
-					<ByteSize>56</ByteSize>
+					<ByteSize>40</ByteSize>
 					<Symbol>
-						<Name>TcModuleOutput_DEBUG</Name>
+						<Name>TcModuleOutput_OutEstimatedPose</Name>
 						<BitSize>192</BitSize>
 						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
 						<PTCID>#x81000000</PTCID>
 						<BitOffs>0</BitOffs>
 					</Symbol>
 					<Symbol>
-						<Name>TcModuleOutput_OutEstimatedPose</Name>
-						<BitSize>192</BitSize>
-						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+						<Name>TcModuleOutput_ThetaDenormalized</Name>
+						<BitSize>64</BitSize>
+						<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 						<PTCID>#x81000018</PTCID>
 						<BitOffs>192</BitOffs>
 					</Symbol>
@@ -569,15 +569,15 @@
 						<Name>TcModuleOutput_version</Name>
 						<BitSize>64</BitSize>
 						<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-						<PTCID>#x81000030</PTCID>
-						<BitOffs>384</BitOffs>
+						<PTCID>#x81000020</PTCID>
+						<BitOffs>256</BitOffs>
 					</Symbol>
 				</DataArea>
 				<DataArea>
 					<AreaNo AreaType="Internal" CreateSymbols="true">2</AreaNo>
 					<Name>simpleObserver2_B</Name>
 					<ContextId>0</ContextId>
-					<ByteSize>296</ByteSize>
+					<ByteSize>272</ByteSize>
 					<Symbol>
 						<Name>InCameraPose</Name>
 						<BitSize>192</BitSize>
@@ -607,81 +607,74 @@
 						<BitOffs>576</BitOffs>
 					</Symbol>
 					<Symbol>
-						<Name>Switch</Name>
-						<BitSize>192</BitSize>
-						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
-						<PTCID>#x82000090</PTCID>
-						<BitOffs>1152</BitOffs>
-					</Symbol>
-					<Symbol>
 						<Name>InVXworld</Name>
 						<BitSize>64</BitSize>
 						<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-						<PTCID>#x820000a8</PTCID>
-						<BitOffs>1344</BitOffs>
+						<PTCID>#x82000090</PTCID>
+						<BitOffs>1152</BitOffs>
 					</Symbol>
 					<Symbol>
 						<Name>InVYworld</Name>
 						<BitSize>64</BitSize>
 						<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-						<PTCID>#x820000b0</PTCID>
-						<BitOffs>1408</BitOffs>
+						<PTCID>#x82000098</PTCID>
+						<BitOffs>1216</BitOffs>
 					</Symbol>
 					<Symbol>
 						<Name>InVThetaworld</Name>
 						<BitSize>64</BitSize>
 						<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-						<PTCID>#x820000b8</PTCID>
-						<BitOffs>1472</BitOffs>
+						<PTCID>#x820000a0</PTCID>
+						<BitOffs>1280</BitOffs>
 					</Symbol>
 					<Symbol>
 						<Name>Sum</Name>
+						<BitSize>192</BitSize>
+						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+						<PTCID>#x820000a8</PTCID>
+						<BitOffs>1344</BitOffs>
+					</Symbol>
+					<Symbol>
+						<Name>Sum1</Name>
 						<BitSize>192</BitSize>
 						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
 						<PTCID>#x820000c0</PTCID>
 						<BitOffs>1536</BitOffs>
 					</Symbol>
 					<Symbol>
-						<Name>angleDenormalizedCamData</Name>
+						<Name>Switch</Name>
 						<BitSize>192</BitSize>
 						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
 						<PTCID>#x820000d8</PTCID>
 						<BitOffs>1728</BitOffs>
 					</Symbol>
 					<Symbol>
-						<Name>Sum1</Name>
+						<Name>Product1</Name>
 						<BitSize>192</BitSize>
 						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
 						<PTCID>#x820000f0</PTCID>
 						<BitOffs>1920</BitOffs>
 					</Symbol>
 					<Symbol>
-						<Name>Product1</Name>
-						<BitSize>192</BitSize>
-						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
-						<PTCID>#x82000108</PTCID>
-						<BitOffs>2112</BitOffs>
-					</Symbol>
-					<Symbol>
 						<Name>cameraDelayCylces</Name>
 						<BitSize>8</BitSize>
 						<BaseType GUID="{18071995-0000-0000-0000-000000000003}">SINT</BaseType>
-						<PTCID>#x82000120</PTCID>
-						<BitOffs>2304</BitOffs>
+						<PTCID>#x82000108</PTCID>
+						<BitOffs>2112</BitOffs>
 					</Symbol>
 					<Symbol>
 						<Name>Reset</Name>
 						<BitSize>8</BitSize>
 						<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
-						<PTCID>#x82000121</PTCID>
-						<BitOffs>2312</BitOffs>
+						<PTCID>#x82000109</PTCID>
+						<BitOffs>2120</BitOffs>
 					</Symbol>
 					<Symbol>
 						<Name>newCamDataArrived</Name>
 						<BitSize>8</BitSize>
 						<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
-						<PTCID>#x82000122</PTCID>
-						<BitOffs>2320</BitOffs>
+						<PTCID>#x8200010a</PTCID>
+						<BitOffs>2128</BitOffs>
 					</Symbol>
 				</DataArea>
 				<DataArea>
@@ -701,7 +694,7 @@
 					<AreaNo AreaType="Internal" CreateSymbols="true">4</AreaNo>
 					<Name>simpleObserver2_DW1</Name>
 					<ContextId>0</ContextId>
-					<ByteSize>2432</ByteSize>
+					<ByteSize>2424</ByteSize>
 					<Symbol>
 						<Name>CameraDelay_DSTATE</Name>
 						<BitSize>19200</BitSize>
@@ -710,18 +703,11 @@
 						<BitOffs>0</BitOffs>
 					</Symbol>
 					<Symbol>
-						<Name>oldTheta</Name>
-						<BitSize>64</BitSize>
-						<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-						<PTCID>#x84000960</PTCID>
-						<BitOffs>19200</BitOffs>
-					</Symbol>
-					<Symbol>
 						<Name>oldCamData</Name>
 						<BitSize>192</BitSize>
 						<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
-						<PTCID>#x84000968</PTCID>
-						<BitOffs>19264</BitOffs>
+						<PTCID>#x84000960</PTCID>
+						<BitOffs>19200</BitOffs>
 					</Symbol>
 				</DataArea>
 				<DataArea>
@@ -752,6 +738,6 @@
 	<Configurations/>
 	<Library>
 		<Name>simpleObserver2</Name>
-		<Version>0.0.0.14</Version>
+		<Version>0.0.0.18</Version>
 	</Library>
 </TcModuleClass>
