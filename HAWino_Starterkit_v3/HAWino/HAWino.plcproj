@@ -177,6 +177,9 @@
     <Compile Include="POUs\UserPOUs\UserFunctions\FILL.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\normalizeAngle.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\Robot2World.TcPOU">
       <SubType>Code</SubType>
     </Compile>
