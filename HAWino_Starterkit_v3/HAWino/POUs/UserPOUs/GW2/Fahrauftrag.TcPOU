@@ -28,7 +28,7 @@ VAR
 	xPointList AT%I*: ARRAY[0..100] OF LREAL;	//xKoordinatenliste
 	yPointList AT%I*: ARRAY[0..100] OF LREAL;	//yKoordinatenliste
 	enable_ASearch AT%Q* : BOOL;				//enable signal for a search
-	finished_ASearch AT%Q* : BOOL;//TODO
+	finished_ASearch AT%I* : BOOL;	 //TODO
 	i: INT;
 	zeile: INT;
 END_VAR
@@ -49,7 +49,7 @@ IF s0 AND NOT s1 AND Auftrag.Art = 'Fahrauftrag' THEN
 	FeedbackToGW1 := 'Auftrag angenommen';
 	//Auftrag auswerten
 	readAssigment(assigment:= Auftrag);
-	EndNode := 92;															//todo in matlab
+	//EndNode := 92;															//todo in matlab
 	xEndvalue := readAssigment.pickupLocation.x;
 	yEndvalue := readAssigment.pickupLocation.y;
 	xRobotStartposition := readAssigment.xStartposition;

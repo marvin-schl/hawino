@@ -3493,7 +3493,7 @@
 								<AreaNo AreaType="InputDst" CreateSymbols="true">0</AreaNo>
 								<Name>AdditionalInports</Name>
 								<ContextId>0</ContextId>
-								<ByteSize>48</ByteSize>
+								<ByteSize>40</ByteSize>
 								<Symbol>
 									<Name>TcModuleInput_enable</Name>
 									<BitSize>8</BitSize>
@@ -3502,59 +3502,59 @@
 									<BitOffs>0</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>TcModuleInput_endNode</Name>
+									<Name>TcModuleInput_xRobotEnd</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 									<PTCID>#x80000008</PTCID>
 									<BitOffs>64</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>TcModuleInput_xRobotEnd</Name>
+									<Name>TcModuleInput_xRobotStart</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 									<PTCID>#x80000010</PTCID>
 									<BitOffs>128</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>TcModuleInput_xRobotStart</Name>
+									<Name>TcModuleInput_yRobotEnd</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 									<PTCID>#x80000018</PTCID>
 									<BitOffs>192</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>TcModuleInput_yRobotEnd</Name>
+									<Name>TcModuleInput_yRobotStart</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 									<PTCID>#x80000020</PTCID>
 									<BitOffs>256</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>TcModuleInput_yRobotStart</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x80000028</PTCID>
-									<BitOffs>320</BitOffs>
 								</Symbol>
 							</DataArea>
 							<DataArea>
 								<AreaNo AreaType="OutputSrc" CreateSymbols="true">1</AreaNo>
 								<Name>AdditionalOutports</Name>
 								<ContextId>0</ContextId>
-								<ByteSize>1616</ByteSize>
+								<ByteSize>1624</ByteSize>
+								<Symbol>
+									<Name>TcModuleOutput_newWayPointList</Name>
+									<BitSize>8</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+									<PTCID>#x81000000</PTCID>
+									<BitOffs>0</BitOffs>
+								</Symbol>
 								<Symbol>
 									<Name>TcModuleOutput_xCoordinates</Name>
 									<BitSize>6464</BitSize>
 									<BaseType GUID="{52DBFE87-3AFB-2D09-48C9-A9D296DAA97A}">matrix_101x1_real_T</BaseType>
-									<PTCID>#x81000000</PTCID>
-									<BitOffs>0</BitOffs>
+									<PTCID>#x81000008</PTCID>
+									<BitOffs>64</BitOffs>
 								</Symbol>
 								<Symbol>
 									<Name>TcModuleOutput_yCoordinates</Name>
 									<BitSize>6464</BitSize>
 									<BaseType GUID="{52DBFE87-3AFB-2D09-48C9-A9D296DAA97A}">matrix_101x1_real_T</BaseType>
-									<PTCID>#x81000328</PTCID>
-									<BitOffs>6464</BitOffs>
+									<PTCID>#x81000330</PTCID>
+									<BitOffs>6528</BitOffs>
 								</Symbol>
 							</DataArea>
 							<DataArea>
@@ -3591,32 +3591,32 @@
 									<BitOffs>192</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>endNode</Name>
+									<Name>startNode</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 									<PTCID>#x82000020</PTCID>
 									<BitOffs>256</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>startNode</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x82000028</PTCID>
-									<BitOffs>320</BitOffs>
-								</Symbol>
-								<Symbol>
 									<Name>xKoordinaten</Name>
 									<BitSize>6464</BitSize>
 									<BaseType GUID="{A241177B-78D6-7DCE-7BE6-870A650A50EF}">matrix_101_real_T</BaseType>
-									<PTCID>#x82000030</PTCID>
-									<BitOffs>384</BitOffs>
+									<PTCID>#x82000028</PTCID>
+									<BitOffs>320</BitOffs>
 								</Symbol>
 								<Symbol>
 									<Name>yKoordinaten</Name>
 									<BitSize>6464</BitSize>
 									<BaseType GUID="{A241177B-78D6-7DCE-7BE6-870A650A50EF}">matrix_101_real_T</BaseType>
-									<PTCID>#x82000358</PTCID>
-									<BitOffs>6848</BitOffs>
+									<PTCID>#x82000350</PTCID>
+									<BitOffs>6784</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>endNode</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<PTCID>#x82000678</PTCID>
+									<BitOffs>13248</BitOffs>
 								</Symbol>
 								<Symbol>
 									<Name>wayPointList</Name>
@@ -3659,6 +3659,13 @@
 									<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
 									<PTCID>#x82029b08</PTCID>
 									<BitOffs>1366080</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>newWayPointList</Name>
+									<BitSize>8</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+									<PTCID>#x82029b09</PTCID>
+									<BitOffs>1366088</BitOffs>
 								</Symbol>
 							</DataArea>
 						</DataAreas>
@@ -4089,10 +4096,6 @@
 					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
 						<Name>PlcTask Inputs</Name>
 						<Var>
-							<Name>PowerManager.shutdownButton</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>Fahrauftrag.TrajectoryController.yBoArrivedAtDestination</Name>
 							<Comment><![CDATA[ TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
 							<Type>BOOL</Type>
@@ -4120,7 +4123,7 @@
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.requestShutdown</Name>
+							<Name>PowerManager.shutdownButton</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -4140,6 +4143,10 @@
 						<Var>
 							<Name>PowerManager.batteryVoltageRaw</Name>
 							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.requestShutdown</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.supplyCurrentRaw</Name>
@@ -4184,11 +4191,6 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>Fahrauftrag.finished_ASearch</Name>
-							<Comment><![CDATA[TODO]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>Fahrauftrag.TrajectoryController.xBoEnable</Name>
 							<Comment><![CDATA[ Freigabesignal für Fahrt, Roboter stoppt bei FALSE]]></Comment>
 							<Type>BOOL</Type>
@@ -4209,7 +4211,8 @@
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.shutdownTrigger</Name>
+							<Name>Fahrauftrag.finished_ASearch</Name>
+							<Comment><![CDATA[TODO]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -4256,6 +4259,10 @@
 						<Var>
 							<Name>Camera.cameraData.SS</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.shutdownTrigger</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.batteryVoltage_V</Name>
@@ -7304,7 +7311,6 @@ Bit1: Value smaller than Limit2]]></Comment>
 			<OwnerB Name="TIRC^TcCOM Objects^Object3 (A_Search)">
 				<Link VarA="PlcTask Inputs^Fahrauftrag.xPointList" VarB="AdditionalOutports^TcModuleOutput_xCoordinates"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.yPointList" VarB="AdditionalOutports^TcModuleOutput_yCoordinates"/>
-				<Link VarA="PlcTask Outputs^Fahrauftrag.EndNode" VarB="AdditionalInports^TcModuleInput_endNode"/>
 				<Link VarA="PlcTask Outputs^Fahrauftrag.enable_ASearch" VarB="AdditionalInports^TcModuleInput_enable"/>
 				<Link VarA="PlcTask Outputs^Fahrauftrag.xEndvalue" VarB="AdditionalInports^TcModuleInput_xRobotEnd"/>
 				<Link VarA="PlcTask Outputs^Fahrauftrag.xRobotStartposition" VarB="AdditionalInports^TcModuleInput_xRobotStart"/>
