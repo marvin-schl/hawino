@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="ZEROS_RobotPoseSimple" Id="{a193154c-87cb-4a96-8399-6bc18e7177fd}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ZEROS_RobotPoseSimple : Array[0..100] OF RobotPoseSimple
+VAR_IN_OUT
+	arr: ARRAY [0..100] OF RobotPoseSimple;
+END_VAR
+VAR
+	i: INT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[FOR i := 0 TO 100 BY 1 DO
+	arr[i] := ToRobotPoseSimple(x := 0, y := 0, theta := 0);
+END_FOR
+]]></ST>
+    </Implementation>
+    <LineIds Name="ZEROS_RobotPoseSimple">
+      <LineId Id="11" Count="2" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

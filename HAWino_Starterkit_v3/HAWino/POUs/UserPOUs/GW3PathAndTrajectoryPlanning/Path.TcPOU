@@ -5,29 +5,43 @@
 VAR_INPUT
 	waypointListRaw: 	ARRAY [0..101] OF RobotPoseSimple;
 	maxRadius: 			LREAL;
-	thetaDZ: 				LREAL := 0.1;
+	thetaDZ: 			LREAL := 0.1;
+END_VAR
+VAR_OUTPUT
+	ready: 				BOOL;
 END_VAR
 VAR
-	waypointList: 		ARRAY [0..101] 	OF 	RobotPoseSimple;		
+	waypointList: 		ARRAY [0..101] 	OF 	RobotPoseSimple;
+		
 	subsplines: 		ARRAY [0..100] 	OF  POINTER TO Spline;
+	linearSplines:		ARRAY [0..51] OF LinearSpline;
+	bezierCurves:		ARRAY [0..49] OF BezierCurve;
+	
 	transitions: 		ARRAY [0..100] 	OF LREAL;
-	nmbOfSubsplines, nmbOfPreprocessedWaypoints:	INT;
+	nmbOfSubsplines, nmbOfPreprocessedWaypoints: INT;
+	subsplineGenerationIdx:					INT := 1;
+	generatedSubsplines:				BOOL := FALSE;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[preprocessWaypointlist();
+      <ST><![CDATA[IF NOT generatedSubsplines THEN
+	preprocessWaypointlist();
+	nmbOfSubsplines := 2*nmbOfPreprocessedWaypoints-3;
+	generateSubsplines();	
+END_IF
 
-nmbOfSubsplines := 2*nmbOfPreprocessedWaypoints-3;
-
-generateSubsplines();
-lengthVar := calculateLength();
-calculateTransitions();
-
-startPoint := subsplines[0]^.startPointVal;
-endPoint   := subsplines[nmbOfSubsplines-1]^.endPointVal;
-
-startPoint.theta := waypointList[0].theta;
-endPoint.theta	 := waypointList[nmbOfPreprocessedWaypoints-1].theta;]]></ST>
+IF generatedSubsplines AND NOT ready THEN
+	lengthVar := calculateLength();
+	calculateTransitions();
+	
+	startPoint := subsplines[0]^.startPointVal;
+	endPoint   := subsplines[nmbOfSubsplines-1]^.endPointVal;
+	
+	startPoint.theta := waypointList[0].theta;
+	endPoint.theta	 := waypointList[nmbOfPreprocessedWaypoints-1].theta;
+	ready := TRUE;
+END_IF
+]]></ST>
     </Implementation>
     <Method Name="calculateLength" Id="{fa9150c3-1548-4fad-bc03-2a7bdbb95fff}">
       <Declaration><![CDATA[(* 
@@ -302,13 +316,7 @@ END_IF ]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="Path">
-      <LineId Id="311" Count="2" />
-      <LineId Id="322" Count="0" />
-      <LineId Id="315" Count="0" />
-      <LineId Id="317" Count="3" />
-      <LineId Id="96" Count="0" />
-      <LineId Id="336" Count="0" />
-      <LineId Id="335" Count="0" />
+      <LineId Id="371" Count="16" />
       <LineId Id="337" Count="0" />
     </LineIds>
     <LineIds Name="Path.calculateLength">
