@@ -4115,6 +4115,11 @@
 							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
 						</Var>
 						<Var>
+							<Name>Fahrauftrag.finished_ASearch</Name>
+							<Comment><![CDATA[TODO]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>Fahrauftrag.Auftrag</Name>
 							<Type GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}">Auftrag</Type>
 						</Var>
@@ -4209,11 +4214,6 @@
 							<Name>Fahrauftrag.FeedbackToGW1</Name>
 							<Comment><![CDATA[Schnittstelle zum MQTT_PRG]]></Comment>
 							<Type>STRING(50)</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.finished_ASearch</Name>
-							<Comment><![CDATA[TODO]]></Comment>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.EndNode</Name>
@@ -7309,6 +7309,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^nEstimatedRunningTime" VarB="SoC_Model__Data_Processing_20_Y^EstimatedRunningTime"/>
 			</OwnerB>
 			<OwnerB Name="TIRC^TcCOM Objects^Object3 (A_Search)">
+				<Link VarA="PlcTask Inputs^Fahrauftrag.finished_ASearch" VarB="AdditionalOutports^TcModuleOutput_newWayPointList"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.xPointList" VarB="AdditionalOutports^TcModuleOutput_xCoordinates"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.yPointList" VarB="AdditionalOutports^TcModuleOutput_yCoordinates"/>
 				<Link VarA="PlcTask Outputs^Fahrauftrag.enable_ASearch" VarB="AdditionalInports^TcModuleInput_enable"/>
