@@ -144,7 +144,7 @@ IF s10 AND NOT s11 AND StatusFromGW1 = 'WerkstueckAusgelesen' THEN
 	resetVar := TRUE;
 	
 	//Auftrag auswerten
-	EndNode := 116;															//todo in matlab
+	//EndNode := 116;															//todo in matlab
 	xEndvalue := readAssigment.storageLocation.x;
 	yEndvalue := readAssigment.storageLocation.y;
 	xRobotStartposition := readAssigment.xStartposition;
@@ -162,9 +162,9 @@ IF s11 AND NOT s12 AND finished_ASearch THEN
 			EXIT;
 		END_IF
 	END_FOR
-	wayPointList[zeile] := readAssigment.lastPointsToPickup[0];
-	wayPointList[zeile+1] := readAssigment.lastPointsToPickup[1];
-	wayPointList[zeile+2] := readAssigment.lastPointsToPickup[2];
+	wayPointList[zeile] := readAssigment.lastPointsToStorage[0];
+	wayPointList[zeile+1] := readAssigment.lastPointsToStorage[1];
+	wayPointList[zeile+2] := readAssigment.lastPointsToStorage[2];
 	TrajectoryController.setWaypointList(waypointList);
 	trajectoryController.newWaypointListAvailable := TRUE;
 	s11 := 0; s12 := 1;
