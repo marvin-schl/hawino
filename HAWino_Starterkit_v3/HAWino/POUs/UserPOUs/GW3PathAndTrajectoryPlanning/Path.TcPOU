@@ -113,59 +113,67 @@ END_IF]]></ST>
 VAR_INPUT
 END_VAR
 VAR
-	linearSplines:		ARRAY [0..50] OF LinearSpline;
-	bezierCurves:		ARRAY [0..49] OF BezierCurve;
-		
+
+			
 	//xTmpLinear,yTmpLinear:    		ARRAY [0..1] OF LREAL;
 	wplTmpLinear:					ARRAY [0..1] OF RobotPoseSimple;
-	linearSpline: LinearSpline;
-	
 	//xTmpBezier,yTmpBezier:    		ARRAY [0..2] OF LREAL;
 	wplTmpBezier:					ARRAY [0..2] OF RobotPoseSimple;
-	bezierCurve: BezierCurve;
 	
 	i,j,k: INT := 0;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF nmbOfSubsplines <> 1 THEN 
-	FOR i := 1 TO nmbOfSubsplines BY 2 DO
-	k := 0;
-	//extract relevant points for bezier curve creation
-	FOR j := (i-1)/2 TO (i-1)/2+2 BY 1 DO
-		wplTmpBezier[k] := waypointList[j];
-		k := k + 1;
-	END_FOR  
-	bezierCurves[(i-1)/2](waypoints:=wplTmpBezier, maxRadius := maxRadius);
-	subsplines[i]:= ADR(bezierCurves[(i-1)/2]);
-	END_FOR
-	
-	//first Segment is always linear
-	wplTmpLinear[0] := waypointList[0];
-	wplTmpLinear[1] := subsplines[1]^.startPointVal;
-	linearSplines[0](wayPoints := wplTmpLinear);
-	subsplines[0] := ADR(linearSplines[0]);
-	
-	
-	//last Segment is always linear
-	wplTmpLinear[0] := subsplines[nmbOfSubsplines-2]^.endPointVal;
-	wplTmpLinear[1] := waypointList[nmbOfPreprocessedWaypoints-1];
-	linearSplines[(nmbOfSubsplines+1)/2](wayPoints := wplTmpLinear);
-	subsplines[nmbOfSubsplines-1] := ADR(linearSplines[(nmbOfSubsplines+1)/2]);
-	
-	
-	//generate the linear segments in between
-	FOR i := 2 TO nmbOfSubsplines-2 BY 2 DO
-	wplTmpLinear[0] := subsplines[i-1]^.endPointVal;
-	wplTmpLinear[1] := subsplines[i+1]^.startPointVal;
-	linearSplines[i/2](wayPoints := wplTmpLinear);
-	subsplines[i] := ADR(linearSplines[i/2]);
-	END_FOR
-ELSE  //nmbOfSubsplines = 1  => only one linear Segment
-	
+        <ST><![CDATA[IF nmbOfSubsplines <> 1 AND NOT ready THEN 
+	IF subsplineGenerationIdx = 0 THEN
+		//first Segment is always linear
+		wplTmpLinear[0] := waypointList[0];
+		wplTmpLinear[1] := subsplines[1]^.startPointVal;
+		linearSplines[0](wayPoints := wplTmpLinear);
+		subsplines[0] := ADR(linearSplines[0]);
+		subsplineGenerationIdx := nmbOfSubsplines-1;
+	ELSIF subsplineGenerationIdx = nmbOfSubsplines-1 THEN
+		//last Segment is always linear
+		wplTmpLinear[0] := subsplines[nmbOfSubsplines-2]^.endPointVal;
+		wplTmpLinear[1] := waypointList[nmbOfPreprocessedWaypoints-1];
+		linearSplines[(nmbOfSubsplines+1)/2](wayPoints := wplTmpLinear);
+		subsplines[nmbOfSubsplines-1] := ADR(linearSplines[(nmbOfSubsplines+1)/2]);
+		subsplineGenerationIdx := 2;
+	ELSIF (subsplineGenerationIdx MOD 2) <> 0 THEN
+		i := subsplineGenerationIdx;
+		k := 0;
+		
+		//extract relevant points for bezier curve creation
+		FOR j := (i-1)/2 TO (i-1)/2+2 BY 1 DO
+			wplTmpBezier[k] := waypointList[j];
+			k := k + 1;
+		END_FOR
+  
+		bezierCurves[(i-1)/2](waypoints:=wplTmpBezier, maxRadius := maxRadius);
+		subsplines[i]:= ADR(bezierCurves[(i-1)/2]);
+		
+		IF subsplineGenerationIdx >= nmbOfSubsplines-2 THEN
+			subsplineGenerationIdx := 0;
+		ELSE 
+			subsplineGenerationIdx := i+2;
+		END_IF
+	ELSIF (subsplineGenerationIdx MOD 2) = 0 THEN
+		i := subsplineGenerationIdx;
+		wplTmpLinear[0] := subsplines[i-1]^.endPointVal;
+		wplTmpLinear[1] := subsplines[i+1]^.startPointVal;
+		linearSplines[i/2](wayPoints := wplTmpLinear);
+		subsplines[i] := ADR(linearSplines[i/2]);
+		IF subsplineGenerationIdx >= nmbOfSubsplines-3 THEN
+			generatedSubsplines := TRUE;
+		ELSE	
+		subsplineGenerationIdx := subsplineGenerationIdx + 2;
+		END_IF
+	END_IF
+ELSIF nmbOfSubsplines = 1 AND NOT ready THEN  //nmbOfSubsplines = 1  => only one linear Segment
 	wplTmpLinear[0] := waypointList[0];
 	wplTmpLinear[1] := waypointList[1];;
 	linearSplines[0](wayPoints := wplTmpLinear);
 	subsplines[0] := ADR(linearSplines[0]);
+	generatedSubsplines := TRUE;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -320,7 +328,7 @@ END_IF ]]></ST>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="Path.generateSubsplines">
-      <LineId Id="22" Count="38" />
+      <LineId Id="89" Count="50" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="Path.getPoint">
