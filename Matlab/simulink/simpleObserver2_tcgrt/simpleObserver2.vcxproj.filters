@@ -1,0 +1,165 @@
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<Filter Include="TwinCAT">
+			<UniqueIdentifier>{6EC3D979-321D-DD4E-EB3F-B5A56765AAF9}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\ClassFactory">
+			<UniqueIdentifier>{3CA1911D-842B-400B-1D81-31ECBF6BEF4F}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\RT">
+			<UniqueIdentifier>{79CC4364-325B-4966-EDC5-2A86F0019728}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\OS">
+			<UniqueIdentifier>{0392E815-9D74-7EC1-99DA-AE0F4233F543}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\UM">
+			<UniqueIdentifier>{C355F9B7-1CB5-8702-4339-C8C447FDD121}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\Classes">
+			<UniqueIdentifier>{677C198D-1A80-3956-7E87-42709FC192AB}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\Classes\simpleObserver2">
+			<UniqueIdentifier>{EE740A6C-0564-C519-2DA8-A0666ADFA52A}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Resource Files">
+			<UniqueIdentifier>{711BCE93-487E-D9EF-5AC2-33354FF8C485}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink">
+			<UniqueIdentifier>{17A8EF01-8D08-FAFE-6738-1E837903EA71}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink\simpleObserver2">
+			<UniqueIdentifier>{432E1299-C990-2608-392F-4580BB42E1F6}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink\simpleObserver2\Sources">
+			<UniqueIdentifier>{DFDA8177-DF11-BCE6-4421-B78E859F487A}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink\simpleObserver2\Includes">
+			<UniqueIdentifier>{E5A2EB3A-4D72-D442-216D-09EFDAE6215C}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="xml">
+			<UniqueIdentifier>{099CFCCC-56BC-BA79-5936-76F97BAEA51C}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TMx">
+			<UniqueIdentifier>{9D5E7017-34BA-05DA-B407-8D80659AC84B}</UniqueIdentifier>
+		</Filter>
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="TcPch.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2Services.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2Duts.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2Interfaces.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2ClassFactory.h">
+			<Filter>TwinCAT\ClassFactory</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2Drv.h">
+			<Filter>TwinCAT\RT</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2Ctrl.h">
+			<Filter>TwinCAT\UM</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2W32.h">
+			<Filter>TwinCAT\UM</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2W32Resource.h">
+			<Filter>TwinCAT\UM</Filter>
+		</ClInclude>
+		<ClInclude Include="TcComsimpleObserver2.h">
+			<Filter>TwinCAT\Classes\simpleObserver2</Filter>
+		</ClInclude>
+		<ClInclude Include="FbsimpleObserver2.h">
+			<Filter>TwinCAT\Classes\simpleObserver2</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2Internal.h">
+			<Filter>TwinCAT\Classes\simpleObserver2</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_simpleObserver2_START_DIR)\simpleObserver2_tcgrt\multiword_types.h">
+			<Filter>Simulink\simpleObserver2\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_simpleObserver2_START_DIR)\simpleObserver2_tcgrt\rtmodel.h">
+			<Filter>Simulink\simpleObserver2\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_simpleObserver2_START_DIR)\simpleObserver2_tcgrt\rtwtypes.h">
+			<Filter>Simulink\simpleObserver2\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_simpleObserver2_START_DIR)\simpleObserver2_tcgrt\simpleObserver2.h">
+			<Filter>Simulink\simpleObserver2\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_simpleObserver2_START_DIR)\simpleObserver2_tcgrt\simpleObserver2_private.h">
+			<Filter>Simulink\simpleObserver2\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_simpleObserver2_START_DIR)\simpleObserver2_tcgrt\simpleObserver2_types.h">
+			<Filter>Simulink\simpleObserver2\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_simpleObserver2_START_DIR)\simpleObserver2_tcgrt\zero_crossing_types.h">
+			<Filter>Simulink\simpleObserver2\Includes</Filter>
+		</ClInclude>
+	</ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="TcPch.cpp">
+			<Filter>TwinCAT</Filter>
+		</ClCompile>
+		<ClCompile Include="simpleObserver2ClassFactory.cpp">
+			<Filter>TwinCAT\ClassFactory</Filter>
+		</ClCompile>
+		<ClCompile Include="simpleObserver2Drv.cpp">
+			<Filter>TwinCAT\RT</Filter>
+		</ClCompile>
+		<ClCompile Include="simpleObserver2ModulesMain.cpp">
+			<Filter>TwinCAT\OS</Filter>
+		</ClCompile>
+		<ClCompile Include="simpleObserver2Ctrl.cpp">
+			<Filter>TwinCAT\UM</Filter>
+		</ClCompile>
+		<ClCompile Include="simpleObserver2W32.cpp">
+			<Filter>TwinCAT\UM</Filter>
+		</ClCompile>
+		<ClCompile Include="TcComsimpleObserver2.cpp">
+			<Filter>TwinCAT\Classes\simpleObserver2</Filter>
+		</ClCompile>
+		<ClCompile Include="FbsimpleObserver2.cpp">
+			<Filter>TwinCAT\Classes\simpleObserver2</Filter>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_simpleObserver2_START_DIR)\simpleObserver2_tcgrt\simpleObserver2.cpp">
+			<Filter>Simulink\simpleObserver2\Sources</Filter>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_simpleObserver2_MATLAB_ROOT)\rtw\c\src\common\rt_malloc_main.cpp">
+			<Filter>Simulink\simpleObserver2\Sources</Filter>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="simpleObserver2W32.rc">
+			<Filter>TwinCAT\UM</Filter>
+		</ResourceCompile>
+		<ResourceCompile Include="simpleObserver2.rc">
+			<Filter>Resource Files</Filter>
+		</ResourceCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="simpleObserver2Artifacts.props">
+			<Filter>simpleObserver2.vcxproj</Filter>
+		</None>
+		<None Include="simpleObserver2W32.def">
+			<Filter>TwinCAT\UM</Filter>
+		</None>
+		<None Include="simpleObserver2_ModuleInfo.xml">
+			<Filter>TwinCAT\Classes\simpleObserver2</Filter>
+		</None>
+		<None Include="simpleObserver2.libcat.xml">
+			<Filter>xml</Filter>
+		</None>
+		<None Include="simpleObserver2.tmc">
+			<Filter>TMx</Filter>
+		</None>
+		<None Include="simpleObserver2.tml">
+			<Filter>TMx</Filter>
+		</None>
+	</ItemGroup>
+</Project>

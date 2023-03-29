@@ -6,7 +6,7 @@
 #------------------------ system settings ------------------------------------
 MSBUILDBINPATH = C:\Windows\Microsoft.NET\Framework\v4.0.30220
 MODEL_NAME     = simpleObserver
-DEFINES_OTHER  = -DMODEL=simpleObserver -DNUMST=2 -DNCSTATES=6 -DHAVESTDIO -DRT -DUSE_RTMODEL
+DEFINES_OTHER  = -DMODEL=simpleObserver -DNUMST=2 -DNCSTATES=3 -DHAVESTDIO -DRT -DUSE_RTMODEL
 
 #------------------------ model referencing ----------------------------------
 MODELREFS                 = 

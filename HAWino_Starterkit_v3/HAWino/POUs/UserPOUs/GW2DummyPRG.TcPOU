@@ -43,6 +43,46 @@ END_IF
 
 ]]></ST>
     </Implementation>
+    <Method Name="driveCyclic" Id="{730ce0cc-f3e4-41f5-934b-0a2023a9ef7d}">
+      <Declaration><![CDATA[METHOD driveCyclic : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF state = 0 THEN	
+	wpl := generateWPLStationReverse();
+	toStation := TRUE;
+	state := 89;
+ELSIF state = 1 THEN
+	wpl := generateWPLStation();
+	toStation := FALSE;
+	state := 89;
+ELSIF state = 89 THEN
+	roboter.setWaypointList(wpl);
+	set := TRUE;
+	state := 90;
+ELSIF state = 90 THEN
+	IF roboter.yControllerState = ControllerState.setTrajectory THEN
+		set := FALSE;
+		state := 91;
+	END_IF
+ELSIF state = 91 THEN
+	IF roboter.yControllerState = ControllerState.ready THEN
+		enable := TRUE;
+		state := 92;
+	END_IF
+ELSIF state = 92 THEN
+	IF roboter.yControllerState = ControllerState.idle AND roboter.yBoArrivedAtDestination THEN
+		enable := FALSE;
+		IF toStation THEN
+			state := 1;
+		ELSE
+			state := 0;
+		END_IF
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="generateWPLCircle" Id="{723e581b-c10b-48a5-af6d-0cb88e71c220}">
       <Declaration><![CDATA[METHOD generateWPLCircle : ARRAY[0..100] OF RobotPoseSimple 
 VAR
@@ -109,7 +149,8 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[FOR i := 0 TO 100 DO
+        <ST><![CDATA[
+FOR i := 0 TO 100 DO
 	IF   RechteckX[i] <> -1 AND  RechteckY[i] <> -1  THEN
 		wpl[i].x 		:= RechteckX[i];
 		wpl[i].y 		:= RechteckY[i];
@@ -122,6 +163,60 @@ END_VAR
 END_FOR
 
 generateWPLRect := wpl;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="generateWPLStation" Id="{72e79a22-8f7a-4c32-8372-d9d95c309729}">
+      <Declaration><![CDATA[METHOD generateWPLStation : ARRAY[0..100] OF RobotPoseSimple
+VAR
+
+	
+		x: ARRAY[0..10] OF LREAL := 		[1000, 1650, 1650, 2102, -1,3000,1000,1000,1000, -1];
+	y: ARRAY[0..10] OF LREAL := 		[1000, 1000, 2829, 2829, -1,2000,2000,1500,1000, -1];
+	theta:	   ARRAY[0..10] OF LREAL := [-1,   1000, 1000, 0,   2000,2000,2000,1500, pi, -1];
+	wpl:  ARRAY[0..100] OF RobotPoseSimple;
+	i: INT := 0;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := 0 TO 100 DO
+	IF   x[i] <> -1 AND  y[i] <> -1  THEN
+		wpl[i].x 		:= x[i];
+		wpl[i].y 		:= y[i];
+		wpl[i].theta	:= Theta[i];
+	ELSE 
+		wpl[i].x 		:= -1;
+		wpl[i].y 		:= -1;
+		wpl[i].theta	:= -1;
+	END_IF
+END_FOR
+
+generateWPLStation := wpl;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="generateWPLStationReverse" Id="{311b078a-79c6-438f-84d7-19b7322e05ae}">
+      <Declaration><![CDATA[METHOD generateWPLStationReverse : ARRAY[0..100] OF RobotPoseSimple
+VAR
+	x: ARRAY[0..10] OF LREAL := 		[2102, 1650, 1650, 1000, -1, 3000,1000,1000,1000, -1];
+	y: ARRAY[0..10] OF LREAL := 		[2829, 2829, 1000, 1000, -1,2000,2000,1500,1000, -1];
+	theta:	   ARRAY[0..10] OF LREAL := [-1,   1000, 1000, pi,   2000,2000,2000,1500, pi, -1];
+	wpl:  ARRAY[0..100] OF RobotPoseSimple;
+	i: INT := 0;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := 0 TO 100 DO
+	IF   x[i] <> -1 AND  y[i] <> -1  THEN
+		wpl[i].x 		:= x[i];
+		wpl[i].y 		:= y[i];
+		wpl[i].theta	:= Theta[i];
+	ELSE 
+		wpl[i].x 		:= -1;
+		wpl[i].y 		:= -1;
+		wpl[i].theta	:= -1;
+	END_IF
+END_FOR
+
+generateWPLStationReverse := wpl;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="GW2DummyPRG">
@@ -147,7 +242,7 @@ generateWPLRect := wpl;]]></ST>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="GW2DummyPRG.generateWPLRect">
-      <LineId Id="43" Count="11" />
+      <LineId Id="16" Count="12" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>

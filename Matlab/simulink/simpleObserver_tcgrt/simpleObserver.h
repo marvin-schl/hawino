@@ -7,9 +7,9 @@
  *
  * Code generation for model "simpleObserver".
  *
- * Model version              : 1.14
+ * Model version              : 1.19
  * Simulink Coder version : 9.6 (R2021b) 14-May-2021
- * C++ source code generated on : Thu Mar  9 17:18:43 2023
+ * C++ source code generated on : Mon Mar 27 15:04:04 2023
  *
  * Target selection: TwinCatGrt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -151,18 +151,12 @@ struct B_simpleObserver_T {
   real_T InVYworld;                    /* '<Root>/InVYworld' */
   real_T InVThetaworld;                /* '<Root>/InVThetaworld' */
   real_T TmpSignalConversionAtIntegrator[3];
-  real_T Integrator[3];                /* '<Root>/Integrator' */
-  real_T vxToRobot;                    /* '<Root>/vxToRobot' */
-  real_T vyToRobot;                    /* '<Root>/vyToRobot' */
-  real_T omegaToRobot;                 /* '<Root>/omegaToRobot' */
-  real_T Sum[3];                       /* '<Root>/Sum' */
+  real_T TmpSignalConversionAtOutEstimat[3];
   real_T estimatedPose[3];             /* '<S1>/PoseCalculation' */
   real_T debug;                        /* '<S1>/PoseCalculation' */
   real_T estimatedX;                   /* '<S1>/PoseCalculation' */
   real_T estimatedY;                   /* '<S1>/PoseCalculation' */
   real_T estimatedTheta;               /* '<S1>/PoseCalculation' */
-  real_T Sum1_p[3];                    /* '<Root>/Sum1' */
-  real_T Gain[3];                      /* '<Root>/Gain' */
   boolean_T newCamDataArrived;         /* '<S1>/CamFlag' */
 };
 
@@ -179,27 +173,21 @@ struct DW_simpleObserver_T {
   void *InVXworld_PWORK;               /* '<Root>/InVXworld' */
   void *InVYworld_PWORK;               /* '<Root>/InVYworld' */
   void *InVThetaworld_PWORK;           /* '<Root>/InVThetaworld' */
-  void *vxToRobot_PWORK;               /* '<Root>/vxToRobot' */
-  void *vyToRobot_PWORK;               /* '<Root>/vyToRobot' */
-  void *omegaToRobot_PWORK;            /* '<Root>/omegaToRobot' */
 };
 
 /* Continuous states (default storage) */
 struct X_simpleObserver_T {
   real_T Integrator_CSTATE[3];         /* '<S1>/Integrator' */
-  real_T Integrator_CSTATE_p[3];       /* '<Root>/Integrator' */
 };
 
 /* State derivatives (default storage) */
 struct XDot_simpleObserver_T {
   real_T Integrator_CSTATE[3];         /* '<S1>/Integrator' */
-  real_T Integrator_CSTATE_p[3];       /* '<Root>/Integrator' */
 };
 
 /* State disabled  */
 struct XDis_simpleObserver_T {
   boolean_T Integrator_CSTATE[3];      /* '<S1>/Integrator' */
-  boolean_T Integrator_CSTATE_p[3];    /* '<Root>/Integrator' */
 };
 
 #ifndef ODE1_INTG
@@ -214,7 +202,7 @@ struct ODE1_IntgData {
 
 /* Parameters (default storage) */
 struct P_simpleObserver_T_ {
-  real_T Constant_Value;               /* Expression: 0.6
+  real_T Constant_Value;               /* Expression: 0.5
                                         * Referenced by: '<Root>/Constant'
                                         */
   real_T CameraDelay_InitialCondition; /* Expression: 0.0
@@ -225,12 +213,6 @@ struct P_simpleObserver_T_ {
                                          */
   real_T Integrator_IC;                /* Expression: 0
                                         * Referenced by: '<S1>/Integrator'
-                                        */
-  real_T Integrator_IC_i;              /* Expression: 0
-                                        * Referenced by: '<Root>/Integrator'
-                                        */
-  real_T Gain_Gain[9];                 /* Expression: [9 0 0; 0 9 0; 0 0 9]
-                                        * Referenced by: '<Root>/Gain'
                                         */
 };
 
@@ -246,7 +228,7 @@ struct tag_RTM_simpleObserver_T {
   boolean_T zCCacheNeedsReset;
   boolean_T derivCacheNeedsReset;
   boolean_T CTOutputIncnstWithState;
-  real_T odeF[1][6];
+  real_T odeF[1][3];
   ODE1_IntgData intgData;
 
   /*

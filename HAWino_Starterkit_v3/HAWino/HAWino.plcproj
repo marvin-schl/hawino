@@ -186,6 +186,9 @@
     <Compile Include="POUs\UserPOUs\UserFunctions\FILL.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\normalizeAngle.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\Robot2World.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -196,6 +199,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\RP2ARRAY.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\shiftCamAngle.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\SI.TcPOU">

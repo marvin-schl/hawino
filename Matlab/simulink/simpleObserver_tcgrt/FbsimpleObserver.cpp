@@ -114,9 +114,6 @@ bool CFbsimpleObserver::FB_init(bool bInitRetains, bool bInCopyCode)
 		TcModuleInput_InVThetaworld = 0;
 		TcModuleInput_InVXworld = 0;
 		TcModuleInput_InVYworld = 0;
-		TcModuleInput_omegaToRobot = 0;
-		TcModuleInput_vxToRobot = 0;
-		TcModuleInput_vyToRobot = 0;
 
 		m_pData = nullptr;
 		fbInitResult = __super::Init(0,TC_BUILD_MIN,bInitRetains,bInCopyCode);
@@ -139,9 +136,6 @@ bool CFbsimpleObserver::FB_init(bool bInitRetains, bool bInCopyCode)
 		simpleObserver_DW.InVThetaworld_PWORK = reinterpret_cast<PVOID>(&(TcModuleInput_InVThetaworld));
 		simpleObserver_DW.InVXworld_PWORK = reinterpret_cast<PVOID>(&(TcModuleInput_InVXworld));
 		simpleObserver_DW.InVYworld_PWORK = reinterpret_cast<PVOID>(&(TcModuleInput_InVYworld));
-		simpleObserver_DW.omegaToRobot_PWORK = reinterpret_cast<PVOID>(&(TcModuleInput_omegaToRobot));
-		simpleObserver_DW.vxToRobot_PWORK = reinterpret_cast<PVOID>(&(TcModuleInput_vxToRobot));
-		simpleObserver_DW.vyToRobot_PWORK = reinterpret_cast<PVOID>(&(TcModuleInput_vyToRobot));
 		simpleObserver_DW.DEBUG_PWORK = reinterpret_cast<PVOID>(&(TcModuleOutput_DEBUG));
 		simpleObserver_DW.OutEstimatedPose_PWORK = reinterpret_cast<PVOID>(&(TcModuleOutput_OutEstimatedPose));
 		simpleObserver_DW.version_PWORK = reinterpret_cast<PVOID>(&(TcModuleOutput_version));

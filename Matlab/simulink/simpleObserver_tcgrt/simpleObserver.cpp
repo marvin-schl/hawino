@@ -7,9 +7,9 @@
  *
  * Code generation for model "simpleObserver".
  *
- * Model version              : 1.14
+ * Model version              : 1.19
  * Simulink Coder version : 9.6 (R2021b) 14-May-2021
- * C++ source code generated on : Thu Mar  9 17:18:43 2023
+ * C++ source code generated on : Mon Mar 27 15:04:04 2023
  *
  * Target selection: TwinCatGrt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -52,7 +52,7 @@ static void rt_ertODEUpdateContinuousStates(RTWSolverInfo *si )
   real_T *f0 { id->f[0] };
 
   int_T i;
-  int_T nXc { 6 };
+  int_T nXc { 3 };
 
   rtsiSetSimTimeStep(si,MINOR_TIME_STEP);
   rtsiSetdX(si, f0);
@@ -68,7 +68,6 @@ static void rt_ertODEUpdateContinuousStates(RTWSolverInfo *si )
 /* Model step function */
 void simpleObserver_step(void)
 {
-  int32_T k;
   if (rtmIsMajorTimeStep(simpleObserver_M)) {
     /* set solver stop time */
     if (!(simpleObserver_M->Timing.clockTick0+1)) {
@@ -90,9 +89,7 @@ void simpleObserver_step(void)
   }
 
   if (rtmIsMajorTimeStep(simpleObserver_M)) {
-  }
-
-  if (rtmIsMajorTimeStep(simpleObserver_M)) {
+    int32_T k;
     boolean_T exitg1;
     boolean_T y;
 
@@ -228,53 +225,16 @@ void simpleObserver_step(void)
     simpleObserver_B.InVYworld;
   simpleObserver_B.TmpSignalConversionAtIntegrator[2] =
     simpleObserver_B.InVThetaworld;
-
-  /* Integrator: '<Root>/Integrator' */
-  simpleObserver_B.Integrator[0] = simpleObserver_X.Integrator_CSTATE_p[0];
-  simpleObserver_B.Integrator[1] = simpleObserver_X.Integrator_CSTATE_p[1];
-  simpleObserver_B.Integrator[2] = simpleObserver_X.Integrator_CSTATE_p[2];
-
-  /* Sum: '<Root>/Sum1' */
-  simpleObserver_B.Sum1_p[0] = simpleObserver_B.estimatedX -
-    simpleObserver_B.Integrator[0];
-  simpleObserver_B.Sum1_p[1] = simpleObserver_B.estimatedY -
-    simpleObserver_B.Integrator[1];
-  simpleObserver_B.Sum1_p[2] = simpleObserver_B.estimatedTheta -
-    simpleObserver_B.Integrator[2];
-  for (k = 0; k < 3; k++) {
-    /* Gain: '<Root>/Gain' */
-    simpleObserver_B.Gain[k] = 0.0;
-    simpleObserver_B.Gain[k] += simpleObserver_P.Gain_Gain[k] *
-      simpleObserver_B.Sum1_p[0];
-    simpleObserver_B.Gain[k] += simpleObserver_P.Gain_Gain[k + 3] *
-      simpleObserver_B.Sum1_p[1];
-    simpleObserver_B.Gain[k] += simpleObserver_P.Gain_Gain[k + 6] *
-      simpleObserver_B.Sum1_p[2];
+  if (rtmIsMajorTimeStep(simpleObserver_M)) {
+    /* SignalConversion generated from: '<Root>/OutEstimatedPose' */
+    simpleObserver_B.TmpSignalConversionAtOutEstimat[0] =
+      simpleObserver_B.estimatedX;
+    simpleObserver_B.TmpSignalConversionAtOutEstimat[1] =
+      simpleObserver_B.estimatedY;
+    simpleObserver_B.TmpSignalConversionAtOutEstimat[2] =
+      simpleObserver_B.estimatedTheta;
   }
 
-  /* S-Function (TcModuleInOut): '<Root>/vxToRobot' */
-  if (simpleObserver_DW.vxToRobot_PWORK != NULL) {
-    simpleObserver_B.vxToRobot = *((real_T*)simpleObserver_DW.vxToRobot_PWORK);
-  }
-
-  /* S-Function (TcModuleInOut): '<Root>/vyToRobot' */
-  if (simpleObserver_DW.vyToRobot_PWORK != NULL) {
-    simpleObserver_B.vyToRobot = *((real_T*)simpleObserver_DW.vyToRobot_PWORK);
-  }
-
-  /* S-Function (TcModuleInOut): '<Root>/omegaToRobot' */
-  if (simpleObserver_DW.omegaToRobot_PWORK != NULL) {
-    simpleObserver_B.omegaToRobot = *((real_T*)
-      simpleObserver_DW.omegaToRobot_PWORK);
-  }
-
-  /* Sum: '<Root>/Sum' */
-  simpleObserver_B.Sum[0] = simpleObserver_B.Gain[0] +
-    simpleObserver_B.vxToRobot;
-  simpleObserver_B.Sum[1] = simpleObserver_B.Gain[1] +
-    simpleObserver_B.vyToRobot;
-  simpleObserver_B.Sum[2] = simpleObserver_B.Gain[2] +
-    simpleObserver_B.omegaToRobot;
   if (rtmIsMajorTimeStep(simpleObserver_M)) {
     if (rtmIsMajorTimeStep(simpleObserver_M)) {
       /* Update for S-Function (TcModuleInOut): '<Root>/version' incorporates:
@@ -289,15 +249,13 @@ void simpleObserver_step(void)
       if (simpleObserver_DW.DEBUG_PWORK != NULL) {
         *((real_T*)simpleObserver_DW.DEBUG_PWORK) = simpleObserver_B.debug;
       }
-    }
 
-    /* Update for S-Function (TcModuleInOut): '<Root>/OutEstimatedPose' */
-    if (simpleObserver_DW.OutEstimatedPose_PWORK != NULL) {
-      memcpy(simpleObserver_DW.OutEstimatedPose_PWORK,
-             &simpleObserver_B.Integrator[0], 24);
-    }
+      /* Update for S-Function (TcModuleInOut): '<Root>/OutEstimatedPose' */
+      if (simpleObserver_DW.OutEstimatedPose_PWORK != NULL) {
+        memcpy(simpleObserver_DW.OutEstimatedPose_PWORK,
+               &simpleObserver_B.TmpSignalConversionAtOutEstimat[0], 24);
+      }
 
-    if (rtmIsMajorTimeStep(simpleObserver_M)) {
       /* Update for Delay: '<S1>/CameraDelay' */
       for (int_T idxDelay{0}; idxDelay < 13; idxDelay++) {
         int32_T CameraDelay_DSTATE_tmp;
@@ -375,23 +333,10 @@ void simpleObserver_derivatives(void)
   /* Derivatives for Integrator: '<S1>/Integrator' */
   _rtXdot->Integrator_CSTATE[0] =
     simpleObserver_B.TmpSignalConversionAtIntegrator[0];
-
-  /* Derivatives for Integrator: '<Root>/Integrator' */
-  _rtXdot->Integrator_CSTATE_p[0] = simpleObserver_B.Sum[0];
-
-  /* Derivatives for Integrator: '<S1>/Integrator' */
   _rtXdot->Integrator_CSTATE[1] =
     simpleObserver_B.TmpSignalConversionAtIntegrator[1];
-
-  /* Derivatives for Integrator: '<Root>/Integrator' */
-  _rtXdot->Integrator_CSTATE_p[1] = simpleObserver_B.Sum[1];
-
-  /* Derivatives for Integrator: '<S1>/Integrator' */
   _rtXdot->Integrator_CSTATE[2] =
     simpleObserver_B.TmpSignalConversionAtIntegrator[2];
-
-  /* Derivatives for Integrator: '<Root>/Integrator' */
-  _rtXdot->Integrator_CSTATE_p[2] = simpleObserver_B.Sum[2];
 }
 
 /* Model initialize function */
@@ -459,9 +404,6 @@ void simpleObserver_initialize(void)
   /* InitializeConditions for Integrator: '<S1>/Integrator' */
   simpleObserver_X.Integrator_CSTATE[0] = simpleObserver_P.Integrator_IC;
 
-  /* InitializeConditions for Integrator: '<Root>/Integrator' */
-  simpleObserver_X.Integrator_CSTATE_p[0] = simpleObserver_P.Integrator_IC_i;
-
   /* SystemInitialize for MATLAB Function: '<S1>/CamFlag' */
   simpleObserver_DW.oldCamData[0] = 0.0;
 
@@ -475,9 +417,6 @@ void simpleObserver_initialize(void)
   /* InitializeConditions for Integrator: '<S1>/Integrator' */
   simpleObserver_X.Integrator_CSTATE[1] = simpleObserver_P.Integrator_IC;
 
-  /* InitializeConditions for Integrator: '<Root>/Integrator' */
-  simpleObserver_X.Integrator_CSTATE_p[1] = simpleObserver_P.Integrator_IC_i;
-
   /* SystemInitialize for MATLAB Function: '<S1>/CamFlag' */
   simpleObserver_DW.oldCamData[1] = 0.0;
 
@@ -490,9 +429,6 @@ void simpleObserver_initialize(void)
 
   /* InitializeConditions for Integrator: '<S1>/Integrator' */
   simpleObserver_X.Integrator_CSTATE[2] = simpleObserver_P.Integrator_IC;
-
-  /* InitializeConditions for Integrator: '<Root>/Integrator' */
-  simpleObserver_X.Integrator_CSTATE_p[2] = simpleObserver_P.Integrator_IC_i;
 
   /* SystemInitialize for MATLAB Function: '<S1>/CamFlag' */
   simpleObserver_DW.oldCamData[2] = 0.0;

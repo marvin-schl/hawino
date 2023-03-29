@@ -20,7 +20,7 @@ VAR
 	robot		: Robot;							//link to physical I/O of roboter or simulation model of the roboter
 	robotPoses 	AT%I*: ARRAY [1..8] OF RobotPose;	//input from camera
 	
-
+	state AT%Q*: ControllerState := ControllerState.init;//sets controller state
 	
 	CONTROL_ERROR_THRESH : LREAL := 5;
 	
@@ -36,11 +36,11 @@ VAR
 	waypointList AT%I*: ARRAY[0..100] OF RobotPoseSimple;	// implemented, Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)
 	newWaypointListAvailable AT%I*: BOOL := FALSE;			// implemented, Status-Bit zur Signalisierung einer neuen WP-Liste
 	
-	//outputs to GW2, uncomment and link when needed				
+	//outputs to GW2, uncomment and link when needed
 	yBoArrivedAtDestination AT%Q*:	BOOL := FALSE;			// implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP
-	yUintWaypointIndex AT%Q*: INT  := 0;					// implemented, COUNTER zur Anzeige, des Indexes des nächstes WP
+	yUintWaypointIndex AT%Q*: INT  := 0;						// implemented, COUNTER zur Anzeige, des Indexes des nächstes WP
 	yRPposition AT%Q*: RobotPoseSimple;						// implemented, aktuelle Roboterposition, für Simulationszwecke
-	state AT%Q*: ControllerState := ControllerState.init;	// controller state
+	FFLin: BOOL := FALSE;
 
 END_VAR
 ]]></Declaration>
@@ -63,8 +63,7 @@ CASE state OF
 	ControllerState.idle:
 		//if new waypointlist available reset trajectory and go into set trajectory state
 		IF newWaypointListAvailable THEN
-			controller.reset();
-			trajectory.reset(); //reset trajectory before setTrajectory to ensure all flags are resetted properly
+			reset();
 			state := ControllerState.setTrajectory;
 		END_IF
 	
@@ -202,16 +201,7 @@ END_VAR]]></Declaration>
       </Implementation>
     </Method>
     <LineIds Name="ControlPRG">
-      <LineId Id="895" Count="3" />
-      <LineId Id="900" Count="13" />
-      <LineId Id="1059" Count="0" />
-      <LineId Id="914" Count="26" />
-      <LineId Id="1061" Count="1" />
-      <LineId Id="941" Count="6" />
-      <LineId Id="1058" Count="0" />
-      <LineId Id="948" Count="46" />
-      <LineId Id="1060" Count="0" />
-      <LineId Id="995" Count="21" />
+      <LineId Id="1147" Count="124" />
       <LineId Id="94" Count="0" />
     </LineIds>
     <LineIds Name="ControlPRG.calculateTrajectory">
