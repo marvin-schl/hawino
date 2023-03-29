@@ -9,6 +9,7 @@ END_VAR
 VAR_OUTPUT
 	finished			: BOOL 				:= FALSE;
 	ready				: BOOL				:= FALSE;
+	pathReady			:BOOL				:= FALSE;
 	referencePose		: RobotPoseSimple;
 	referenceVelocities	: RobotPoseSimple;
 	WPLidx 				: INT 				:= 0;
@@ -17,6 +18,7 @@ VAR_OUTPUT
 END_VAR
 VAR
 	trajectoryPlanner	: TrajectoryPlanner;
+	path				: Path;
 	wayPointListRaw		: ARRAY [0..100] OF RobotPoseSimple;
 	cnt					: INT 				:= 0;
 	
@@ -39,6 +41,7 @@ END_VAR
 endPoint 	:= path.endPointVal;
 
 ready := trajectoryPlanner.trajectoriesReady;
+pathReady := path.ready;
 IF cnt = 5 AND NOT finished THEN
 	WPLidx := WPLidx +1;
 	cnt := 0;
@@ -121,7 +124,9 @@ ELSE
 END_IF
 
 path(waypointListRaw := extendedWayPointList, maxRadius := maxRadius);
-trajectoryPlanner(path := path, 
+
+IF path.ready THEN
+	trajectoryPlanner(path := path, 
 				  qAccMax := maxAcc, 
 				  qVelMax := maxVel, 
 				  thetaAccMax := maxRotAcc,
@@ -129,13 +134,16 @@ trajectoryPlanner(path := path,
 				  qVelMaxSlow := maxSlowVel,
 				  arcLengthSlow := arcLengthSlow,
 				  deltaT := samplingTime);
+ END_IF
 				  
 ]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="TimeOptimalTrajectory">
       <LineId Id="242" Count="2" />
-      <LineId Id="124" Count="7" />
+      <LineId Id="124" Count="0" />
+      <LineId Id="279" Count="0" />
+      <LineId Id="125" Count="6" />
       <LineId Id="133" Count="2" />
       <LineId Id="207" Count="0" />
       <LineId Id="138" Count="3" />
@@ -164,6 +172,8 @@ trajectoryPlanner(path := path,
       <LineId Id="67" Count="0" />
       <LineId Id="87" Count="0" />
       <LineId Id="13" Count="0" />
+      <LineId Id="119" Count="0" />
+      <LineId Id="118" Count="0" />
       <LineId Id="18" Count="0" />
       <LineId Id="20" Count="0" />
       <LineId Id="19" Count="0" />
@@ -171,6 +181,7 @@ trajectoryPlanner(path := path,
       <LineId Id="23" Count="0" />
       <LineId Id="34" Count="1" />
       <LineId Id="108" Count="0" />
+      <LineId Id="120" Count="0" />
       <LineId Id="30" Count="0" />
       <LineId Id="24" Count="0" />
     </LineIds>

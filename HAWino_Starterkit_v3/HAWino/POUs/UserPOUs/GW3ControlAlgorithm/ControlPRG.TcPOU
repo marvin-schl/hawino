@@ -74,8 +74,7 @@ CASE state OF
 			
 		//go into calcTrajectory as soon as GW2 resets the new waypointlist flag to avoid looping through
 		//ready --> setTrajectory --> calcTrajectory
-		IF NOT newWaypointListAvailable THEN
-			trajectory.reset(); //reset trajectory before setTrajectory to ensure all flags are resetted properly
+		IF NOT newWaypointListAvailable and trajectory.pathReady THEN
 			state := ControllerState.calcTrajectory;
 		END_IF
 		
@@ -88,9 +87,8 @@ CASE state OF
 	
 	ControllerState.ready:
 		IF newWaypointListAvailable THEN
+			reset();
 			//stop and calculate new trajectory
-			controller.reset();
-			trajectory.reset(); //reset trajectory before setTrajectory to ensure all flags are resetted properly
 			state := ControllerState.setTrajectory;
 		ELSIF xBoEnable THEN
 			state := ControllerState.driving;
@@ -98,15 +96,13 @@ CASE state OF
 	
 	ControllerState.driving:
 		IF newWaypointListAvailable THEN
-			controller.reset();
-			trajectory.reset(); //reset trajectory before setTrajectory to ensure all flags are resetted properly
+			reset();
 			//stop and calculate new trajectory
 			state := ControllerState.setTrajectory;
 		ELSIF yBoArrivedAtDestination THEN
 			//got back to idle and set arrived flag for GW2, method needed?
+			reset();
 			state := ControllerState.idle;
-			controller.reset();
-			trajectory.reset();
 		ELSIF xBoEnable THEN
 			//do the driving
 			drive();
@@ -211,9 +207,19 @@ observer.reset();]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="ControlPRG">
-      <LineId Id="1147" Count="53" />
-      <LineId Id="1314" Count="1" />
-      <LineId Id="1203" Count="68" />
+      <LineId Id="1147" Count="14" />
+      <LineId Id="1360" Count="0" />
+      <LineId Id="1163" Count="1" />
+      <LineId Id="1362" Count="0" />
+      <LineId Id="1166" Count="11" />
+      <LineId Id="1179" Count="11" />
+      <LineId Id="1364" Count="0" />
+      <LineId Id="1191" Count="0" />
+      <LineId Id="1194" Count="6" />
+      <LineId Id="1363" Count="0" />
+      <LineId Id="1203" Count="4" />
+      <LineId Id="1361" Count="0" />
+      <LineId Id="1210" Count="61" />
       <LineId Id="94" Count="0" />
     </LineIds>
     <LineIds Name="ControlPRG.calculateTrajectory">

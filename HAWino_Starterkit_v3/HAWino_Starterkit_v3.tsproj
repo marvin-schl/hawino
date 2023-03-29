@@ -4165,21 +4165,21 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.requestShutdown</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>PowerManager.supplyCurrentRaw</Name>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.requestShutdown</Name>
-							<Type>BOOL</Type>
+							<Name>PowerManager.SOC</Name>
+							<Type>REAL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.closeGripperCommand</Name>
 							<Comment><![CDATA[True: opening, false: closing]]></Comment>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.SOC</Name>
-							<Type>REAL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.slider</Name>
@@ -4230,6 +4230,11 @@
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.state</Name>
+							<Comment><![CDATA[sets controller state]]></Comment>
+							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
+						</Var>
+						<Var>
 							<Name>ControlPRG.yBoArrivedAtDestination</Name>
 							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
 							<Type>BOOL</Type>
@@ -4238,11 +4243,6 @@
 							<Name>ControlPRG.yUintWaypointIndex</Name>
 							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
 							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.state</Name>
-							<Comment><![CDATA[ controller state]]></Comment>
-							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.EndNode</Name>
@@ -4299,6 +4299,14 @@
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.observer.resetToSimulink</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.cycleTimeDelay</Name>
+							<Type>SINT</Type>
+						</Var>
+						<Var>
 							<Name>ControlPRG.observer.K</Name>
 							<Type GUID="{48A9867C-4E1C-5C48-972D-E35D946F6489}">ARRAY [0..2,0..2] OF LREAL</Type>
 						</Var>
@@ -4336,10 +4344,6 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.shutdownTrigger</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>IrDistanceSensors.distance_mm</Name>
 							<Type GUID="{E653CDAE-1A31-0819-E492-0347803C1564}">ARRAY [1..9] OF REAL</Type>
 						</Var>
@@ -4360,6 +4364,10 @@
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.shutdownTrigger</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>PowerManager.batteryVoltage_V</Name>
 							<Type>REAL</Type>
 						</Var>
@@ -4368,17 +4376,13 @@
 							<Type>REAL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.stMqtt_HAWino_IN</Name>
-							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
-							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
-						</Var>
-						<Var>
 							<Name>Gripper.driveEnable</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>Gripper.driveVelocity</Name>
-							<Type>INT</Type>
+							<Name>PowerManager.stMqtt_HAWino_IN</Name>
+							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
+							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.sliderToSimulink</Name>
@@ -4387,6 +4391,10 @@
 						<Var>
 							<Name>Gripper.partInGripperToSimulink</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.driveVelocity</Name>
+							<Type>INT</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2022-04-26T16:44:07">
@@ -4593,7 +4601,7 @@
 			<PlcAuxTask Affinity="#x00000002"/>
 		</Plc>
 		<Io>
-			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="192.168.1.44.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
+			<Device Id="1" Disabled="true" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="192.168.1.44.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
 				<Name>Gerät 1 (EtherCAT)</Name>
 				<AddressInfo>
 					<Ccat>
@@ -7009,7 +7017,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 				</Box>
 				<EtherCAT/>
 			</Device>
-			<Device Id="2" DevType="109" DevFlags="#x0004">
+			<Device Id="2" Disabled="true" DevType="109" DevFlags="#x0004">
 				<Name>Gerät 2 (RT-Ethernet Adapter)</Name>
 				<AddressInfo>
 					<Pnp>
@@ -7439,13 +7447,8 @@ Bit1: Value smaller than Limit2]]></Comment>
 	</Project>
 	<Mappings>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500800205008}" Id="#x02030050"/>
-		<MappingInfo Identifier="{00000000-2001-0850-0120-500831000403}" Id="#x02030040"/>
 		<MappingInfo Identifier="{00000000-2002-0850-0020-500800205008}" Id="#x02030010"/>
-		<MappingInfo Identifier="{00000000-2003-0850-0020-500810000403}" Id="#x02030020"/>
-		<MappingInfo Identifier="{00000000-2003-0850-0020-500842000403}" Id="#x02030060"/>
 		<MappingInfo Identifier="{08502001-2002-0850-0120-500802205008}" Id="#x020300c0" Watchdog="04000000280000000400000004000000"/>
-		<MappingInfo Identifier="{08502002-0010-0304-0020-500810000403}" Id="#x02030030" Watchdog="04000000040000000400000004000000"/>
-		<MappingInfo Identifier="{08502002-0040-0304-0020-500840000403}" Id="#x02030080" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{08502003-2002-0850-0020-500802205008}" Id="#x02030070" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIPC^HAWino^HAWino Instance">
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Analoge Eingänge A6 (EL3068)">
