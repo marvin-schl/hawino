@@ -11,7 +11,8 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//calculate shifted upper and lower theta bounds depending on the start and end angles of the path
+      <ST><![CDATA[shiftCamAngle := camData;
+//calculate shifted upper and lower theta bounds depending on the start and end angles of the path
 IF path.startPoint.theta >= path.endPoint.theta THEN
 	thetaMin := path.startPoint.theta-1.5*pi;
 	thetaMax := path.startPoint.theta+0.5*pi;
@@ -26,6 +27,7 @@ IF  camData.x <> 0 AND  camData.y <> 0 THEN
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="shiftCamAngle">
+      <LineId Id="47" Count="0" />
       <LineId Id="36" Count="0" />
       <LineId Id="7" Count="0" />
       <LineId Id="14" Count="0" />
