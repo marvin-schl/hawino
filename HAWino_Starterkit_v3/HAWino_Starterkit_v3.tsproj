@@ -3302,11 +3302,6 @@
 							<Context>
 								<Id>0</Id>
 								<Name>Context0 (20 ms)</Name>
-								<ManualConfig>
-									<OTCID>#x02010080</OTCID>
-								</ManualConfig>
-								<Priority>22</Priority>
-								<CycleTime>20000000</CycleTime>
 							</Context>
 						</Contexts>
 						<Interfaces>
@@ -3681,19 +3676,19 @@
 						<ParameterValues>
 							<Value>
 								<Name>TaskOid</Name>
-								<Value>33620096</Value>
+								<Value>0</Value>
 							</Value>
 							<Value>
 								<Name>TaskPriority</Name>
-								<Value>22</Value>
+								<Value>0</Value>
 							</Value>
 							<Value>
 								<Name>TaskCycleTimeNs</Name>
-								<Value>20000000</Value>
+								<Value>0</Value>
 							</Value>
 							<Value>
 								<Name>TaskPort</Name>
-								<Value>355</Value>
+								<Value>0</Value>
 							</Value>
 							<Value>
 								<Name>TaskSortOrder</Name>
@@ -7225,7 +7220,6 @@ Bit1: Value smaller than Limit2]]></Comment>
 		<MappingInfo Identifier="{08502002-0060-0201-0120-500820000101}" Id="#x020300b0" Watchdog="04000000280000000400000004000000"/>
 		<MappingInfo Identifier="{08502003-0010-0304-0020-500810000403}" Id="#x02030020" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{08502003-0040-0304-0020-500840000403}" Id="#x02030070" Watchdog="04000000040000000400000004000000"/>
-		<MappingInfo Identifier="{08502003-0080-0201-0220-500840000101}" Id="#x020300d0" Watchdog="08000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-2003-0850-1000-010102205008}" Id="#x02030090" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-0060-0201-1000-010120000101}" Id="#x02030030" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIPC^HAWino^HAWino Instance">
