@@ -3302,11 +3302,6 @@
 							<Context>
 								<Id>0</Id>
 								<Name>Context0 (20 ms)</Name>
-								<ManualConfig>
-									<OTCID>#x02010080</OTCID>
-								</ManualConfig>
-								<Priority>22</Priority>
-								<CycleTime>20000000</CycleTime>
 							</Context>
 						</Contexts>
 						<Interfaces>
@@ -3681,19 +3676,19 @@
 						<ParameterValues>
 							<Value>
 								<Name>TaskOid</Name>
-								<Value>33620096</Value>
+								<Value>0</Value>
 							</Value>
 							<Value>
 								<Name>TaskPriority</Name>
-								<Value>22</Value>
+								<Value>0</Value>
 							</Value>
 							<Value>
 								<Name>TaskCycleTimeNs</Name>
-								<Value>20000000</Value>
+								<Value>0</Value>
 							</Value>
 							<Value>
 								<Name>TaskPort</Name>
-								<Value>355</Value>
+								<Value>0</Value>
 							</Value>
 							<Value>
 								<Name>TaskSortOrder</Name>
@@ -4115,6 +4110,11 @@
 							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
 						</Var>
 						<Var>
+							<Name>Fahrauftrag.finished_ASearch</Name>
+							<Comment><![CDATA[TODO]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>Fahrauftrag.Auftrag</Name>
 							<Type GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}">Auftrag</Type>
 						</Var>
@@ -4209,11 +4209,6 @@
 							<Name>Fahrauftrag.FeedbackToGW1</Name>
 							<Comment><![CDATA[Schnittstelle zum MQTT_PRG]]></Comment>
 							<Type>STRING(50)</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.finished_ASearch</Name>
-							<Comment><![CDATA[TODO]]></Comment>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.EndNode</Name>
@@ -7225,7 +7220,6 @@ Bit1: Value smaller than Limit2]]></Comment>
 		<MappingInfo Identifier="{08502002-0060-0201-0120-500820000101}" Id="#x020300b0" Watchdog="04000000280000000400000004000000"/>
 		<MappingInfo Identifier="{08502003-0010-0304-0020-500810000403}" Id="#x02030020" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{08502003-0040-0304-0020-500840000403}" Id="#x02030070" Watchdog="04000000040000000400000004000000"/>
-		<MappingInfo Identifier="{08502003-0080-0201-0220-500840000101}" Id="#x020300d0" Watchdog="08000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-2003-0850-1000-010102205008}" Id="#x02030090" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-0060-0201-1000-010120000101}" Id="#x02030030" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIPC^HAWino^HAWino Instance">
@@ -7309,6 +7303,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^nEstimatedRunningTime" VarB="SoC_Model__Data_Processing_20_Y^EstimatedRunningTime"/>
 			</OwnerB>
 			<OwnerB Name="TIRC^TcCOM Objects^Object3 (A_Search)">
+				<Link VarA="PlcTask Inputs^Fahrauftrag.finished_ASearch" VarB="AdditionalOutports^TcModuleOutput_newWayPointList"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.xPointList" VarB="AdditionalOutports^TcModuleOutput_xCoordinates"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.yPointList" VarB="AdditionalOutports^TcModuleOutput_yCoordinates"/>
 				<Link VarA="PlcTask Outputs^Fahrauftrag.enable_ASearch" VarB="AdditionalInports^TcModuleInput_enable"/>
