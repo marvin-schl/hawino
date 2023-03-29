@@ -40,7 +40,6 @@ VAR
 	yBoArrivedAtDestination AT%Q*:	BOOL := FALSE;			// implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP
 	yUintWaypointIndex AT%Q*: INT  := 0;						// implemented, COUNTER zur Anzeige, des Indexes des nächstes WP
 	yRPposition AT%Q*: RobotPoseSimple;						// implemented, aktuelle Roboterposition, für Simulationszwecke
-	FFLin: BOOL := FALSE;
 
 END_VAR
 ]]></Declaration>
@@ -200,8 +199,21 @@ END_VAR]]></Declaration>
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
+    <Method Name="reset" Id="{157a2148-99f8-44be-ab04-ad5b7071ba02}">
+      <Declaration><![CDATA[METHOD reset : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[trajectory.reset();
+controller.reset();
+observer.reset();]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="ControlPRG">
-      <LineId Id="1147" Count="124" />
+      <LineId Id="1147" Count="53" />
+      <LineId Id="1314" Count="1" />
+      <LineId Id="1203" Count="68" />
       <LineId Id="94" Count="0" />
     </LineIds>
     <LineIds Name="ControlPRG.calculateTrajectory">
@@ -212,6 +224,9 @@ END_VAR]]></Declaration>
     </LineIds>
     <LineIds Name="ControlPRG.init">
       <LineId Id="26" Count="0" />
+    </LineIds>
+    <LineIds Name="ControlPRG.reset">
+      <LineId Id="5" Count="2" />
     </LineIds>
   </POU>
 </TcPlcObject>
