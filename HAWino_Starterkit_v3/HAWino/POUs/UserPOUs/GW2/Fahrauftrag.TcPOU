@@ -5,7 +5,7 @@
 VAR
 	//State machine
 	sStart : BOOL := TRUE;
-	s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14,s15,s16,s17,s18,s19,s20,s21,s22: BOOL := FALSE;
+	s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14,s15,s16,s17,s18,s19,s20,s21,s22,s23,s24: BOOL := FALSE;
 	
 	readAssigment: ReadAssigment;
 	TrajectoryController: TrajectoryControl;
@@ -34,14 +34,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//vorläufig für Tests
-//wayPointList[0] := ToRobotPoseSimple(x:= 200, y:= 500, theta:= -1);
-//wayPointList[1] := ToRobotPoseSimple(x:= 300, y:= 500, theta:= -1);
-
-
-//Frage: Setzt GW3 die Variablen zurück? - jeder setzt seine variablen zurück
-
-//Ablauf einer Fahrt:
+      <ST><![CDATA[//Ablauf einer Fahrt:
 //Init
 IF sStart AND NOT s0 THEN
 	sStart := 0; s0 := 1;
@@ -51,7 +44,7 @@ IF sStart AND NOT s0 THEN
 END_IF
 //	Warten auf Auftrag
 IF s0 AND NOT s1 AND Auftrag.Art = 'Fahrauftrag' THEN
-	s0 := 0; //s1 := 1;
+	s0 := 0; s1 := 1;
 	//	RückmeldugGW1 Auftrag angenommen setzt
 	FeedbackToGW1 := 'Auftrag angenommen';
 	//Auftrag auswerten
@@ -62,13 +55,11 @@ IF s0 AND NOT s1 AND Auftrag.Art = 'Fahrauftrag' THEN
 	xRobotStartposition := readAssigment.xStartposition;
 	yRobotStartposition := readAssigment.yStartposition;
 	enable_ASearch := TRUE;
-	//Bahnplanung
-	
-	
 END_IF
 
-//vorübergehend
-IF xPointList[0] <> 0 THEN
+//Bahnplanung
+//IF xPointList[0] <> 0 THEN
+IF s1 AND NOT s2 AND finished_ASearch THEN
 	FOR i := 0 TO 100 BY 1 DO
  		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i], y:= yPointList[i], theta:= -1);
 		IF xPointList[i] = 0 THEN
@@ -81,34 +72,34 @@ IF xPointList[0] <> 0 THEN
 	wayPointList[zeile+2] := readAssigment.lastPointsToPickup[2];
 	TrajectoryController.setWaypointList(waypointList);
 	trajectoryController.newWaypointListAvailable := TRUE;
-	s1:=1;
+	s1 := 0; s2 := 1;
 END_IF
 
 ///////////////////////////////////////////////FahrtZumAbholort///////////////////////////////////////////////////
 
 // 	RückmeldungGW3 Wegpunkte erhalten abwarten
-IF s1 AND NOT s2 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
-	s1 := 0; s2 := 1;
+IF s2 AND NOT s3 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
+	s2 := 0; s3 := 1;
 	trajectoryController.newWaypointListAvailable := FALSE;
 	enable_ASearch := FALSE;
 END_IF
 
 // 	RückmeldungGW3 ready abwarten
-IF s2 AND NOT s3 AND trajectoryController.yControllerState = ControllerState.ready THEN
-	s2 := 0; s3 := 1;
+IF s3 AND NOT s4 AND trajectoryController.yControllerState = ControllerState.ready THEN
+	s3 := 0; s4 := 1;
 	trajectoryController.xBoEnable := TRUE;
 END_IF
 	
 //	RückmeldungGW3 Fahrt abwarten
-IF s3 AND NOT s4 AND trajectoryController.yControllerState = ControllerState.driving THEN
-	s3 := 0; s4 := 1;
+IF s4 AND NOT s5 AND trajectoryController.yControllerState = ControllerState.driving THEN
+	s4 := 0; s5 := 1;
 	//	RückmeldungGW1 Auf Anfahrt setzen
 	FeedbackToGW1 := 'Auf Anfahrt';
 END_IF
 
 //	RückmeldungGW3 am Ziel abwarten
-IF s4 AND NOT s5 AND trajectoryController.yBoArrivedAtDestination THEN
-	s4 := 0; //s5 := 1;
+IF s5 AND NOT s6 AND trajectoryController.yBoArrivedAtDestination THEN
+	s5 := 0; s6 := 1;
 	trajectoryController.xBoEnable := FALSE;
 	//	Greifersteuerung
 	Gripper.closeGripperCommand := TRUE;												// hier könnte noch slider und Lichtschranke abgefragt werden zur Sicherheit
@@ -123,33 +114,33 @@ END_IF
 /////////////////////////////////////////////////////FahrtZumLesekopf/////////////////////////////////////////////////////////
 
 // 	RückmeldungGW3 Wegpunkte erhalten abwarten
-IF s5 AND NOT s6 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
-	s5 := 0; s6 := 1;
+IF s6 AND NOT s7 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
+	s6 := 0; s7 := 1;
 	trajectoryController.newWaypointListAvailable := FALSE;
 END_IF
 
 // 	RückmeldungGW3 ready abwarten
-IF s6 AND NOT s7 AND trajectoryController.yControllerState = ControllerState.ready THEN
-	s6 := 0; s7 := 1;
+IF s7 AND NOT s8 AND trajectoryController.yControllerState = ControllerState.ready THEN
+	s7 := 0; s8 := 1;
 	trajectoryController.xBoEnable := TRUE;
 END_IF
 	
 //	RückmeldungGW3 Fahrt abwarten
-IF s7 AND NOT s8 AND trajectoryController.yControllerState = ControllerState.driving THEN
-	s7 := 0; s8 := 1;
+IF s8 AND NOT s9 AND trajectoryController.yControllerState = ControllerState.driving THEN
+	s8 := 0; s9 := 1;
 END_IF
 
 //	RückmeldungGW3 am Ziel abwarten
-IF s8 AND NOT s9 AND trajectoryController.yBoArrivedAtDestination THEN
-	s8 := 0; s9 := 1;
+IF s9 AND NOT s10 AND trajectoryController.yBoArrivedAtDestination THEN
+	s9 := 0; s10 := 1;
 	trajectoryController.xBoEnable := FALSE;
 	//	RückmeldungGW1 Abmeldung
 	FeedbackToGW1 := 'Abmeldung';
 END_IF
 
 //	Warten auf Werkstück ausgelesen
-IF s9 AND NOT s10 AND StatusFromGW1 = 'WerkstueckAusgelesen' THEN
-	s9 := 0; //s10 := 1;
+IF s10 AND NOT s11 AND StatusFromGW1 = 'WerkstueckAusgelesen' THEN
+	s10 := 0; s11 := 1;
 	resetVar := TRUE;
 	
 	//Auftrag auswerten
@@ -159,46 +150,60 @@ IF s9 AND NOT s10 AND StatusFromGW1 = 'WerkstueckAusgelesen' THEN
 	xRobotStartposition := readAssigment.xStartposition;
 	yRobotStartposition := readAssigment.yStartposition;
 	enable_ASearch := TRUE;
-	
-	//	Bahnplanung
-	//TrajectoryController.setWaypointList(WaypointList);
-	//trajectoryController.newWaypointListAvailable := TRUE;
+END_IF
+
+//Bahnplanung																				//todo
+//IF xPointList[0] <> 0 THEN
+IF s11 AND NOT s12 AND finished_ASearch THEN
+	FOR i := 0 TO 100 BY 1 DO
+ 		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i], y:= yPointList[i], theta:= -1);
+		IF xPointList[i] = 0 THEN
+			zeile := i;
+			EXIT;
+		END_IF
+	END_FOR
+	wayPointList[zeile] := readAssigment.lastPointsToPickup[0];
+	wayPointList[zeile+1] := readAssigment.lastPointsToPickup[1];
+	wayPointList[zeile+2] := readAssigment.lastPointsToPickup[2];
+	TrajectoryController.setWaypointList(waypointList);
+	trajectoryController.newWaypointListAvailable := TRUE;
+	s11 := 0; s12 := 1;
 END_IF
 
 /////////////////////////////////////////////////FahrtZurAblageStation///////////////////////////////////////////////////
 
 // 	RückmeldungGW3 Wegpunkte erhalten abwarten
-IF s10 AND NOT s11 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
-	s10 := 0; s11 := 1;
+IF s12 AND NOT s13 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
+	s12 := 0; s13 := 1;
 	trajectoryController.newWaypointListAvailable := FALSE;
 	enable_ASearch := FALSE;
 END_IF
 
 // 	RückmeldungGW3 ready abwarten
-IF s11 AND NOT s12 AND trajectoryController.yControllerState = ControllerState.ready THEN
-	s11 := 0; s12 := 1;
+IF s13 AND NOT s14 AND trajectoryController.yControllerState = ControllerState.ready THEN
+	s13 := 0; s14 := 1;
 	trajectoryController.xBoEnable := TRUE;
 END_IF
 	
 //	RückmeldungGW3 Fahrt abwarten
-IF s12 AND NOT s13 AND trajectoryController.yControllerState = ControllerState.driving THEN
-	s12 := 0; s13 := 1;
+IF s14 AND NOT s15 AND trajectoryController.yControllerState = ControllerState.driving THEN
+	s14 := 0; s15 := 1;
 	resetVar := FALSE;
 	//	RückmeldungGW1 Auf Anfahrt setzen
 	FeedbackToGW1 := 'Auf Transport';
 END_IF
 
 //	RückmeldungGW3 am Ziel abwarten
-IF s13 AND NOT s14 AND trajectoryController.yBoArrivedAtDestination THEN
-	s13 := 0; s14 := 1;
+IF s15 AND NOT s16 AND trajectoryController.yBoArrivedAtDestination THEN
+	s15 := 0; s16 := 1;
 	trajectoryController.xBoEnable := FALSE;
 	//	RückmeldungGW1 Anmeldung
 	FeedbackToGW1 := 'Anmeldung';
 END_IF
 
 //	Warten auf Werkstück ausgelesen
-IF s14 AND NOT s15 AND StatusFromGW1 = 'WerkstueckAusgelesen' THEN
-	s14 := 0; s15 := 1;
+IF s16 AND NOT s17 AND StatusFromGW1 = 'WerkstueckAusgelesen' THEN
+	s16 := 0; s17 := 1;
 	resetVar := TRUE;
 	//	Fahrauftrag zur Ablage
 	TrajectoryController.setWaypointList(readAssigment.pointsFromReaderToSlot);
@@ -208,33 +213,33 @@ END_IF
 //////////////////////////////////////////////////FahrtZurAblage///////////////////////////////////////////////////////
 
 // 	RückmeldungGW3 Wegpunkte erhalten abwarten
-IF s15 AND NOT s16 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
-	s15 := 0; s16 := 1;
+IF s17 AND NOT s18 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
+	s17 := 0; s18 := 1;
 	trajectoryController.newWaypointListAvailable := FALSE;
 END_IF
 
 // 	RückmeldungGW3 ready abwarten
-IF s16 AND NOT s17 AND trajectoryController.yControllerState = ControllerState.ready THEN
-	s16 := 0; s17 := 1;
+IF s18 AND NOT s19 AND trajectoryController.yControllerState = ControllerState.ready THEN
+	s18 := 0; s19 := 1;
 	trajectoryController.xBoEnable := TRUE;
 END_IF
 	
 //	RückmeldungGW3 Fahrt abwarten
-IF s17 AND NOT s18 AND trajectoryController.yControllerState = ControllerState.driving THEN
-	s17 := 0; s18 := 1;
+IF s19 AND NOT s20 AND trajectoryController.yControllerState = ControllerState.driving THEN
+	s19 := 0; s20 := 1;
 	resetVar := FALSE;
 END_IF
 
 //	RückmeldungGW3 am Ziel abwarten
-IF s18 AND NOT s19 AND trajectoryController.yBoArrivedAtDestination THEN
-	s18 := 0; //s19 := 1;
+IF s20 AND NOT s21 AND trajectoryController.yBoArrivedAtDestination THEN
+	s20 := 0; //s21 := 1;
 	trajectoryController.xBoEnable := FALSE;
 	//	Greifersteuerung
 	Gripper.closeGripperCommand := FALSE;																	//----------todo
 	//	RückmeldungGW1 Teil abgelegt
 	FeedbackToGW1 := 'Teil abgelegt';
 	//	Fahrauftrag zum Parkplatz
-	s22 := 1;																							//wieder rausnehmen
+	s24 := 1;																							//wieder rausnehmen
 	//TrajectoryController.setWaypointList(WaypointList);
 	//trajectoryController.newWaypointListAvailable := TRUE;
 END_IF
@@ -242,25 +247,25 @@ END_IF
 ///////////////////////////////////////////////////FahrtZumParkplatz////////////////////////////////////////////////////////
  
 // 	RückmeldungGW3 Wegpunkte erhalten abwarten
-IF s19 AND NOT s20 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
-	s19 := 0; s20 := 1;
+IF s21 AND NOT s22 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
+	s21 := 0; s22 := 1;
 	trajectoryController.newWaypointListAvailable := FALSE;
 END_IF
 
 // 	RückmeldungGW3 ready abwarten
-IF s20 AND NOT s21 AND trajectoryController.yControllerState = ControllerState.ready THEN
-	s20 := 0; s21 := 1;
+IF s22 AND NOT s23 AND trajectoryController.yControllerState = ControllerState.ready THEN
+	s22 := 0; s23 := 1;
 	trajectoryController.xBoEnable := TRUE;
 END_IF
 	
 //	RückmeldungGW3 Fahrt abwarten
-IF s21 AND NOT s22 AND trajectoryController.yControllerState = ControllerState.driving THEN
-	s21 := 0; s22 := 1;
+IF s23 AND NOT s24 AND trajectoryController.yControllerState = ControllerState.driving THEN
+	s23 := 0; s24 := 1;
 END_IF
 
 //	RückmeldungGW3 am Ziel abwarten
-IF s22 AND NOT s0 AND trajectoryController.yBoArrivedAtDestination THEN
-	s22 := 0; s0 := 1;
+IF s24 AND NOT s0 AND trajectoryController.yBoArrivedAtDestination THEN
+	s24 := 0; s0 := 1;
 	trajectoryController.xBoEnable := FALSE;
 	//	RückmeldungGW1 Verfügbar
 	FeedbackToGW1 := 'Verfuegbar';
@@ -268,12 +273,6 @@ END_IF
 				]]></ST>
     </Implementation>
     <LineIds Name="Fahrauftrag">
-      <LineId Id="405" Count="0" />
-      <LineId Id="376" Count="0" />
-      <LineId Id="375" Count="0" />
-      <LineId Id="372" Count="1" />
-      <LineId Id="202" Count="0" />
-      <LineId Id="104" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="406" Count="0" />
       <LineId Id="191" Count="0" />
@@ -289,13 +288,11 @@ END_IF
       <LineId Id="377" Count="0" />
       <LineId Id="422" Count="4" />
       <LineId Id="492" Count="0" />
-      <LineId Id="94" Count="0" />
-      <LineId Id="523" Count="0" />
-      <LineId Id="230" Count="0" />
       <LineId Id="91" Count="0" />
       <LineId Id="527" Count="0" />
       <LineId Id="526" Count="0" />
       <LineId Id="528" Count="0" />
+      <LineId Id="605" Count="0" />
       <LineId Id="531" Count="1" />
       <LineId Id="557" Count="2" />
       <LineId Id="556" Count="0" />
@@ -353,10 +350,9 @@ END_IF
       <LineId Id="563" Count="0" />
       <LineId Id="565" Count="4" />
       <LineId Id="562" Count="0" />
-      <LineId Id="571" Count="0" />
-      <LineId Id="142" Count="0" />
-      <LineId Id="356" Count="1" />
       <LineId Id="141" Count="0" />
+      <LineId Id="608" Count="16" />
+      <LineId Id="607" Count="0" />
       <LineId Id="292" Count="0" />
       <LineId Id="72" Count="0" />
       <LineId Id="293" Count="0" />
