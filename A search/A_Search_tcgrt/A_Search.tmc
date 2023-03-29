@@ -1,4 +1,4 @@
-<TcModuleClass Hash="{03258E4C-7B54-4348-A2D9-048FB0E3941D}" GeneratedBy="TE140x-TargetForMatlabSimulink 2.3.1.1, MATLAB 9.11.0.2022996 (R2021b) Update 4 (win64)">
+<TcModuleClass Hash="{84AE11D8-1E07-45AC-9AA6-02244ACC54DE}" GeneratedBy="TE140x-TargetForMatlabSimulink 2.3.1.1, MATLAB 9.11.0.2022996 (R2021b) Update 4 (win64)">
 	<Vendor>
 		<Name>TE140x Module Vendor</Name>
 		<ImageData/>
@@ -676,6 +676,6 @@
 	<Configurations/>
 	<Library>
 		<Name>A_Search</Name>
-		<Version>0.0.0.3</Version>
+		<Version>0.0.0.1</Version>
 	</Library>
 </TcModuleClass>

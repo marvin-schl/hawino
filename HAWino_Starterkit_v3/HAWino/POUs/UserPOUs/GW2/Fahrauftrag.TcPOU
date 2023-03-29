@@ -49,7 +49,7 @@ IF s0 AND NOT s1 AND Auftrag.Art = 'Fahrauftrag' THEN
 	FeedbackToGW1 := 'Auftrag angenommen';
 	//Auftrag auswerten
 	readAssigment(assigment:= Auftrag);
-	//EndNode := 92;															//todo in matlab
+	EndNode := 92;															//todo in matlab
 	xEndvalue := readAssigment.pickupLocation.x;
 	yEndvalue := readAssigment.pickupLocation.y;
 	xRobotStartposition := readAssigment.xStartposition;
@@ -144,7 +144,7 @@ IF s10 AND NOT s11 AND StatusFromGW1 = 'WerkstueckAusgelesen' THEN
 	resetVar := TRUE;
 	
 	//Auftrag auswerten
-	//EndNode := 116;															//todo in matlab
+	EndNode   := 116;															//todo in matlab
 	xEndvalue := readAssigment.storageLocation.x;
 	yEndvalue := readAssigment.storageLocation.y;
 	xRobotStartposition := readAssigment.xStartposition;
