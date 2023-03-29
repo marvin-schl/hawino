@@ -40,8 +40,8 @@ VAR
 	swp					: ARRAY[0..99] OF LREAL;	//array of switching points, not needed entrys are filled with -1
 	nmbSWP				: INT;						//number of swichting points
 	
-	pos			: ARRAY[0..500] OF LREAL;			//the i-th element indicates the position on the curve at time t=i*deltaT
-	vel			: ARRAY[0..500] OF LREAL;			//the i-th element indicates the tangential path velocity on the curve at time t=i*deltaT
+	pos			: ARRAY[0..1000] OF LREAL;			//the i-th element indicates the position on the curve at time t=i*deltaT
+	vel			: ARRAY[0..1000] OF LREAL;			//the i-th element indicates the tangential path velocity on the curve at time t=i*deltaT
 	idxForward  : INT := 0;							//index Variable for writing into pos and vel, i-th element represents t=i*deltaT
 	
 	posBackward	: ARRAY[0..500] OF LREAL;			//temp array for backward integrartion, after backward integration is finished the values are written into pos
@@ -204,7 +204,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT trajectoryGenerationFinished AND NOT trajectoryGenerationFailed THEN
+        <ST><![CDATA[IF NOT trajectoryGenerationFinished AND NOT trajectoryGenerationFailed AND idxForward <= UPPER_BOUND(vel) THEN
 	CASE currentStep OF
 		1:
 			step1();
@@ -217,6 +217,8 @@ END_VAR
 		5:
 			step5();
 	END_CASE
+ELSIF idxForward > UPPER_BOUND(vel,1) THEN
+	trajectoryGenerationFailed := TRUE;
 END_IF
 
 IF trajectoryGenerationFinished THEN
@@ -534,6 +536,7 @@ END_IF]]></ST>
     </LineIds>
     <LineIds Name="TrajectoryPlanner.generateTrajectory">
       <LineId Id="12" Count="12" />
+      <LineId Id="37" Count="1" />
       <LineId Id="5" Count="0" />
       <LineId Id="26" Count="3" />
       <LineId Id="33" Count="0" />

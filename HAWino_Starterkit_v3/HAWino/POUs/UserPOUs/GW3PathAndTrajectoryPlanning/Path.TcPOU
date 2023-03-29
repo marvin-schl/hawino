@@ -317,15 +317,15 @@ generatedSubsplines := FALSE;
 ready := FALSE;
 subsplineGenerationIdx := 1;
 
-FOR i := 0 TO nmbOfPreprocessedWaypoints-1 BY 1 DO
-	waypointList[i].x 	:= 0;
-	waypointList[i].y	:= 0;
-	waypointList[i].theta:= 0;
-END_FOR
+//FOR i := 0 TO nmbOfPreprocessedWaypoints-1 BY 1 DO
+//	waypointList[i].x 	:= 0;
+//	waypointList[i].y	:= 0;
+//	waypointList[i].theta:= 0;
+//END_FOR
 
-FOR i := 0 TO nmbOfSubsplines-1 BY 1 DO 
-	subsplines[i] := 0;
-END_FOR]]></ST>
+//FOR i := 0 TO nmbOfSubsplines-1 BY 1 DO 
+//	subsplines[i] := 0;
+//END_FOR]]></ST>
       </Implementation>
     </Method>
     <Method Name="theta" Id="{3e06842d-afd1-418d-bfed-0a225c6266f7}">
