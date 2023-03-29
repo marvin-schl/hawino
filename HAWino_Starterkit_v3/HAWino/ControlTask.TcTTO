@@ -11,7 +11,7 @@
       <Name>MotorDrivers</Name>
     </PouCall>
     <PouCall>
-      <Name>TrackingController</Name>
+      <Name>ControlPRG</Name>
     </PouCall>
     <TaskFBGuid>{0910cdbd-d6f1-435f-9c3d-6f882f09add8}</TaskFBGuid>
     <Fb_init>{860f622c-7793-4372-9ae9-94885284e8c6}</Fb_init>

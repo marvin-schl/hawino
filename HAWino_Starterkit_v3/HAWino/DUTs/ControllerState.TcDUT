@@ -8,8 +8,10 @@ TYPE ControllerState :
 	init 			:= 0,
 	idle			:= 1,
 	calcTrajectory 	:= 2,
-	ready			:= 3,
-	driving			:= 4
+	setTrajectory	:= 3,
+	ready			:= 4,
+	driving			:= 5
+
 );
 END_TYPE
 ]]></Declaration>

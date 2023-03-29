@@ -1,0 +1,170 @@
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Condition="Exists('$(TWINCATSDK)\Sdk.props')" Project="$(TWINCATSDK)\Sdk.props"/>
+	<Import Condition="Exists('$(TWINCATSDK)\MsBuild\TwinCAT Common')" Project="$(TWINCATSDK)\MsBuild\TwinCAT Common\*.targets"/>
+	<ItemGroup Label="ProjectConfigurations">
+		<ProjectConfiguration Include="Debug|TwinCAT RT (x86)">
+			<Configuration>Debug</Configuration>
+			<Platform>TwinCAT RT (x86)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|TwinCAT RT (x86)">
+			<Configuration>Release</Configuration>
+			<Platform>TwinCAT RT (x86)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|TwinCAT RT (x64)">
+			<Configuration>Debug</Configuration>
+			<Platform>TwinCAT RT (x64)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|TwinCAT RT (x64)">
+			<Configuration>Release</Configuration>
+			<Platform>TwinCAT RT (x64)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|TwinCAT OS (x64)">
+			<Configuration>Debug</Configuration>
+			<Platform>TwinCAT OS (x64)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|TwinCAT OS (x64)">
+			<Configuration>Release</Configuration>
+			<Platform>TwinCAT OS (x64)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|TwinCAT UM (x86)">
+			<Configuration>Debug</Configuration>
+			<Platform>TwinCAT UM (x86)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|TwinCAT UM (x86)">
+			<Configuration>Release</Configuration>
+			<Platform>TwinCAT UM (x86)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|TwinCAT UM (x64)">
+			<Configuration>Debug</Configuration>
+			<Platform>TwinCAT UM (x64)</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|TwinCAT UM (x64)">
+			<Configuration>Release</Configuration>
+			<Platform>TwinCAT UM (x64)</Platform>
+		</ProjectConfiguration>
+	</ItemGroup>
+	<PropertyGroup Label="Globals">
+		<RootNamespace>simpleObserver</RootNamespace>
+		<AutomaticRetargetPlatformVersion>true</AutomaticRetargetPlatformVersion>
+		<TcSignTwinCatCertName>HAW_Hamburg_VPJ_BT7_R462</TcSignTwinCatCertName>
+		<TcPublishAddFiles>simpleObserver_ModuleInfo.xml;;$(TcPublishAddFiles)</TcPublishAddFiles>
+		<PreferredToolArchitecture>x64</PreferredToolArchitecture>
+		<_IsNativeEnvironment>true</_IsNativeEnvironment>
+		<ProjectGuid>{B8FA7DBC-2DB9-4F5E-9C6F-29BAA5BC7CC4}</ProjectGuid>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
+	<Import Project="simpleObserverArtifacts.props"/>
+	<PropertyGroup Label="Configuration">
+		<ModuleGeneratorSdk Condition="'$(ModuleGeneratorSdk)'==''">C:\TwinCAT\Functions\TE14xx-ToolsForMatlabAndSimulink\TE140x\SDK</ModuleGeneratorSdk>
+		<PlatformToolset>v142</PlatformToolset>
+		<MATLAB_ROOT Condition="'$(MATLAB_ROOT)'==''">C:\Program Files\MATLAB\R2021b</MATLAB_ROOT>
+		<TE140xSdk Condition="'$(TE140xSdk)'==''">C:\TwinCAT\Functions\TE14xx-ToolsForMatlabAndSimulink\TE140x\SDK</TE140xSdk>
+		<TcGeneralUseTmx>true</TcGeneralUseTmx>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
+	<ImportGroup Label="ExtensionSettings">
+		<Import Project="$(ModuleGeneratorSdk)\MsBuild\Targets\*.props"/>
+		<Import Project="$(TE140xSdk)\MsBuild\Targets\*.props" Condition="'$(TE140xSdk)'!='$(ModuleGeneratorSdk)'"/>
+	</ImportGroup>
+	<ImportGroup Label="PropertySheets">
+		<Import Project="$(ModuleGeneratorSdk)\MsBuild\Props\*.props"/>
+		<Import Project="$(TE140xSdk)\MsBuild\Props\*.props" Condition="'$(TE140xSdk)'!='$(ModuleGeneratorSdk)'"/>
+	</ImportGroup>
+	<PropertyGroup Label="UserMacros"/>
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<AdditionalIncludeDirectories Condition="$(Platform.StartsWith('TwinCAT RT'))">$(ProjectDir)\TwinCAT RT\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories Condition="$(Platform.StartsWith('TwinCAT OS'))">$(ProjectDir)\TwinCAT OS\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories Condition="$(Platform.StartsWith('TwinCAT UM'))">$(ProjectDir)\TwinCAT UM\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories Condition="$(Platform.StartsWith('TwinCAT CE'))">$(ProjectDir)\TwinCAT CE\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PreprocessorDefinitions>TCMATH_BLOCK_STANDARDLIB=0;TC_BUILD_MIN=4024;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+		</ClCompile>
+		<Link>
+			<AdditionalDependencies>TcMgFramework.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies>TcMgFramework.lib;%(AdditionalDependencies)</AdditionalDependencies>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemGroup>
+		<ClInclude Include="TcPch.h"/>
+		<ClInclude Include="simpleObserverServices.h"/>
+		<ClInclude Include="simpleObserverDuts.h"/>
+		<ClInclude Include="simpleObserverInterfaces.h"/>
+		<ClInclude Include="simpleObserverClassFactory.h"/>
+		<ClInclude Include="simpleObserverDrv.h"/>
+		<ClInclude Include="simpleObserverCtrl.h"/>
+		<ClInclude Include="simpleObserverW32.h"/>
+		<ClInclude Include="simpleObserverW32Resource.h"/>
+		<ClInclude Include="TcComsimpleObserver.h"/>
+		<ClInclude Include="FbsimpleObserver.h"/>
+		<ClInclude Include="simpleObserverInternal.h"/>
+		<ClInclude Include="$(Simulink_simpleObserver_START_DIR)\simpleObserver_tcgrt\multiword_types.h"/>
+		<ClInclude Include="$(Simulink_simpleObserver_START_DIR)\simpleObserver_tcgrt\rtmodel.h"/>
+		<ClInclude Include="$(Simulink_simpleObserver_START_DIR)\simpleObserver_tcgrt\rtwtypes.h"/>
+		<ClInclude Include="$(Simulink_simpleObserver_START_DIR)\simpleObserver_tcgrt\simpleObserver.h"/>
+		<ClInclude Include="$(Simulink_simpleObserver_START_DIR)\simpleObserver_tcgrt\simpleObserver_private.h"/>
+		<ClInclude Include="$(Simulink_simpleObserver_START_DIR)\simpleObserver_tcgrt\simpleObserver_types.h"/>
+	</ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="TcPch.cpp">
+			<PrecompiledHeader>Create</PrecompiledHeader>
+		</ClCompile>
+		<ClCompile Include="simpleObserverClassFactory.cpp"/>
+		<ClCompile Include="simpleObserverDrv.cpp">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT RT'))">true</ExcludedFromBuild>
+		</ClCompile>
+		<ClCompile Include="simpleObserverModulesMain.cpp">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT OS'))">true</ExcludedFromBuild>
+		</ClCompile>
+		<ClCompile Include="simpleObserverCtrl.cpp">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT UM'))">true</ExcludedFromBuild>
+		</ClCompile>
+		<ClCompile Include="simpleObserverW32.cpp">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT UM'))">true</ExcludedFromBuild>
+		</ClCompile>
+		<ClCompile Include="TcComsimpleObserver.cpp">
+			<PreprocessorDefinitions>$(Simulink_simpleObserver_Definitions)%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>$(Simulink_simpleObserver_IncludeDir)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+		<ClCompile Include="FbsimpleObserver.cpp">
+			<PreprocessorDefinitions>$(Simulink_simpleObserver_Definitions)%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>$(Simulink_simpleObserver_IncludeDir)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_simpleObserver_START_DIR)\simpleObserver_tcgrt\simpleObserver.cpp">
+			<PreprocessorDefinitions>$(Simulink_simpleObserver_Definitions)%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>$(Simulink_simpleObserver_IncludeDir)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PrecompiledHeader>NotUsing</PrecompiledHeader>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_simpleObserver_START_DIR)\simpleObserver_tcgrt\simpleObserver_data.cpp">
+			<PreprocessorDefinitions>$(Simulink_simpleObserver_Definitions)%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>$(Simulink_simpleObserver_IncludeDir)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PrecompiledHeader>NotUsing</PrecompiledHeader>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_simpleObserver_MATLAB_ROOT)\rtw\c\src\common\rt_main.cpp">
+			<PreprocessorDefinitions>$(Simulink_simpleObserver_Definitions)%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>$(Simulink_simpleObserver_IncludeDir)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PrecompiledHeader>NotUsing</PrecompiledHeader>
+			<ExcludedFromBuild>true</ExcludedFromBuild>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="simpleObserverW32.rc">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT UM'))">true</ExcludedFromBuild>
+		</ResourceCompile>
+		<ResourceCompile Include="simpleObserver.rc"/>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="simpleObserverArtifacts.props"/>
+		<None Include="simpleObserverW32.def">
+			<ExcludedFromBuild Condition="!$(Platform.StartsWith('TwinCAT UM'))">true</ExcludedFromBuild>
+		</None>
+		<None Include="simpleObserver_ModuleInfo.xml"/>
+		<None Include="simpleObserver.libcat.xml"/>
+		<None Include="simpleObserver.tmc"/>
+		<None Include="simpleObserver.tml"/>
+	</ItemGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
+	<ImportGroup Label="ExtensionTargets">
+		<Import Project="$(ModuleGeneratorSdk)\MsBuild\Targets\*.targets"/>
+		<Import Project="$(TE140xSdk)\MsBuild\Targets\*.targets" Condition="'$(TE140xSdk)'!='$(ModuleGeneratorSdk)'"/>
+	</ImportGroup>
+</Project>

@@ -591,9 +591,9 @@
       </Children>
     </Node>
     <Node>
-      <Title>MeasureVariance</Title>
+      <Title>motorVelocitiesRef</Title>
       <Expanded>False</Expanded>
-      <FileName>E:\hawino\YT Scope Project1\MeasureVariance.tcscopex</FileName>
+      <FileName>E:\hawino\YT Scope Project1\motorVelocitiesRef.tcscopex</FileName>
       <Children>
         <Node>
           <Title>DataPool</Title>
@@ -601,67 +601,7 @@
           <FileName></FileName>
           <Children>
             <Node>
-              <Title>counter</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>distTheta</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>distX</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>distY</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>state</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>taskSampleTime</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>v</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>vSoll</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>vThetaFromMotor</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>vXFromMotor</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>vYFromMotor</Title>
+              <Title>vXtoRobot</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -669,83 +609,17 @@
           </Children>
         </Node>
         <Node>
-          <Title>YT Chart</Title>
+          <Title>YT Chart (1)</Title>
           <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
-            <Node>
-              <Title>Axis Group</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
             <Node>
               <Title>Axis Group (1)</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
-                  <Title>vXFromMotor</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>vYFromMotor</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>vThetaFromMotor</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>v</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>state</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>counter</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>distX</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>distY</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>distTheta</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>taskSampleTime</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>vSoll</Title>
+                  <Title>vXtoRobot</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
@@ -758,27 +632,7 @@
           <Title>Trigger</Title>
           <Expanded>False</Expanded>
           <FileName></FileName>
-          <Children>
-            <Node>
-              <Title>Trigger Group</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children>
-                <Node>
-                  <Title>Channel Trigger Set</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>Channel Trigger Set (1)</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-              </Children>
-            </Node>
-          </Children>
+          <Children />
         </Node>
       </Children>
     </Node>

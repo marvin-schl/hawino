@@ -3,7 +3,6 @@ classdef BezierCurve < Spline
     properties
         startPoint          % Entry point of the Bezier curve [x, y]
         endPoint            % Exit point of the Bezier curve [x, y]
-        maxAbsCurvature
         controlPoint        % Control point of the Bezier curve [x, y]
         ax, bx, cx
         ay, by, cy
@@ -47,9 +46,6 @@ classdef BezierCurve < Spline
             
             % 3.) Calculate length of curve
             obj = obj.calculateLength();
-            
-            [ddx, ddy] = obj.diff([0:dt:obj.length],2);
-            obj.maxAbsCurvature = struct("x", max(abs(ddx)), "y", max(abs(ddy)));
         end
         % -----------------------------------------------------------------
 
@@ -144,14 +140,13 @@ classdef BezierCurve < Spline
             for i=1:length(s0)
                     t_prev = 2;
                     while abs(t(i)-t_prev) > 1e-4
-                        abs(t(i)-t_prev)
                         t_prev = t(i);
                         t(i) = t(i) - (obj.s(t(i)) - s0(i)) / obj.ds(t(i));
                     end
             end
         end
         
-                function [startPoint, endPoint] = getStartEndPoint(obj, prevWP, nextWP)
+        function [startPoint, endPoint] = getStartEndPoint(obj, prevWP, nextWP)
             % Start point:
             % - angle of incidence of former linear part
             phi1 = atan2(prevWP.y - obj.controlPoint.y, prevWP.x - obj.controlPoint.x);
@@ -204,8 +199,10 @@ classdef BezierCurve < Spline
 
             startPoint.x = zpx1;
             startPoint.y = zpy1;
+            startPoint.phi = phi1;
             endPoint.x = zpx2;
             endPoint.y = zpy2;
+            endPoint.phi = phi2;
           end
     % -----------------------------------------------------------------
         function [ax, bx, cx, ay, by, cy] = calculateCoefficients(obj)
@@ -237,9 +234,9 @@ classdef BezierCurve < Spline
         
        function [x,y] = getPointNorm(obj, t)
             % calculate corresponding point(s) (hard-coded for 3rd order Bezier curve)
-            x = obj.ax*t.^2 + obj.bx * t + obj.cx;
-            y = obj.ay*t.^2 + obj.by * t + obj.cy;
-        end
+            x   = obj.ax*t.^2 + obj.bx * t + obj.cx;
+            y   = obj.ay*t.^2 + obj.by * t + obj.cy;
+       end
         
         
         function [dx,dy] = diffNorm(obj,t)
@@ -255,12 +252,12 @@ classdef BezierCurve < Spline
       
       function s = s(obj, t) 
             %matlab symbolic integration of: sqrt((dx/dt)^2+(dy/dt)^2)
-            sIn = @(t)( (t/2 + (4*obj.ax*obj.bx + 4*obj.ay*obj.by)/(4*(4*obj.ax^2 + 4*obj.ay^2)))*(t*(4*obj.ax*obj.bx + 4*obj.ay*obj.by) ...
-                + obj.bx^2 + obj.by^2 + t^2*(4*obj.ax^2 + 4*obj.ay^2))^(1/2) ...
-               - (log((2*obj.ax*obj.bx + 2*obj.ay*obj.by + t*(4*obj.ax^2 + 4*obj.ay^2))/(4*obj.ax^2 + 4*obj.ay^2)^(1/2) ...
-               + (t*(4*obj.ax*obj.bx + 4*obj.ay*obj.by) + obj.bx^2 + obj.by^2 ...
-               + t^2*(4*obj.ax^2 + 4*obj.ay^2))^(1/2))*((4*obj.ax*obj.bx + 4*obj.ay*obj.by)^2/4 ...
-               - (4*obj.ax^2 + 4*obj.ay^2)*(obj.bx^2 + obj.by^2)))/(2*(4*obj.ax^2 + 4*obj.ay^2)^(3/2)));
+                sIn = @(t)( (t/2 + (4*obj.ax*obj.bx + 4*obj.ay*obj.by)/(4*(4*obj.ax^2 + 4*obj.ay^2)))*(t*(4*obj.ax*obj.bx + 4*obj.ay*obj.by) ...
+                    + obj.bx^2 + obj.by^2 + t^2*(4*obj.ax^2 + 4*obj.ay^2))^(1/2) ...
+                   - (log((2*obj.ax*obj.bx + 2*obj.ay*obj.by + t*(4*obj.ax^2 + 4*obj.ay^2))/(4*obj.ax^2 + 4*obj.ay^2)^(1/2) ...
+                   + (t*(4*obj.ax*obj.bx + 4*obj.ay*obj.by) + obj.bx^2 + obj.by^2 ...
+                   + t^2*(4*obj.ax^2 + 4*obj.ay^2))^(1/2))*((4*obj.ax*obj.bx + 4*obj.ay*obj.by)^2/4 ...
+                   - (4*obj.ax^2 + 4*obj.ay^2)*(obj.bx^2 + obj.by^2))) / (2*(4*obj.ax^2 + 4*obj.ay^2)^(3/2)));
 
             s = sIn(t)-sIn(0);
         end

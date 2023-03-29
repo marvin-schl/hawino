@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="Path" Id="{95fe6ec8-af15-4fc0-b4c5-550c7aba9b73}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Path EXTENDS Spline
+VAR_INPUT
+	waypointListRaw: 	ARRAY [0..101] OF RobotPoseSimple;
+	maxRadius: 			LREAL;
+	thetaDZ: 				LREAL := 0.1;
+END_VAR
+VAR
+	waypointList: 		ARRAY [0..101] 	OF 	RobotPoseSimple;		
+	subsplines: 		ARRAY [0..100] 	OF  POINTER TO Spline;
+	transitions: 		ARRAY [0..100] 	OF LREAL;
+	nmbOfSubsplines, nmbOfPreprocessedWaypoints:	INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[preprocessWaypointlist();
+
+nmbOfSubsplines := 2*nmbOfPreprocessedWaypoints-3;
+
+generateSubsplines();
+lengthVar := calculateLength();
+calculateTransitions();
+
+startPoint := subsplines[0]^.startPointVal;
+endPoint   := subsplines[nmbOfSubsplines-1]^.endPointVal;
+
+startPoint.theta := waypointList[0].theta;
+endPoint.theta	 := waypointList[nmbOfPreprocessedWaypoints-1].theta;]]></ST>
+    </Implementation>
+    <Method Name="calculateLength" Id="{fa9150c3-1548-4fad-bc03-2a7bdbb95fff}">
+      <Declaration><![CDATA[(* 
+Implementation of abstract Spline method.
+For internal inital length calculation, should be called in the constructor => protected
+*)
+METHOD PROTECTED  calculateLength : LREAL
+VAR_INPUT
+END_VAR
+VAR
+	i: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[calculateLength := 0;
+FOR i := 0 TO nmbOfSubsplines-1 DO
+	calculateLength := calculateLength + subsplines[i]^.length;
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="calculateTransitions" Id="{52dbb64c-0f38-4919-8d0f-8a50326cf34d}">
+      <Declaration><![CDATA[METHOD PRIVATE calculateTransitions
+VAR_INPUT
+END_VAR
+VAR
+	i : INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[transitions[0] := 0;
+FOR i := 0 TO nmbOfSubsplines-2 DO
+	transitions[i+1] := transitions[i] + subsplines[i]^.length;
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="diff" Id="{c435850d-099e-4883-9ebf-b0187bee6499}">
+      <Declaration><![CDATA[(* 
+Implementation of abstract Spline method.
+Calculates the derivate of the spline at an arbitrary arcLength. Should be implmented for order one and two. Invalid 
+orders should write a -1 in every component of the return value.
+*)
+METHOD  PUBLIC diff : RobotPoseSimple
+VAR_INPUT
+	arcLength: LREAL; //arcLength at which the corresponding derivative should be calculated
+	order: INT := 1;  //optional: order of the derivate, should be implemented for 1 and 2, default: 1
+END_VAR
+VAR
+	subspline: 				POINTER TO Spline;
+	arcOffset, deltaTheta: 	LREAL;
+	dPos: RobotPoseSimple;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[getSubsplineToPoint(arcLength := arcLength,
+					subspline => subspline,
+					arcOffset => arcOffset);
+deltaTheta:= endPoint.theta - startPoint.theta; 		
+diff 		:= subspline^.diff(arcLength := arcOffset, order:= order);	
+diff.theta 	:= dTheta(arcLength := arcLength, order := order);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="dTheta" Id="{7d2d238e-6c7d-41bf-901f-e1aba91ddba5}">
+      <Declaration><![CDATA[METHOD PRIVATE dTheta : LREAL
+VAR_INPUT
+	arcLength: LREAL;
+	order: INT;
+END_VAR
+VAR
+	deltaTheta: LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[deltaTheta := endPoint.theta - startPoint.theta;
+IF arcLength < thetaDZ  OR arcLength > lengthVar - thetaDZ THEN
+	dTheta := 0;
+ELSIF order = 1 THEN
+	dTheta := deltaTheta/2*(pi/(lengthVar-2*thetaDZ))*SIN(pi/(lengthVar-2*thetaDZ)*(arcLength-thetaDZ));
+ELSIF order = 2 THEN
+	dTheta := deltaTheta/2*EXPT(pi/(lengthVar-2*thetaDZ),2)*COS(pi/(lengthVar-2*thetaDZ)*(arcLength-thetaDZ));
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="generateSubsplines" Id="{64c26576-c972-4416-a2f8-ea26c3f38e4d}">
+      <Declaration><![CDATA[METHOD generateSubsplines : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	linearSplines:		ARRAY [0..50] OF LinearSpline;
+	bezierCurves:		ARRAY [0..49] OF BezierCurve;
+		
+	//xTmpLinear,yTmpLinear:    		ARRAY [0..1] OF LREAL;
+	wplTmpLinear:					ARRAY [0..1] OF RobotPoseSimple;
+	linearSpline: LinearSpline;
+	
+	//xTmpBezier,yTmpBezier:    		ARRAY [0..2] OF LREAL;
+	wplTmpBezier:					ARRAY [0..2] OF RobotPoseSimple;
+	bezierCurve: BezierCurve;
+	
+	i,j,k: INT := 0;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF nmbOfSubsplines <> 1 THEN 
+	FOR i := 1 TO nmbOfSubsplines BY 2 DO
+	k := 0;
+	//extract relevant points for bezier curve creation
+	FOR j := (i-1)/2 TO (i-1)/2+2 BY 1 DO
+		wplTmpBezier[k] := waypointList[j];
+		k := k + 1;
+	END_FOR  
+	bezierCurves[(i-1)/2](waypoints:=wplTmpBezier, maxRadius := maxRadius);
+	subsplines[i]:= ADR(bezierCurves[(i-1)/2]);
+	END_FOR
+	
+	//first Segment is always linear
+	wplTmpLinear[0] := waypointList[0];
+	wplTmpLinear[1] := subsplines[1]^.startPointVal;
+	linearSplines[0](wayPoints := wplTmpLinear);
+	subsplines[0] := ADR(linearSplines[0]);
+	
+	
+	//last Segment is always linear
+	wplTmpLinear[0] := subsplines[nmbOfSubsplines-2]^.endPointVal;
+	wplTmpLinear[1] := waypointList[nmbOfPreprocessedWaypoints-1];
+	linearSplines[(nmbOfSubsplines+1)/2](wayPoints := wplTmpLinear);
+	subsplines[nmbOfSubsplines-1] := ADR(linearSplines[(nmbOfSubsplines+1)/2]);
+	
+	
+	//generate the linear segments in between
+	FOR i := 2 TO nmbOfSubsplines-2 BY 2 DO
+	wplTmpLinear[0] := subsplines[i-1]^.endPointVal;
+	wplTmpLinear[1] := subsplines[i+1]^.startPointVal;
+	linearSplines[i/2](wayPoints := wplTmpLinear);
+	subsplines[i] := ADR(linearSplines[i/2]);
+	END_FOR
+ELSE  //nmbOfSubsplines = 1  => only one linear Segment
+	
+	wplTmpLinear[0] := waypointList[0];
+	wplTmpLinear[1] := waypointList[1];;
+	linearSplines[0](wayPoints := wplTmpLinear);
+	subsplines[0] := ADR(linearSplines[0]);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="getPoint" Id="{edc81ff7-b7ad-4aac-a526-a3258fc65de9}">
+      <Declaration><![CDATA[(*
+Implementation of abstract Spline method.
+Gets the configuration of the Spline at any given arcLength. 
+*)
+METHOD PUBLIC  getPoint : RobotPoseSimple
+VAR_INPUT
+	arcLength: LREAL; //arcLength at which the Splines configuration shall be calculated.
+END_VAR
+VAR
+	subspline: POINTER TO Spline;
+	arcOffset: LREAL;
+	deltaTheta: LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[getSubsplineToPoint(arcLength := arcLength,
+					subspline => subspline,
+					arcOffset => arcOffset);
+getPoint := subspline^.getPoint(arcLength:= arcOffset);
+
+deltaTheta 		:= endPoint.theta - startPoint.theta;
+getPoint.theta	:= theta(arcLength := arcLength);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="getSubsplineToPoint" Id="{d9693a58-8dc8-4612-b85b-8d181f60b2f3}">
+      <Declaration><![CDATA[METHOD PRIVATE getSubsplineToPoint : POINTER TO Spline
+VAR_INPUT
+	arcLength: LREAL;
+END_VAR
+
+VAR_OUTPUT
+	subspline: 	POINTER TO Spline;
+	arcOffset: 	LREAL;
+	i: 			INT := 0;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[arcOffset := arcLength;
+IF arcLength >= length THEN
+	arcOffset := arcLength - transitions[nmbOfSubsplines-1];
+	subspline := subsplines[nmbOfSubsplines-1];
+	RETURN;
+END_IF
+
+FOR i := 0 TO nmbOfSubsplines-1 DO
+	IF arcOffset-subsplines[i]^.length < 0 THEN
+		subspline := subsplines[i];
+		EXIT;
+	ELSE
+		arcOffset := arcOffset -subsplines[i]^.length;
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="getSwitchingPointIntervals" Id="{cfaa726c-df69-48c1-84c4-a6f3a80b3d25}">
+      <Declaration><![CDATA[METHOD getSwitchingPointIntervals : ARRAY [0..98] OF LREAL
+VAR_INPUT
+END_VAR
+VAR
+	i: INT := 0;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FILL(arr :=  getSwitchingPointIntervals, val := -1.0);
+FOR i := 1 TO nmbOfSubsplines-1 BY 1 DO
+	getSwitchingPointIntervals[i-1] := transitions[i];
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="preprocessWaypointlist" Id="{eb2abc10-4b35-4a8b-a276-447cab2534b7}">
+      <Declaration><![CDATA[METHOD PRIVATE preprocessWaypointlist 
+VAR_IN_OUT
+END_VAR
+VAR 
+	i : 				INT 			:= 0;
+	nextIDX: 			INT;
+	phi1, phi2: 		LREAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[waypointList[0].theta := waypointListRaw[0].theta;	
+waypointList[0].y := waypointListRaw[0].y/1000;	
+waypointList[0].x := waypointListRaw[0].x/1000;	
+nextIDX := 1;
+
+FOR i := 1 TO 99 DO
+	//exit if last point is reached, last valid point is last point in preprocessed list
+	IF waypointListRaw[i+1].x = -1 AND waypointListRaw[i+1].y = -1 THEN
+		waypointList[nextIDX].theta := waypointListRaw[i].theta;	
+		waypointList[nextIDX].y := waypointListRaw[i].y/1000;	
+		waypointList[nextIDX].x := waypointListRaw[i].x/1000;	
+		EXIT;
+	END_IF	
+
+	phi1 := ATAN2(waypointListRaw[i].y-waypointListRaw[i-1].y,waypointListRaw[i].x-waypointListRaw[i-1].x);
+	phi2 := ATAN2(waypointListRaw[i+1].y-waypointListRaw[i].y,waypointListRaw[i+1].x-waypointListRaw[i].x);
+	IF phi1 <> phi2 THEN
+		waypointList[nextIDX].theta := waypointListRaw[i].theta;	
+		waypointList[nextIDX].y := waypointListRaw[i].y/1000;	
+		waypointList[nextIDX].x := waypointListRaw[i].x/1000;	
+		nextIDX := nextIDX +1;
+	END_IF
+END_FOR
+nmbOfPreprocessedWaypoints := nextIDX +1;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="theta" Id="{3e06842d-afd1-418d-bfed-0a225c6266f7}">
+      <Declaration><![CDATA[METHOD PRIVATE theta : LREAL
+VAR_INPUT
+	arcLength: LREAL;
+END_VAR
+VAR
+	deltaTheta: LREAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[deltaTheta := endPoint.theta - startPoint.theta;
+IF arcLength < thetaDZ THEN
+	theta := startPoint.theta;
+ELSIF arcLength > lengthVar - thetaDZ THEN
+	theta := endPoint.theta;
+ELSE
+	theta := startPoint.theta + deltaTheta/2*(1-COS(pi/(lengthVar-2*thetaDZ)*(arcLength-thetaDZ)));
+END_IF ]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="Path">
+      <LineId Id="311" Count="2" />
+      <LineId Id="322" Count="0" />
+      <LineId Id="315" Count="0" />
+      <LineId Id="317" Count="3" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="336" Count="0" />
+      <LineId Id="335" Count="0" />
+      <LineId Id="337" Count="0" />
+    </LineIds>
+    <LineIds Name="Path.calculateLength">
+      <LineId Id="22" Count="2" />
+      <LineId Id="11" Count="0" />
+    </LineIds>
+    <LineIds Name="Path.calculateTransitions">
+      <LineId Id="21" Count="2" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Path.diff">
+      <LineId Id="57" Count="4" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="Path.dTheta">
+      <LineId Id="15" Count="6" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Path.generateSubsplines">
+      <LineId Id="22" Count="38" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Path.getPoint">
+      <LineId Id="30" Count="2" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="35" Count="0" />
+    </LineIds>
+    <LineIds Name="Path.getSubsplineToPoint">
+      <LineId Id="39" Count="1" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="50" Count="2" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="18" Count="2" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="53" Count="3" />
+    </LineIds>
+    <LineIds Name="Path.getSwitchingPointIntervals">
+      <LineId Id="27" Count="2" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Path.preprocessWaypointlist">
+      <LineId Id="95" Count="1" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="60" Count="3" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="93" Count="1" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="67" Count="5" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="91" Count="1" />
+      <LineId Id="75" Count="2" />
+      <LineId Id="43" Count="0" />
+    </LineIds>
+    <LineIds Name="Path.theta">
+      <LineId Id="13" Count="6" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
