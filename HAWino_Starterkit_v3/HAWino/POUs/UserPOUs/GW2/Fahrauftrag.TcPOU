@@ -28,7 +28,7 @@ VAR
 	xPointList AT%I*: ARRAY[0..100] OF LREAL;	//xKoordinatenliste
 	yPointList AT%I*: ARRAY[0..100] OF LREAL;	//yKoordinatenliste
 	enable_ASearch AT%Q* : BOOL;				//enable signal for a search
-	finished_ASearch AT%Q* : BOOL;//TODO
+	finished_ASearch AT%I* : BOOL;	 //TODO
 	i: INT;
 	zeile: INT;
 END_VAR
