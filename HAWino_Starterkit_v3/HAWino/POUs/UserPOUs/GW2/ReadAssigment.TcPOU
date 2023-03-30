@@ -10,9 +10,9 @@ VAR_OUTPUT
 	pointsFromSlotToReader : ARRAY[0..100] OF RobotPoseSimple;	//Weg vom Abholort zur Abmeldung 
 	lastPointsToStorage : ARRAY[0..2] OF RobotPoseSimple;		//Weg zum Ablageort (letzte Punkte)
 	pointsFromReaderToSlot : ARRAY[0..100] OF RobotPoseSimple;	//Weg vom Abmelden zur Ablage
-	lastPointsToCharging : ARRAY[0..2] of RobotPoseSimple; 		//Weg zur Ladestation
+	lastPointsToCharging : ARRAY[0..2] OF RobotPoseSimple; 		//Weg zur Ladestation
 	lastNodePickUp, lastNodeStorage, pickupLocation, readerCheckOut, readerCheckIn, storageLocation, lastNodeCharging, chargingLocation : RobotPoseSimple;
-	xStartposition, yStartposition : LREAL;
+	parkingSlots : ARRAY[1..4] OF RobotPoseSimple;				//Array mit Parkplätzen der Roboter
 END_VAR
 VAR
 	Failed : BOOL := FALSE;
@@ -289,11 +289,18 @@ END_IF
 
 
 
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////Parkplätze/////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////]]></ST>
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Parkplätze "unterhalb" der Ladestation
+//Roboter 4 auf Knoten 17, 3 auf 16, 2 auf 15, 1 auf 14
+////////TODO passt das oder brauchen die mehr Abstand??????????????
+parkingSlots[1] := ToRobotPoseSimple(x := 5400, y := 600, theta := -1);
+parkingSlots[2] := ToRobotPoseSimple(x := 5800, y := 600, theta := -1);
+parkingSlots[3] := ToRobotPoseSimple(x := 6200, y := 600, theta := -1);
+parkingSlots[4] := ToRobotPoseSimple(x := 6600, y := 600, theta := -1);
+
+]]></ST>
     </Implementation>
     <LineIds Name="ReadAssigment">
       <LineId Id="9" Count="0" />
@@ -489,9 +496,16 @@ END_IF
       <LineId Id="478" Count="0" />
       <LineId Id="461" Count="0" />
       <LineId Id="468" Count="0" />
-      <LineId Id="462" Count="2" />
+      <LineId Id="464" Count="0" />
       <LineId Id="458" Count="2" />
       <LineId Id="457" Count="0" />
+      <LineId Id="483" Count="0" />
+      <LineId Id="485" Count="0" />
+      <LineId Id="487" Count="0" />
+      <LineId Id="489" Count="0" />
+      <LineId Id="506" Count="2" />
+      <LineId Id="488" Count="0" />
+      <LineId Id="486" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
