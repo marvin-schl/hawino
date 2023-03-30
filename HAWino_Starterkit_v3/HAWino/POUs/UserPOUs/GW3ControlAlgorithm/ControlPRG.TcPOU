@@ -14,7 +14,7 @@ VAR_OUTPUT
 END_VAR
 VAR
 	//declare objects
-	observer 	: SimpleObserver;//Observer object
+	observer 	: SimpleObserverST;					//Observer object
 	controller	: SimpleStateFeedbackLaw;			//Control law object
 	trajectory	: TimeOptimalTrajectory;			//Trajectory Object
 	robot		: Robot;							//link to physical I/O of roboter or simulation model of the roboter
@@ -122,15 +122,20 @@ END_IF
 
 //initilizing and linking of control algorithm individual components
 //init observer
-observer(xCameraPose 	:= robotPoses[Var_HAWIno.Robot_Number],	//extraxt roboter coordinates based on roboter number
+observer(xCameraPose 	:= shiftCamAngle(camData := robotPoses[Var_HAWIno.Robot_Number], path := trajectory.path),
+		 //xCameraPose 	:= robotPoses[Var_HAWIno.Robot_Number],
 		 xVxRobot    	:= robot.vXfromRobot,						//link x-velocity with measured velocity
 		 xVyRobot    	:= robot.vYfromRobot,						//link y-velocity with measured velocity
 		 xOmegaRobot    := robot.vThetaFromRobot,
- 		 xVxToRobot		:= controller.vXrobot,
-		 xVyToRobot		:= controller.vYrobot,
-		 xOmegaToRobot	:= controller.omegaRobot,				//link theta-velocity with measured velocity
+ 		 //xVxToRobot		:= controller.vXrobot,
+		 //xVyToRobot		:= controller.vYrobot,
+		 //xOmegaToRobot	:= controller.omegaRobot,				//link theta-velocity with measured velocity
 		 theta			:= thetaLin);							//Angle for IO-Lineariztion						 
-
+//init controller and link to observer
+controller(xRobotPose 		:= observer.yObserverdPose,			//pass controller the observerd roboter pose
+		   xRobotPoseRef	:= trajectory.referencePose,
+		   xRobotVelRef		:= trajectory.referenceVelocities,
+		   enable			:= robot.enable);		//pass controller the reference position for the next cycle comming from the trajectory
 
 //trajectory object
 trajectory(
@@ -138,12 +143,7 @@ trajectory(
 	currentPose 	:= observer.yObserverdPose,					//Current implementation needs observed pose for distance calculation, TODO: check if needed for final implemenation
 	referencePose 	=> controller.xRobotPoseRef					//outputs reference pose to controller
 );
-
-//init controller and link to observer
-controller(xRobotPose 		:= observer.yObserverdPose,			//pass controller the observerd roboter pose
-		   xRobotPoseRef	:= trajectory.referencePose,
-		   enable			:= robot.enable);		//pass controller the reference position for the next cycle comming from the trajectory
-
+//observer.xCameraPose 	:= shiftCamAngle(camData := robotPoses[Var_HAWIno.Robot_Number], path := trajectory.path);
 //transform control inputs into robot coordinates and pass them to the robot
 //pass enable signal to robot
 World2Robot(
@@ -219,7 +219,21 @@ observer.reset();]]></ST>
       <LineId Id="1363" Count="0" />
       <LineId Id="1203" Count="4" />
       <LineId Id="1361" Count="0" />
-      <LineId Id="1210" Count="61" />
+      <LineId Id="1210" Count="14" />
+      <LineId Id="1450" Count="0" />
+      <LineId Id="1456" Count="0" />
+      <LineId Id="1227" Count="2" />
+      <LineId Id="1449" Count="0" />
+      <LineId Id="1448" Count="0" />
+      <LineId Id="1231" Count="5" />
+      <LineId Id="1246" Count="2" />
+      <LineId Id="1506" Count="0" />
+      <LineId Id="1249" Count="0" />
+      <LineId Id="1463" Count="0" />
+      <LineId Id="1458" Count="4" />
+      <LineId Id="1250" Count="0" />
+      <LineId Id="1464" Count="0" />
+      <LineId Id="1251" Count="20" />
       <LineId Id="94" Count="0" />
     </LineIds>
     <LineIds Name="ControlPRG.calculateTrajectory">

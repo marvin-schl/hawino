@@ -3,30 +3,46 @@
   <POU Name="shiftCamAngle" Id="{6c2c887f-9c97-409a-a730-f3cf5b4c4f40}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION shiftCamAngle : RobotPose
 VAR_INPUT
-	trajectory: 		TimeOptimalTrajectory;
-	camData:	RobotPose;
+	path: 		Path;
+	camData:			RobotPose;
 END_VAR
 VAR
 	thetaMin, thetaMax: LREAL;
+	startPoint, endPoint: RobotPoseSimple;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//calculate shifted upper and lower theta bounds depending on the start and end angles of the path
-IF trajectory.startPoint.theta >= trajectory.endPoint.theta THEN
-	thetaMin := trajectory.startPoint.theta-1.5*pi;
-	thetaMax := trajectory.startPoint.theta+0.5*pi;
-ELSIF trajectory.startPoint.theta < trajectory.endPoint.theta THEN
-	thetaMin := trajectory.startPoint.theta-0.5*pi;
-	thetaMax := trajectory.startPoint.theta+1.5*pi;
+shiftCamAngle.x 	:= camData.x;
+shiftCamAngle.y 	:= camData.y;
+shiftCamAngle.theta := camData.theta;
+shiftCamAngle.e 	:= camData.e;
+
+startPoint := path.startPointVal;
+endPoint   := path.endPointVal;
+
+IF startPoint.theta >= endPoint.theta THEN
+	thetaMin := startPoint.theta-1.5*pi;
+	thetaMax := startPoint.theta+0.5*pi;
+ELSIF startPoint.theta < endPoint.theta THEN
+	thetaMin := startPoint.theta-0.5*pi;
+	thetaMax := startPoint.theta+1.5*pi;
 END_IF
 
-//normailize the camera angle within the prior calculated bounds
+//normalize the camera angle within the prior calculated bounds
 IF  camData.x <> 0 AND  camData.y <> 0 THEN
-	shiftCamAngle.theta := normalizeAngle(camData.theta, thetaMax, thetaMin);
+	shiftCamAngle := normalizeAngle(camData.theta, thetaMax, thetaMin);
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="shiftCamAngle">
-      <LineId Id="54" Count="11" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="75" Count="3" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="55" Count="9" />
+      <LineId Id="116" Count="0" />
       <LineId Id="34" Count="0" />
     </LineIds>
   </POU>

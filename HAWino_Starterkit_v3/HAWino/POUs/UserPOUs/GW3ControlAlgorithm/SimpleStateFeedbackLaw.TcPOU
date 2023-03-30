@@ -10,6 +10,7 @@ FUNCTION_BLOCK SimpleStateFeedbackLaw
 VAR_INPUT
 	xRobotPose: 		RobotPoseSimple; 				//current pose
 	xRobotPoseRef: 		RobotPoseSimple; 				//reference pose
+	xRobotvelRef: 		RobotPoseSimple;				//reference velocity
 	enable:				BOOL 			:= FALSE;
 END_VAR
 
@@ -23,9 +24,9 @@ END_VAR
 
 VAR
 	//static control parameters
-	K: ARRAY [0..2,0..2] OF LREAL := [3,0,0,
-									  0,3,0,
-									  0,0,3];
+	K: ARRAY [0..2,0..2] OF LREAL := [1,0,0,
+									  0,1,0,
+									  0,0,1];
 	poseError: RobotPoseSimple;
 	vtrans_max: LREAL := 934; //vY,vY
 	vrot_max: LREAL   := 1.57; //vTheta
@@ -42,8 +43,6 @@ poseError.y 	:= xRobotPoseRef.y 		- xRobotPose.y;
 poseError.theta := xRobotPoseRef.theta 	- xRobotPose.theta;
 
 reachedReference := (ABS(poseError.x) < accuracyXY) AND (ABS(poseError.y) < accuracyXY) AND (ABS(poseError.theta) < accuracyTheta);
-
-
 
 //2.) apply gain on errors
 FOR i := 0 TO 2 DO
@@ -67,9 +66,9 @@ END_IF
 
 //4.) set control outputs
 IF enable THEN
-	vXrobot 	:= u[0];
-	vYrobot 	:= u[1];
-	omegaRobot	:= u[2];
+	vXrobot 	:= u[0] + xRobotvelRef.x;
+	vYrobot 	:= u[1] + xRobotvelRef.y;
+	omegaRobot	:= u[2] + xRobotvelRef.theta;
 ELSE
 	vXrobot 	:= 0;
 	vYrobot 	:= 0;
@@ -94,7 +93,6 @@ END_VAR
       <LineId Id="22" Count="0" />
       <LineId Id="36" Count="0" />
       <LineId Id="155" Count="1" />
-      <LineId Id="162" Count="1" />
       <LineId Id="37" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="41" Count="0" />

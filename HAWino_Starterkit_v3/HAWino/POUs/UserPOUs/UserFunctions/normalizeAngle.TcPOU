@@ -3,9 +3,9 @@
   <POU Name="normalizeAngle" Id="{dcf0afd6-8216-4551-a2e7-b170fbea7d1e}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION normalizeAngle : LREAL
 VAR_INPUT
-	angle: LREAL;
-	upperBound:LREAL := pi;
-	lowerBound:LREAL := -pi;
+	angle: 			LREAL;
+	upperBound:		LREAL;
+	lowerBound:		LREAL;
 END_VAR
 VAR
 END_VAR	

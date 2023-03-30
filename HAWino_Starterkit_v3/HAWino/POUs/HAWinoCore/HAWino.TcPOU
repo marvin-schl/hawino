@@ -32,6 +32,7 @@ END_VAR
 		END_IF
 	DUT_SysState.Op:
 	//Operate System
+		GW2DummyPRG();
 		IrDistanceSensors();
 		Camera();
 		PowerManager();
@@ -120,6 +121,7 @@ CASE state OF
     </Method>
     <LineIds Name="HAWino">
       <LineId Id="3" Count="15" />
+      <LineId Id="39" Count="0" />
       <LineId Id="21" Count="4" />
       <LineId Id="2" Count="0" />
     </LineIds>

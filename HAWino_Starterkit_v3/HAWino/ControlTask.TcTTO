@@ -10,6 +10,9 @@
     <PouCall>
       <Name>WheelEncoders</Name>
     </PouCall>
+    <PouCall>
+      <Name>ControlPRG</Name>
+    </PouCall>
     <TaskFBGuid>{c6745a89-8caf-4d4b-b655-109b4dd73381}</TaskFBGuid>
     <Fb_init>{145f5444-ea53-4249-a646-be3f7c411ce3}</Fb_init>
     <Fb_exit>{97303027-429e-49f1-bb67-93eca3242959}</Fb_exit>

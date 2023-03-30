@@ -38,7 +38,14 @@ IF generatedSubsplines AND NOT ready THEN
 	endPoint   := subsplines[nmbOfSubsplines-1]^.endPointVal;
 	
 	startPoint.theta := waypointList[0].theta;
+	
+	
 	endPoint.theta	 := waypointList[nmbOfPreprocessedWaypoints-1].theta;
+	IF ABS(endPoint.theta-startPoint.theta) > ABS(endPoint.theta+2*pi-startPoint.theta) THEN
+		endPoint.theta := endPoint.theta+2*pi;
+	ELSIF ABS(endPoint.theta-startPoint.theta) > ABS(endPoint.theta-2*pi-startPoint.theta) THEN
+		endPoint.theta := endPoint.theta-2*pi;
+	END_IF
 	ready := TRUE;
 END_IF
 ]]></ST>
@@ -357,7 +364,11 @@ END_IF ]]></ST>
       <LineId Id="96" Count="0" />
       <LineId Id="336" Count="0" />
       <LineId Id="335" Count="0" />
+      <LineId Id="387" Count="1" />
       <LineId Id="337" Count="0" />
+      <LineId Id="389" Count="1" />
+      <LineId Id="392" Count="1" />
+      <LineId Id="391" Count="0" />
       <LineId Id="365" Count="0" />
       <LineId Id="355" Count="1" />
     </LineIds>
