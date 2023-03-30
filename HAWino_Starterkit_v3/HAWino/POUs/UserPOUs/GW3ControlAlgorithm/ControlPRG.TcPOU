@@ -41,10 +41,18 @@ VAR
 	yRPposition AT%Q*: RobotPoseSimple;						// implemented, aktuelle Roboterposition, für Simulationszwecke
 	FFLin: BOOL := FALSE;
 	thetaLin: LREAL;
+	
+	// TESTING
+	fbTime : FB_LocalSystemTime:= ( bEnable := TRUE, dwCycle:= 1);
+	sysTime : TIMESTRUCT;
+	ttime : NT_GetTime;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//robot disabled by default
+      <ST><![CDATA[fbTime();
+ttime(START:=TRUE); 
+ttime.START:=FALSE;
+//robot disabled by default
 robot.enable			:= FALSE;
 
 //outputs to GW2
@@ -202,6 +210,8 @@ END_VAR]]></Declaration>
       </Implementation>
     </Method>
     <LineIds Name="ControlPRG">
+      <LineId Id="1107" Count="1" />
+      <LineId Id="1111" Count="0" />
       <LineId Id="895" Count="18" />
       <LineId Id="1059" Count="0" />
       <LineId Id="914" Count="26" />

@@ -1454,7 +1454,7 @@
 		<ImageData Id="1006">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1007">424de6000000000000007600000028000000100000000e000000010004000000000070000000000000000000000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffff788833338887ffff78883bb38887ffffffff3bb3ffffffffffff8778fffffffffffffffffffffffffffffffff999ffff78f78fffffffffff78f78ffff999ffff78f7888fffffffff78f78f78f999ffff78f78f78ffffffff78f7888ff999ffffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.207.184.1.1" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.200.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="2">
 				<Cpu BaseTime="1000"/>
@@ -4643,6 +4643,11 @@
 						<Contexts>
 							<Context>
 								<Id>1</Id>
+								<ManualConfig>
+									<OTCID>#x02010030</OTCID>
+								</ManualConfig>
+								<Priority>20</Priority>
+								<CycleTime>10000000</CycleTime>
 							</Context>
 						</Contexts>
 						<Interfaces>
@@ -4862,7 +4867,7 @@ Minimum interval between messages;]]></Comment>
 								<PTCID>#x03150021</PTCID>
 								<ContextId>1</ContextId>
 							</Parameter>
-							<Parameter OnlineParameter="true" ReadOnly="true">
+							<Parameter OnlineParameter="true" ShowSubItems="true" ReadOnly="true">
 								<Name>ServerInfo</Name>
 								<BitSize>704</BitSize>
 								<SubItem>
@@ -5289,15 +5294,15 @@ Time at the client when the reply arrived from the server;]]></Comment>
 							</Value>
 							<Value>
 								<Name>ClientPara.sServerName</Name>
-								<String>ntp.beckhoff-cloud.com</String>
+								<String>'ntp.haw-hamburg.de'</String>
 							</Value>
 							<Value>
 								<Name>ClientPara.nServerAddress</Name>
-								<Value>0</Value>
+								<Value>2367032585</Value>
 							</Value>
 							<Value>
 								<Name>ClientPara.nServerPort</Name>
-								<Value>0</Value>
+								<Value>123</Value>
 							</Value>
 							<Value>
 								<Name>ClientPara.tPollInterval</Name>
@@ -5495,12 +5500,12 @@ Time at the client when the reply arrived from the server;]]></Comment>
 						<InterfacePointerValues>
 							<Value>
 								<Name>CyclicCaller</Name>
-								<OTCID>#x00000000</OTCID>
+								<OTCID>#x02010030</OTCID>
 							</Value>
 						</InterfacePointerValues>
 					</TmcDesc>
 				</Module>
-				<Module Id="#x01010070" KeepUnrestoredLinks="2" ClassFactoryId="TE140x Module Vendor|simpleObserver2withKalman|0.0.0.5">
+				<Module Id="#x01010070" Disabled="true" KeepUnrestoredLinks="2" ClassFactoryId="TE140x Module Vendor|simpleObserver2withKalman|0.0.0.5">
 					<Name>Object6 (simpleObserver2withKalman)</Name>
 					<ImageId>1000</ImageId>
 					<TmcDesc GUID="{48E6D4BF-C23F-E4C0-0B01-1A38BA041B5E}">
@@ -6495,16 +6500,16 @@ Time at the client when the reply arrived from the server;]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>IrDistanceSensors.distanceRaw</Name>
-							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
-						</Var>
-						<Var>
 							<Name>PowerManager.shutdownButton</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.batteryVoltageRaw</Name>
 							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>IrDistanceSensors.distanceRaw</Name>
+							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.supplyCurrentRaw</Name>
@@ -6523,16 +6528,16 @@ Time at the client when the reply arrived from the server;]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>Gripper.closeGripperFromSimulink</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
 							<Name>Gripper.slider</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.partGripped</Name>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.closeGripperFromSimulink</Name>
-							<Type>LREAL</Type>
 						</Var>
 						<Var>
 							<Name>GW2DummyPRG.roboter.yBoDriving</Name>
@@ -6616,13 +6621,17 @@ Time at the client when the reply arrived from the server;]]></Comment>
 							<Type>REAL</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.stMqtt_HAWino_IN</Name>
+							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
+							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
+						</Var>
+						<Var>
 							<Name>Gripper.driveEnable</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.stMqtt_HAWino_IN</Name>
-							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
-							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
+							<Name>Gripper.driveVelocity</Name>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.sliderToSimulink</Name>
@@ -6631,10 +6640,6 @@ Time at the client when the reply arrived from the server;]]></Comment>
 						<Var>
 							<Name>Gripper.partInGripperToSimulink</Name>
 							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.driveVelocity</Name>
-							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>GW2DummyPRG.roboter.xBoEnable</Name>
@@ -6852,7 +6857,7 @@ Time at the client when the reply arrived from the server;]]></Comment>
 			<PlcAuxTask Affinity="#x00000002"/>
 		</Plc>
 		<Io>
-			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="5.53.207.184.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
+			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="5.53.205.200.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
 				<Name>Gerät 1 (EtherCAT)</Name>
 				<AddressInfo>
 					<Ccat>
@@ -9700,7 +9705,6 @@ Bit1: Value smaller than Limit2]]></Comment>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500800205008}" Id="#x02030050"/>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500810000403}" Id="#x02030010"/>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500842000403}" Id="#x02030040"/>
-		<MappingInfo Identifier="{00000000-2001-0850-0020-500870000101}" Id="#x020300f0"/>
 		<MappingInfo Identifier="{00000000-2002-0850-0020-500800205008}" Id="#x02030090"/>
 		<MappingInfo Identifier="{00000000-2002-0850-0120-500831000403}" Id="#x02030030"/>
 		<MappingInfo Identifier="{00000000-2003-0850-0020-500800205008}" Id="#x020300e0"/>
@@ -9808,7 +9812,10 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="ControlTask Outputs^ControlPRG.observer.vYworldToSimulink" VarB="AdditionalInports^TcModuleInput_InVYworld"/>
 			</OwnerB>
 			<OwnerB Name="TIRC^TcCOM Objects^Object6 (simpleObserver2withKalman)">
+				<Link VarA="ControlTask Inputs^ControlPRG.observer.estimatedPoseFromSimlink" VarB="AdditionalOutports^TcModuleOutput_OutEstimatedPose"/>
 				<Link VarA="ControlTask Outputs^ControlPRG.observer.K" VarB="AdditionalInports^TcModuleInput_Estimator1_K"/>
+				<Link VarA="ControlTask Outputs^ControlPRG.observer.UseSimpleNotKalmanToSimulink" VarB="AdditionalInports^TcModuleInput_Estimator1_UseSimpleNotKalman"/>
+				<Link VarA="ControlTask Outputs^ControlPRG.observer.cameraDelayCyclesToSimulink" VarB="AdditionalInports^TcModuleInput_Estimator1_cameraDelayCylces"/>
 				<Link VarA="ControlTask Outputs^ControlPRG.observer.cameraPoseToSimulink" VarB="AdditionalInports^TcModuleInput_InCameraPose"/>
 				<Link VarA="ControlTask Outputs^ControlPRG.observer.omegaWorldToSimulink" VarB="AdditionalInports^TcModuleInput_InVThetaworld"/>
 				<Link VarA="ControlTask Outputs^WheelEncoders.vXCartesianFromMotors" VarB="AdditionalInports^TcModuleInput_InVXworld"/>
