@@ -5,7 +5,7 @@
 VAR
 	//State machine
 	sStart : BOOL := TRUE;
-	s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14,s15,s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s26,s27,s28,s29,s30,s31: BOOL := FALSE;
+	s0,s1a,s1b,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11a,s11b,s12,s13,s14,s15,s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s26,s27,s28,s29,s30,s31: BOOL := FALSE;
 	
 	readAssigment: ReadAssigment;
 	TrajectoryController: TrajectoryControl;
@@ -47,8 +47,8 @@ END_IF
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //	Warten auf Auftrag
-IF s0 AND NOT s1 AND Auftrag.Art = 'Fahrauftrag' THEN
-	s0 := 0; s1 := 1;
+IF s0 AND NOT s1a AND Auftrag.Art = 'Fahrauftrag' THEN
+	s0 := 0; s1a := 1;
 	//	RückmeldugGW1 Auftrag angenommen setzt
 	FeedbackToGW1 := 'Auftrag angenommen';
 	//Auftrag auswerten
@@ -58,11 +58,18 @@ IF s0 AND NOT s1 AND Auftrag.Art = 'Fahrauftrag' THEN
 	yEndvalue := readAssigment.pickupLocation.y;
 	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
 	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
+END_IF
+
+IF s1a AND NOT s1b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 THEN
+	s1a := 0; s1b := 1;
 	enable_ASearch := TRUE;
+ELSE
+	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
+	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;
 END_IF
 
 //Bahnplanung
-IF s1 AND NOT s2 AND finished_ASearch THEN
+IF s1b AND NOT s2 AND finished_ASearch THEN
 	FOR i := 0 TO 100 BY 1 DO
  		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i], y:= yPointList[i], theta:= -1);
 		IF xPointList[i] = 0 THEN
@@ -75,7 +82,7 @@ IF s1 AND NOT s2 AND finished_ASearch THEN
 	wayPointList[zeile+2] := readAssigment.lastPointsToPickup[2];
 	TrajectoryController.setWaypointList(waypointList);
 	trajectoryController.newWaypointListAvailable := TRUE;
-	s1 := 0; s2 := 1;
+	s1b := 0; s2 := 1;
 END_IF
 
 ///////////////////////////////////////////////FahrtZumAbholort///////////////////////////////////////////////////
@@ -142,8 +149,8 @@ IF s9 AND NOT s10 AND trajectoryController.yBoArrivedAtDestination THEN
 END_IF
 
 //	Warten auf Werkstück ausgelesen
-IF s10 AND NOT s11 AND StatusFromGW1 = 'WerkstueckAusgelesen' THEN
-	s10 := 0; s11 := 1;
+IF s10 AND NOT s11a AND StatusFromGW1 = 'WerkstueckAusgelesen' THEN
+	s10 := 0; s11a := 1;
 	resetVar := TRUE;
 	
 	//Auftrag auswerten
@@ -152,11 +159,18 @@ IF s10 AND NOT s11 AND StatusFromGW1 = 'WerkstueckAusgelesen' THEN
 	yEndvalue := readAssigment.storageLocation.y;
 	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
 	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
+END_IF
+
+IF s11a AND NOT s11b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 THEN
+	s11a := 0; s11b := 1;
 	enable_ASearch := TRUE;
+ELSE
+	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
+	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;
 END_IF
 
 //Bahnplanung
-IF s11 AND NOT s12 AND finished_ASearch THEN
+IF s11b AND NOT s12 AND finished_ASearch THEN
 	FOR i := 0 TO 100 BY 1 DO
  		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i], y:= yPointList[i], theta:= -1);
 		IF xPointList[i] = 0 THEN
@@ -169,7 +183,7 @@ IF s11 AND NOT s12 AND finished_ASearch THEN
 	wayPointList[zeile+2] := readAssigment.lastPointsToStorage[2];
 	TrajectoryController.setWaypointList(waypointList);
 	trajectoryController.newWaypointListAvailable := TRUE;
-	s11 := 0; s12 := 1;
+	s11b := 0; s12 := 1;
 END_IF
 
 /////////////////////////////////////////////////FahrtZurAblageStation///////////////////////////////////////////////////
@@ -394,8 +408,12 @@ END_IF
       <LineId Id="427" Count="0" />
       <LineId Id="377" Count="0" />
       <LineId Id="422" Count="4" />
-      <LineId Id="492" Count="0" />
       <LineId Id="91" Count="0" />
+      <LineId Id="983" Count="0" />
+      <LineId Id="982" Count="0" />
+      <LineId Id="984" Count="0" />
+      <LineId Id="986" Count="3" />
+      <LineId Id="985" Count="0" />
       <LineId Id="527" Count="0" />
       <LineId Id="526" Count="0" />
       <LineId Id="605" Count="0" />
@@ -455,8 +473,9 @@ END_IF
       <LineId Id="570" Count="0" />
       <LineId Id="563" Count="0" />
       <LineId Id="565" Count="4" />
-      <LineId Id="562" Count="0" />
       <LineId Id="141" Count="0" />
+      <LineId Id="992" Count="6" />
+      <LineId Id="991" Count="0" />
       <LineId Id="608" Count="1" />
       <LineId Id="611" Count="13" />
       <LineId Id="607" Count="0" />
