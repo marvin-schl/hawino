@@ -9,7 +9,7 @@ VAR
 	closeGripperFromSimulink AT%I* : LREAL:=0;
 	//closeGripperCommand		AT%I* : BOOL;				//True: opening, false: closing
 	slider					AT%I* : BOOL;
-	partGripped				AT%I* : BOOL;
+	partGripped				AT%I* : BOOL;					//Teil zwischen Greifer: partGripped := 0
 	
 	sliderToSimulink 		AT%Q* : LREAL:=0;
 	partInGripperToSimulink AT%Q*  :LREAL:=0;

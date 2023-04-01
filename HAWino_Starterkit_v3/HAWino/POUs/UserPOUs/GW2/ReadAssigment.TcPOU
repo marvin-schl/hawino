@@ -86,13 +86,13 @@ IF assigment.Art = 'Fahrauftrag' THEN
 		IF assigment.AbholTasche = 1 THEN
 			//RFID links anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 3000, y := 3000, theta := -1);
-			pickupLocation := ToRobotPoseSimple(x := 3229, y := 2837, theta := 0);
-			readerCheckOut := ToRobotPoseSimple(x := 3235, y := 2941, theta := 0);
+			pickupLocation := ToRobotPoseSimple(x := 3240, y := 2837, theta := 0);
+			readerCheckOut := ToRobotPoseSimple(x := 3240, y := 2941, theta := 0);
 		ELSIF assigment.AbholTasche = 2 THEN
 			//RFID links anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 3000, y := 2600, theta := -1);
-			pickupLocation := ToRobotPoseSimple(x := 3228, y := 2732, theta := 0);
-			readerCheckOut := ToRobotPoseSimple(x := 3235, y := 2941, theta := 0);
+			pickupLocation := ToRobotPoseSimple(x := 3240, y := 2732, theta := 0);
+			readerCheckOut := ToRobotPoseSimple(x := 3240, y := 2941, theta := 0);
 		ELSIF assigment.AbholTasche = 3 THEN
 			//RFID rechts anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 3800, y := 3000, theta := -1);
@@ -193,13 +193,13 @@ IF assigment.Art = 'Fahrauftrag' THEN
 		IF assigment.AblageTasche = 1 THEN
 			//RFID links anfahren
 			lastNodeStorage := ToRobotPoseSimple(x := 3000, y := 3000, theta := -1);
-			storageLocation := ToRobotPoseSimple(x := 3229, y := 2837, theta := 0);
-			readerCheckIn := ToRobotPoseSimple(x := 3235, y := 2941, theta := 0);
+			storageLocation := ToRobotPoseSimple(x := 3240, y := 2837, theta := 0); //3229
+			readerCheckIn := ToRobotPoseSimple(x := 3240, y := 2941, theta := 0);
 		ELSIF assigment.AblageTasche = 2 THEN
 			//RFID links anfahren
 			lastNodeStorage := ToRobotPoseSimple(x := 3000, y := 2600, theta := -1);
-			storageLocation := ToRobotPoseSimple(x := 3228, y := 2732, theta := 0);
-			readerCheckIn := ToRobotPoseSimple(x := 3235, y := 2941, theta := 0);
+			storageLocation := ToRobotPoseSimple(x := 3240, y := 2732, theta := 0);
+			readerCheckIn := ToRobotPoseSimple(x := 3240, y := 2941, theta := 0);
 		ELSIF assigment.AblageTasche = 3 THEN
 			//RFID rechts anfahren
 			lastNodeStorage := ToRobotPoseSimple(x := 3800, y := 3000, theta := -1);

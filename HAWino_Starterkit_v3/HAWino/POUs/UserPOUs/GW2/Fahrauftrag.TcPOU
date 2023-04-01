@@ -5,13 +5,14 @@
 VAR
 	//State machine
 	sStart : BOOL := TRUE;
-	s0,s1a,s1b,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11a,s11b,s12,s13,s14,s15,s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s26,s27,s28,s29,s30,s31: BOOL := FALSE;
+	s0,s1a,s1b,s2,s3,s4,s5,s6a,s6b,s7,s8,s9,s10,s11a,s11b,s12,s13,s14,s15,s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s26,s27,s28,s29,s30,s31: BOOL := FALSE;
 	
 	readAssigment: ReadAssigment;
 	TrajectoryController: TrajectoryControl;
 	
 	wayPointList : ARRAY[0..100] OF RobotPoseSimple;
 	actualCamX, actualCamY : LREAL;
+	//pieceGripped AT%I* : BOOL;
 	
 	//Schnittstelle zum MQTT_PRG
 	FeedbackToGW1 AT%Q*: STRING(50);
@@ -113,24 +114,36 @@ IF s4 AND NOT s5 AND trajectoryController.yControllerState = ControllerState.dri
 END_IF
 
 //	RückmeldungGW3 am Ziel abwarten
-IF s5 AND NOT s6 AND trajectoryController.yBoArrivedAtDestination THEN
-	s5 := 0; s6 := 1;
+IF s5 AND NOT s6a AND trajectoryController.yBoArrivedAtDestination THEN
+	s5 := 0; s6a := 1;
 	trajectoryController.xBoEnable := FALSE;
 	//	Greifersteuerung
-	Gripper.closeGripperCommand := TRUE;												// hier könnte noch slider und Lichtschranke abgefragt werden zur Sicherheit
+	Gripper.closeGripperCommand := TRUE;
+END_IF
+												// hier könnte noch slider und Lichtschranke abgefragt werden zur Sicherheit
+IF s6a AND NOT s6b AND NOT Gripper.partGripped THEN
+	s6a := 0; s6b := 1;	
 	//	RückmeldungGW1 Teil aufgenommen setzen
 	FeedbackToGW1 := 'Teil aufgenommen';
 	//	Fahrauftrag zu Lesekopf
 	TrajectoryController.setWaypointList(readAssigment.pointsFromSlotToReader);
 	trajectoryController.newWaypointListAvailable := TRUE;
+ELSIF s6a AND NOT s6b AND Gripper.partGripped THEN
+	Gripper.closeGripperCommand := FALSE;
+	wayPointList[0] := readAssigment.lastPointsToPickup[0];
+	wayPointList[1] := readAssigment.lastPointsToPickup[1];
+	wayPointList[2] := readAssigment.lastPointsToPickup[2];
+	TrajectoryController.setWaypointList(waypointList);
+	trajectoryController.newWaypointListAvailable := TRUE;
+	s6a := 0; s2 := 1;
 END_IF
 
 
 /////////////////////////////////////////////////////FahrtZumLesekopf/////////////////////////////////////////////////////////
 
 // 	RückmeldungGW3 Wegpunkte erhalten abwarten
-IF s6 AND NOT s7 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
-	s6 := 0; s7 := 1;
+IF s6b AND NOT s7 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
+	s6b := 0; s7 := 1;
 	trajectoryController.newWaypointListAvailable := FALSE;
 END_IF
 
@@ -457,9 +470,18 @@ END_IF
       <LineId Id="268" Count="0" />
       <LineId Id="125" Count="0" />
       <LineId Id="460" Count="0" />
+      <LineId Id="1006" Count="1" />
       <LineId Id="124" Count="0" />
+      <LineId Id="1009" Count="0" />
+      <LineId Id="1005" Count="0" />
       <LineId Id="126" Count="1" />
       <LineId Id="354" Count="1" />
+      <LineId Id="1010" Count="0" />
+      <LineId Id="1019" Count="0" />
+      <LineId Id="1018" Count="0" />
+      <LineId Id="1015" Count="2" />
+      <LineId Id="1013" Count="0" />
+      <LineId Id="1011" Count="0" />
       <LineId Id="122" Count="0" />
       <LineId Id="463" Count="0" />
       <LineId Id="290" Count="0" />

@@ -415,20 +415,6 @@
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{0A7316D4-BFFE-C731-DEA9-110616289DBB}" HideSubItems="true">matrix_300_real_T</Name>
-			<BitSize>19200</BitSize>
-			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-			<ArrayInfo>
-				<LBound>0</LBound>
-				<Elements>300</Elements>
-			</ArrayInfo>
-		</DataType>
-		<DataType>
-			<Name GUID="{7CC55797-31DD-5AB7-296E-2DB7BE6FD367}">int_T</Name>
-			<BitSize>32</BitSize>
-			<BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
-		</DataType>
-		<DataType>
 			<Name GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..2] OF LREAL</Name>
 			<BitSize>192</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
@@ -1473,7 +1459,7 @@
 		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1006">424de6000000000000007600000028000000100000000e000000010004000000000070000000000000000000000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffff788833338887ffff78883bb38887ffffffff3bb3ffffffffffff8778fffffffffffffffffffffffffffffffff999ffff78f78fffffffffff78f78ffff999ffff78f7888fffffffff78f78f78f999ffff78f78f78ffffffff78f7888ff999ffffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.214.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.200.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="2">
 				<Cpu BaseTime="1000"/>
@@ -4556,7 +4542,7 @@
 						</OwnerA>
 					</UnrestoredVarLinks>
 				</Module>
-				<Module Id="#x01010050" KeepUnrestoredLinks="2" ClassFactoryId="TE140x Module Vendor|simpleObserver2|0.0.0.18">
+				<Module Id="#x01010050" KeepUnrestoredLinks="2" ClassFactoryId="TE140x Module Vendor|simpleObserver2|0.0.0.1">
 					<Name>Object4 (simpleObserver2)</Name>
 					<ImageId>1000</ImageId>
 					<TmcDesc GUID="{4AFB6DB7-3994-EEF8-77F0-40A79A4D8923}">
@@ -4772,7 +4758,7 @@
 								<AreaNo AreaType="InputDst" CreateSymbols="true">0</AreaNo>
 								<Name>AdditionalInports</Name>
 								<ContextId>0</ContextId>
-								<ByteSize>128</ByteSize>
+								<ByteSize>120</ByteSize>
 								<Symbol>
 									<Name>TcModuleInput_Estimator1_K</Name>
 									<BitSize>576</BitSize>
@@ -4781,64 +4767,50 @@
 									<BitOffs>0</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>TcModuleInput_Estimator1_Reset</Name>
-									<BitSize>8</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+									<Name>TcModuleInput_InCameraPose</Name>
+									<BitSize>192</BitSize>
+									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
 									<PTCID>#x80000048</PTCID>
 									<BitOffs>576</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>TcModuleInput_Estimator1_cameraDelayCylces</Name>
-									<BitSize>8</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-000000000003}">SINT</BaseType>
-									<PTCID>#x80000049</PTCID>
-									<BitOffs>584</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>TcModuleInput_InCameraPose</Name>
-									<BitSize>192</BitSize>
-									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
-									<PTCID>#x80000050</PTCID>
-									<BitOffs>640</BitOffs>
-								</Symbol>
-								<Symbol>
 									<Name>TcModuleInput_InVThetaworld</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<PTCID>#x80000060</PTCID>
+									<BitOffs>768</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>TcModuleInput_InVXworld</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 									<PTCID>#x80000068</PTCID>
 									<BitOffs>832</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>TcModuleInput_InVXworld</Name>
+									<Name>TcModuleInput_InVYworld</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 									<PTCID>#x80000070</PTCID>
 									<BitOffs>896</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>TcModuleInput_InVYworld</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x80000078</PTCID>
-									<BitOffs>960</BitOffs>
 								</Symbol>
 							</DataArea>
 							<DataArea>
 								<AreaNo AreaType="OutputSrc" CreateSymbols="true">1</AreaNo>
 								<Name>AdditionalOutports</Name>
 								<ContextId>0</ContextId>
-								<ByteSize>40</ByteSize>
+								<ByteSize>56</ByteSize>
 								<Symbol>
-									<Name>TcModuleOutput_OutEstimatedPose</Name>
+									<Name>TcModuleOutput_DEBUG</Name>
 									<BitSize>192</BitSize>
 									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
 									<PTCID>#x81000000</PTCID>
 									<BitOffs>0</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>TcModuleOutput_ThetaDenormalized</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<Name>TcModuleOutput_OutEstimatedPose</Name>
+									<BitSize>192</BitSize>
+									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
 									<PTCID>#x81000018</PTCID>
 									<BitOffs>192</BitOffs>
 								</Symbol>
@@ -4846,8 +4818,8 @@
 									<Name>TcModuleOutput_version</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x81000020</PTCID>
-									<BitOffs>256</BitOffs>
+									<PTCID>#x81000030</PTCID>
+									<BitOffs>384</BitOffs>
 								</Symbol>
 							</DataArea>
 							<DataArea>
@@ -4863,14 +4835,14 @@
 									<BitOffs>0</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>Odometry</Name>
+									<Name>CameraDelay</Name>
 									<BitSize>192</BitSize>
 									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
 									<PTCID>#x82000018</PTCID>
 									<BitOffs>192</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>CameraDelay</Name>
+									<Name>Odometry</Name>
 									<BitSize>192</BitSize>
 									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
 									<PTCID>#x82000030</PTCID>
@@ -4884,42 +4856,42 @@
 									<BitOffs>576</BitOffs>
 								</Symbol>
 								<Symbol>
+									<Name>Switch</Name>
+									<BitSize>192</BitSize>
+									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
+									<PTCID>#x82000090</PTCID>
+									<BitOffs>1152</BitOffs>
+								</Symbol>
+								<Symbol>
 									<Name>InVXworld</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x82000090</PTCID>
-									<BitOffs>1152</BitOffs>
+									<PTCID>#x820000a8</PTCID>
+									<BitOffs>1344</BitOffs>
 								</Symbol>
 								<Symbol>
 									<Name>InVYworld</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x82000098</PTCID>
-									<BitOffs>1216</BitOffs>
+									<PTCID>#x820000b0</PTCID>
+									<BitOffs>1408</BitOffs>
 								</Symbol>
 								<Symbol>
 									<Name>InVThetaworld</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x820000a0</PTCID>
-									<BitOffs>1280</BitOffs>
+									<PTCID>#x820000b8</PTCID>
+									<BitOffs>1472</BitOffs>
 								</Symbol>
 								<Symbol>
 									<Name>Sum</Name>
-									<BitSize>192</BitSize>
-									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
-									<PTCID>#x820000a8</PTCID>
-									<BitOffs>1344</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>Sum1</Name>
 									<BitSize>192</BitSize>
 									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
 									<PTCID>#x820000c0</PTCID>
 									<BitOffs>1536</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>Switch</Name>
+									<Name>Sum1</Name>
 									<BitSize>192</BitSize>
 									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
 									<PTCID>#x820000d8</PTCID>
@@ -4933,25 +4905,11 @@
 									<BitOffs>1920</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>cameraDelayCylces</Name>
-									<BitSize>8</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-000000000003}">SINT</BaseType>
-									<PTCID>#x82000108</PTCID>
-									<BitOffs>2112</BitOffs>
-								</Symbol>
-								<Symbol>
-									<Name>Reset</Name>
-									<BitSize>8</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
-									<PTCID>#x82000109</PTCID>
-									<BitOffs>2120</BitOffs>
-								</Symbol>
-								<Symbol>
 									<Name>newCamDataArrived</Name>
 									<BitSize>8</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
-									<PTCID>#x8200010a</PTCID>
-									<BitOffs>2128</BitOffs>
+									<PTCID>#x82000108</PTCID>
+									<BitOffs>2112</BitOffs>
 								</Symbol>
 							</DataArea>
 							<DataArea>
@@ -4971,11 +4929,11 @@
 								<AreaNo AreaType="Internal" CreateSymbols="true">4</AreaNo>
 								<Name>simpleObserver2_DW1</Name>
 								<ContextId>0</ContextId>
-								<ByteSize>2424</ByteSize>
+								<ByteSize>360</ByteSize>
 								<Symbol>
 									<Name>CameraDelay_DSTATE</Name>
-									<BitSize>19200</BitSize>
-									<BaseType GUID="{0A7316D4-BFFE-C731-DEA9-110616289DBB}">matrix_300_real_T</BaseType>
+									<BitSize>2688</BitSize>
+									<BaseType GUID="{D66A6CF3-92AF-F198-AE29-9C504D923AF2}">matrix_42_real_T</BaseType>
 									<PTCID>#x84000000</PTCID>
 									<BitOffs>0</BitOffs>
 								</Symbol>
@@ -4983,21 +4941,8 @@
 									<Name>oldCamData</Name>
 									<BitSize>192</BitSize>
 									<BaseType GUID="{610A2D24-A761-AE0B-B518-D70554B2A821}">matrix_3_real_T</BaseType>
-									<PTCID>#x84000960</PTCID>
-									<BitOffs>19200</BitOffs>
-								</Symbol>
-							</DataArea>
-							<DataArea>
-								<AreaNo AreaType="Internal" CreateSymbols="true">5</AreaNo>
-								<Name>simpleObserver2_DW3</Name>
-								<ContextId>0</ContextId>
-								<ByteSize>4</ByteSize>
-								<Symbol>
-									<Name>Integrator_IWORK</Name>
-									<BitSize>32</BitSize>
-									<BaseType GUID="{7CC55797-31DD-5AB7-296E-2DB7BE6FD367}">int_T</BaseType>
-									<PTCID>#x85000000</PTCID>
-									<BitOffs>0</BitOffs>
+									<PTCID>#x84000150</PTCID>
+									<BitOffs>2688</BitOffs>
 								</Symbol>
 							</DataArea>
 						</DataAreas>
@@ -5490,10 +5435,6 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.batteryVoltageRaw</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
 							<Name>Fahrauftrag.xPointList</Name>
 							<Comment><![CDATA[xKoordinatenliste]]></Comment>
 							<Type GUID="{160298A9-1AA9-6076-6FE5-D331BEDC2A7F}">ARRAY [0..100] OF LREAL</Type>
@@ -5506,6 +5447,10 @@
 						<Var>
 							<Name>IrDistanceSensors.distanceRaw</Name>
 							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.batteryVoltageRaw</Name>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.supplyCurrentRaw</Name>
@@ -5521,12 +5466,12 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>Gripper.closeGripperFromSimulink</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
 							<Name>Gripper.partGripped</Name>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.closeGripperFromSimulink</Name>
+							<Type>LREAL</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" ContextId="2" AreaNo="33">
@@ -5566,7 +5511,8 @@
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.FeedbackToGW1</Name>
-							<Comment><![CDATA[Schnittstelle zum MQTT_PRG]]></Comment>
+							<Comment><![CDATA[pieceGripped AT%I* : BOOL;
+Schnittstelle zum MQTT_PRG]]></Comment>
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
@@ -5721,7 +5667,7 @@
 			<PlcAuxTask Affinity="#x00000002"/>
 		</Plc>
 		<Io>
-			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="5.53.205.214.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
+			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="5.53.205.200.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
 				<Name>Gerät 1 (EtherCAT)</Name>
 				<AddressInfo>
 					<Ccat>
@@ -8603,6 +8549,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Digitale Eingänge A4 (EL1008)">
 				<Link VarA="ControlTask Inputs^MotorDrivers.bumper" VarB="Channel 3^Input"/>
+				<Link VarA="PlcTask Inputs^Gripper.partGripped" VarB="Channel 6^Input"/>
 				<Link VarA="PlcTask Inputs^Gripper.slider" VarB="Channel 5^Input"/>
 				<Link VarA="PlcTask Inputs^PowerManager.shutdownButton" VarB="ShutdownRequested (S11)^Input"/>
 			</OwnerB>
