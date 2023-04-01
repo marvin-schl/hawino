@@ -5450,6 +5450,15 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
+							<Name>Fahrauftrag.finished_ASearch</Name>
+							<Comment><![CDATA[TODO]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.shutdownButton</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>Fahrauftrag.TrajectoryController.yBoArrivedAtDestination</Name>
 							<Comment><![CDATA[ TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
 							<Type>BOOL</Type>
@@ -5477,13 +5486,12 @@
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
-							<Name>Fahrauftrag.finished_ASearch</Name>
-							<Comment><![CDATA[TODO]]></Comment>
+							<Name>PowerManager.requestShutdown</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.shutdownButton</Name>
-							<Type>BOOL</Type>
+							<Name>PowerManager.batteryVoltageRaw</Name>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.xPointList</Name>
@@ -5500,14 +5508,6 @@
 							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.batteryVoltageRaw</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.requestShutdown</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>PowerManager.supplyCurrentRaw</Name>
 							<Type>INT</Type>
 						</Var>
@@ -5521,12 +5521,12 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>Gripper.partGripped</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>Gripper.closeGripperFromSimulink</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.partGripped</Name>
+							<Type>BOOL</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" ContextId="2" AreaNo="33">
@@ -5538,6 +5538,15 @@
 						</Var>
 						<Var>
 							<Name>HAWino.initDone</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.resetVar</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.enable_ASearch</Name>
+							<Comment><![CDATA[enable signal for a search]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -5561,12 +5570,7 @@
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
-							<Name>Fahrauftrag.resetVar</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.enable_ASearch</Name>
-							<Comment><![CDATA[enable signal for a search]]></Comment>
+							<Name>PowerManager.shutdownTrigger</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -5615,10 +5619,6 @@
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.shutdownTrigger</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>PowerManager.batteryVoltage_V</Name>
 							<Type>REAL</Type>
 						</Var>
@@ -5627,13 +5627,17 @@
 							<Type>REAL</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.stMqtt_HAWino_IN</Name>
+							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
+							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
+						</Var>
+						<Var>
 							<Name>Gripper.driveEnable</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.stMqtt_HAWino_IN</Name>
-							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
-							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
+							<Name>Gripper.driveVelocity</Name>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.sliderToSimulink</Name>
@@ -5642,10 +5646,6 @@
 						<Var>
 							<Name>Gripper.partInGripperToSimulink</Name>
 							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.driveVelocity</Name>
-							<Type>INT</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2022-04-26T16:44:07">
@@ -8580,7 +8580,6 @@ Bit1: Value smaller than Limit2]]></Comment>
 		<MappingInfo Identifier="{08502002-0060-0201-0120-500820000101}" Id="#x020300f0" Watchdog="04000000280000000400000004000000"/>
 		<MappingInfo Identifier="{08502003-0010-0304-0020-500810000403}" Id="#x02030020" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{08502003-0040-0304-0020-500840000403}" Id="#x02030060" Watchdog="04000000040000000400000004000000"/>
-		<MappingInfo Identifier="{08502003-0080-0201-0220-500860000101}" Id="#x02030070" Watchdog="08000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-2003-0850-1000-010102205008}" Id="#x020300d0" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-0060-0201-1000-010120000101}" Id="#x020300b0" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIPC^HAWino^HAWino Instance">

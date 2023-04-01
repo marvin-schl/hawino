@@ -10,8 +10,8 @@ VAR
 	readAssigment: ReadAssigment;
 	TrajectoryController: TrajectoryControl;
 	
-	//Hilfsvariablen vorübergehend
 	wayPointList : ARRAY[0..100] OF RobotPoseSimple;
+	actualCamX, actualCamY : LREAL;
 	
 	//Schnittstelle zum MQTT_PRG
 	FeedbackToGW1 AT%Q*: STRING(50);
@@ -34,7 +34,12 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//Ablauf einer Fahrt:
+      <ST><![CDATA[//Camera damit immer Daten da:
+IF camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x <> 0 AND camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y <> 0 THEN
+	actualCamX := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
+	actualCamY := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;
+END_IF
+//Ablauf einer Fahrt:
 //Init
 IF sStart AND NOT s0 THEN
 	sStart := 0; s0 := 1;
@@ -63,9 +68,9 @@ END_IF
 IF s1a AND NOT s1b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 THEN
 	s1a := 0; s1b := 1;
 	enable_ASearch := TRUE;
-ELSE
-	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
-	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;
+ELSIF s1a AND NOT s1b THEN
+	xRobotStartposition := actualCamX;
+	yRobotStartposition := actualCamY;
 END_IF
 
 //Bahnplanung
@@ -154,7 +159,7 @@ IF s10 AND NOT s11a AND StatusFromGW1 = 'WerkstueckAusgelesen' THEN
 	resetVar := TRUE;
 	
 	//Auftrag auswerten
-	EndNode   := 94;															//todo in matlab
+	EndNode   := 92;															//todo in matlab
 	xEndvalue := readAssigment.storageLocation.x;
 	yEndvalue := readAssigment.storageLocation.y;
 	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
@@ -164,9 +169,9 @@ END_IF
 IF s11a AND NOT s11b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 THEN
 	s11a := 0; s11b := 1;
 	enable_ASearch := TRUE;
-ELSE
-	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
-	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;
+ELSIF s11a AND NOT s11b THEN
+	xRobotStartposition := actualCamX;
+	yRobotStartposition := actualCamY;
 END_IF
 
 //Bahnplanung
@@ -248,7 +253,7 @@ END_IF
 
 //	RückmeldungGW3 am Ziel abwarten
 IF s20 AND NOT s21 AND trajectoryController.yBoArrivedAtDestination THEN
-	s20 := 0; s21 := 1;
+	s20 := 0; //s21 := 1;
 	trajectoryController.xBoEnable := FALSE;
 	//	Greifersteuerung
 	Gripper.closeGripperCommand := FALSE;																	//----------todo
@@ -391,6 +396,9 @@ END_IF
 ]]></ST>
     </Implementation>
     <LineIds Name="Fahrauftrag">
+      <LineId Id="999" Count="2" />
+      <LineId Id="1003" Count="0" />
+      <LineId Id="1002" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="406" Count="0" />
       <LineId Id="191" Count="0" />
