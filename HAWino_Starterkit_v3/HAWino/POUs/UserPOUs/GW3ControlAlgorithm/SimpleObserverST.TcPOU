@@ -29,9 +29,9 @@ VAR
 	delayedPosition: ARRAY [0..140] OF RobotPoseSimple;
 	
 	
-	K : ARRAY [0..2,0..2] OF LREAL 		:= [12, 0 ,0,
-									  		0, 12, 0,
-									  		0, 0, 12];
+	K : ARRAY [0..2,0..2] OF LREAL 		:= [18, 0 ,0,
+									  		0, 18, 0,
+									  		0, 0, 18];
 	
 	// TEST
 	//systime : NT_GetTime;
