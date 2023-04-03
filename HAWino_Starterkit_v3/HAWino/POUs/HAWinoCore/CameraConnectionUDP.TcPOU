@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="CameraConnectionUDP" Id="{3b4b2ae9-c069-42e3-9b69-f42439287066}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'c++_compatible'}
 FUNCTION_BLOCK CameraConnectionUDP IMPLEMENTS ITcIoUdpProtocolRecv
@@ -129,7 +129,8 @@ END_VAR
 VAR 
 	i : INT;
 	x,y,theta,e : LREAL;
-	
+	hou, minu, sek : LREAL;
+	DataUDP : STRING;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -160,10 +161,19 @@ IF nData = 448 THEN
 		robotPosition[i].e := (e);
 			
 	END_FOR
+	memcpy( ADR(HH), pData + 256, 8);						// Hours
+	memcpy( ADR(MM), pData + 264, 8);						// Minutes
+	memcpy( ADR(SS), pData + 272, 8);						// Seconds
+//	memcpy( ADR(hou), pData + 64, 8);						// Hours
+//	memcpy( ADR(minu), pData + 200, 8);						// Minutes
+//	memcpy( ADR(sek), pData + 208, 8);						// Seconds
 	
-	memcpy( ADR(HH), pData + 192, 8);						// Hours
-	memcpy( ADR(MM), pData + 200, 8);						// Minutes
-	memcpy( ADR(SS), pData + 208, 8);						// Seconds
+//	HH := (hou);
+//	MM := (minu);
+//	SS := (sek);
+
+//	DataUDP := pData^;
+
 END_IF
 
 
@@ -288,9 +298,14 @@ METHOD TcRelease : UDINT
       <LineId Id="190" Count="0" />
       <LineId Id="91" Count="0" />
       <LineId Id="62" Count="0" />
-      <LineId Id="168" Count="0" />
-      <LineId Id="124" Count="1" />
+      <LineId Id="222" Count="1" />
       <LineId Id="123" Count="0" />
+      <LineId Id="213" Count="1" />
+      <LineId Id="211" Count="0" />
+      <LineId Id="215" Count="3" />
+      <LineId Id="220" Count="0" />
+      <LineId Id="219" Count="0" />
+      <LineId Id="212" Count="0" />
       <LineId Id="63" Count="0" />
       <LineId Id="54" Count="1" />
       <LineId Id="57" Count="0" />

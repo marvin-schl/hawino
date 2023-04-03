@@ -51,10 +51,25 @@ VAR
 	kalmanPose AT%I*  	: ARRAY [0..2] OF LREAL;
 	i: INT;
 	
+	timestampNTPTcCom AT%I* : LINT;
+	CamDelay : REAL;
+	ntpTimeStruct : TIMESTRUCT;
+	CamHH, CamMM, CamSS AT%I*: LREAL;
+	test: INT;
+	CamMS: INT;
+	ntpSS :LREAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//transform roboter velocities into world velocities and pass them to Simulink
+      <ST><![CDATA[ntpTimeStruct := FILETIME64_TO_SYSTEMTIME(fileTime:=timestampNTPTcCom);
+
+CamMS:= REAL_TO_INT(CamSS*1000) MOD 1000;
+ntpSS := WORD_TO_LREAL(ntpTimeStruct.wSecond) + (WORD_TO_LREAL(ntpTimeStruct.wMilliseconds)/1000);
+IF camSS <> 0 THEN
+	camDelay := (ntpSS - (camSS - 6.092028379440308))*1000;
+END_IF
+//INT_TO_TIME(timestampNTPTcCom);
+//transform roboter velocities into world velocities and pass them to Simulink
 Robot2World( 
 	vx_robot 	:= xVxRobot,
 	vy_robot 	:= xVyRobot,
@@ -97,6 +112,14 @@ yKalmanObservedPose.y := lpfilter[1].y;
 yObserverdPose := yKalmanObservedPose;]]></ST>
     </Implementation>
     <LineIds Name="SimpleObserver">
+      <LineId Id="380" Count="0" />
+      <LineId Id="387" Count="0" />
+      <LineId Id="389" Count="0" />
+      <LineId Id="395" Count="0" />
+      <LineId Id="392" Count="0" />
+      <LineId Id="391" Count="0" />
+      <LineId Id="393" Count="0" />
+      <LineId Id="381" Count="0" />
       <LineId Id="68" Count="0" />
       <LineId Id="52" Count="0" />
       <LineId Id="61" Count="6" />

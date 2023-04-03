@@ -464,15 +464,6 @@
 			<BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
 		</DataType>
 		<DataType>
-			<Name GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..2] OF LREAL</Name>
-			<BitSize>192</BitSize>
-			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-			<ArrayInfo>
-				<LBound>0</LBound>
-				<Elements>3</Elements>
-			</ArrayInfo>
-		</DataType>
-		<DataType>
 			<Name GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}" AutoDeleteType="true">RobotPoseSimple</Name>
 			<BitSize>192</BitSize>
 			<SubItem>
@@ -523,6 +514,15 @@
 			<ArrayInfo>
 				<LBound>0</LBound>
 				<Elements>101</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..2] OF LREAL</Name>
+			<BitSize>192</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>3</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
@@ -1454,7 +1454,7 @@
 		<ImageData Id="1006">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1007">424de6000000000000007600000028000000100000000e000000010004000000000070000000000000000000000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffff788833338887ffff78883bb38887ffffffff3bb3ffffffffffff8778fffffffffffffffffffffffffffffffff999ffff78f78fffffffffff78f78ffff999ffff78f7888fffffffff78f78f78f999ffff78f78f78ffffffff78f7888ff999ffffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.200.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.207.184.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="2">
 				<Cpu BaseTime="1000"/>
@@ -4644,9 +4644,9 @@
 							<Context>
 								<Id>1</Id>
 								<ManualConfig>
-									<OTCID>#x02010030</OTCID>
+									<OTCID>#x02010070</OTCID>
 								</ManualConfig>
-								<Priority>20</Priority>
+								<Priority>1</Priority>
 								<CycleTime>10000000</CycleTime>
 							</Context>
 						</Contexts>
@@ -5500,7 +5500,7 @@ Time at the client when the reply arrived from the server;]]></Comment>
 						<InterfacePointerValues>
 							<Value>
 								<Name>CyclicCaller</Name>
-								<OTCID>#x02010030</OTCID>
+								<OTCID>#x02010070</OTCID>
 							</Value>
 						</InterfacePointerValues>
 					</TmcDesc>
@@ -6306,16 +6306,6 @@ Time at the client when the reply arrived from the server;]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>ControlPRG.observer.estimatedPoseFromSimlink</Name>
-							<Comment><![CDATA[from Simulink]]></Comment>
-							<Type GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}">ARRAY [0..2] OF LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.observer.kalmanPose</Name>
-							<Comment><![CDATA[TEMPORARY++++++++++++++++++++++++++++++++++++++++++++++++++++++++]]></Comment>
-							<Type GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}">ARRAY [0..2] OF LREAL</Type>
-						</Var>
-						<Var>
 							<Name>ControlPRG.robot.vXfromRobot</Name>
 							<Comment><![CDATA[outputs from robot]]></Comment>
 							<Type>LREAL</Type>
@@ -6342,6 +6332,32 @@ Time at the client when the reply arrived from the server;]]></Comment>
 							<Name>ControlPRG.waypointList</Name>
 							<Comment><![CDATA[ implemented, Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)]]></Comment>
 							<Type GUID="{57D1290D-8922-6C29-A5EB-E802603DE228}">ARRAY [0..100] OF RobotPoseSimple</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.estimatedPoseFromSimlink</Name>
+							<Comment><![CDATA[from Simulink]]></Comment>
+							<Type GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}">ARRAY [0..2] OF LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.kalmanPose</Name>
+							<Comment><![CDATA[TEMPORARY++++++++++++++++++++++++++++++++++++++++++++++++++++++++]]></Comment>
+							<Type GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}">ARRAY [0..2] OF LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.timestampNTPTcCom</Name>
+							<Type>LINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.CamHH</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.CamMM</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.CamSS</Name>
+							<Type>LREAL</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -6390,6 +6406,39 @@ Time at the client when the reply arrived from the server;]]></Comment>
 							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.robot.vXtoRobot</Name>
+							<Comment><![CDATA[inputs to robot]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vYtoRobot</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vThetaToRobot</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yBoDriving</Name>
+							<Comment><![CDATA[ implemented, TRUE, wenn Roboter fährt				]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yBoArrivedAtDestination</Name>
+							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yUintWaypointIndex</Name>
+							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yRPposition</Name>
+							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
+							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
+						</Var>
+						<Var>
 							<Name>ControlPRG.observer.cameraPoseToSimulink</Name>
 							<Comment><![CDATA[to Simulink]]></Comment>
 							<Type GUID="{4D3DC7C8-81AE-A753-B20D-E9008BBCE70B}">ARRAY [0..3] OF LREAL</Type>
@@ -6429,39 +6478,6 @@ Time at the client when the reply arrived from the server;]]></Comment>
 						<Var>
 							<Name>ControlPRG.observer.UseSimpleNotKalmanToSimulink</Name>
 							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vXtoRobot</Name>
-							<Comment><![CDATA[inputs to robot]]></Comment>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vYtoRobot</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vThetaToRobot</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yBoDriving</Name>
-							<Comment><![CDATA[ implemented, TRUE, wenn Roboter fährt				]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yBoArrivedAtDestination</Name>
-							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yUintWaypointIndex</Name>
-							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yRPposition</Name>
-							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
-							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="1" ContextId="1" AreaNo="16">
@@ -6857,7 +6873,7 @@ Time at the client when the reply arrived from the server;]]></Comment>
 			<PlcAuxTask Affinity="#x00000002"/>
 		</Plc>
 		<Io>
-			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="5.53.205.200.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
+			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="5.53.207.184.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
 				<Name>Gerät 1 (EtherCAT)</Name>
 				<AddressInfo>
 					<Ccat>
@@ -9705,6 +9721,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500800205008}" Id="#x02030050"/>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500810000403}" Id="#x02030010"/>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500842000403}" Id="#x02030040"/>
+		<MappingInfo Identifier="{00000000-2001-0850-0020-500860000101}" Id="#x02030070"/>
 		<MappingInfo Identifier="{00000000-2002-0850-0020-500800205008}" Id="#x02030090"/>
 		<MappingInfo Identifier="{00000000-2002-0850-0120-500831000403}" Id="#x02030030"/>
 		<MappingInfo Identifier="{00000000-2003-0850-0020-500800205008}" Id="#x020300e0"/>
@@ -9759,6 +9776,9 @@ Bit1: Value smaller than Limit2]]></Comment>
 			</OwnerB>
 			<OwnerB Name="TIPC^HAWino^HAWino Instance">
 				<Link VarA="ControlTask Inputs^ControlPRG.newWaypointListAvailable" VarB="PlcTask Outputs^GW2DummyPRG.roboter.newWaypointListAvailable"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.observer.CamHH" VarB="PlcTask Outputs^Camera.cameraData.HH"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.observer.CamMM" VarB="PlcTask Outputs^Camera.cameraData.MM"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.observer.CamSS" VarB="PlcTask Outputs^Camera.cameraData.SS"/>
 				<Link VarA="ControlTask Inputs^ControlPRG.robot.vThetaFromRobot" VarB="ControlTask Outputs^WheelEncoders.vthetaCartesianFromMotors"/>
 				<Link VarA="ControlTask Inputs^ControlPRG.robot.vXfromRobot" VarB="ControlTask Outputs^WheelEncoders.vXCartesianFromMotors"/>
 				<Link VarA="ControlTask Inputs^ControlPRG.robot.vYfromRobot" VarB="ControlTask Outputs^WheelEncoders.vYCartesianFromMotors"/>
@@ -9810,6 +9830,9 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="ControlTask Outputs^ControlPRG.observer.vXworldToSimulink" VarB="AdditionalInports^TcModuleInput_InVXworld"/>
 				<Link VarA="ControlTask Outputs^ControlPRG.observer.vYtoRobotWorldToSimulink" VarB="AdditionalInports^TcModuleInput_vyToRobot"/>
 				<Link VarA="ControlTask Outputs^ControlPRG.observer.vYworldToSimulink" VarB="AdditionalInports^TcModuleInput_InVYworld"/>
+			</OwnerB>
+			<OwnerB Name="TIRC^TcCOM Objects^Object5 (TcNtpExternalTimeProvider)">
+				<Link VarA="ControlTask Inputs^ControlPRG.observer.timestampNTPTcCom" VarB="Outputs^nExtTime"/>
 			</OwnerB>
 			<OwnerB Name="TIRC^TcCOM Objects^Object6 (simpleObserver2withKalman)">
 				<Link VarA="ControlTask Inputs^ControlPRG.observer.estimatedPoseFromSimlink" VarB="AdditionalOutports^TcModuleOutput_OutEstimatedPose"/>
