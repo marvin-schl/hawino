@@ -35,9 +35,9 @@ VAR
 	resetToSimulink					AT%Q*   : BOOL	:= FALSE;
 	cycleTimeDelay					AT%Q* 	: SINT	:= 14;
 	pulseGenerator: TP;
-	K AT%Q*: ARRAY [0..2,0..2] OF LREAL := [1, 0 ,0,
-									  		0, 1, 0,
-									  		0, 0, 1];
+	K AT%Q*: ARRAY [0..2,0..2] OF LREAL := [15, 0 ,0,
+									  		0, 15, 0,
+									  		0, 0, 15];
 	
 	//from Simulink
 	estimatedPoseFromSimlink AT%I* 	: ARRAY [0..2] OF LREAL;

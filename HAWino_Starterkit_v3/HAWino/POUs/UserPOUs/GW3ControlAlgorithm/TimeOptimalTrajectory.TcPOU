@@ -9,16 +9,14 @@ END_VAR
 VAR_OUTPUT
 	finished			: BOOL 				:= FALSE;
 	ready				: BOOL				:= FALSE;
-	pathReady			:BOOL				:= FALSE;
+	pathReady			: BOOL				:= FALSE;
 	referencePose		: RobotPoseSimple;
 	referenceVelocities	: RobotPoseSimple;
 	WPLidx 				: INT 				:= 0;
-	startPoint			: RobotPoseSimple;
-	endPoint			: RobotPoseSimple;
+	path				: Path;
 END_VAR
 VAR
 	trajectoryPlanner	: TrajectoryPlanner;
-	path				: Path;
 	wayPointListRaw		: ARRAY [0..100] OF RobotPoseSimple;
 	cnt					: INT 				:= 0;
 	
@@ -37,12 +35,9 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[startPoint  := path.startPointVal;
-endPoint 	:= path.endPointVal;
-
-ready := trajectoryPlanner.trajectoriesReady;
+      <ST><![CDATA[ready := trajectoryPlanner.trajectoriesReady;
 pathReady := path.ready;
-IF cnt = 5 AND NOT finished THEN
+IF cnt = LREAL_TO_INT(samplingTime/Var_HAWIno.CONTROLLER_CYCLE_TIME) AND NOT finished THEN
 	WPLidx := WPLidx +1;
 	cnt := 0;
 END_IF
@@ -140,7 +135,6 @@ IF path.ready THEN
       </Implementation>
     </Method>
     <LineIds Name="TimeOptimalTrajectory">
-      <LineId Id="242" Count="2" />
       <LineId Id="124" Count="0" />
       <LineId Id="279" Count="0" />
       <LineId Id="125" Count="6" />

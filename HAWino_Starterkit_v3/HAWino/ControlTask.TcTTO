@@ -2,13 +2,16 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <Task Name="ControlTask" Id="{7ad294b1-a7c5-4741-8178-893977b10bea}">
     <!--CycleTime in micro seconds.-->
-    <CycleTime>10000</CycleTime>
+    <CycleTime>2000</CycleTime>
     <Priority>1</Priority>
     <PouCall>
       <Name>MotorDrivers</Name>
     </PouCall>
     <PouCall>
       <Name>WheelEncoders</Name>
+    </PouCall>
+    <PouCall>
+      <Name>ControlPRG</Name>
     </PouCall>
     <TaskFBGuid>{c6745a89-8caf-4d4b-b655-109b4dd73381}</TaskFBGuid>
     <Fb_init>{145f5444-ea53-4249-a646-be3f7c411ce3}</Fb_init>

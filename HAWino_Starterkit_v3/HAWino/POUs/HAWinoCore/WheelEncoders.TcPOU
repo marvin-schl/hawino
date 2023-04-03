@@ -6,7 +6,7 @@ VAR
 zaehler : UINT := 0;
 
 //ENC Daten Differenzieren für Geschwindigkeit
-diffConst:LREAL:=0.01;//SECONDS
+diffConst:LREAL := Var_HAWIno.CONTROLLER_CYCLE_TIME;//SECONDS
 encDataOldMotor1:UINT:=0;
 encDataOldMotor2:UINT:=0;
 encDataOldMotor3:UINT:=0;

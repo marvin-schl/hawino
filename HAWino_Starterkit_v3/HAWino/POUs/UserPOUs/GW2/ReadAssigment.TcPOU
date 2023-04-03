@@ -11,6 +11,7 @@ VAR_OUTPUT
 	lastPointsToStorage : ARRAY[0..2] OF RobotPoseSimple;		//Weg zum Ablageort (letzte Punkte)
 	pointsFromReaderToSlot : ARRAY[0..100] OF RobotPoseSimple;	//Weg vom Abmelden zur Ablage
 	lastNodePickUp, lastNodeStorage, pickupLocation, readerCheckOut, readerCheckIn, storageLocation : RobotPoseSimple;
+	xStartposition, yStartposition : LREAL;
 END_VAR
 VAR
 	Failed : BOOL := FALSE;
@@ -242,22 +243,30 @@ END_IF
 //lastPointsToPickup[0] := lastNodePickUp;
 lastPointsToPickup[0] := ToRobotPoseSimple(x := lastNodePickUp.x, y := pickupLocation.y, theta := pickupLocation.theta);
 lastPointsToPickup[1] := pickupLocation;
+lastPointsToPickup[2] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 
 //erstellen 3 Wegpunkte für fahren von Tasche zu RFID Leser
 pointsFromSlotToReader[0] := ToRobotPoseSimple(x := lastNodePickUp.x, y := pickupLocation.y, theta := pickupLocation.theta);
 pointsFromSlotToReader[1] := ToRobotPoseSimple(x := lastNodePickUp.x, y := readerCheckOut.y, theta := readerCheckOut.theta);
 pointsFromSlotToReader[2] := readerCheckOut;
+pointsFromSlotToReader[3] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 
 //Ablageort (3 Punkte) an Wegpunktliste anfügen (Ankunft Reader)
 //lastPointsToStorage[0] := lastNodeStorage;
 lastPointsToStorage[0] := ToRobotPoseSimple(x := lastNodeStorage.x, y := readerCheckIn.y, theta := readerCheckIn.theta);
 lastPointsToStorage[1] := readerCheckIn;
+lastPointsToStorage[2] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 
 //3 Wegpunkte von RFID Leser zu Ablageort
 pointsFromReaderToSlot[0] := ToRobotPoseSimple(x := lastNodeStorage.x, y := readerCheckIn.y, theta := readerCheckIn.theta);
 pointsFromReaderToSlot[1] := ToRobotPoseSimple(x := lastNodeStorage.x, y := storageLocation.y, theta := storageLocation.theta);
 pointsFromReaderToSlot[2] := storageLocation;
+pointsFromReaderToSlot[3] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 
+
+//Kameradaten auslesen für aktuelle Position
+//xStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;		//ungleich 0 abfangen
+//yStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;		//ungleich 0 abfangen
 ]]></ST>
     </Implementation>
     <LineIds Name="ReadAssigment">
@@ -421,16 +430,23 @@ pointsFromReaderToSlot[2] := storageLocation;
       <LineId Id="130" Count="0" />
       <LineId Id="145" Count="0" />
       <LineId Id="134" Count="1" />
+      <LineId Id="429" Count="0" />
       <LineId Id="127" Count="1" />
       <LineId Id="137" Count="0" />
       <LineId Id="63" Count="0" />
-      <LineId Id="138" Count="1" />
+      <LineId Id="138" Count="0" />
+      <LineId Id="430" Count="0" />
+      <LineId Id="139" Count="0" />
       <LineId Id="59" Count="0" />
       <LineId Id="140" Count="2" />
+      <LineId Id="431" Count="0" />
       <LineId Id="100" Count="0" />
       <LineId Id="99" Count="0" />
       <LineId Id="146" Count="2" />
+      <LineId Id="432" Count="0" />
+      <LineId Id="409" Count="1" />
       <LineId Id="392" Count="0" />
+      <LineId Id="412" Count="1" />
       <LineId Id="143" Count="0" />
     </LineIds>
   </POU>

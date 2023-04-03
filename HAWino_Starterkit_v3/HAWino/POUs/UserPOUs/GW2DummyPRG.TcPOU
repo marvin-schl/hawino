@@ -14,14 +14,12 @@ VAR
 	circle: BOOL	:= FALSE;
 	square: BOOL	:= FALSE;
 	point: BOOL 	:= FALSE;
-	cyclic: BOOL 	:= FALSE;
-	station : BOOL  := FALSE;
 	enable: BOOL 	:= FALSE;
+	cyclic: BOOL	:= FALSE;
 	
+	wpl: ARRAY [0..100] OF RobotPoseSimple;
 	state: INT := 0;
 	toStation: BOOL := TRUE;
-	wpl: ARRAY [0..100] OF RobotPoseSimple;
-
 	//Point
 	xRef: LREAL 	:= 0;
 	yRef: LREAL 	:= 0;
@@ -38,19 +36,14 @@ ELSIF square THEN
 	wpl := generateWPLRect();
 ELSIF point THEN
 	wpl := generateWPLPoint();
-ELSIF station THEN
-	wpl := generateWPLStation();
 ELSIF cyclic THEN
 	driveCyclic();
 ELSIF set THEN
 	roboter.setWaypointList(wpl);
-	IF roboter.yControllerState = ControllerState.calcTrajectory THEN
+	IF roboter.yControllerState = ControllerState.setTrajectory THEN
 		set := FALSE;
 	END_IF
 END_IF
-
-
-
 
 ]]></ST>
     </Implementation>
@@ -146,11 +139,11 @@ generateWPLPoint := wpl;]]></ST>
     <Method Name="generateWPLRect" Id="{15904306-5952-490d-bc55-51a6d5a51035}">
       <Declaration><![CDATA[METHOD generateWPLRect : ARRAY[0..100] OF RobotPoseSimple
 VAR
-	RechteckX: ARRAY[0..6] OF LREAL := [5000,5000,2000,3000,1500,1500, -1];
-	RechteckY: ARRAY[0..6] OF LREAL := [1500,2000,2000,3000,1500,2000, -1];
-	//RechteckX: ARRAY[0..10] OF LREAL := [1000,3000,	5000,5000,5000,3000,1000,1000,1000, -1];
-	//RechteckY: ARRAY[0..10] OF LREAL := [1000,1000,	1000,1500,2000,2000,2000,1500,1000, -1];
-	Theta:	   ARRAY[0..6] OF LREAL := [1500,2000,2000,2000,1500, pi, -1];
+	//RechteckX: ARRAY[0..6] OF LREAL := [5000,5000,2000,3000,1500,1500, -1];
+	//RechteckY: ARRAY[0..6] OF LREAL := [1500,2000,2000,3000,1500,2000, -1];
+	RechteckX: ARRAY[0..10] OF LREAL := [1000,3000,	5000,5000,5000,3000,1000,1000,1000, -1];
+	RechteckY: ARRAY[0..10] OF LREAL := [1000,1000,	1000,1500,2000,2000,2000,1500,1000, -1];
+	Theta:	   ARRAY[0..10] OF LREAL := [1000,1000,	1000,1500,2000,2000,2000,1500, pi, -1];
 	
 	//RechteckX: ARRAY[0..10] OF LREAL := [4450, 4150, 4150, 5160, 5160, 4859, -1];
 	//RechteckY: ARRAY[0..10] OF LREAL :=  [2043, 2043, 1530, 1530, 2033, 2033, -1];
@@ -183,10 +176,11 @@ generateWPLRect := wpl;]]></ST>
 VAR
 
 	
-		x: ARRAY[0..10] OF LREAL := 		[1000, 1650, 1650, 2102, -1,3000,1000,1000,1000, -1];
+	x: ARRAY[0..10] OF LREAL := 		[1000, 1650, 1650, 2099, -1,3000,1000,1000,1000, -1];
 	y: ARRAY[0..10] OF LREAL := 		[1000, 1000, 2829, 2829, -1,2000,2000,1500,1000, -1];
 	theta:	   ARRAY[0..10] OF LREAL := [-1,   1000, 1000, 0,   2000,2000,2000,1500, pi, -1];
 	wpl:  ARRAY[0..100] OF RobotPoseSimple;
+
 	i: INT := 0;
 END_VAR
 ]]></Declaration>
@@ -209,7 +203,7 @@ generateWPLStation := wpl;]]></ST>
     <Method Name="generateWPLStationReverse" Id="{311b078a-79c6-438f-84d7-19b7322e05ae}">
       <Declaration><![CDATA[METHOD generateWPLStationReverse : ARRAY[0..100] OF RobotPoseSimple
 VAR
-	x: ARRAY[0..10] OF LREAL := 		[2102, 1650, 1650, 1000, -1, 3000,1000,1000,1000, -1];
+	x: ARRAY[0..10] OF LREAL := 		[2099, 1650, 1650, 1000, -1, 3000,1000,1000,1000, -1];
 	y: ARRAY[0..10] OF LREAL := 		[2829, 2829, 1000, 1000, -1,2000,2000,1500,1000, -1];
 	theta:	   ARRAY[0..10] OF LREAL := [-1,   1000, 1000, pi,   2000,2000,2000,1500, pi, -1];
 	wpl:  ARRAY[0..100] OF RobotPoseSimple;
@@ -233,21 +227,7 @@ generateWPLStationReverse := wpl;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="GW2DummyPRG">
-      <LineId Id="53" Count="0" />
-      <LineId Id="98" Count="1" />
-      <LineId Id="77" Count="0" />
-      <LineId Id="47" Count="0" />
-      <LineId Id="55" Count="0" />
-      <LineId Id="73" Count="1" />
-      <LineId Id="59" Count="0" />
-      <LineId Id="148" Count="1" />
-      <LineId Id="178" Count="1" />
-      <LineId Id="60" Count="1" />
-      <LineId Id="122" Count="2" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="174" Count="1" />
-      <LineId Id="173" Count="0" />
-      <LineId Id="97" Count="0" />
+      <LineId Id="230" Count="17" />
       <LineId Id="95" Count="0" />
     </LineIds>
     <LineIds Name="GW2DummyPRG.driveCyclic">

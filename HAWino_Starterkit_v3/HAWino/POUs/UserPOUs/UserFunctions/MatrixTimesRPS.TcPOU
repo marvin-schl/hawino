@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="MatrixTimesRPS" Id="{d8a25963-196a-479f-8502-ec67bf6c40a1}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION MatrixTimesRPS : RobotPoseSimple
+VAR_INPUT
+	K: ARRAY [0..2,0..2] OF LREAL;
+	pose: RobotPoseSimple;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//2.) apply gain on errors
+MatrixTimesRPS.x 	 := K[0,0] * pose.x + K[1,0] * pose.y + K[2,0] * pose.theta;
+MatrixTimesRPS.y 	 := K[0,1] * pose.x + K[1,1] * pose.y + K[2,1] * pose.theta;
+MatrixTimesRPS.theta := K[0,2] * pose.x + K[1,2] * pose.y + K[2,2] * pose.theta;]]></ST>
+    </Implementation>
+    <LineIds Name="MatrixTimesRPS">
+      <LineId Id="12" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="19" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
