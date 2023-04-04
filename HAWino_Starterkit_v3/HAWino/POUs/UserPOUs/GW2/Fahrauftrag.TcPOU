@@ -21,7 +21,7 @@ VAR
 	StatusFromGW1 AT%I*: STRING(50);
 	
 	//Schnittstelle zu A*-Algorithmus
-	EndNode AT%Q*: LREAL;						//letzter Knoten
+	EndNode AT%Q*: INT;						//letzter Knoten
 	xEndvalue AT%Q*: LREAL;						//Ziel xKoordinate
 	xRobotStartposition AT%Q*: LREAL;			//aktuelle xKoordinate
 	yEndvalue AT%Q*: LREAL;						//Ziel yKoordinate
@@ -47,7 +47,6 @@ IF sStart AND NOT s0 THEN
 	//	RückmeldungGW1 Verfügbar
 	FeedbackToGW1 := 'Verfuegbar';
 	resetVar := FALSE;
-	//AStar(enable := TRUE);
 END_IF
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////FAHRAUFTRAG/////////////////////////////////////////////////////////////////
@@ -60,7 +59,7 @@ IF s0 AND NOT s1a AND Auftrag.Art = 'Fahrauftrag' THEN
 	FeedbackToGW1 := 'Auftrag angenommen';
 	//Auftrag auswerten
 	readAssigment(assigment:= Auftrag);
-	EndNode := readAssigment.endNode;															//todo in matlab
+	EndNode := readAssigment.endNodePickup;															//todo in matlab
 	xEndvalue := readAssigment.pickupLocation.x;
 	yEndvalue := readAssigment.pickupLocation.y;
 	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
@@ -69,7 +68,10 @@ END_IF
 
 IF s1a AND NOT s1b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 THEN
 	s1a := 0; s1b := 1;
-	enable_ASearch := TRUE;
+	AStar(enable := TRUE, xRobotActual := xRobotStartposition, yRobotActual := yRobotStartposition, xEnd := xEndvalue, yEnd := yEndvalue, endNode := EndNode);
+	finished_ASearch := AStar.finishedASearch;
+	xPointList := AStar.xCoordinates;
+	yPointList := AStar.yCoordinates;
 ELSIF s1a AND NOT s1b THEN
 	xRobotStartposition := actualCamX;
 	yRobotStartposition := actualCamY;
@@ -173,18 +175,29 @@ IF s10 AND NOT s11a AND StatusFromGW1 = 'WerkstueckAusgelesen' THEN
 	resetVar := TRUE;
 	
 	//Auftrag auswerten
-	EndNode   := 92;															//todo in matlab
+	EndNode   := readAssigment.endNodeStorage;																	
 	xEndvalue := readAssigment.storageLocation.x;
 	yEndvalue := readAssigment.storageLocation.y;
-	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
 	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
+	IF readAssigment.assigment.AbholTasche < 3 THEN
+		xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x - 200;
+	ELSE
+		xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x + 200;
+	END_IF
 END_IF
 
 IF s11a AND NOT s11b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 THEN
 	s11a := 0; s11b := 1;
-	enable_ASearch := TRUE;
+	AStar(enable := TRUE, xRobotActual := xRobotStartposition, yRobotActual := yRobotStartposition, xEnd := xEndvalue, yEnd := yEndvalue, endNode := EndNode);
+	finished_ASearch := AStar.finishedASearch;
+	xPointList := AStar.xCoordinates;
+	yPointList := AStar.yCoordinates;
 ELSIF s11a AND NOT s11b THEN
-	xRobotStartposition := actualCamX;
+	IF readAssigment.assigment.AbholTasche < 3 THEN	
+		xRobotStartposition := actualCamX - 200;
+	ELSE
+		xRobotStartposition := actualCamX + 200;
+	END_IF
 	yRobotStartposition := actualCamY;
 END_IF
 
@@ -277,7 +290,11 @@ IF s20 AND NOT s21 AND trajectoryController.yBoArrivedAtDestination THEN
 	EndNode := 17;															//todo in matlab
 	xEndvalue := readAssigment.parkingSlots[Var_HAWIno.Robot_Number].x;
 	yEndvalue := readAssigment.parkingSlots[Var_HAWIno.Robot_Number].y;
-	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
+	IF readAssigment.assigment.AbholTasche < 3 THEN
+		xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x - 200;
+	ELSE
+		xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x + 200;
+	END_IF
 	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
 	enable_ASearch := TRUE;
 END_IF
@@ -420,7 +437,6 @@ END_IF
       <LineId Id="192" Count="0" />
       <LineId Id="194" Count="0" />
       <LineId Id="400" Count="0" />
-      <LineId Id="1054" Count="0" />
       <LineId Id="193" Count="0" />
       <LineId Id="663" Count="0" />
       <LineId Id="662" Count="0" />
@@ -435,7 +451,8 @@ END_IF
       <LineId Id="983" Count="0" />
       <LineId Id="982" Count="0" />
       <LineId Id="984" Count="0" />
-      <LineId Id="986" Count="3" />
+      <LineId Id="1087" Count="3" />
+      <LineId Id="987" Count="2" />
       <LineId Id="985" Count="0" />
       <LineId Id="527" Count="0" />
       <LineId Id="526" Count="0" />
@@ -504,9 +521,19 @@ END_IF
       <LineId Id="204" Count="0" />
       <LineId Id="570" Count="0" />
       <LineId Id="563" Count="0" />
-      <LineId Id="565" Count="4" />
+      <LineId Id="565" Count="2" />
+      <LineId Id="1099" Count="0" />
+      <LineId Id="1094" Count="0" />
+      <LineId Id="568" Count="0" />
+      <LineId Id="1095" Count="2" />
       <LineId Id="141" Count="0" />
-      <LineId Id="992" Count="6" />
+      <LineId Id="992" Count="2" />
+      <LineId Id="1091" Count="2" />
+      <LineId Id="995" Count="2" />
+      <LineId Id="1104" Count="0" />
+      <LineId Id="1106" Count="1" />
+      <LineId Id="1105" Count="0" />
+      <LineId Id="998" Count="0" />
       <LineId Id="991" Count="0" />
       <LineId Id="608" Count="1" />
       <LineId Id="611" Count="13" />
@@ -549,7 +576,9 @@ END_IF
       <LineId Id="176" Count="0" />
       <LineId Id="178" Count="0" />
       <LineId Id="174" Count="0" />
-      <LineId Id="943" Count="4" />
+      <LineId Id="943" Count="2" />
+      <LineId Id="1100" Count="3" />
+      <LineId Id="946" Count="1" />
       <LineId Id="361" Count="0" />
       <LineId Id="171" Count="0" />
       <LineId Id="187" Count="0" />

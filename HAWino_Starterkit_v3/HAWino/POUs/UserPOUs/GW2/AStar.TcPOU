@@ -3,26 +3,62 @@
   <POU Name="AStar" Id="{7641bcc2-8598-421f-b509-a825c115c758}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK AStar
 VAR_INPUT
-	enable : BOOL;
+	enable : BOOL := FALSE;
+	xRobotActual, yRobotActual : LREAL;
+	xEnd, yEnd : LREAL;
+	endNode : INT ;
 END_VAR
 VAR_OUTPUT
+	finishedASearch : BOOL := FALSE;
+	xCoordinates, yCoordinates : ARRAY[0..100] OF LREAL;
 END_VAR
 VAR
-	numberOfNodes: INT := 144;
-	numberOfColumns: INT := 18;
-	i: INT;
-	matrix : ARRAY[1..8,1..18] OF LREAL; //Adjazenzmatrix?
-	removeNode : ARRAY[0..11] OF UINT := [143, 93, 96, 99, 102, 111, 114, 117, 120, 124, 125, 142];
-	counter: INT;
-	j: INT;
-	xNode : ARRAY[1..18] OF LREAL;
-	yNode : ARRAY[1..18] OF LREAL;
-	row: LREAL;
-	col: LREAL;
+	numberOfNodes : INT := 144;
+	a, b, c, d, e, i, j, k, l, m, p, q, t, u, v, w, counter, nodeNumber : INT;
+	xMin, yMin : LREAL;
+	n : INT := 0;
+	numberOfColumns : INT := 18;
+	matrix : ARRAY[1..144,1..144] OF LREAL;
+	row, col : LREAL;
+	xNode, yNode : ARRAY[1..144] OF LREAL;
+	removeNode : ARRAY[0..11] OF INT := [93, 96, 99, 102, 111, 114, 117, 120, 124, 125, 142, 143];
+	startNode : INT := 0;
+	diff_x, diff_y : ARRAY[1..144] OF LREAL;
+	xMinPosition : ARRAY[0..100] OF INT;
+	openList : ARRAY[1..144,1..6] OF LREAL;
+	nullOpenList : ARRAY[1..144,1..6] OF LREAL := [864(0)];
+	closedList : ARRAY[1..144] OF LREAL;
+	nullClosedList : ARRAY[1..144] OF LREAL := [144(0)];
+	h, f, gprev : LREAL;
+	g : LREAL := 0;
+	parentNode : INT ;
+	countNeighbor, indexMin, currentNode, temp : INT;
+	neighborList:ARRAY[1..8,1..5] OF LREAL;
+	nullMatrix : ARRAY[1..8,1..5] OF LREAL := [40(0)];
+	nullMatrix_TempArray : ARRAY[1..144,1..7] OF LREAL := [1008(0)];
+	flag : BOOL;
+	countOpen : INT := 1;
+	tempArray : ARRAY[1..144,1..7] OF LREAL;
+	countTemp : INT := 1;
+	minf : LREAL;
+	wayPointList : ARRAY[1..101] OF INT;
+	wayPointList_finished : ARRAY[0..100] OF INT;
+	countClosed : INT := 1;
+	countPointList : INT := 1;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[ FOR i := 0 TO numberOfNodes BY 1 DO
+      <ST><![CDATA[reset();
+countOpen := 1;
+countTemp := 1;
+countClosed := 1;
+countPointList := 1;
+q := 0;
+numberOfNodes := 144;
+numberOfColumns := 18;
+
+///////////////////////////////////////////Erstellen der Adjezenzmatrix//////////////////////////////////////////////////////////////////
+FOR i := 0 TO numberOfNodes BY 1 DO
 	 IF i-1 > 0 AND i MOD numberOfColumns <> 1 THEN
 		 matrix[i-1,i] := 1000;
 	 END_IF
@@ -41,70 +77,265 @@ END_VAR
 	 IF i+numberOfColumns-1 < numberOfNodes+1 AND i MOD numberOfColumns <> 1 THEN
 		 matrix[i+numberOfColumns-1,i] := SQRT(2)*1000;
 	 END_IF
-	 IF i-numberOfColumns+1 > 0 AND i MOD numberOfColumns <> 1 THEN
+	 IF i-numberOfColumns+1 > 0 AND i MOD numberOfColumns <> 0 THEN
 		 matrix[i-numberOfColumns+1,i] := SQRT(2)*1000;
 	 END_IF
-	 IF i-numberOfColumns-1 > 0 AND i MOD numberOfColumns <> 0 THEN
+	 IF i-numberOfColumns-1 > 0 AND i MOD numberOfColumns <> 1 THEN
 		 matrix[i-numberOfColumns-1,i] := SQRT(2)*1000;
 	 END_IF
  END_FOR
  
+ 
+ 
  //Löschen der Knoten über Station
- //FOR counter := 0 TO 11 BY 1 DO
-	//FOR j := 1 TO numberOfNodes BY 1 DO
-		//matrix[removeNode[counter],j] := 0;
-		//matrix[j, removeNode[counter]] := 0;
- 	//END_FOR
-// END_FOR
+ FOR counter := 0 TO 11 BY 1 DO
+	FOR j := 1 TO numberOfNodes BY 1 DO
+		matrix[removeNode[counter],j] := 0;
+		matrix[j, removeNode[counter]] := 0;
+ 	END_FOR
+	xNode[removeNode[counter]] := 10000;
+	yNode[removeNode[counter]] := 10000;
+END_FOR
  
  //Umrechnung von Knoten in Koordinaten
  row := 600;
  col := 200;
  
- FOR i := 1 TO numberOfNodes BY 1 DO
-	 xNode[i] := col;
-	 yNode[i] := row;
+  FOR i := 1 TO numberOfNodes BY 1 DO
+	 IF xNode[i] <> 10000 THEN
+	 	xNode[i] := col;
+	 END_IF
+	 IF yNode[i] <> 10000 THEN
+	 	yNode[i] := row;
+	 END_IF
 	 col := col + 400;
 	 IF i MOD numberOfColumns = 0 THEN
 		 col := 200;
 		 row := row + 400;
 	 END_IF
  END_FOR
- ]]></ST>
+ 
+ ////////////////////////////////////////////////////Startposition und Endposition bestimmen //////////////////////////////////////////////////////////////////////////
+ 
+ FOR i := 1 TO 144 BY 1 DO
+	 diff_x[i] := ABS(xRobotActual - xNode[i]);
+	 diff_y[i] := ABS(yRobotActual - yNode[i]);
+ END_FOR
+ 
+ xMin := 1000;
+ 
+ FOR i := 1 TO 144 BY 1 DO
+	 IF xMin >= diff_x[i] THEN
+		 xMin := diff_x[i];
+	 END_IF
+ END_FOR
+ 
+ FOR l := 1 TO 144 BY 1 DO
+	 IF diff_x[l] = xMin AND l < 145 THEN
+		  xMinPosition[n] := l;
+		  n := n+1;
+	 END_IF
+ END_FOR
+
+ yMin := 1000;
+  
+ FOR m := 1 TO 100 BY 1 DO
+	 nodeNumber := xMinPosition[m];
+	 IF nodeNumber <> 0 THEN
+	 	IF yMin >= diff_y[nodeNumber] THEN
+		 	yMin := diff_y[nodeNumber];
+		END_IF;
+	 END_IF
+ END_FOR
+ 
+  FOR u := 1 TO 100 BY 1 DO
+	nodeNumber := xMinPosition[u];
+	IF nodeNumber <> 0 THEN
+		IF diff_y[nodeNumber] = yMin THEN
+			startNode := nodeNumber;
+		END_IF
+	END_IF
+ END_FOR
+ 
+ /////////////////////////////////////////////////////AStern Algorithmus////////////////////////////////////////////////////////////////////////////////
+ currentNode := startNode;
+ parentNode := 0;
+ g := 0;
+ h := SQRT(EXPT(xNode[startNode]-xEnd,2) + EXPT(yNode[startNode]-yEnd,2));
+ f := g + h;
+ openList := nullOpenList;
+
+ //übergibt hier zu entfernende Nodes in closed List -> nötig?
+ 
+ //insert start node in openList
+ openList[1,1] := 1;
+ openList[1,2] := startNode;
+ openList[1,3] := g;
+ openList[1,4] := h;
+ openList[1,5] := f;
+ openList[1,6] := parentNode;
+ 
+ //put in closedList
+ closedList[1] := startNode;
+ openList[1,1] := 0;
+ 
+ //Goal reached?
+ WHILE currentNode <> endNode DO
+	 //clear neighborlist
+ 	countNeighbor := 1;
+	neighborList := nullMatrix;
+	
+	//search the neightbor and put in neighborlist
+	gprev := g;
+	FOR v := 1 TO numberOfNodes BY 1 DO
+		//calculate forwards
+		IF matrix[currentNode,v] <> 0 THEN
+			g := gprev + SQRT(EXPT(xNode[v]-xNode[currentNode],2) + EXPT(yNode[v]-yNode[currentNode],2));
+			h := SQRT(EXPT(xNode[v]-xEnd,2) + EXPT(yNode[v]-yEnd,2));
+			neighborList[countNeighbor,1] := v;
+			neighborList[countNeighbor,2] := g;
+			neighborList[countNeighbor,3] := h;
+			neighborList[countNeighbor,4] := g + h;
+			neighborList[countNeighbor,5] := currentNode;
+			countNeighbor := countNeighbor + 1;
+		END_IF
+	END_FOR
+	
+	//possible neighbors will be inserted in openList
+	FOR w := 1 TO 8 BY 1 DO
+		flag := 0;
+		FOR a := 1 TO 144 BY 1 DO
+			//if already exist, update g, h, g and parent
+			IF neighborList[w,1] = openList[a,2] THEN
+				openList[a,5] := MIN(openList[a,5], neighborList[w,4]);
+				IF openList[a,5] = neighborList[w,4] THEN
+					openList[a,3] := neighborList[w,2];
+					openList[a,4] := neighborList[w,3];
+					openList[a,6] := neighborList[w,5];
+				END_IF
+				flag := 1;
+			END_IF
+		END_FOR
+		IF flag = 0 AND neighborList[w,1] <> 0 THEN
+			countOpen := countOpen +1;
+			openList[countOpen,1] := 1;
+			openList[countOpen,2] := neighborList[w,1]; //node
+			openList[countOpen,3] := neighborList[w,2]; //g
+			openList[countOpen,4] := neighborList[w,3]; //h
+			openList[countOpen,5] := neighborList[w,4]; //f
+			openList[countOpen,6] := neighborList[w,5]; //parent
+		END_IF
+	END_FOR
+	 
+	//find out the node with the smallest fn
+	countTemp := 1;
+	tempArray := nullMatrix_TempArray;
+	FOR b := 1 TO countOpen BY 1 DO
+		IF openList[b,1] = 1 THEN
+			tempArray[countTemp, 1] := openList[b, 1];
+			tempArray[countTemp, 2] := openList[b, 2];
+			tempArray[countTemp, 3] := openList[b, 3];
+			tempArray[countTemp, 4] := openList[b, 4];
+			tempArray[countTemp, 5] := openList[b, 5];
+			tempArray[countTemp, 6] := openList[b, 6];
+			tempArray[countTemp, 7] := b;
+			countTemp := countTemp + 1;
+		END_IF
+	END_FOR
+	FOR d := 1 TO 144 BY 1 DO
+		IF tempArray[d,5] = 0 THEN
+			tempArray[d,5] := 10000000;
+		END_IF
+	END_FOR
+	
+	minf := 100000;
+	
+	FOR e := 1 TO 144 BY 1 DO
+		IF tempArray[e,5] < minf THEN
+			minf := tempArray[e,5];
+			indexMin := LREAL_TO_INT(tempArray[e,7]);
+		END_IF
+	END_FOR
+	
+	//found smallest fn, update openList and put in closedList
+	openList[indexMin, 1] := 0;
+	currentNode := LREAL_TO_INT(openList[indexMin, 2]);
+	countClosed := countClosed + 1;
+	closedList[countClosed] := currentNode;
+ END_WHILE
+ 
+ //Optimal path is generated by starting of the goal node to start node
+ FOR k := countClosed TO 1 BY -1 DO
+	 IF currentNode <> startNode THEN
+		 wayPointList[countPointList] := currentNode;
+		 FOR p := 1 TO countOpen BY 1 DO
+			 IF openList[p,2] = currentNode THEN
+				 currentNode := LREAL_TO_INT(openList[p,6]);
+			 END_IF
+		 END_FOR
+		 countPointList := countPointList + 1;
+	 ELSE
+		wayPointList[countPointList] := currentNode;
+		EXIT;
+	 END_IF
+ END_FOR
+
+ //sort the wayPointList from start node to target node
+ //FOR q := 1 TO 101 BY 1 DO
+//	 FOR c := q+1 TO 100 BY 1 DO
+	//	 IF wayPointList[c] <> 0 AND wayPointList[q] > wayPointList[c] THEN
+		//	 temp := wayPointList[q];
+			// wayPointList[q] := wayPointList[c];
+			 //wayPointList[c] := temp;
+	//	 END_IF
+	 //END_FOR
+ //END_FOR
+ //geht so nicht weil nach größe der Zahlen kann nicht sortiert werden
+ 
+ FOR c := countPointList TO 1 BY -1 DO
+	 wayPointList_finished[q] := wayPointList[c];
+	 q := q + 1;
+ END_FOR
+ 
+ //////////////////////////////////////////////////Liste in Koordinaten/////////////////////////////////////////////////
+ 
+//WayPointList in Koordinaten umwandeln
+FOR t := 0 TO 100 BY 1 DO
+	IF wayPointList_finished[t] <> 0 THEN
+		xCoordinates[t] := xNode[wayPointList_finished[t]];
+		yCoordinates[t] := yNode[wayPointList_finished[t]];
+	END_IF
+END_FOR
+ 
+ 
+ finishedASearch := TRUE;]]></ST>
     </Implementation>
+    <Method Name="reset" Id="{1844f933-5385-4c4f-b16b-9087fe62c4bc}">
+      <Declaration><![CDATA[METHOD reset : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Zeros_INT(wayPointList_finished);
+Zeros(closedList);
+zeros_INT(wayPointList);
+zeros(xCoordinates);
+zeros(yCoordinates);]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="AStar">
-      <LineId Id="16" Count="1" />
-      <LineId Id="20" Count="1" />
-      <LineId Id="25" Count="1" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="28" Count="1" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="31" Count="1" />
-      <LineId Id="30" Count="0" />
-      <LineId Id="34" Count="1" />
-      <LineId Id="33" Count="0" />
-      <LineId Id="37" Count="1" />
-      <LineId Id="36" Count="0" />
-      <LineId Id="40" Count="1" />
-      <LineId Id="39" Count="0" />
-      <LineId Id="43" Count="1" />
-      <LineId Id="42" Count="0" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="56" Count="2" />
-      <LineId Id="61" Count="0" />
-      <LineId Id="63" Count="0" />
-      <LineId Id="65" Count="0" />
-      <LineId Id="59" Count="0" />
-      <LineId Id="66" Count="0" />
-      <LineId Id="68" Count="2" />
-      <LineId Id="73" Count="0" />
-      <LineId Id="75" Count="0" />
-      <LineId Id="77" Count="1" />
-      <LineId Id="80" Count="3" />
-      <LineId Id="85" Count="0" />
-      <LineId Id="84" Count="0" />
-      <LineId Id="79" Count="0" />
+      <LineId Id="1084" Count="0" />
+      <LineId Id="768" Count="4" />
+      <LineId Id="1081" Count="1" />
+      <LineId Id="773" Count="36" />
+      <LineId Id="1020" Count="1" />
+      <LineId Id="810" Count="5" />
+      <LineId Id="1022" Count="11" />
+      <LineId Id="824" Count="194" />
       <LineId Id="67" Count="0" />
+    </LineIds>
+    <LineIds Name="AStar.reset">
+      <LineId Id="5" Count="4" />
     </LineIds>
   </POU>
 </TcPlcObject>

@@ -213,6 +213,9 @@
     <Compile Include="POUs\UserPOUs\UserFunctions\ZEROS.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\ZEROS_INT.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\ZEROS_RobotPoseSimple.TcPOU">
       <SubType>Code</SubType>
     </Compile>
