@@ -5400,10 +5400,6 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.shutdownButton</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>Fahrauftrag.TrajectoryController.yBoArrivedAtDestination</Name>
 							<Comment><![CDATA[ TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
 							<Type>BOOL</Type>
@@ -5423,6 +5419,10 @@
 							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.shutdownButton</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>Fahrauftrag.Auftrag</Name>
 							<Type GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}">Auftrag</Type>
 						</Var>
@@ -5431,8 +5431,8 @@
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.requestShutdown</Name>
-							<Type>BOOL</Type>
+							<Name>PowerManager.batteryVoltageRaw</Name>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.xPointList</Name>
@@ -5449,10 +5449,6 @@
 							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.batteryVoltageRaw</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
 							<Name>PowerManager.supplyCurrentRaw</Name>
 							<Type>INT</Type>
 						</Var>
@@ -5461,17 +5457,22 @@
 							<Type>REAL</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.requestShutdown</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.closeGripperFromSimulink</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
 							<Name>Gripper.slider</Name>
 							<Comment><![CDATA[closeGripperCommand		AT%I* : BOOL;				//True: opening, false: closing]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.partGripped</Name>
+							<Comment><![CDATA[Teil zwischen Greifer: partGripped := 0]]></Comment>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.closeGripperFromSimulink</Name>
-							<Type>LREAL</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" ContextId="2" AreaNo="33">
@@ -8518,16 +8519,16 @@ Bit1: Value smaller than Limit2]]></Comment>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500800205008}" Id="#x02030050"/>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500810000403}" Id="#x02030010"/>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500842000403}" Id="#x02030040"/>
-		<MappingInfo Identifier="{00000000-2001-0850-0020-500850000101}" Id="#x02030080"/>
+		<MappingInfo Identifier="{00000000-2001-0850-0020-500850000101}" Id="#x02030070"/>
 		<MappingInfo Identifier="{00000000-2002-0850-0020-500800205008}" Id="#x02030090"/>
 		<MappingInfo Identifier="{00000000-2002-0850-0120-500831000403}" Id="#x02030030"/>
 		<MappingInfo Identifier="{08502001-2003-0850-0020-500802205008}" Id="#x020300a0" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{08502002-2003-0850-0120-500802205008}" Id="#x02030100" Watchdog="04000000280000000400000004000000"/>
-		<MappingInfo Identifier="{08502002-0060-0201-0120-500820000101}" Id="#x020300f0" Watchdog="04000000280000000400000004000000"/>
+		<MappingInfo Identifier="{08502002-0060-0201-0120-500820000101}" Id="#x020300c0" Watchdog="04000000280000000400000004000000"/>
 		<MappingInfo Identifier="{08502003-0010-0304-0020-500810000403}" Id="#x02030020" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{08502003-0040-0304-0020-500840000403}" Id="#x02030060" Watchdog="04000000040000000400000004000000"/>
-		<MappingInfo Identifier="{02010050-2003-0850-1000-010102205008}" Id="#x020300d0" Watchdog="04000000040000000400000004000000"/>
-		<MappingInfo Identifier="{02010050-0060-0201-1000-010120000101}" Id="#x020300b0" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{02010050-2003-0850-1000-010102205008}" Id="#x020300b0" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{02010050-0060-0201-1000-010120000101}" Id="#x02030080" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIPC^HAWino^HAWino Instance">
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Analoge Eingänge A6 (EL3068)">
 				<Link VarA="PlcTask Inputs^IrDistanceSensors.distanceRaw[1]" VarB="AI Standard Channel 1^Value"/>
