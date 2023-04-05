@@ -13,7 +13,7 @@
 
 VAR_GLOBAL
 	Robot_Number 				: INT :=4;
-	CONTROLLER_CYCLE_TIME	 	: LREAL := 10E-3;
+	CONTROLLER_CYCLE_TIME	 	: LREAL := 2E-3; //==> manual adjustment in SimpleObserverST required
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

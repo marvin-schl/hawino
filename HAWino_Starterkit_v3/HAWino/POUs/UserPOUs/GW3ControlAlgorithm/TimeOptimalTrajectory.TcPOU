@@ -9,6 +9,7 @@ END_VAR
 VAR_OUTPUT
 	finished			: BOOL 				:= FALSE;
 	ready				: BOOL				:= FALSE;
+	pathReady			: BOOL				:= FALSE;
 	referencePose		: RobotPoseSimple;
 	referenceVelocities	: RobotPoseSimple;
 	WPLidx 				: INT 				:= 0;
@@ -26,8 +27,8 @@ VAR
 	maxVel				: LREAL				:= 0.5;
 	maxAcc				: LREAL				:= 0.4;
 	
-	arcLengthSlow		: LREAL				:= 0.1;
-	maxSlowVel			: LREAL				:= 0.15;
+	arcLengthSlow		: LREAL				:= 0.2;
+	maxSlowVel			: LREAL				:= 0.08;
 	
 	maxRotVel			: LREAL				:= 100;
 	maxRotAcc			: LREAL				:= 100;	
@@ -35,7 +36,8 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[ready := trajectoryPlanner.trajectoriesReady;
-IF cnt = 5 AND NOT finished THEN
+pathReady := path.ready;
+IF cnt = LREAL_TO_INT(samplingTime/Var_HAWIno.CONTROLLER_CYCLE_TIME) AND NOT finished THEN
 	WPLidx := WPLidx +1;
 	cnt := 0;
 END_IF
@@ -70,6 +72,7 @@ END_VAR
         <ST><![CDATA[WPLidx 			:= 0; 						//reset
 finished 		:= FALSE;
 
+path.reset();
 trajectoryPlanner.reset();]]></ST>
       </Implementation>
     </Method>
@@ -116,7 +119,9 @@ ELSE
 END_IF
 
 path(waypointListRaw := extendedWayPointList, maxRadius := maxRadius);
-trajectoryPlanner(path := path, 
+
+IF path.ready THEN
+	trajectoryPlanner(path := path, 
 				  qAccMax := maxAcc, 
 				  qVelMax := maxVel, 
 				  thetaAccMax := maxRotAcc,
@@ -124,12 +129,15 @@ trajectoryPlanner(path := path,
 				  qVelMaxSlow := maxSlowVel,
 				  arcLengthSlow := arcLengthSlow,
 				  deltaT := samplingTime);
+ END_IF
 				  
 ]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="TimeOptimalTrajectory">
-      <LineId Id="124" Count="7" />
+      <LineId Id="124" Count="0" />
+      <LineId Id="279" Count="0" />
+      <LineId Id="125" Count="6" />
       <LineId Id="133" Count="2" />
       <LineId Id="207" Count="0" />
       <LineId Id="138" Count="3" />
@@ -139,7 +147,9 @@ trajectoryPlanner(path := path,
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.reset">
-      <LineId Id="15" Count="2" />
+      <LineId Id="15" Count="1" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="17" Count="0" />
       <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.setRobotPose">
@@ -156,6 +166,8 @@ trajectoryPlanner(path := path,
       <LineId Id="67" Count="0" />
       <LineId Id="87" Count="0" />
       <LineId Id="13" Count="0" />
+      <LineId Id="119" Count="0" />
+      <LineId Id="118" Count="0" />
       <LineId Id="18" Count="0" />
       <LineId Id="20" Count="0" />
       <LineId Id="19" Count="0" />
@@ -163,6 +175,7 @@ trajectoryPlanner(path := path,
       <LineId Id="23" Count="0" />
       <LineId Id="34" Count="1" />
       <LineId Id="108" Count="0" />
+      <LineId Id="120" Count="0" />
       <LineId Id="30" Count="0" />
       <LineId Id="24" Count="0" />
     </LineIds>

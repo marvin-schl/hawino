@@ -21,12 +21,11 @@ VAR_INPUT
 	deltaT	   :    LREAL := 0.05;	//optional: sampling time of the velocity in [s], default: 50ms
 END_VAR
 VAR_OUTPUT
-	posTrajectory: 		ARRAY[0..1000] OF RobotPoseSimple; //reference position profile. position in global coordinates pver time
-	velTrajectory:		ARRAY[0..1000] OF RobotPoseSimple; //reference velocity profile, velocity over time
-	
-	trajectoryGenerationFinished:	BOOL := FALSE; //TRUE if trajectory generation finished successfully
-	trajectoryGenerationFailed: 	BOOL := FALSE; //TRUE if trajectory generation failed, most likely because something went wrong while integrating backward
-	trajectoriesReady:				BOOL := FALSE; //TRUE if the generated path trajectories are transformed back into xy-theta-Coordinates
+	posTrajectory: 					ARRAY	[0..1000] 	OF RobotPoseSimple;			 	//reference position profile. position in global coordinates pver time
+	velTrajectory:					ARRAY	[0..1000] 	OF RobotPoseSimple; 			//reference velocity profile, velocity over time
+	trajectoryGenerationFinished:	BOOL 									:= FALSE; 	//TRUE if trajectory generation finished successfully
+	trajectoryGenerationFailed: 	BOOL 									:= FALSE; 	//TRUE if trajectory generation failed, most likely because something went wrong while integrating backward
+	trajectoriesReady:				BOOL 									:= FALSE; 	//TRUE if the generated path trajectories are transformed back into xy-theta-Coordinates
 END_VAR
 VAR
 	searchTol 	: LREAL := 1E-4;	//tolerance for switching point search, switching points are determined by bisection method
@@ -217,7 +216,7 @@ END_VAR
 		5:
 			step5();
 	END_CASE
-ELSIF idxForward <= 1000  THEN
+ELSIF idxForward > 1000 THEN
 	trajectoryGenerationFailed := TRUE;
 END_IF
 

@@ -5,29 +5,49 @@
 VAR_INPUT
 	waypointListRaw: 	ARRAY [0..101] OF RobotPoseSimple;
 	maxRadius: 			LREAL;
-	thetaDZ: 				LREAL := 0.1;
+	thetaDZ: 			LREAL := 0.1;
+END_VAR
+VAR_OUTPUT
+	ready: 				BOOL;
 END_VAR
 VAR
-	waypointList: 		ARRAY [0..101] 	OF 	RobotPoseSimple;		
+	waypointList: 		ARRAY [0..101] 	OF 	RobotPoseSimple;
+		
 	subsplines: 		ARRAY [0..100] 	OF  POINTER TO Spline;
+	linearSplines:		ARRAY [0..51] OF LinearSpline;
+	bezierCurves:		ARRAY [0..49] OF BezierCurve;
+	
 	transitions: 		ARRAY [0..100] 	OF LREAL;
-	nmbOfSubsplines, nmbOfPreprocessedWaypoints:	INT;
+	nmbOfSubsplines, nmbOfPreprocessedWaypoints: INT;
+	subsplineGenerationIdx:					INT := 1;
+	generatedSubsplines:				BOOL := FALSE;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[preprocessWaypointlist();
+      <ST><![CDATA[IF NOT generatedSubsplines THEN
+	preprocessWaypointlist();
+	nmbOfSubsplines := 2*nmbOfPreprocessedWaypoints-3;
+	generateSubsplines();	
+END_IF
 
-nmbOfSubsplines := 2*nmbOfPreprocessedWaypoints-3;
-
-generateSubsplines();
-lengthVar := calculateLength();
-calculateTransitions();
-
-startPoint := subsplines[0]^.startPointVal;
-endPoint   := subsplines[nmbOfSubsplines-1]^.endPointVal;
-
-startPoint.theta := waypointList[0].theta;
-endPoint.theta	 := waypointList[nmbOfPreprocessedWaypoints-1].theta;]]></ST>
+IF generatedSubsplines AND NOT ready THEN
+	lengthVar := calculateLength();
+	calculateTransitions();
+	
+	startPoint := subsplines[0]^.startPointVal;
+	endPoint   := subsplines[nmbOfSubsplines-1]^.endPointVal;
+	
+	startPoint.theta := waypointList[0].theta;
+	
+	endPoint.theta	 := waypointList[nmbOfPreprocessedWaypoints-1].theta;
+	IF ABS(endPoint.theta-startPoint.theta) > ABS(endPoint.theta+2*pi-startPoint.theta) THEN
+		endPoint.theta := endPoint.theta+2*pi;
+	ELSIF ABS(endPoint.theta-startPoint.theta) > ABS(endPoint.theta-2*pi-startPoint.theta) THEN
+		endPoint.theta := endPoint.theta-2*pi;
+	END_IF
+	ready := TRUE;
+END_IF
+]]></ST>
     </Implementation>
     <Method Name="calculateLength" Id="{fa9150c3-1548-4fad-bc03-2a7bdbb95fff}">
       <Declaration><![CDATA[(* 
@@ -113,59 +133,67 @@ END_IF]]></ST>
 VAR_INPUT
 END_VAR
 VAR
-	linearSplines:		ARRAY [0..50] OF LinearSpline;
-	bezierCurves:		ARRAY [0..49] OF BezierCurve;
-		
+
+			
 	//xTmpLinear,yTmpLinear:    		ARRAY [0..1] OF LREAL;
 	wplTmpLinear:					ARRAY [0..1] OF RobotPoseSimple;
-	linearSpline: LinearSpline;
-	
 	//xTmpBezier,yTmpBezier:    		ARRAY [0..2] OF LREAL;
 	wplTmpBezier:					ARRAY [0..2] OF RobotPoseSimple;
-	bezierCurve: BezierCurve;
 	
 	i,j,k: INT := 0;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF nmbOfSubsplines <> 1 THEN 
-	FOR i := 1 TO nmbOfSubsplines BY 2 DO
-	k := 0;
-	//extract relevant points for bezier curve creation
-	FOR j := (i-1)/2 TO (i-1)/2+2 BY 1 DO
-		wplTmpBezier[k] := waypointList[j];
-		k := k + 1;
-	END_FOR  
-	bezierCurves[(i-1)/2](waypoints:=wplTmpBezier, maxRadius := maxRadius);
-	subsplines[i]:= ADR(bezierCurves[(i-1)/2]);
-	END_FOR
-	
-	//first Segment is always linear
-	wplTmpLinear[0] := waypointList[0];
-	wplTmpLinear[1] := subsplines[1]^.startPointVal;
-	linearSplines[0](wayPoints := wplTmpLinear);
-	subsplines[0] := ADR(linearSplines[0]);
-	
-	
-	//last Segment is always linear
-	wplTmpLinear[0] := subsplines[nmbOfSubsplines-2]^.endPointVal;
-	wplTmpLinear[1] := waypointList[nmbOfPreprocessedWaypoints-1];
-	linearSplines[(nmbOfSubsplines+1)/2](wayPoints := wplTmpLinear);
-	subsplines[nmbOfSubsplines-1] := ADR(linearSplines[(nmbOfSubsplines+1)/2]);
-	
-	
-	//generate the linear segments in between
-	FOR i := 2 TO nmbOfSubsplines-2 BY 2 DO
-	wplTmpLinear[0] := subsplines[i-1]^.endPointVal;
-	wplTmpLinear[1] := subsplines[i+1]^.startPointVal;
-	linearSplines[i/2](wayPoints := wplTmpLinear);
-	subsplines[i] := ADR(linearSplines[i/2]);
-	END_FOR
-ELSE  //nmbOfSubsplines = 1  => only one linear Segment
-	
+        <ST><![CDATA[IF nmbOfSubsplines <> 1 AND NOT ready THEN 
+	IF subsplineGenerationIdx = 0 THEN
+		//first Segment is always linear
+		wplTmpLinear[0] := waypointList[0];
+		wplTmpLinear[1] := subsplines[1]^.startPointVal;
+		linearSplines[0](wayPoints := wplTmpLinear);
+		subsplines[0] := ADR(linearSplines[0]);
+		subsplineGenerationIdx := nmbOfSubsplines-1;
+	ELSIF subsplineGenerationIdx = nmbOfSubsplines-1 THEN
+		//last Segment is always linear
+		wplTmpLinear[0] := subsplines[nmbOfSubsplines-2]^.endPointVal;
+		wplTmpLinear[1] := waypointList[nmbOfPreprocessedWaypoints-1];
+		linearSplines[(nmbOfSubsplines+1)/2](wayPoints := wplTmpLinear);
+		subsplines[nmbOfSubsplines-1] := ADR(linearSplines[(nmbOfSubsplines+1)/2]);
+		subsplineGenerationIdx := 2;
+	ELSIF (subsplineGenerationIdx MOD 2) <> 0 THEN
+		i := subsplineGenerationIdx;
+		k := 0;
+		
+		//extract relevant points for bezier curve creation
+		FOR j := (i-1)/2 TO (i-1)/2+2 BY 1 DO
+			wplTmpBezier[k] := waypointList[j];
+			k := k + 1;
+		END_FOR
+  
+		bezierCurves[(i-1)/2](waypoints:=wplTmpBezier, maxRadius := maxRadius);
+		subsplines[i]:= ADR(bezierCurves[(i-1)/2]);
+		
+		IF subsplineGenerationIdx >= nmbOfSubsplines-2 THEN
+			subsplineGenerationIdx := 0;
+		ELSE 
+			subsplineGenerationIdx := i+2;
+		END_IF
+	ELSIF (subsplineGenerationIdx MOD 2) = 0 THEN
+		i := subsplineGenerationIdx;
+		wplTmpLinear[0] := subsplines[i-1]^.endPointVal;
+		wplTmpLinear[1] := subsplines[i+1]^.startPointVal;
+		linearSplines[i/2](wayPoints := wplTmpLinear);
+		subsplines[i] := ADR(linearSplines[i/2]);
+		IF subsplineGenerationIdx >= nmbOfSubsplines-3 THEN
+			generatedSubsplines := TRUE;
+		ELSE	
+		subsplineGenerationIdx := subsplineGenerationIdx + 2;
+		END_IF
+	END_IF
+ELSIF nmbOfSubsplines = 1 AND NOT ready THEN  //nmbOfSubsplines = 1  => only one linear Segment
 	wplTmpLinear[0] := waypointList[0];
 	wplTmpLinear[1] := waypointList[1];;
 	linearSplines[0](wayPoints := wplTmpLinear);
 	subsplines[0] := ADR(linearSplines[0]);
+	generatedSubsplines := TRUE;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -274,6 +302,38 @@ END_FOR
 nmbOfPreprocessedWaypoints := nextIDX +1;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="reset" Id="{817d8fbe-9d0e-4b33-9f5d-4bd7fb35cdde}">
+      <Declaration><![CDATA[METHOD reset : LREAL
+VAR_INPUT
+END_VAR
+VAR
+	i: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[startPoint.x 	:= 0;
+startPoint.y	:= 0;
+startPoint.theta:= 0;
+
+endPoint.x 	:= 0;
+endPoint.y	:= 0;
+endPoint.theta:= 0;
+
+generatedSubsplines := FALSE;
+ready := FALSE;
+subsplineGenerationIdx := 1;
+
+//FOR i := 0 TO nmbOfPreprocessedWaypoints-1 BY 1 DO
+//	waypointList[i].x 	:= 0;
+//	waypointList[i].y	:= 0;
+//	waypointList[i].theta:= 0;
+//END_FOR
+
+//FOR i := 0 TO nmbOfSubsplines-1 BY 1 DO 
+//	subsplines[i] := 0;
+//END_FOR]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="theta" Id="{3e06842d-afd1-418d-bfed-0a225c6266f7}">
       <Declaration><![CDATA[METHOD PRIVATE theta : LREAL
 VAR_INPUT
@@ -294,14 +354,22 @@ END_IF ]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="Path">
-      <LineId Id="311" Count="2" />
-      <LineId Id="322" Count="0" />
-      <LineId Id="315" Count="0" />
+      <LineId Id="359" Count="0" />
+      <LineId Id="362" Count="2" />
+      <LineId Id="361" Count="0" />
+      <LineId Id="358" Count="0" />
+      <LineId Id="354" Count="0" />
       <LineId Id="317" Count="3" />
       <LineId Id="96" Count="0" />
       <LineId Id="336" Count="0" />
       <LineId Id="335" Count="0" />
+      <LineId Id="387" Count="0" />
       <LineId Id="337" Count="0" />
+      <LineId Id="389" Count="1" />
+      <LineId Id="392" Count="1" />
+      <LineId Id="391" Count="0" />
+      <LineId Id="365" Count="0" />
+      <LineId Id="355" Count="1" />
     </LineIds>
     <LineIds Name="Path.calculateLength">
       <LineId Id="22" Count="2" />
@@ -320,7 +388,29 @@ END_IF ]]></ST>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="Path.generateSubsplines">
-      <LineId Id="22" Count="38" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="112" Count="3" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="120" Count="0" />
+      <LineId Id="111" Count="0" />
+      <LineId Id="116" Count="3" />
+      <LineId Id="110" Count="0" />
+      <LineId Id="121" Count="0" />
+      <LineId Id="148" Count="16" />
+      <LineId Id="147" Count="0" />
+      <LineId Id="106" Count="1" />
+      <LineId Id="123" Count="2" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="126" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="57" Count="3" />
+      <LineId Id="146" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="Path.getPoint">
@@ -346,6 +436,25 @@ END_IF ]]></ST>
     <LineIds Name="Path.preprocessWaypointlist">
       <LineId Id="112" Count="22" />
       <LineId Id="43" Count="0" />
+    </LineIds>
+    <LineIds Name="Path.reset">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="10" Count="2" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="21" Count="1" />
     </LineIds>
     <LineIds Name="Path.theta">
       <LineId Id="13" Count="6" />

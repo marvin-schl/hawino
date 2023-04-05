@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="calcTimeDiff" Id="{de4b1c24-c107-4cbb-a7f2-3430a4a388b4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION calcTimeDiff : LREAL
+VAR_INPUT
+	TimeCam : TIMESTRUCT;
+	TimeSys : TIMESTRUCT; 
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <LineIds Name="calcTimeDiff">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
