@@ -1,0 +1,123 @@
+Microsoft (R)-Build-Engine, Version 16.11.2+f32259642 fÅr .NET Framework
+Copyright (C) Microsoft Corporation. Alle Rechte vorbehalten.
+
+Der Buildvorgang wurde am 29.03.2023 18:04:40 gestartet.
+Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" auf Knoten "1", TcPublishModule Ziel(e).
+TcPublishTMX:
+  TMC/TML files: E:\hawino\A search\A_Search_tcgrt\A_Search.tmc
+  Using library vendor name "TE140x Module Vendor" defined in "E:\hawino\A search\A_Search_tcgrt\A_Search.tmc"
+  Using library name "A_Search" defined in "E:\hawino\A search\A_Search_tcgrt\A_Search.tmc"
+  Using library version "0.0.0.1" defined in "E:\hawino\A search\A_Search_tcgrt\A_Search.tmc"
+  Clearing the intermediate publish folder 'E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1'
+  Das Verzeichnis "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1" wird entfernt.
+  Building and collecting files in the intermediate publish folder 'E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1'
+Das Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" (1) erstellt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" (1:2) auf Knoten "1", TcPublishBinaries Ziel(e).
+TcExtractVersion:
+  Extracting version information
+  "C:\TwinCAT\3.1\SDK\\Bin\ExtractVersionInfo" /RcFile:"E:\hawino\A search\A_Search_tcgrt\A_Search.rc" /HFile:"E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x86)\Release\A_Search\\A_SearchVersion.h" /FileVersionDef:"E:\hawino\A search\A_Search_tcgrt\A_Search.tmc" /ProductVersionDef:"E:\hawino\A search\A_Search_tcgrt\A_Search.tmc" /ProjName:"A_Search"
+  ExtractVersionInfo header file "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x86)\Release\A_Search\\A_SearchVersion.h" is up-to-date!
+InitializeBuildStatus:
+  "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x86)\Release\A_Search\A_Search.tlog\unsuccessfulbuild" wird erstellt, da "AlwaysCreate" angegeben wurde.
+ClCompile:
+  Alle Ausgaben sind aktuell.
+  Alle Ausgaben sind aktuell.
+  Alle Ausgaben sind aktuell.
+  Alle Ausgaben sind aktuell.
+ResourceCompile:
+  Alle Ausgaben sind aktuell.
+Link:
+  Alle Ausgaben sind aktuell.
+  A_Search.vcxproj -> E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x86)\Release\A_Search.tmx
+FinalizeBuildStatus:
+  Die Datei "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x86)\Release\A_Search\A_Search.tlog\unsuccessfulbuild" wird gelîscht.
+  Aktualisieren des Timestamps von "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x86)\Release\A_Search\A_Search.tlog\A_Search.lastbuildstate".
+TcSign:
+  Signing output with TwinCAT certificate 'HAW_Hamburg_VPJ_BT7_R462'
+  "C:\TwinCAT\3.1\SDK\bin\TcSignTool.exe" sign "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x86)\Release\A_Search.tmx" /f "C:\TwinCAT\3.1\CustomConfig\Certificates\HAW_Hamburg_VPJ_BT7_R462.tccert" /q
+TcPublishBinaries:
+  Publishing binaries for Platform 'TwinCAT RT (x86)' with configuration 'Release'
+  Das Verzeichnis "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x86)" wird erstellt.
+  Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x86)\Release\A_Search.tmx" in "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x86)\A_Search.tmx" kopiert.
+Die Erstellung von Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" ist abgeschlossen (TcPublishBinaries Ziel(e)).
+Das Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" (1) erstellt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" (1:3) auf Knoten "1", TcPublishBinaries Ziel(e).
+TcExtractVersion:
+  Extracting version information
+  "C:\TwinCAT\3.1\SDK\\Bin\ExtractVersionInfo" /RcFile:"E:\hawino\A search\A_Search_tcgrt\A_Search.rc" /HFile:"E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x64)\Release\A_Search\\A_SearchVersion.h" /FileVersionDef:"E:\hawino\A search\A_Search_tcgrt\A_Search.tmc" /ProductVersionDef:"E:\hawino\A search\A_Search_tcgrt\A_Search.tmc" /ProjName:"A_Search"
+  ExtractVersionInfo header file "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x64)\Release\A_Search\\A_SearchVersion.h" is up-to-date!
+InitializeBuildStatus:
+  "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x64)\Release\A_Search\A_Search.tlog\unsuccessfulbuild" wird erstellt, da "AlwaysCreate" angegeben wurde.
+ClCompile:
+  Alle Ausgaben sind aktuell.
+  Alle Ausgaben sind aktuell.
+  Alle Ausgaben sind aktuell.
+  Alle Ausgaben sind aktuell.
+ResourceCompile:
+  Alle Ausgaben sind aktuell.
+Link:
+  Alle Ausgaben sind aktuell.
+  A_Search.vcxproj -> E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x64)\Release\A_Search.tmx
+FinalizeBuildStatus:
+  Die Datei "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x64)\Release\A_Search\A_Search.tlog\unsuccessfulbuild" wird gelîscht.
+  Aktualisieren des Timestamps von "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x64)\Release\A_Search\A_Search.tlog\A_Search.lastbuildstate".
+TcSign:
+  Signing output with TwinCAT certificate 'HAW_Hamburg_VPJ_BT7_R462'
+  "C:\TwinCAT\3.1\SDK\bin\TcSignTool.exe" sign "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x64)\Release\A_Search.tmx" /f "C:\TwinCAT\3.1\CustomConfig\Certificates\HAW_Hamburg_VPJ_BT7_R462.tccert" /q
+TcPublishBinaries:
+  Publishing binaries for Platform 'TwinCAT RT (x64)' with configuration 'Release'
+  Das Verzeichnis "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x64)" wird erstellt.
+  Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x64)\Release\A_Search.tmx" in "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x64)\A_Search.tmx" kopiert.
+Die Erstellung von Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" ist abgeschlossen (TcPublishBinaries Ziel(e)).
+Das Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" (1) erstellt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" (1:4) auf Knoten "1", TcPublishBinaries Ziel(e).
+TcExtractVersion:
+  Extracting version information
+  "C:\TwinCAT\3.1\SDK\\Bin\ExtractVersionInfo" /RcFile:"E:\hawino\A search\A_Search_tcgrt\A_Search.rc" /HFile:"E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT OS (x64)\Release\A_Search\\A_SearchVersion.h" /FileVersionDef:"E:\hawino\A search\A_Search_tcgrt\A_Search.tmc" /ProductVersionDef:"E:\hawino\A search\A_Search_tcgrt\A_Search.tmc" /ProjName:"A_Search"
+  ExtractVersionInfo header file "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT OS (x64)\Release\A_Search\\A_SearchVersion.h" is up-to-date!
+InitializeBuildStatus:
+  "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT OS (x64)\Release\A_Search\A_Search.tlog\unsuccessfulbuild" wird erstellt, da "AlwaysCreate" angegeben wurde.
+ClCompile:
+  Alle Ausgaben sind aktuell.
+  Alle Ausgaben sind aktuell.
+  Alle Ausgaben sind aktuell.
+  Alle Ausgaben sind aktuell.
+ResourceCompile:
+  Alle Ausgaben sind aktuell.
+Link:
+  Alle Ausgaben sind aktuell.
+  A_Search.vcxproj -> E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT OS (x64)\Release\A_Search.tmx
+FinalizeBuildStatus:
+  Die Datei "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT OS (x64)\Release\A_Search\A_Search.tlog\unsuccessfulbuild" wird gelîscht.
+  Aktualisieren des Timestamps von "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT OS (x64)\Release\A_Search\A_Search.tlog\A_Search.lastbuildstate".
+TcSign:
+  Signing output with TwinCAT certificate 'HAW_Hamburg_VPJ_BT7_R462'
+  "C:\TwinCAT\3.1\SDK\bin\TcSignTool.exe" sign "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT OS (x64)\Release\A_Search.tmx" /f "C:\TwinCAT\3.1\CustomConfig\Certificates\HAW_Hamburg_VPJ_BT7_R462.tccert" /q
+TcPublishBinaries:
+  Publishing binaries for Platform 'TwinCAT OS (x64)' with configuration 'Release'
+  Das Verzeichnis "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT OS (x64)" wird erstellt.
+  Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT OS (x64)\Release\A_Search.tmx" in "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT OS (x64)\A_Search.tmx" kopiert.
+Die Erstellung von Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" ist abgeschlossen (TcPublishBinaries Ziel(e)).
+Das Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" (1) erstellt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" (1:5) auf Knoten "1", TcPublishAdditionalFiles Ziel(e).
+TcPublishAdditionalFiles:
+  Das Verzeichnis "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\deploy" wird erstellt.
+  Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\A_Search_ModuleInfo.xml" in "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\deploy\A_Search_ModuleInfo.xml" kopiert.
+Die Erstellung von Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" ist abgeschlossen (TcPublishAdditionalFiles Ziel(e)).
+TcPublishTMX:
+  Clearing the local installation folder 'C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1'
+  Das Verzeichnis "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1" wird entfernt.
+  Copying files to the local installation folder 'C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1'
+  Das Verzeichnis "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1" wird erstellt.
+  Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\A_Search.tmc" in "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\A_Search.tmc" kopiert.
+  Das Verzeichnis "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\deploy" wird erstellt.
+  Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\deploy\A_Search_ModuleInfo.xml" in "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\deploy\A_Search_ModuleInfo.xml" kopiert.
+  Das Verzeichnis "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT OS (x64)" wird erstellt.
+  Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT OS (x64)\A_Search.tmx" in "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT OS (x64)\A_Search.tmx" kopiert.
+  Das Verzeichnis "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x64)" wird erstellt.
+  Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x64)\A_Search.tmx" in "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x64)\A_Search.tmx" kopiert.
+  Das Verzeichnis "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x86)" wird erstellt.
+  Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x86)\A_Search.tmx" in "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x86)\A_Search.tmx" kopiert.
+Die Erstellung von Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" ist abgeschlossen (TcPublishModule Ziel(e)).
+
+Der Buildvorgang wurde erfolgreich ausgefÅhrt.
+    0 Warnung(en)
+    0 Fehler
+
+Verstrichene Zeit 00:00:01.48

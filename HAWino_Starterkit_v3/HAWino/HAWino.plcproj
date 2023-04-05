@@ -111,12 +111,6 @@
     <Compile Include="POUs\UserPOUs\GW2\ReadAssigment.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\NonlinearController.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\NonLinearController.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\Robot.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -142,9 +136,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\GW2DummyPRG.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\TrackingController1.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning\BezierCurve.TcPOU">

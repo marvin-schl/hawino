@@ -2,9 +2,12 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="Gripper" Id="{914b4c40-8d67-4edc-a810-6f17709861da}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM Gripper
+VAR_INPUT
+	closeGripperCommand : BOOL;
+END_VAR
 VAR
 	closeGripperFromSimulink AT%I* : LREAL:=0;
-	closeGripperCommand		AT%I* : BOOL;				//True: opening, false: closing
+	//closeGripperCommand		AT%I* : BOOL;				//True: opening, false: closing
 	slider					AT%I* : BOOL;
 	partGripped				AT%I* : BOOL;
 	

@@ -4,45 +4,42 @@
     <Declaration><![CDATA[FUNCTION shiftCamAngle : RobotPose
 VAR_INPUT
 	path: 		Path;
-	camData:			RobotPose;
+	camData:	RobotPose;
 END_VAR
 VAR
 	thetaMin, thetaMax: LREAL;
-	startPoint, endPoint: RobotPoseSimple;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//calculate shifted upper and lower theta bounds depending on the start and end angles of the path
-shiftCamAngle.x 	:= camData.x;
-shiftCamAngle.y 	:= camData.y;
-shiftCamAngle.theta := camData.theta;
-shiftCamAngle.e 	:= camData.e;
-
-startPoint := path.startPointVal;
-endPoint   := path.endPointVal;
-
-IF startPoint.theta >= endPoint.theta THEN
-	thetaMin := startPoint.theta-1.5*pi;
-	thetaMax := startPoint.theta+0.5*pi;
-ELSIF startPoint.theta < endPoint.theta THEN
-	thetaMin := startPoint.theta-0.5*pi;
-	thetaMax := startPoint.theta+1.5*pi;
+      <ST><![CDATA[shiftCamAngle := camData;
+//calculate shifted upper and lower theta bounds depending on the start and end angles of the path
+IF path.startPoint.theta >= path.endPoint.theta THEN
+	thetaMin := path.startPoint.theta-1.5*pi;
+	thetaMax := path.startPoint.theta+0.5*pi;
+ELSIF path.startPoint.theta < path.endPoint.theta THEN
+	thetaMin := path.startPoint.theta-0.5*pi;
+	thetaMax := path.startPoint.theta+1.5*pi;
 END_IF
 
-//normalize the camera angle within the prior calculated bounds
+//normailize the camera angle within the prior calculated bounds
 IF  camData.x <> 0 AND  camData.y <> 0 THEN
 	shiftCamAngle.theta := normalizeAngle(camData.theta, thetaMax, thetaMin);
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="shiftCamAngle">
-      <LineId Id="54" Count="0" />
-      <LineId Id="75" Count="3" />
-      <LineId Id="105" Count="0" />
-      <LineId Id="87" Count="0" />
-      <LineId Id="104" Count="0" />
-      <LineId Id="106" Count="0" />
-      <LineId Id="55" Count="9" />
-      <LineId Id="116" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="24" Count="0" />
       <LineId Id="34" Count="0" />
     </LineIds>
   </POU>
