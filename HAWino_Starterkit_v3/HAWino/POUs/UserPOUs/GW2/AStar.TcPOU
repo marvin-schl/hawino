@@ -22,19 +22,18 @@ VAR
 	row, col : LREAL;
 	xNode, yNode : ARRAY[1..144] OF LREAL;
 	removeNode : ARRAY[0..11] OF INT := [93, 96, 99, 102, 111, 114, 117, 120, 124, 125, 142, 143];
-	startNode : INT := 0;
+	startNode : INT := 0; //fragwürdig
 	diff_x, diff_y : ARRAY[1..144] OF LREAL;
 	xMinPosition : ARRAY[0..100] OF INT;
 	openList : ARRAY[1..144,1..6] OF LREAL;
 	nullOpenList : ARRAY[1..144,1..6] OF LREAL := [864(0)];
 	closedList : ARRAY[1..144] OF LREAL;
-	nullClosedList : ARRAY[1..144] OF LREAL := [144(0)];
 	h, f, gprev : LREAL;
 	g : LREAL := 0;
 	parentNode : INT ;
-	countNeighbor, indexMin, currentNode, temp : INT;
+	countNeighbor, indexMin, currentNode : INT;
 	neighborList:ARRAY[1..8,1..5] OF LREAL;
-	nullMatrix : ARRAY[1..8,1..5] OF LREAL := [40(0)];
+	nullMatrix_Neighbor : ARRAY[1..8,1..5] OF LREAL := [40(0)];
 	nullMatrix_TempArray : ARRAY[1..144,1..7] OF LREAL := [1008(0)];
 	flag : BOOL;
 	countOpen : INT := 1;
@@ -49,13 +48,7 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[reset();
-countOpen := 1;
-countTemp := 1;
-countClosed := 1;
-countPointList := 1;
-q := 0;
-numberOfNodes := 144;
-numberOfColumns := 18;
+openList := nullOpenList;
 
 ///////////////////////////////////////////Erstellen der Adjezenzmatrix//////////////////////////////////////////////////////////////////
 FOR i := 0 TO numberOfNodes BY 1 DO
@@ -122,7 +115,7 @@ END_FOR
 	 diff_y[i] := ABS(yRobotActual - yNode[i]);
  END_FOR
  
- xMin := 1000;
+ xMin := 10000;
  
  FOR i := 1 TO 144 BY 1 DO
 	 IF xMin >= diff_x[i] THEN
@@ -137,7 +130,7 @@ END_FOR
 	 END_IF
  END_FOR
 
- yMin := 1000;
+ yMin := 10000;
   
  FOR m := 1 TO 100 BY 1 DO
 	 nodeNumber := xMinPosition[m];
@@ -159,12 +152,9 @@ END_FOR
  
  /////////////////////////////////////////////////////AStern Algorithmus////////////////////////////////////////////////////////////////////////////////
  currentNode := startNode;
- parentNode := 0;
- g := 0;
  h := SQRT(EXPT(xNode[startNode]-xEnd,2) + EXPT(yNode[startNode]-yEnd,2));
  f := g + h;
- openList := nullOpenList;
-
+ 
  //übergibt hier zu entfernende Nodes in closed List -> nötig?
  
  //insert start node in openList
@@ -183,7 +173,7 @@ END_FOR
  WHILE currentNode <> endNode DO
 	 //clear neighborlist
  	countNeighbor := 1;
-	neighborList := nullMatrix;
+	neighborList := nullMatrix_Neighbor;
 	
 	//search the neightbor and put in neighborlist
 	gprev := g;
@@ -320,22 +310,56 @@ END_VAR
 Zeros(closedList);
 zeros_INT(wayPointList);
 zeros(xCoordinates);
-zeros(yCoordinates);]]></ST>
+zeros(yCoordinates);
+//Matrix?
+zeros(xNode);
+zeros(yNode);
+//removeNode?
+zeros(diff_x);
+zeros(diff_y);
+zeros_INT(xMinPosition);
+
+finishedASearch := FALSE;
+numberOfNodes := 144;
+q := 0;
+n := 0;
+numberOfColumns := 18;
+parentNode := 0;
+g := 0;
+flag := FALSE;
+countOpen := 1;
+countTemp := 1;
+countClosed := 1;
+countPointList := 1;
+]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="AStar">
       <LineId Id="1084" Count="0" />
-      <LineId Id="768" Count="4" />
-      <LineId Id="1081" Count="1" />
+      <LineId Id="1130" Count="0" />
       <LineId Id="773" Count="36" />
       <LineId Id="1020" Count="1" />
       <LineId Id="810" Count="5" />
       <LineId Id="1022" Count="11" />
-      <LineId Id="824" Count="194" />
+      <LineId Id="824" Count="45" />
+      <LineId Id="872" Count="2" />
+      <LineId Id="876" Count="142" />
       <LineId Id="67" Count="0" />
     </LineIds>
     <LineIds Name="AStar.reset">
       <LineId Id="5" Count="4" />
+      <LineId Id="20" Count="6" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="15" Count="1" />
+      <LineId Id="18" Count="1" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="33" Count="1" />
+      <LineId Id="32" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

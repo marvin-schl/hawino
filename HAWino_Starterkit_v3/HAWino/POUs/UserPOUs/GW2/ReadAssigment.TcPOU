@@ -14,6 +14,7 @@ VAR_OUTPUT
 	lastNodePickUp, lastNodeStorage, pickupLocation, readerCheckOut, readerCheckIn, storageLocation, lastNodeCharging, chargingLocation : RobotPoseSimple;
 	parkingSlots : ARRAY[1..4] OF RobotPoseSimple;				//Array mit Parkplätzen der Roboter
 	endNodePickup, endNodeStorage, endNodeCharging : INT;
+	endNodeParking : ARRAY[1..4] OF INT;
 END_VAR
 VAR
 	Failed : BOOL := FALSE;
@@ -332,9 +333,13 @@ END_IF
 //Roboter 4 auf Knoten 17, 3 auf 16, 2 auf 15, 1 auf 14
 ////////TODO passt das oder brauchen die mehr Abstand??????????????
 parkingSlots[1] := ToRobotPoseSimple(x := 5400, y := 600, theta := -1);
+endNodeParking[1] := 14;
 parkingSlots[2] := ToRobotPoseSimple(x := 5800, y := 600, theta := -1);
+endNodeParking[2] := 15;
 parkingSlots[3] := ToRobotPoseSimple(x := 6200, y := 600, theta := -1);
+endNodeParking[3] := 16;
 parkingSlots[4] := ToRobotPoseSimple(x := 6600, y := 600, theta := -1);
+endNodeParking[4] := 17;
 
 ]]></ST>
     </Implementation>
@@ -574,7 +579,13 @@ parkingSlots[4] := ToRobotPoseSimple(x := 6600, y := 600, theta := -1);
       <LineId Id="485" Count="0" />
       <LineId Id="487" Count="0" />
       <LineId Id="489" Count="0" />
-      <LineId Id="506" Count="2" />
+      <LineId Id="595" Count="0" />
+      <LineId Id="506" Count="0" />
+      <LineId Id="597" Count="0" />
+      <LineId Id="507" Count="0" />
+      <LineId Id="598" Count="0" />
+      <LineId Id="508" Count="0" />
+      <LineId Id="599" Count="0" />
       <LineId Id="488" Count="0" />
       <LineId Id="486" Count="0" />
     </LineIds>
