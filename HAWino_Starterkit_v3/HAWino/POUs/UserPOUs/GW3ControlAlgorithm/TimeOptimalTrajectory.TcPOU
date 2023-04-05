@@ -24,8 +24,8 @@ VAR
 	
 	samplingTime		: LREAL				:= 0.05;
 	
-	maxVel				: LREAL				:= 0.5;
-	maxAcc				: LREAL				:= 0.4;
+	maxVel				: LREAL				:= 0.6;
+	maxAcc				: LREAL				:= 0.3;
 	
 	arcLengthSlow		: LREAL				:= 0.2;
 	maxSlowVel			: LREAL				:= 0.08;
@@ -99,7 +99,7 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Insert actual position as first waypoint if robot is too far away from first
-IF (SQRT(EXPT(currentPose.x - newWayPointList[0].x, 2) + EXPT(currentPose.y - newWayPointList[0].y, 2)) > maxInitialPoseError) THEN
+IF (SQRT(EXPT(currentPose.x - newWayPointList[0].x, 2) + EXPT(currentPose.y - newWayPointList[0].y, 2)) > maxInitialPoseError) AND currentPose.x <> 0 AND currentPose.y <> 0 THEN
 	// shift all elements +1 to right except the lat one (gets overwritten)
 	FOR i := 100 TO 0 BY -1 DO
 		extendedWayPointList[i + 1] := newWayPointList[i];
