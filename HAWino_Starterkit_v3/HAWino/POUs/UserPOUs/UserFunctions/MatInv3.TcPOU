@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="MatInv3" Id="{19f7f81c-5e31-4a68-8e21-e9f3e97b1c66}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION MatInv3 : ARRAY [0..2,0..2] OF LREAL
+VAR_INPUT
+	A : ARRAY [0..2,0..2] OF LREAL;
+END_VAR
+
+VAR
+	det		: LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[det := MatDet3(A);
+
+MatInv3[0,0] := ( A[1,1]*A[2,2] - A[1,2]*A[2,1] ) / det;
+MatInv3[0,1] := ( -A[0,1]*A[2,2] + A[0,2]*A[2,1] ) / det;
+MatInv3[0,2] := ( A[0,1]*A[1,2] - A[0,2]*A[1,1] ) / det;
+MatInv3[1,0] := ( -A[1,0]*A[2,2] + A[1,2]*A[2,0] ) / det;
+MatInv3[1,1] := ( A[0,0]*A[2,2] - A[0,2]*A[2,0] ) / det;
+MatInv3[1,2] := ( -A[0,0]*A[1,2] + A[0,2]*A[1,0] ) / det;
+MatInv3[2,0] := ( A[1,0]*A[2,1] - A[1,1]*A[2,0] ) / det;
+MatInv3[2,1] := ( -A[0,0]*A[2,1] + A[0,1]*A[2,0] ) / det;
+MatInv3[2,2] := ( A[0,0]*A[1,1] - A[0,1]*A[1,0] ) / det;]]></ST>
+    </Implementation>
+    <LineIds Name="MatInv3">
+      <LineId Id="42" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="65" Count="7" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
