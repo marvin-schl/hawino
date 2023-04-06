@@ -464,6 +464,15 @@
 			<BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
 		</DataType>
 		<DataType>
+			<Name GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..2] OF LREAL</Name>
+			<BitSize>192</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>3</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
 			<Name GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}" AutoDeleteType="true">RobotPoseSimple</Name>
 			<BitSize>192</BitSize>
 			<SubItem>
@@ -514,15 +523,6 @@
 			<ArrayInfo>
 				<LBound>0</LBound>
 				<Elements>101</Elements>
-			</ArrayInfo>
-		</DataType>
-		<DataType>
-			<Name GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..2] OF LREAL</Name>
-			<BitSize>192</BitSize>
-			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-			<ArrayInfo>
-				<LBound>0</LBound>
-				<Elements>3</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
@@ -6306,6 +6306,32 @@ Time at the client when the reply arrived from the server;]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.observer.estimatedPoseFromSimlink</Name>
+							<Comment><![CDATA[from Simulink]]></Comment>
+							<Type GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}">ARRAY [0..2] OF LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.kalmanPose</Name>
+							<Comment><![CDATA[TEMPORARY++++++++++++++++++++++++++++++++++++++++++++++++++++++++]]></Comment>
+							<Type GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}">ARRAY [0..2] OF LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.timestampNTPTcCom</Name>
+							<Type>LINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.CamHH</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.CamMM</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.observer.CamSS</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
 							<Name>ControlPRG.robot.vXfromRobot</Name>
 							<Comment><![CDATA[outputs from robot]]></Comment>
 							<Type>LREAL</Type>
@@ -6332,32 +6358,6 @@ Time at the client when the reply arrived from the server;]]></Comment>
 							<Name>ControlPRG.waypointList</Name>
 							<Comment><![CDATA[ implemented, Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)]]></Comment>
 							<Type GUID="{57D1290D-8922-6C29-A5EB-E802603DE228}">ARRAY [0..100] OF RobotPoseSimple</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.observer.estimatedPoseFromSimlink</Name>
-							<Comment><![CDATA[from Simulink]]></Comment>
-							<Type GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}">ARRAY [0..2] OF LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.observer.kalmanPose</Name>
-							<Comment><![CDATA[TEMPORARY++++++++++++++++++++++++++++++++++++++++++++++++++++++++]]></Comment>
-							<Type GUID="{081E5D19-0F37-D720-7511-75B2BAA04D00}">ARRAY [0..2] OF LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.observer.timestampNTPTcCom</Name>
-							<Type>LINT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.observer.CamHH</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.observer.CamMM</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.observer.CamSS</Name>
-							<Type>LREAL</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -6406,39 +6406,6 @@ Time at the client when the reply arrived from the server;]]></Comment>
 							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
 						</Var>
 						<Var>
-							<Name>ControlPRG.robot.vXtoRobot</Name>
-							<Comment><![CDATA[inputs to robot]]></Comment>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vYtoRobot</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vThetaToRobot</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yBoDriving</Name>
-							<Comment><![CDATA[ implemented, TRUE, wenn Roboter fährt				]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yBoArrivedAtDestination</Name>
-							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yUintWaypointIndex</Name>
-							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yRPposition</Name>
-							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
-							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
-						</Var>
-						<Var>
 							<Name>ControlPRG.observer.cameraPoseToSimulink</Name>
 							<Comment><![CDATA[to Simulink]]></Comment>
 							<Type GUID="{4D3DC7C8-81AE-A753-B20D-E9008BBCE70B}">ARRAY [0..3] OF LREAL</Type>
@@ -6478,6 +6445,39 @@ Time at the client when the reply arrived from the server;]]></Comment>
 						<Var>
 							<Name>ControlPRG.observer.UseSimpleNotKalmanToSimulink</Name>
 							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vXtoRobot</Name>
+							<Comment><![CDATA[inputs to robot]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vYtoRobot</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vThetaToRobot</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yBoDriving</Name>
+							<Comment><![CDATA[ implemented, TRUE, wenn Roboter fährt				]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yBoArrivedAtDestination</Name>
+							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yUintWaypointIndex</Name>
+							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yRPposition</Name>
+							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
+							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="1" ContextId="1" AreaNo="16">
@@ -6873,7 +6873,7 @@ Time at the client when the reply arrived from the server;]]></Comment>
 			<PlcAuxTask Affinity="#x00000002"/>
 		</Plc>
 		<Io>
-			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="5.53.207.184.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
+			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="172.16.0.6.2.1" RemoteName="Gerät 1 (EtherCAT)" InfoImageId="2">
 				<Name>Gerät 1 (EtherCAT)</Name>
 				<AddressInfo>
 					<Ccat>

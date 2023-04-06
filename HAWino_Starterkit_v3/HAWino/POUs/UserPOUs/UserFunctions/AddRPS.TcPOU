@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="AddRPS" Id="{68a1e610-742f-4602-90ea-14eef65fa4c1}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION AddRPS : RobotPoseSimple
+VAR_INPUT
+	pose1, pose2: RobotPoseSimple;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[AddRPS.x		:= pose1.x + pose2.x;
+AddRPS.y		:= pose1.y + pose2.y;
+AddRPS.theta	:= pose1.theta + pose2.theta;]]></ST>
+    </Implementation>
+    <LineIds Name="AddRPS">
+      <LineId Id="7" Count="0" />
+      <LineId Id="9" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

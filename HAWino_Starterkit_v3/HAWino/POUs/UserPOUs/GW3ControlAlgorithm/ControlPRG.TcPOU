@@ -46,6 +46,13 @@ VAR
 	fbTime : FB_LocalSystemTime:= ( bEnable := TRUE, dwCycle:= 1);
 	sysTime : TIMESTRUCT;
 	ttime : NT_GetTime;
+	
+	matA : ARRAY[0..2,0..2] OF LREAL := [1, 2, 3, 4, 5, 6, 70, 8, 9] ;
+	matB : ARRAY[0..2,0..2] OF LREAL := [0, -1, -2, 3, 7, 40, 3, 2, 0];
+	matC : ARRAY[0..2,0..2] OF LREAL;
+	matD : ARRAY[0..2,0..2] OF LREAL;
+	matE : ARRAY[0..2,0..2] OF LREAL;
+	detA : LREAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -178,6 +185,12 @@ END_IF
 //needs to be called so that the velocities will be written to motor drives
 robot(); 
 
+detA := matDet3(matA);
+matC := MatTimesMat(matA, matB);
+matD := MatInv3(matA);
+matE := MatInv3(matB);
+
+
 
 ]]></ST>
     </Implementation>
@@ -220,7 +233,14 @@ END_VAR]]></Declaration>
       <LineId Id="1058" Count="0" />
       <LineId Id="948" Count="46" />
       <LineId Id="1060" Count="0" />
-      <LineId Id="995" Count="21" />
+      <LineId Id="995" Count="19" />
+      <LineId Id="1161" Count="1" />
+      <LineId Id="1015" Count="0" />
+      <LineId Id="1164" Count="0" />
+      <LineId Id="1169" Count="0" />
+      <LineId Id="1171" Count="0" />
+      <LineId Id="1167" Count="0" />
+      <LineId Id="1016" Count="0" />
       <LineId Id="94" Count="0" />
     </LineIds>
     <LineIds Name="ControlPRG.calculateTrajectory">

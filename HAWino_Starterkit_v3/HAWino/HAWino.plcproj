@@ -108,6 +108,12 @@
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\SimpleObserver.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\SimpleObserverST.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\KalmanObserverST.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\SimpleStateFeedbackLaw.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -159,10 +165,31 @@
     <Compile Include="POUs\UserPOUs\TestAndMeasurement\Sinusfahrt.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\SubstractMat3.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\AddRPS.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\AddMat3.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\ATAN2.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\FILL.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\MatDet3.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\MatInv3.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\MatTimesRPS.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\MatTimesMat.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\Robot2World.TcPOU">
@@ -177,7 +204,13 @@
     <Compile Include="POUs\UserPOUs\UserFunctions\RP2ARRAY.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\ScaleRPS.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\SI.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\SubtractRPS.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\World2Robot.TcPOU">

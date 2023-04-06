@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="AddMat3" Id="{31e4cf46-7780-4daf-a11c-d89cf5ae93dd}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION AddMat3 : ARRAY[0..2, 0..2] OF LREAL
+VAR_INPUT
+	mat1: ARRAY[0..2, 0..2] OF REAL;
+	mat2: ARRAY[0..2, 0..2] OF REAL;
+END_VAR
+
+VAR
+	i, j: INT; 
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[FOR i := 0 TO 2 DO
+	FOR j := 0 TO 2 DO
+		AddMat3[i,j] := mat1[i,j] + mat2[i,j];
+	END_FOR
+END_FOR]]></ST>
+    </Implementation>
+    <LineIds Name="AddMat3">
+      <LineId Id="23" Count="3" />
+      <LineId Id="10" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
