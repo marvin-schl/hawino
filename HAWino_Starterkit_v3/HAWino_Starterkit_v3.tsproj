@@ -3246,11 +3246,6 @@
 							<Type>UINT</Type>
 						</Var>
 						<Var>
-							<Name>ControlPRG.robotPoses</Name>
-							<Comment><![CDATA[input from camera]]></Comment>
-							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
-						</Var>
-						<Var>
 							<Name>ControlPRG.robot.vel.n1MotorRaw</Name>
 							<Type>UINT</Type>
 						</Var>
@@ -3261,6 +3256,11 @@
 						<Var>
 							<Name>ControlPRG.robot.vel.n3MotorRaw</Name>
 							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robotPoses</Name>
+							<Comment><![CDATA[input from camera]]></Comment>
+							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
 						</Var>
 						<Var>
 							<Name>ControlPRG.xBoEnable</Name>
@@ -3330,6 +3330,19 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.robot.vXtoRobot</Name>
+							<Comment><![CDATA[inputs to robot]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vYtoRobot</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vThetaToRobot</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
 							<Name>ControlPRG.yBoArrivedAtDestination</Name>
 							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
 							<Type>BOOL</Type>
@@ -3343,19 +3356,6 @@
 							<Name>ControlPRG.yRPposition</Name>
 							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
 							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vXtoRobot</Name>
-							<Comment><![CDATA[inputs to robot]]></Comment>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vYtoRobot</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vThetaToRobot</Name>
-							<Type>LREAL</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="1" ContextId="1" AreaNo="16">

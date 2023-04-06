@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
-  <POU Name="MatTimesRPS" Id="{d8a25963-196a-479f-8502-ec67bf6c40a1}" SpecialFunc="None">
+  <POU Name="MatTimesRPS" Id="{2ab1d99a-d155-42b6-8f7d-fbea54f57555}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION MatTimesRPS : RobotPoseSimple
 VAR_INPUT
 	K: ARRAY [0..2,0..2] OF LREAL;
