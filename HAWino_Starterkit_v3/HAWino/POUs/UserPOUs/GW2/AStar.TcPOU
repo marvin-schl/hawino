@@ -52,40 +52,56 @@ openList := nullOpenList;
 
 ///////////////////////////////////////////Erstellen der Adjezenzmatrix//////////////////////////////////////////////////////////////////
 FOR i := 0 TO numberOfNodes BY 1 DO
-	 IF i-1 > 0 AND i MOD numberOfColumns <> 1 THEN
+	 IF i-1 > 0 AND i MOD numberOfColumns <> 1 THEN									//linker Nachbar
 		 matrix[i-1,i] := 1000;
 	 END_IF
-	 IF i+1 < numberOfNodes+1 AND i MOD numberOfColumns <> 0 THEN
+	 IF i+1 < numberOfNodes+1 AND i MOD numberOfColumns <> 0 THEN					//rechter Nachbar
 		 matrix[i+1,i] := 1000;
 	 END_IF
-	 IF i+numberOfColumns < numberOfNodes+1 THEN
+	 IF i+numberOfColumns < numberOfNodes+1 THEN									//oberer Nachbar
 		 matrix[i+numberOfColumns,i] := 1000;
 	 END_IF
-	 IF i-numberOfColumns > 0 THEN
+	 IF i-numberOfColumns > 0 THEN													//unterer Nachbar
 		 matrix[i-numberOfColumns,i] := 1000;
 	 END_IF
-	 IF i+numberOfColumns+1 < numberOfNodes+1 AND i MOD numberOfColumns <> 0 THEN
+	 IF i+numberOfColumns+1 < numberOfNodes+1 AND i MOD numberOfColumns <> 0 THEN	//Nachbar oben rechts
 		 matrix[i+numberOfColumns+1,i] := SQRT(2)*1000;
 	 END_IF
-	 IF i+numberOfColumns-1 < numberOfNodes+1 AND i MOD numberOfColumns <> 1 THEN
+	 IF i+numberOfColumns-1 < numberOfNodes+1 AND i MOD numberOfColumns <> 1 THEN	//Nachbar oben links
 		 matrix[i+numberOfColumns-1,i] := SQRT(2)*1000;
 	 END_IF
-	 IF i-numberOfColumns+1 > 0 AND i MOD numberOfColumns <> 0 THEN
+	 IF i-numberOfColumns+1 > 0 AND i MOD numberOfColumns <> 0 THEN					//Nachbar unten rechts
 		 matrix[i-numberOfColumns+1,i] := SQRT(2)*1000;
 	 END_IF
-	 IF i-numberOfColumns-1 > 0 AND i MOD numberOfColumns <> 1 THEN
+	 IF i-numberOfColumns-1 > 0 AND i MOD numberOfColumns <> 1 THEN					//Nachbar unten links
 		 matrix[i-numberOfColumns-1,i] := SQRT(2)*1000;
 	 END_IF
  END_FOR
  
  
  
- //Löschen der Knoten über Station
+//Löschen der Knoten über Station und die nahegelegenen diagonalen Verbindungen
  FOR counter := 0 TO 11 BY 1 DO
 	FOR j := 1 TO numberOfNodes BY 1 DO
 		matrix[removeNode[counter],j] := 0;
 		matrix[j, removeNode[counter]] := 0;
  	END_FOR
+	//diagonale Verbindung oben links
+	matrix[removeNode[counter] - 1, removeNode[counter] + numberOfColumns] := 0;	
+	matrix[removeNode[counter] + numberOfColumns, removeNode[counter] - 1] := 0;	
+	
+	//diagonale Verbindung unten links
+	matrix[removeNode[counter] - 1, removeNode[counter] - numberOfColumns] := 0;	
+	matrix[removeNode[counter] - numberOfColumns, removeNode[counter] - 1] := 0;	
+	
+	//diagonale Verbindung oben rechts
+	matrix[removeNode[counter] + 1, removeNode[counter] + numberOfColumns] := 0;	
+	matrix[removeNode[counter] + numberOfColumns, removeNode[counter] + 1] := 0;	
+	
+	//diagonale Verbindung unten rechts
+	matrix[removeNode[counter] + 1, removeNode[counter] - numberOfColumns] := 0;	
+	matrix[removeNode[counter] - numberOfColumns, removeNode[counter] + 1] := 0;	
+	
 	xNode[removeNode[counter]] := 10000;
 	yNode[removeNode[counter]] := 10000;
 END_FOR
@@ -143,7 +159,7 @@ END_FOR
  
   FOR u := 1 TO 100 BY 1 DO
 	nodeNumber := xMinPosition[u];
-	IF nodeNumber <> 0 THEN
+	IF nodeNumber <>  0 THEN
 		IF diff_y[nodeNumber] = yMin THEN
 			startNode := nodeNumber;
 		END_IF
@@ -176,7 +192,6 @@ END_FOR
 	neighborList := nullMatrix_Neighbor;
 	
 	//search the neightbor and put in neighborlist
-	gprev := g;
 	FOR v := 1 TO numberOfNodes BY 1 DO
 		//calculate forwards
 		IF matrix[currentNode,v] <> 0 THEN
@@ -250,6 +265,7 @@ END_FOR
 	//found smallest fn, update openList and put in closedList
 	openList[indexMin, 1] := 0;
 	currentNode := LREAL_TO_INT(openList[indexMin, 2]);
+	gprev := openList[indexMin,3];
 	countClosed := countClosed + 1;
 	closedList[countClosed] := currentNode;
  END_WHILE
@@ -270,18 +286,6 @@ END_FOR
 	 END_IF
  END_FOR
 
- //sort the wayPointList from start node to target node
- //FOR q := 1 TO 101 BY 1 DO
-//	 FOR c := q+1 TO 100 BY 1 DO
-	//	 IF wayPointList[c] <> 0 AND wayPointList[q] > wayPointList[c] THEN
-		//	 temp := wayPointList[q];
-			// wayPointList[q] := wayPointList[c];
-			 //wayPointList[c] := temp;
-	//	 END_IF
-	 //END_FOR
- //END_FOR
- //geht so nicht weil nach größe der Zahlen kann nicht sortiert werden
- 
  FOR c := countPointList TO 1 BY -1 DO
 	 wayPointList_finished[q] := wayPointList[c];
 	 q := q + 1;
@@ -337,13 +341,17 @@ countPointList := 1;
     <LineIds Name="AStar">
       <LineId Id="1084" Count="0" />
       <LineId Id="1130" Count="0" />
-      <LineId Id="773" Count="36" />
-      <LineId Id="1020" Count="1" />
+      <LineId Id="773" Count="30" />
+      <LineId Id="1193" Count="23" />
       <LineId Id="810" Count="5" />
       <LineId Id="1022" Count="11" />
       <LineId Id="824" Count="45" />
       <LineId Id="872" Count="2" />
-      <LineId Id="876" Count="142" />
+      <LineId Id="876" Count="20" />
+      <LineId Id="898" Count="72" />
+      <LineId Id="1217" Count="0" />
+      <LineId Id="971" Count="18" />
+      <LineId Id="1002" Count="16" />
       <LineId Id="67" Count="0" />
     </LineIds>
     <LineIds Name="AStar.reset">
