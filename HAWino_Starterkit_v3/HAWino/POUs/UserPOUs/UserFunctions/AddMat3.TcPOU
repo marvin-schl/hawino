@@ -3,8 +3,8 @@
   <POU Name="AddMat3" Id="{31e4cf46-7780-4daf-a11c-d89cf5ae93dd}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION AddMat3 : ARRAY[0..2, 0..2] OF LREAL
 VAR_INPUT
-	mat1: ARRAY[0..2, 0..2] OF REAL;
-	mat2: ARRAY[0..2, 0..2] OF REAL;
+	mat1: ARRAY[0..2, 0..2] OF LREAL;
+	mat2: ARRAY[0..2, 0..2] OF LREAL;
 END_VAR
 
 VAR

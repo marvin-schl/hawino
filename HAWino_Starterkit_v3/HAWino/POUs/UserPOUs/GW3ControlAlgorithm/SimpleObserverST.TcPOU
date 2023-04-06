@@ -25,13 +25,13 @@ VAR
 	camDataOld, observerError, observedPosition, vWorld: RobotPoseSimple;
 	pulseGenerator: TP;
 	
-	delayedCycles		AT%Q* 	: INT	:= 77;
+	delayedCycles		AT%Q* 	: INT	:= 80;
 	delayedPosition: ARRAY [0..140] OF RobotPoseSimple;
 	
 	
-	K : ARRAY [0..2,0..2] OF LREAL 		:= [21, 0 ,0,
-									  		0, 21, 0,
-									  		0, 0, 21];
+	K : ARRAY [0..2,0..2] OF LREAL 		:= [25, 0 ,0,
+									  		0, 25, 0,
+									  		0, 0, 25];
 END_VAR
 ]]></Declaration>
     <Implementation>
