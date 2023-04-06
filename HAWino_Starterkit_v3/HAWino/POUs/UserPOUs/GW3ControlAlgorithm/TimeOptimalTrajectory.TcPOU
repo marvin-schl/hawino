@@ -25,13 +25,15 @@ VAR
 	samplingTime		: LREAL				:= 0.05;
 	
 	maxVel				: LREAL				:= 0.6;
-	maxAcc				: LREAL				:= 0.3;
+	maxAcc				: LREAL				:= 0.4;
 	
 	arcLengthSlow		: LREAL				:= 0.2;
 	maxSlowVel			: LREAL				:= 0.08;
 	
 	maxRotVel			: LREAL				:= 100;
 	maxRotAcc			: LREAL				:= 100;	
+	
+	thetaDZ				: LREAL				:= 0.2;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -118,7 +120,7 @@ ELSE
 	extendedWayPointList[0].theta := currentPose.theta;
 END_IF
 
-path(waypointListRaw := extendedWayPointList, maxRadius := maxRadius);
+path(waypointListRaw := extendedWayPointList, maxRadius := maxRadius, thetaDZ := thetaDZ);
 
 IF path.ready THEN
 	trajectoryPlanner(path := path, 

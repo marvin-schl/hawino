@@ -32,9 +32,6 @@ VAR
 	K : ARRAY [0..2,0..2] OF LREAL 		:= [18, 0 ,0,
 									  		0, 18, 0,
 									  		0, 0, 18];
-	
-	// TEST
-	//systime : NT_GetTime;
 END_VAR
 ]]></Declaration>
     <Implementation>

@@ -32,7 +32,7 @@ VAR
 	vrot_max: LREAL   := 1.57; //vTheta
 	u: ARRAY[0..2] OF LREAL;
 	i: INT;
-	accuracyXY: LREAL := 2;
+	accuracyXY: LREAL := 5;
 	accuracyTheta: LREAL := 0.01;
 END_VAR
 ]]></Declaration>

@@ -14,10 +14,10 @@ VAR_OUTPUT
 END_VAR
 VAR
 	//declare objects
-	observer 	: SimpleObserverST;					//Observer object
-	controller	: SimpleStateFeedbackLaw;			//Control law object
-	trajectory	: TimeOptimalTrajectory;			//Trajectory Object
-	robot		: Robot;							//link to physical I/O of roboter or simulation model of the roboter
+	observer 		 : SimpleObserverST;					//Observer object
+	controller		 : SimpleStateFeedbackLaw;			//Control law object
+	trajectory		 : TimeOptimalTrajectory;			//Trajectory Object
+	robot			 : Robot;							//link to physical I/O of roboter or simulation model of the roboter
 	robotPoses 	AT%I*: ARRAY [1..8] OF RobotPose;	//input from camera
 	
 	state AT%Q*: ControllerState := ControllerState.init;//sets controller state
@@ -38,7 +38,7 @@ VAR
 	
 	//outputs to GW2, uncomment and link when needed
 	yBoArrivedAtDestination AT%Q*:	BOOL := FALSE;			// implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP
-	yUintWaypointIndex AT%Q*: INT  := 0;						// implemented, COUNTER zur Anzeige, des Indexes des nächstes WP
+	yUintWaypointIndex AT%Q*: INT  := 0;					// implemented, COUNTER zur Anzeige, des Indexes des nächstes WP
 	yRPposition AT%Q*: RobotPoseSimple;						// implemented, aktuelle Roboterposition, für Simulationszwecke
 
 END_VAR
@@ -139,7 +139,7 @@ controller(xRobotPose 		:= observer.yObserverdPose,			//pass controller the obse
 
 //trajectory object
 trajectory(
-	drive := robot.enable,
+	drive 			:= robot.enable,
 	currentPose 	:= observer.yObserverdPose,					//Current implementation needs observed pose for distance calculation, TODO: check if needed for final implemenation
 	referencePose 	=> controller.xRobotPoseRef					//outputs reference pose to controller
 );
