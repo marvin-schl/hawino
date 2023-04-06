@@ -124,9 +124,9 @@ END_IF
 //init observer
 observer(xCameraPose 	:= shiftCamAngle(camData := robotPoses[Var_HAWIno.Robot_Number], path := trajectory.path),
 		 //xCameraPose 	:= robotPoses[Var_HAWIno.Robot_Number],
-		 xVxRobot    	:= robot.vXfromRobot,						//link x-velocity with measured velocity
-		 xVyRobot    	:= robot.vYfromRobot,						//link y-velocity with measured velocity
-		 xOmegaRobot    := robot.vThetaFromRobot,
+		 xVxRobot    	:= robot.vX,						//link x-velocity with measured velocity
+		 xVyRobot    	:= robot.vY,						//link y-velocity with measured velocity
+		 xOmegaRobot    := robot.vTheta,
  		 //xVxToRobot		:= controller.vXrobot,
 		 //xVyToRobot		:= controller.vYrobot,
 		 //xOmegaToRobot	:= controller.omegaRobot,				//link theta-velocity with measured velocity

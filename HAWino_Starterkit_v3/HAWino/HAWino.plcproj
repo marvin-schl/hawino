@@ -150,6 +150,9 @@
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\TrackingController1.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\VelocityMeasurement.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning\BezierCurve.TcPOU">
       <SubType>Code</SubType>
     </Compile>

@@ -29,9 +29,9 @@ VAR
 	delayedPosition: ARRAY [0..140] OF RobotPoseSimple;
 	
 	
-	K : ARRAY [0..2,0..2] OF LREAL 		:= [18, 0 ,0,
-									  		0, 18, 0,
-									  		0, 0, 18];
+	K : ARRAY [0..2,0..2] OF LREAL 		:= [21, 0 ,0,
+									  		0, 21, 0,
+									  		0, 0, 21];
 END_VAR
 ]]></Declaration>
     <Implementation>
