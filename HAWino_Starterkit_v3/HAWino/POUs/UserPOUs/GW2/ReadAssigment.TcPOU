@@ -42,25 +42,25 @@ IF assigment.Art = 'Fahrauftrag' THEN
 			lastNodePickUp := ToRobotPoseSimple(x := 600, y := 3000, theta := -1);
 			pickupLocation := ToRobotPoseSimple(x := 892, y := 2838, theta := 0); //gut	
 			readerCheckOut := ToRobotPoseSimple(x := 892, y := 2936, theta := 0); //gut
-			endNodePickup := 146;
+			endNodePickup := 110;
 		ELSIF assigment.AbholTasche = 2 THEN
 			//RFID links anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 600, y := 2600, theta := -1);
 			pickupLocation := ToRobotPoseSimple(x := 892, y := 2735, theta := 0); //gut
 			readerCheckOut := ToRobotPoseSimple(x := 892, y := 2936, theta := 0); //gut 
-			endNodePickup := 145;
+			endNodePickup := 92;
 		ELSIF assigment.AbholTasche = 3 THEN
 			//RFID rechts anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 1400, y := 3000, theta := -1);
 			pickupLocation := ToRobotPoseSimple(x := 1311, y := 2835, theta := pi); //gut
 			readerCheckOut := ToRobotPoseSimple(x := 1303, y := 2935, theta := pi);	//gut
-			endNodePickup := 149;
+			endNodePickup := 112;
 		ELSIF assigment.AbholTasche = 4 THEN
 			//RFID rechts anfahren	
 			lastNodePickUp := ToRobotPoseSimple(x := 1400, y := 2600, theta := -1);
 			pickupLocation := ToRobotPoseSimple(x := 1310, y := 2736, theta := pi);	//gut
 			readerCheckOut := ToRobotPoseSimple(x := 1303, y := 2935, theta := pi);	//gut
-			endNodePickup := 148;			
+			endNodePickup := 94;			
 		ELSE
 			//Fehler
 			Failed := TRUE;
@@ -71,25 +71,25 @@ IF assigment.Art = 'Fahrauftrag' THEN
 			lastNodePickUp := ToRobotPoseSimple(x := 1800, y := 3000, theta := -1);
 			pickupLocation := ToRobotPoseSimple(x := 2090, y := 2829, theta := 0); 	//gut
 			readerCheckOut := ToRobotPoseSimple(x := 2095, y := 2931, theta := 0);	//gut
-			endNodePickup := 152;
+			endNodePickup := 113;
 		ELSIF assigment.AbholTasche = 2 THEN
 			//RFID links anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 1800, y := 2600, theta := -1);
 			pickupLocation := ToRobotPoseSimple(x := 2094, y := 2731, theta := 0);	//gut
 			readerCheckOut := ToRobotPoseSimple(x := 2095, y := 2931, theta := 0);	//gut
-			endNodePickup := 151;
+			endNodePickup := 95;
 		ELSIF assigment.AbholTasche = 3 THEN
 			//RFID rechts anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 2600, y := 3000, theta := -1);
 			pickupLocation := ToRobotPoseSimple(x := 2445, y := 2833, theta := pi);	//test
 			readerCheckOut := ToRobotPoseSimple(x := 2445, y := 2928, theta := pi);	//test
-			endNodePickup := 155;	
+			endNodePickup := 115;	
 		ELSIF assigment.AbholTasche = 4 THEN
 			//RFID rechts anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 2600, y := 2600, theta := -1);
 			pickupLocation := ToRobotPoseSimple(x := 2490, y := 2732, theta := pi);	//test
 			readerCheckOut := ToRobotPoseSimple(x := 2445, y := 2928, theta := pi);	//test
-			endNodePickup := 154;			
+			endNodePickup := 97;			
 		ELSE
 			//Fehler
 			Failed := TRUE;
@@ -100,25 +100,25 @@ IF assigment.Art = 'Fahrauftrag' THEN
 			lastNodePickUp := ToRobotPoseSimple(x := 3000, y := 3000, theta := -1);
 			pickupLocation := ToRobotPoseSimple(x := 3234, y := 2837, theta := 0);	//gut
 			readerCheckOut := ToRobotPoseSimple(x := 3234, y := 2940, theta := 0);	//gut
-			endNodePickup := 158;
+			endNodePickup := 116;
 		ELSIF assigment.AbholTasche = 2 THEN
 			//RFID links anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 3000, y := 2600, theta := -1);
 			pickupLocation := ToRobotPoseSimple(x := 3234, y := 2732, theta := 0);	//gut
 			readerCheckOut := ToRobotPoseSimple(x := 3234, y := 2940, theta := 0); //gut
-			endNodePickup := 157;
+			endNodePickup := 98;
 		ELSIF assigment.AbholTasche = 3 THEN
 			//RFID rechts anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 3800, y := 3000, theta := -1);
 			pickupLocation := ToRobotPoseSimple(x := 3653, y := 2840, theta := pi);	//gut
 			readerCheckOut := ToRobotPoseSimple(x := 3672, y := 2940, theta := pi);	//test
-			endNodePickup := 161;	
+			endNodePickup := 118;	
 		ELSIF assigment.AbholTasche = 4 THEN
 			//RFID rechts anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 3800, y := 2600, theta := -1);
 			pickupLocation := ToRobotPoseSimple(x := 3650, y := 2732, theta := pi); //gut
 			readerCheckOut := ToRobotPoseSimple(x := 3662, y := 2940, theta := pi);	//alt
-			endNodePickup := 160;			
+			endNodePickup := 100;			
 		ELSE
 			//Fehler
 			Failed := TRUE;
@@ -129,25 +129,25 @@ IF assigment.Art = 'Fahrauftrag' THEN
 			lastNodePickUp := ToRobotPoseSimple(x := 4200, y := 3000, theta := -1);
 			pickupLocation := ToRobotPoseSimple(x := 4460, y := 2838, theta := 0); //gut
 			readerCheckOut := ToRobotPoseSimple(x := 4454, y := 2944, theta := 0); //test
-			endNodePickup := 164;
+			endNodePickup := 119;
 		ELSIF assigment.AbholTasche = 2 THEN
 			//RFID links anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 4200, y := 2600, theta := -1);
 			pickupLocation := ToRobotPoseSimple(x := 4460, y := 2732, theta := 0); //test
 			readerCheckOut := ToRobotPoseSimple(x := 4454, y := 2944, theta := 0); //test
-			endNodePickup := 163;
+			endNodePickup := 101;
 		ELSIF assigment.AbholTasche = 3 THEN
 			//RFID rechts anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 5000, y := 3000, theta := -1);
-			pickupLocation := ToRobotPoseSimple(x := 4918, y := 2855, theta := pi); //test - nciht weit genug dran
+			pickupLocation := ToRobotPoseSimple(x := 4918, y := 2855, theta := pi); //test
 			readerCheckOut := ToRobotPoseSimple(x := 4893, y := 2942, theta := pi);	//test
-			endNodePickup := 167;
+			endNodePickup := 121;
 		ELSIF assigment.AbholTasche = 4 THEN
 			//RFID rechts anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 5000, y := 2600, theta := -1);
 			pickupLocation := ToRobotPoseSimple(x := 4893, y := 2746, theta := pi); //test
 			readerCheckOut := ToRobotPoseSimple(x := 4893, y := 2942, theta := pi);	//test
-			endNodePickup := 166;			
+			endNodePickup := 103;			
 		ELSE
 			//Fehler
 			Failed := TRUE;
@@ -166,25 +166,25 @@ IF assigment.Art = 'Fahrauftrag' THEN
 			lastNodeStorage := ToRobotPoseSimple(x := 600, y := 3000, theta := -1); 
 			storageLocation := ToRobotPoseSimple(x := 892, y := 2838, theta := 0);
 			readerCheckIn := ToRobotPoseSimple(x := 892, y := 2936, theta := 0);
-			endNodeStorage := 146;
+			endNodeStorage := 110;
 		ELSIF assigment.AblageTasche = 2 THEN
 			//RFID links anfahren
 			lastNodeStorage := ToRobotPoseSimple(x := 600, y := 2600, theta := -1); 
 			storageLocation := ToRobotPoseSimple(x := 892, y := 2735, theta := 0);
 			readerCheckIn := ToRobotPoseSimple(x := 892, y := 2936, theta := 0); 
-			endNodeStorage := 145;
+			endNodeStorage := 92;
 		ELSIF assigment.AblageTasche = 3 THEN
 			//RFID rechts anfahren	
 			lastNodeStorage := ToRobotPoseSimple(x := 1400, y := 3000, theta := -1);
 			storageLocation := ToRobotPoseSimple(x := 1311, y := 2835, theta := pi);
 			readerCheckIn := ToRobotPoseSimple(x := 1303, y := 2935, theta := pi);	
-			endNodeStorage := 149;
+			endNodeStorage := 112;
 		ELSIF assigment.AblageTasche = 4 THEN
 			//RFID rechts anfahren	
 			lastNodeStorage := ToRobotPoseSimple(x := 1400, y := 2600, theta := -1);
 			storageLocation := ToRobotPoseSimple(x := 1310, y := 2736, theta := pi);
 			readerCheckIn := ToRobotPoseSimple(x := 1303, y := 2935, theta := pi);
-			endNodeStorage := 148;		
+			endNodeStorage := 94;		
 		ELSE
 			//Fehler
 			Failed := TRUE;
@@ -195,25 +195,25 @@ IF assigment.Art = 'Fahrauftrag' THEN
 			lastNodeStorage := ToRobotPoseSimple(x := 1800, y := 3000, theta := -1);
 			storageLocation := ToRobotPoseSimple(x := 2090, y := 2829, theta := 0);
 			readerCheckIn := ToRobotPoseSimple(x := 2095, y := 2931, theta := 0);
-			endNodeStorage := 152;
+			endNodeStorage := 113;
 		ELSIF assigment.AblageTasche = 2 THEN
 			//RFID links anfahren
 			lastNodeStorage := ToRobotPoseSimple(x := 1800, y := 2600, theta := -1);
 			storageLocation := ToRobotPoseSimple(x := 2094, y := 2731, theta := 0);	//test
 			readerCheckIn := ToRobotPoseSimple(x := 2095, y := 2931, theta := 0); //2088
-			endNodeStorage := 151;
+			endNodeStorage := 95;
 		ELSIF assigment.AblageTasche = 3 THEN
 			//RFID rechts anfahren	
 			lastNodeStorage := ToRobotPoseSimple(x := 2600, y := 3000, theta := -1);
 			storageLocation := ToRobotPoseSimple(x := 2445, y := 2833, theta := pi);
 			readerCheckIn := ToRobotPoseSimple(x := 2445, y := 2928, theta := pi);	
-			endNodeStorage := 155;
+			endNodeStorage := 115;
 		ELSIF assigment.AblageTasche = 4 THEN
 			//RFID rechts anfahren	
 			lastNodeStorage := ToRobotPoseSimple(x := 2600, y := 2600, theta := -1);
 			storageLocation := ToRobotPoseSimple(x := 2490, y := 2732, theta := pi);
 			readerCheckIn := ToRobotPoseSimple(x := 2445, y := 2928, theta := pi);
-			endNodeStorage := 154;			
+			endNodeStorage := 97;			
 		ELSE
 			//Fehler
 			Failed := TRUE;
@@ -222,27 +222,27 @@ IF assigment.Art = 'Fahrauftrag' THEN
 		IF assigment.AblageTasche = 1 THEN
 			//RFID links anfahren
 			lastNodeStorage := ToRobotPoseSimple(x := 3000, y := 3000, theta := -1);
-			storageLocation := ToRobotPoseSimple(x := 3234, y := 2837, theta := 0); //3229 //noch nicht gut so... x zu weit in tasche
+			storageLocation := ToRobotPoseSimple(x := 3234, y := 2837, theta := 0); //3229
 			readerCheckIn := ToRobotPoseSimple(x := 3234, y := 2940, theta := 0);	//test
-			endNodeStorage := 158;
+			endNodeStorage := 116;
 		ELSIF assigment.AblageTasche = 2 THEN
 			//RFID links anfahren
 			lastNodeStorage := ToRobotPoseSimple(x := 3000, y := 2600, theta := -1);
 			storageLocation := ToRobotPoseSimple(x := 3234, y := 2732, theta := 0);
 			readerCheckIn := ToRobotPoseSimple(x := 3234, y := 2940, theta := 0);
-			endNodeStorage := 157;
+			endNodeStorage := 98;
 		ELSIF assigment.AblageTasche = 3 THEN
 			//RFID rechts anfahren
 			lastNodeStorage := ToRobotPoseSimple(x := 3800, y := 3000, theta := -1);
 			storageLocation := ToRobotPoseSimple(x := 3653, y := 2840, theta := pi);
 			readerCheckIn := ToRobotPoseSimple(x := 3672, y := 2940, theta := pi);	
-			endNodeStorage := 161;	
+			endNodeStorage := 118;	
 		ELSIF assigment.AblageTasche = 4 THEN
 			//RFID rechts anfahren	
 			lastNodeStorage := ToRobotPoseSimple(x := 3800, y := 2600, theta := -1);
 			storageLocation := ToRobotPoseSimple(x := 3650, y := 2732, theta := pi);
 			readerCheckIn := ToRobotPoseSimple(x := 3662, y := 2940, theta := pi);	
-			endNodeStorage := 160;	
+			endNodeStorage := 100;	
 		ELSE
 			//Fehler
 			Failed := TRUE;
@@ -253,25 +253,25 @@ IF assigment.Art = 'Fahrauftrag' THEN
 			lastNodeStorage := ToRobotPoseSimple(x := 4200, y := 3000, theta := -1);
 			storageLocation := ToRobotPoseSimple(x := 4460, y := 2838, theta := 0);
 			readerCheckIn := ToRobotPoseSimple(x := 4454, y := 2944, theta := 0);
-			endNodeStorage := 164;
+			endNodeStorage := 119;
 		ELSIF assigment.AblageTasche = 2 THEN
 			//RFID links anfahren
 			lastNodeStorage := ToRobotPoseSimple(x := 4200, y := 2600, theta := -1);
 			storageLocation := ToRobotPoseSimple(x := 4460, y := 2732, theta := 0);
 			readerCheckIn := ToRobotPoseSimple(x := 4454, y := 2944, theta := 0);
-			endNodeStorage := 163;
+			endNodeStorage := 101;
 		ELSIF assigment.AblageTasche = 3 THEN
 			//RFID rechts anfahren	
 			lastNodeStorage := ToRobotPoseSimple(x := 5000, y := 3000, theta := -1);
 			storageLocation := ToRobotPoseSimple(x := 4879, y := 2844, theta := pi);
 			readerCheckIn := ToRobotPoseSimple(x := 4886, y := 2934, theta := pi);
-			endNodeStorage := 167;
+			endNodeStorage := 121;
 		ELSIF assigment.AblageTasche = 4 THEN
 			//RFID rechts anfahren	
 			lastNodeStorage := ToRobotPoseSimple(x := 5000, y := 2600, theta := -1);
 			storageLocation := ToRobotPoseSimple(x := 4893, y := 2741, theta := pi);
 			readerCheckIn := ToRobotPoseSimple(x := 4886, y := 2934, theta := pi);
-			endNodeStorage := 166;		
+			endNodeStorage := 103;		
 		ELSE
 			//Fehler
 			Failed := TRUE;
@@ -313,12 +313,12 @@ ELSIF assigment.Art = 'Ladeauftrag' THEN
 //Abholstation gibt an ob Ladestation 1 oder 2, Rest der Werte wird ignoriert	
 	IF assigment.AbholStation = 1 THEN
 		lastNodeCharging := ToRobotPoseSimple(x := 6200, y := 2600, theta := -1);
-		chargingLocation := ToRobotPoseSimple(x := 6117, y := 3500, theta := 15.3*pi/180);
-		endNodeCharging := 169;
+		chargingLocation := ToRobotPoseSimple(x := 6117, y := 3500, theta := 17.5);
+		endNodeCharging := 106;
 	ELSIF assigment.AbholStation = 2 THEN
 		lastNodeCharging := ToRobotPoseSimple(x := 6600, y := 2600, theta := -1);
-		chargingLocation := ToRobotPoseSimple(x := 6716, y := 3504, theta := 15.3*pi/180);
-		endNodeCharging := 170;
+		chargingLocation := ToRobotPoseSimple(x := 6716, y := 3504, theta := 17.5);
+		endNodeCharging := 107;
 	END_IF
 	
 	lastPointsToCharging[0] := ToRobotPoseSimple(x := chargingLocation.x, y := lastNodeCharging.y, theta := chargingLocation.theta);
