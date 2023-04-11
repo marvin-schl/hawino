@@ -476,7 +476,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF arcLength >= path.length-arcLengthSlow THEN
-velMax := qVelMaxSlow;
+	velMax := qVelMaxSlow;
 ELSE
 	velMax := qVelMax;
 END_IF]]></ST>
