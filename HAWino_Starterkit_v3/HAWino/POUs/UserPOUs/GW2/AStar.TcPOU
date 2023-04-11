@@ -14,16 +14,16 @@ VAR_OUTPUT
 END_VAR
 VAR
 	numberOfNodes : INT := 144;
-	a, b, c, d, e, i, j, k, l, m, p, q, t, u, v, w, counter, nodeNumber : INT;
+	a, b, c, d, e, i, j, k, l, m, o, p, q, t, u, v, w, counter, nodeNumber, number, cnt1, cnt2 : INT;
 	xMin, yMin : LREAL;
 	n : INT := 0;
 	numberOfColumns : INT := 18;
-	matrix : ARRAY[1..144,1..144] OF LREAL;
+	matrix : ARRAY[1..170,1..170] OF LREAL;
 	row, col : LREAL;
-	xNode, yNode : ARRAY[1..144] OF LREAL;
+	xNode, yNode : ARRAY[1..170] OF LREAL;
 	removeNode : ARRAY[0..11] OF INT := [93, 96, 99, 102, 111, 114, 117, 120, 124, 125, 142, 143];
 	startNode : INT := 0; //fragwürdig
-	diff_x, diff_y : ARRAY[1..144] OF LREAL;
+	diff_x, diff_y : ARRAY[1..170] OF LREAL;
 	xMinPosition : ARRAY[0..100] OF INT;
 	openList : ARRAY[1..144,1..6] OF LREAL;
 	nullOpenList : ARRAY[1..144,1..6] OF LREAL := [864(0)];
@@ -86,6 +86,7 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 		matrix[removeNode[counter],j] := 0;
 		matrix[j, removeNode[counter]] := 0;
  	END_FOR
+	
 	//diagonale Verbindung oben links
 	IF removeNode[counter] - 1 > 0 AND removeNode[counter] + numberOfColumns <= numberOfNodes THEN 
 		matrix[removeNode[counter] - 1, removeNode[counter] + numberOfColumns] := 0;	
@@ -114,6 +115,29 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 	yNode[removeNode[counter]] := 10000;
  END_FOR
  
+ //neues Raster für Taschenanfahrt
+ o := 0;
+ FOR number := 1 TO 24 BY 6 DO
+	 FOR cnt1 := 0 TO 2 BY 1 DO 
+		 matrix[numberOfNodes + number + cnt1, 92 + o] := 1000;
+		 matrix[92 + o, numberOfNodes + number + cnt1] := 1000;
+		 matrix[numberOfNodes + number + cnt1, 110 + o] := 1000;
+		 matrix[110 + o, numberOfNodes + number + cnt1] := 1000;
+	END_FOR
+	FOR cnt2 := 3 TO 5 BY 1 DO 
+		 matrix[numberOfNodes + number + cnt2, 92 + o + 2] := 1000;
+		 matrix[92 + o + 2, numberOfNodes + number + cnt2] := 1000;
+		 matrix[numberOfNodes + number + cnt2, 110 + o + 2] := 1000;
+		 matrix[110 + o + 2, numberOfNodes + number + cnt2] := 1000;
+	END_FOR
+	o := o + 3;
+ END_FOR
+ 
+ matrix[numberOfNodes + number, 106] := 1000;
+ matrix[106, numberOfNodes + number] := 1000;
+ matrix[numberOfNodes + number + 1, 107] := 1000;
+ matrix[107, numberOfNodes + number + 1] := 1000;
+ 
  //Umrechnung von Knoten in Koordinaten
  row := 600;
  col := 200;
@@ -132,22 +156,78 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 	 END_IF
  END_FOR
  
+ //nochmal mit pickuplocation und co machen also ohne magic numbers
+ xNode[145] := 850;
+ xNode[146] := 850;
+ xNode[147] := 850;
+ xNode[148] := 1350;
+ xNode[149] := 1350;
+ xNode[150] := 1350;
+ xNode[151] := 2050;
+ xNode[152] := 2050;
+ xNode[153] := 2050;
+ xNode[154] := 2490;
+ xNode[155] := 2490;
+ xNode[156] := 2490;
+ xNode[157] := 3190;
+ xNode[158] := 3190;
+ xNode[159] := 3190;
+ xNode[160] := 3700;
+ xNode[161] := 3700;
+ xNode[162] := 3700;
+ xNode[163] := 4420;
+ xNode[164] := 4420;
+ xNode[165] := 4420;
+ xNode[166] := 4940;
+ xNode[167] := 4940;
+ xNode[168] := 4940;
+ xNode[169] := 6117;
+ xNode[170] := 6716;
+ 
+ yNode[145] := 2735;
+ yNode[146] := 2838;
+ yNode[147] := 2936;
+ yNode[148] := 2736;
+ yNode[149] := 2835;
+ yNode[150] := 2935;
+ yNode[151] := 2731;
+ yNode[152] := 2829;
+ yNode[153] := 2931;
+ yNode[154] := 2732;
+ yNode[155] := 2833;
+ yNode[156] := 2928;
+ yNode[157] := 2732;
+ yNode[158] := 2837;
+ yNode[159] := 2940;
+ yNode[160] := 2732;
+ yNode[161] := 2840;
+ yNode[162] := 2940;
+ yNode[163] := 2732;
+ yNode[164] := 2838;
+ yNode[165] := 2944;
+ yNode[166] := 2746;
+ yNode[167] := 2855;
+ yNode[168] := 2942;
+ yNode[169] := 3450;
+ yNode[170] := 3450;
+ 
+ 
  ////////////////////////////////////////////////////Startposition und Endposition bestimmen //////////////////////////////////////////////////////////////////////////
  
- FOR i := 1 TO 144 BY 1 DO
+ FOR i := 1 TO 170 BY 1 DO
 	 diff_x[i] := ABS(xRobotActual - xNode[i]);
 	 diff_y[i] := ABS(yRobotActual - yNode[i]);
  END_FOR
  
  xMin := 10000;
  
- FOR i := 1 TO 144 BY 1 DO
+ FOR i := 1 TO 170 BY 1 DO
 	 IF xMin >= diff_x[i] THEN
 		 xMin := diff_x[i];
 	 END_IF
  END_FOR
  
- FOR l := 1 TO 144 BY 1 DO
+ FOR l := 1 TO 170 BY 1 DO
 	 IF diff_x[l] = xMin AND l < 145 THEN
 		  xMinPosition[n] := l;
 		  n := n+1;
@@ -200,7 +280,7 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 	neighborList := nullMatrix_Neighbor;
 	
 	//search the neightbor and put in neighborlist
-	FOR v := 1 TO numberOfNodes BY 1 DO
+	FOR v := 1 TO 170 BY 1 DO
 		//calculate forwards
 		IF matrix[currentNode,v] <> 0 THEN
 			g := gprev + SQRT(EXPT(xNode[v]-xNode[currentNode],2) + EXPT(yNode[v]-yNode[currentNode],2));
@@ -255,7 +335,7 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 			countTemp := countTemp + 1;
 		END_IF
 	END_FOR
-	FOR d := 1 TO 144 BY 1 DO
+	FOR d := 1 TO 170 BY 1 DO
 		IF tempArray[d,5] = 0 THEN
 			tempArray[d,5] := 10000000;
 		END_IF
@@ -263,7 +343,7 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 	
 	minf := 100000;
 	
-	FOR e := 1 TO 144 BY 1 DO
+	FOR e := 1 TO 170 BY 1 DO
 		IF tempArray[e,5] < minf THEN
 			minf := tempArray[e,5];
 			indexMin := LREAL_TO_INT(tempArray[e,7]);
@@ -350,7 +430,9 @@ countPointList := 1;
       <LineId Id="1084" Count="0" />
       <LineId Id="1130" Count="0" />
       <LineId Id="773" Count="30" />
-      <LineId Id="1193" Count="6" />
+      <LineId Id="1193" Count="5" />
+      <LineId Id="1228" Count="0" />
+      <LineId Id="1199" Count="0" />
       <LineId Id="1218" Count="1" />
       <LineId Id="1201" Count="1" />
       <LineId Id="1220" Count="0" />
@@ -367,9 +449,19 @@ countPointList := 1;
       <LineId Id="1212" Count="2" />
       <LineId Id="1227" Count="0" />
       <LineId Id="1215" Count="1" />
-      <LineId Id="810" Count="5" />
+      <LineId Id="810" Count="1" />
+      <LineId Id="1253" Count="0" />
+      <LineId Id="1231" Count="0" />
+      <LineId Id="1233" Count="18" />
+      <LineId Id="1229" Count="1" />
+      <LineId Id="812" Count="3" />
       <LineId Id="1022" Count="11" />
-      <LineId Id="824" Count="45" />
+      <LineId Id="824" Count="0" />
+      <LineId Id="1255" Count="0" />
+      <LineId Id="1310" Count="0" />
+      <LineId Id="1257" Count="52" />
+      <LineId Id="1256" Count="0" />
+      <LineId Id="825" Count="44" />
       <LineId Id="872" Count="2" />
       <LineId Id="876" Count="20" />
       <LineId Id="898" Count="72" />

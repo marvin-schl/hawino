@@ -139,7 +139,7 @@ IF assigment.Art = 'Fahrauftrag' THEN
 		ELSIF assigment.AbholTasche = 3 THEN
 			//RFID rechts anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 5000, y := 3000, theta := -1);
-			pickupLocation := ToRobotPoseSimple(x := 4918, y := 2855, theta := pi); //test
+			pickupLocation := ToRobotPoseSimple(x := 4918, y := 2855, theta := pi); //test - nciht weit genug dran
 			readerCheckOut := ToRobotPoseSimple(x := 4893, y := 2942, theta := pi);	//test
 			endNodePickup := 121;
 		ELSIF assigment.AbholTasche = 4 THEN
@@ -222,7 +222,7 @@ IF assigment.Art = 'Fahrauftrag' THEN
 		IF assigment.AblageTasche = 1 THEN
 			//RFID links anfahren
 			lastNodeStorage := ToRobotPoseSimple(x := 3000, y := 3000, theta := -1);
-			storageLocation := ToRobotPoseSimple(x := 3234, y := 2837, theta := 0); //3229
+			storageLocation := ToRobotPoseSimple(x := 3234, y := 2837, theta := 0); //3229 //noch nicht gut so... x zu weit in tasche
 			readerCheckIn := ToRobotPoseSimple(x := 3234, y := 2940, theta := 0);	//test
 			endNodeStorage := 116;
 		ELSIF assigment.AblageTasche = 2 THEN
