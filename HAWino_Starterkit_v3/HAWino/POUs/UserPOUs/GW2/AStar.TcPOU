@@ -87,20 +87,28 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 		matrix[j, removeNode[counter]] := 0;
  	END_FOR
 	//diagonale Verbindung oben links
-	matrix[removeNode[counter] - 1, removeNode[counter] + numberOfColumns] := 0;	
-	matrix[removeNode[counter] + numberOfColumns, removeNode[counter] - 1] := 0;	
+	IF removeNode[counter] -1 > 0 AND removeNode[counter] + numberOfColumns < 145 THEN
+		matrix[removeNode[counter] - 1, removeNode[counter] + numberOfColumns] := 0;	
+		matrix[removeNode[counter] + numberOfColumns, removeNode[counter] - 1] := 0;	
+	END_IF
 	
 	//diagonale Verbindung unten links
-	matrix[removeNode[counter] - 1, removeNode[counter] - numberOfColumns] := 0;	
-	matrix[removeNode[counter] - numberOfColumns, removeNode[counter] - 1] := 0;	
+	IF removeNode[counter] - 1 > 0 and removeNode[counter] - numberOfColumns > 0 THEN
+		matrix[removeNode[counter] - 1, removeNode[counter] - numberOfColumns] := 0;	
+		matrix[removeNode[counter] - numberOfColumns, removeNode[counter] - 1] := 0;	
+	END_IF
 	
 	//diagonale Verbindung oben rechts
-	matrix[removeNode[counter] + 1, removeNode[counter] + numberOfColumns] := 0;	
-	matrix[removeNode[counter] + numberOfColumns, removeNode[counter] + 1] := 0;	
+	IF removeNode[counter] + 1 < 145 AND removeNode[counter] + numberOfColumns < 145 THEN
+		matrix[removeNode[counter] + 1, removeNode[counter] + numberOfColumns] := 0;	
+		matrix[removeNode[counter] + numberOfColumns, removeNode[counter] + 1] := 0;	
+	END_IF
 	
 	//diagonale Verbindung unten rechts
-	matrix[removeNode[counter] + 1, removeNode[counter] - numberOfColumns] := 0;	
-	matrix[removeNode[counter] - numberOfColumns, removeNode[counter] + 1] := 0;	
+	IF removeNode[counter] + 1 < 145 AND removeNode[counter] - numberOfColumns > 0 THEN
+		matrix[removeNode[counter] + 1, removeNode[counter] - numberOfColumns] := 0;	
+		matrix[removeNode[counter] - numberOfColumns, removeNode[counter] + 1] := 0;	
+	END_IF
 	
 	xNode[removeNode[counter]] := 10000;
 	yNode[removeNode[counter]] := 10000;
@@ -342,7 +350,23 @@ countPointList := 1;
       <LineId Id="1084" Count="0" />
       <LineId Id="1130" Count="0" />
       <LineId Id="773" Count="30" />
-      <LineId Id="1193" Count="23" />
+      <LineId Id="1193" Count="6" />
+      <LineId Id="1262" Count="0" />
+      <LineId Id="1200" Count="2" />
+      <LineId Id="1263" Count="0" />
+      <LineId Id="1203" Count="0" />
+      <LineId Id="1264" Count="1" />
+      <LineId Id="1205" Count="1" />
+      <LineId Id="1266" Count="0" />
+      <LineId Id="1207" Count="0" />
+      <LineId Id="1267" Count="0" />
+      <LineId Id="1208" Count="2" />
+      <LineId Id="1268" Count="0" />
+      <LineId Id="1211" Count="0" />
+      <LineId Id="1269" Count="0" />
+      <LineId Id="1212" Count="2" />
+      <LineId Id="1270" Count="0" />
+      <LineId Id="1215" Count="1" />
       <LineId Id="810" Count="5" />
       <LineId Id="1022" Count="11" />
       <LineId Id="824" Count="45" />

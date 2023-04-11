@@ -215,7 +215,8 @@ END_VAR
       <Implementation>
         <ST><![CDATA[trajectory.reset();
 controller.reset();
-observer.reset();]]></ST>
+observer.reset();
+kobserver.reset();]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="ControlPRG">
@@ -262,6 +263,7 @@ observer.reset();]]></ST>
     </LineIds>
     <LineIds Name="ControlPRG.reset">
       <LineId Id="5" Count="2" />
+      <LineId Id="11" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

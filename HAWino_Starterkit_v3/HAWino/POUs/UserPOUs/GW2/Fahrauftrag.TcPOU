@@ -324,7 +324,7 @@ s0 := 0; s26a := 1;
 	FeedbackToGW1 := 'Auftrag angenommen';
 	//Auftrag auswerten
 	readAssigment(assigment:= Auftrag);
-	EndNode := readAssigment.endNodePickup;
+	EndNode := readAssigment.endNodeCharging;
 	xEndvalue := readAssigment.chargingLocation.x;
 	yEndvalue := readAssigment.chargingLocation.y;
 	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
