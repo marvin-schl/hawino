@@ -31,7 +31,7 @@ END_IF
 
 //normalize the camera angle within the prior calculated bounds
 IF  camData.x <> 0 AND  camData.y <> 0 THEN
-	shiftCamAngle := normalizeAngle(camData.theta, thetaMax, thetaMin);
+	shiftCamAngle.theta := normalizeAngle(camData.theta, thetaMax, thetaMin);
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="shiftCamAngle">

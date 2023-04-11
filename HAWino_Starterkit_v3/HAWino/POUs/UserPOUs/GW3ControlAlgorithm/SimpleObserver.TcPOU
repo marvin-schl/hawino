@@ -25,10 +25,10 @@ END_VAR
 
 VAR
 	//to Simulink
-	cameraPoseToSimulink 	AT%Q* 	: ARRAY [0..2] OF LREAL;
-	vXworldToSimulink 		AT%Q*	: LREAL;
-	vYworldToSimulink 		AT%Q*	: LREAL;
-	omegaWorldToSimulink 	AT%Q*	: LREAL;
+	cameraPoseToSimulink 			AT%Q* 	: ARRAY [0..2] OF LREAL;
+	vXworldToSimulink 				AT%Q*	: LREAL;
+	vYworldToSimulink 				AT%Q*	: LREAL;
+	omegaWorldToSimulink 			AT%Q*	: LREAL;
 	vXtoRobotWorldToSimulink 		AT%Q*	: LREAL;
 	vYtoRobotWorldToSimulink 		AT%Q*	: LREAL;
 	omegaToRobotWorldToSimulink 	AT%Q*	: LREAL;

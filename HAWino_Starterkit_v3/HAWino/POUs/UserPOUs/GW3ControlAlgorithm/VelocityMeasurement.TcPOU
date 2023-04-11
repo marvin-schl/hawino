@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="VelocityMeasurement" Id="{c3843323-10f5-413e-a194-2eaaaff02de9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK VelocityMeasurement
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	vXRobot, vYRobot, vThetaRobot: LREAL;
+END_VAR
+VAR
+	n1MotorRaw AT%I*: UINT;
+	n2MotorRaw AT%I*: UINT;
+	n3MotorRaw AT%I*: UINT;
+	
+	v1Wheel, v2Wheel, v3Wheel: LREAL;
+	
+	g : LREAL 		:= 0.0625; //gear ratio
+	rWheel : LREAL  := 40; // wheel radius
+	maxMotorVelocity : LREAL := 3600;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[v1Wheel := -UINT_TO_INT(n1MotorRaw)/10000.0*maxMotorVelocity/60.0*g*2*pi*rWheel;
+v2Wheel := -UINT_TO_INT(n2MotorRaw)/10000.0*maxMotorVelocity/60.0*g*2*pi*rWheel;
+v3Wheel := -UINT_TO_INT(n3MotorRaw)/10000.0*maxMotorVelocity/60.0*g*2*pi*rWheel;
+
+vXRobot:=(v3Wheel - v1Wheel) / (2.0 * COS(30.0*PI/180));  		//in mm / s
+vYRobot:=(v1Wheel - 2.0 * v2Wheel + v3Wheel) / 3.0;            //in mm / s
+vThetaRobot:=(v1Wheel + v2Wheel + v3Wheel) / (3.0 * 135.0);    //in rad / s]]></ST>
+    </Implementation>
+    <LineIds Name="VelocityMeasurement">
+      <LineId Id="9" Count="0" />
+      <LineId Id="21" Count="1" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="27" Count="1" />
+      <LineId Id="26" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

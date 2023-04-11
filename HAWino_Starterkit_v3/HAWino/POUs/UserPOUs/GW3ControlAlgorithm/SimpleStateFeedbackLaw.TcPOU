@@ -24,15 +24,15 @@ END_VAR
 
 VAR
 	//static control parameters
-	K: ARRAY [0..2,0..2] OF LREAL := [1,0,0,
-									  0,1,0,
-									  0,0,1];
+	K: ARRAY [0..2,0..2] OF LREAL := [2,0,0,
+									  0,2,0,
+									  0,0,2];
 	poseError: RobotPoseSimple;
 	vtrans_max: LREAL := 934; //vY,vY
 	vrot_max: LREAL   := 1.57; //vTheta
 	u: ARRAY[0..2] OF LREAL;
 	i: INT;
-	accuracyXY: LREAL := 2;
+	accuracyXY: LREAL := 5;
 	accuracyTheta: LREAL := 0.01;
 END_VAR
 ]]></Declaration>
@@ -66,9 +66,9 @@ END_IF
 
 //4.) set control outputs
 IF enable THEN
-	vXrobot 	:= u[0] + xRobotvelRef.x;
-	vYrobot 	:= u[1] + xRobotvelRef.y;
-	omegaRobot	:= u[2] + xRobotvelRef.theta;
+	vXrobot 	:= (u[0] + xRobotvelRef.x);
+	vYrobot 	:= (u[1] + xRobotvelRef.y);
+	omegaRobot	:= (u[2] + xRobotvelRef.theta);
 ELSE
 	vXrobot 	:= 0;
 	vYrobot 	:= 0;
@@ -112,7 +112,7 @@ END_VAR
       <LineId Id="24" Count="0" />
       <LineId Id="303" Count="0" />
       <LineId Id="74" Count="1" />
-      <LineId Id="72" Count="0" />
+      <LineId Id="343" Count="0" />
       <LineId Id="305" Count="3" />
       <LineId Id="237" Count="0" />
       <LineId Id="73" Count="0" />

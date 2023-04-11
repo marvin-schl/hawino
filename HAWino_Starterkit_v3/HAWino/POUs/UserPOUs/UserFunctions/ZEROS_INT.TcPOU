@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="ZEROS_INT" Id="{ae10d378-96fe-4ac7-be99-5c473769a6eb}" SpecialFunc="None">
+    <Declaration><![CDATA[//Fills an array of LREAL of varible length with zeros
+FUNCTION ZEROS_INT
+VAR_IN_OUT
+	arr: ARRAY [*] OF INT;
+END_VAR
+VAR
+	i : DINT := 0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[FOR i := LOWER_BOUND(arr,1) TO UPPER_BOUND(arr, 1) BY 1 DO
+	arr[i] := 0;
+END_FOR
+]]></ST>
+    </Implementation>
+    <LineIds Name="ZEROS_INT">
+      <LineId Id="14" Count="1" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

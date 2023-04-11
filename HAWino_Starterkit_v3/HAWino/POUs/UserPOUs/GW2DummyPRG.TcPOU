@@ -9,7 +9,6 @@
 PROGRAM GW2DummyPRG
 VAR
 	roboter: TrajectoryControl;
-
 	set: BOOL 		:= FALSE;
 	circle: BOOL	:= FALSE;
 	square: BOOL	:= FALSE;
@@ -141,9 +140,13 @@ generateWPLPoint := wpl;]]></ST>
 VAR
 	//RechteckX: ARRAY[0..6] OF LREAL := [5000,5000,2000,3000,1500,1500, -1];
 	//RechteckY: ARRAY[0..6] OF LREAL := [1500,2000,2000,3000,1500,2000, -1];
-	RechteckX: ARRAY[0..10] OF LREAL := [1000,3000,	5000,5000,5000,3000,1000,1000,1000, -1];
-	RechteckY: ARRAY[0..10] OF LREAL := [1000,1000,	1000,1500,2000,2000,2000,1500,1000, -1];
-	Theta:	   ARRAY[0..10] OF LREAL := [1000,1000,	1000,1500,2000,2000,2000,1500, pi, -1];
+//	RechteckX: ARRAY[0..10] OF LREAL := [1000,3000,	5000,5000,5000,3000,1000,1000,1000, -1];
+//	RechteckY: ARRAY[0..10] OF LREAL := [1000,1000,	1000,1500,2000,2000,2000,1500,1000, -1];
+//	Theta:	   ARRAY[0..10] OF LREAL := [1000,1000,	1000,1500,2000,2000,2000,1500, pi, -1];
+	
+	RechteckX: ARRAY[0..10] OF LREAL := [4000,4000,	6117, 6114, -1];
+	RechteckY: ARRAY[0..10] OF LREAL := [1500,2000,	2000, 3502, -1];
+	Theta:	   ARRAY[0..10] OF LREAL := [0,0,0, 0.27, -1];
 	
 	//RechteckX: ARRAY[0..10] OF LREAL := [4450, 4150, 4150, 5160, 5160, 4859, -1];
 	//RechteckY: ARRAY[0..10] OF LREAL :=  [2043, 2043, 1530, 1530, 2033, 2033, -1];
@@ -176,10 +179,11 @@ generateWPLRect := wpl;]]></ST>
 VAR
 
 	
-	x: ARRAY[0..10] OF LREAL := 		[1000, 1650, 1650, 2086, -1,3000,1000,1000,1000, -1];
-	y: ARRAY[0..10] OF LREAL := 		[1000, 1000, 2829, 2833, -1,2000,2000,1500,1000, -1];
+	x: ARRAY[0..10] OF LREAL := 		[1000, 1650, 1650, 2099, -1,3000,1000,1000,1000, -1];
+	y: ARRAY[0..10] OF LREAL := 		[1000, 1000, 2829, 2829, -1,2000,2000,1500,1000, -1];
 	theta:	   ARRAY[0..10] OF LREAL := [-1,   1000, 1000, 0,   2000,2000,2000,1500, pi, -1];
 	wpl:  ARRAY[0..100] OF RobotPoseSimple;
+
 	i: INT := 0;
 END_VAR
 ]]></Declaration>
@@ -202,8 +206,8 @@ generateWPLStation := wpl;]]></ST>
     <Method Name="generateWPLStationReverse" Id="{311b078a-79c6-438f-84d7-19b7322e05ae}">
       <Declaration><![CDATA[METHOD generateWPLStationReverse : ARRAY[0..100] OF RobotPoseSimple
 VAR
-	x: ARRAY[0..10] OF LREAL := 		[2086, 1650, 1650, 1000, -1, 3000,1000,1000,1000, -1];
-	y: ARRAY[0..10] OF LREAL := 		[2833, 2829, 1000, 1000, -1,2000,2000,1500,1000, -1];
+	x: ARRAY[0..10] OF LREAL := 		[2099, 1650, 1650, 1000, -1, 3000,1000,1000,1000, -1];
+	y: ARRAY[0..10] OF LREAL := 		[2829, 2829, 1000, 1000, -1,2000,2000,1500,1000, -1];
 	theta:	   ARRAY[0..10] OF LREAL := [-1,   1000, 1000, pi,   2000,2000,2000,1500, pi, -1];
 	wpl:  ARRAY[0..100] OF RobotPoseSimple;
 	i: INT := 0;
@@ -226,25 +230,34 @@ generateWPLStationReverse := wpl;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="GW2DummyPRG">
-      <LineId Id="53" Count="0" />
-      <LineId Id="98" Count="0" />
-      <LineId Id="148" Count="0" />
-      <LineId Id="77" Count="0" />
-      <LineId Id="47" Count="0" />
-      <LineId Id="55" Count="0" />
-      <LineId Id="73" Count="0" />
-      <LineId Id="173" Count="0" />
-      <LineId Id="59" Count="0" />
-      <LineId Id="174" Count="1" />
-      <LineId Id="60" Count="1" />
-      <LineId Id="122" Count="2" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="97" Count="0" />
+      <LineId Id="230" Count="17" />
       <LineId Id="95" Count="0" />
     </LineIds>
     <LineIds Name="GW2DummyPRG.driveCyclic">
-      <LineId Id="3" Count="30" />
-      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="43" Count="1" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="29" Count="2" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="35" Count="2" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="GW2DummyPRG.generateWPLCircle">
       <LineId Id="11" Count="12" />
@@ -260,12 +273,12 @@ generateWPLStationReverse := wpl;]]></ST>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="GW2DummyPRG.generateWPLStation">
-      <LineId Id="3" Count="11" />
-      <LineId Id="2" Count="0" />
+      <LineId Id="20" Count="11" />
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="GW2DummyPRG.generateWPLStationReverse">
-      <LineId Id="3" Count="11" />
-      <LineId Id="2" Count="0" />
+      <LineId Id="20" Count="11" />
+      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

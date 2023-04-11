@@ -25,16 +25,13 @@ VAR
 	camDataOld, observerError, observedPosition, vWorld: RobotPoseSimple;
 	pulseGenerator: TP;
 	
-	cycleTimeDelay		AT%Q* 	: SINT	:= 14;
-	delayedPosition: ARRAY [0..14] OF RobotPoseSimple;
+	delayedCycles		AT%Q* 	: INT	:= 80;
+	delayedPosition: ARRAY [0..140] OF RobotPoseSimple;
 	
 	
-	K : ARRAY [0..2,0..2] OF LREAL 		:= [12, 0 ,0,
-									  		0, 12, 0,
-									  		0, 0, 12];
-	
-	// TEST
-	//systime : NT_GetTime;
+	K : ARRAY [0..2,0..2] OF LREAL 		:= [25, 0 ,0,
+									  		0, 25, 0,
+									  		0, 0, 25];
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -56,7 +53,7 @@ delayPosition();
 //if cam data arrived correct
 IF newCamDataArrived THEN
 	//calculate observer error
-	observerError := SubtractRPS(xCameraPose,delayedPosition[cycleTimeDelay]);
+	observerError := SubtractRPS(xCameraPose,delayedPosition[delayedCycles]);
 	//do the feedback correction
 	observedPosition := AddRPS(observedPosition, ScaleRPS(c := Var_HAWIno.CONTROLLER_CYCLE_TIME, AddRPS(vWorld, MatrixTimesRPS(K, observerError))));
 ELSE
@@ -77,7 +74,6 @@ END_VAR
       <Implementation>
         <ST><![CDATA[newCamDataArrived := (camDataOld.x <> xCameraPose.x OR camDataOld.y <> xCameraPose.y OR camDataOld.theta <> xCameraPose.theta) //cahnge in one of the positions
 					 AND xCameraPose.x <> 0 AND xCameraPose.y <> 0;		//valid data
-//newCamDataArrived := xCameraPose.x <> 0 AND xCameraPose.y <> 0;	
 	
 ]]></ST>
       </Implementation>
@@ -90,7 +86,7 @@ VAR
 	i: INT := 0;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[FOR i := 0 TO cycleTimeDelay-1 DO
+        <ST><![CDATA[FOR i := 0 TO delayedCycles-1 DO
 	delayedPosition[i+1] := delayedPosition[i];
 END_FOR
 delayedPosition[0] := observedPosition;]]></ST>
@@ -109,34 +105,12 @@ END_VAR
       </Implementation>
     </Method>
     <LineIds Name="SimpleObserverST">
-      <LineId Id="68" Count="0" />
-      <LineId Id="52" Count="0" />
-      <LineId Id="61" Count="6" />
-      <LineId Id="386" Count="0" />
-      <LineId Id="338" Count="0" />
-      <LineId Id="393" Count="1" />
-      <LineId Id="387" Count="0" />
-      <LineId Id="347" Count="0" />
-      <LineId Id="312" Count="0" />
-      <LineId Id="340" Count="0" />
-      <LineId Id="346" Count="0" />
-      <LineId Id="341" Count="0" />
-      <LineId Id="348" Count="0" />
-      <LineId Id="343" Count="0" />
-      <LineId Id="388" Count="0" />
-      <LineId Id="390" Count="0" />
-      <LineId Id="342" Count="0" />
-      <LineId Id="94" Count="0" />
-      <LineId Id="320" Count="0" />
-      <LineId Id="132" Count="0" />
-      <LineId Id="70" Count="0" />
-      <LineId Id="57" Count="0" />
+      <LineId Id="465" Count="28" />
       <LineId Id="14" Count="0" />
     </LineIds>
     <LineIds Name="SimpleObserverST.checkForNewCameraData">
       <LineId Id="5" Count="0" />
       <LineId Id="9" Count="0" />
-      <LineId Id="13" Count="0" />
       <LineId Id="7" Count="1" />
     </LineIds>
     <LineIds Name="SimpleObserverST.delayPosition">
