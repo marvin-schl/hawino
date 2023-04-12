@@ -14,17 +14,15 @@ VAR_OUTPUT
 END_VAR
 VAR
 	numberOfNodes : INT := 144;
-	a, b, c, d, e, i, j, k, l, m, o, p, q, t, u, v, w, counter, nodeNumber, number, cnt1, cnt2 : INT;
-	xMin, yMin : LREAL;
-	n : INT := 0;
+	a, b, c, d, e, i, j, k, m, o, p, q, t, v, w, counter, number, cnt1, cnt2 : INT;
 	numberOfColumns : INT := 18;
 	matrix : ARRAY[1..170,1..170] OF LREAL;
 	row, col : LREAL;
 	xNode, yNode : ARRAY[1..170] OF LREAL;
 	removeNode : ARRAY[0..11] OF INT := [93, 96, 99, 102, 111, 114, 117, 120, 124, 125, 142, 143];
 	startNode : INT := 0; //fragwürdig
-	diff_x, diff_y : ARRAY[1..170] OF LREAL;
-	xMinPosition : ARRAY[0..100] OF INT;
+	diff_x, diff_y, diff_total : ARRAY[1..170] OF LREAL;
+	min_total : LREAL;
 	openList : ARRAY[1..144,1..6] OF LREAL;
 	nullOpenList : ARRAY[1..144,1..6] OF LREAL := [864(0)];
 	closedList : ARRAY[1..144] OF LREAL;
@@ -34,10 +32,10 @@ VAR
 	countNeighbor, indexMin, currentNode : INT;
 	neighborList:ARRAY[1..8,1..5] OF LREAL;
 	nullMatrix_Neighbor : ARRAY[1..8,1..5] OF LREAL := [40(0)];
-	nullMatrix_TempArray : ARRAY[1..144,1..7] OF LREAL := [1008(0)];
+	nullMatrix_TempArray : ARRAY[1..170,1..7] OF LREAL := [1008(0)];
 	flag : BOOL;
 	countOpen : INT := 1;
-	tempArray : ARRAY[1..144,1..7] OF LREAL;
+	tempArray : ARRAY[1..170,1..7] OF LREAL;
 	countTemp : INT := 1;
 	minf : LREAL;
 	wayPointList : ARRAY[1..101] OF INT;
@@ -217,41 +215,16 @@ FOR i := 0 TO numberOfNodes BY 1 DO
  FOR i := 1 TO 170 BY 1 DO
 	 diff_x[i] := ABS(xRobotActual - xNode[i]);
 	 diff_y[i] := ABS(yRobotActual - yNode[i]);
+	 diff_total[i] := diff_x[i] + diff_y[i];
  END_FOR
  
- xMin := 10000;
+ min_total := 1000000;
  
- FOR i := 1 TO 170 BY 1 DO
-	 IF xMin >= diff_x[i] THEN
-		 xMin := diff_x[i];
+ FOR m := 1 TO 170 BY 1 DO
+	 IF min_total >= diff_total[m] THEN
+		 min_total := diff_total[m];
+		 startNode := m;
 	 END_IF
- END_FOR
- 
- FOR l := 1 TO 170 BY 1 DO
-	 IF diff_x[l] = xMin AND l < 145 THEN
-		  xMinPosition[n] := l;
-		  n := n+1;
-	 END_IF
- END_FOR
-
- yMin := 10000;
-  
- FOR m := 1 TO 100 BY 1 DO
-	 nodeNumber := xMinPosition[m];
-	 IF nodeNumber <> 0 THEN
-	 	IF yMin >= diff_y[nodeNumber] THEN
-		 	yMin := diff_y[nodeNumber];
-		END_IF;
-	 END_IF
- END_FOR
- 
-  FOR u := 1 TO 100 BY 1 DO
-	nodeNumber := xMinPosition[u];
-	IF nodeNumber <>  0 THEN
-		IF diff_y[nodeNumber] = yMin THEN
-			startNode := nodeNumber;
-		END_IF
-	END_IF
  END_FOR
  
  /////////////////////////////////////////////////////AStern Algorithmus////////////////////////////////////////////////////////////////////////////////
@@ -409,12 +382,10 @@ zeros(yNode);
 //removeNode?
 zeros(diff_x);
 zeros(diff_y);
-zeros_INT(xMinPosition);
 
 finishedASearch := FALSE;
 numberOfNodes := 144;
 q := 0;
-n := 0;
 numberOfColumns := 18;
 parentNode := 0;
 g := 0;
@@ -461,7 +432,14 @@ countPointList := 1;
       <LineId Id="1310" Count="0" />
       <LineId Id="1257" Count="52" />
       <LineId Id="1256" Count="0" />
-      <LineId Id="825" Count="44" />
+      <LineId Id="825" Count="5" />
+      <LineId Id="1355" Count="0" />
+      <LineId Id="831" Count="1" />
+      <LineId Id="1357" Count="0" />
+      <LineId Id="1364" Count="0" />
+      <LineId Id="1358" Count="4" />
+      <LineId Id="1356" Count="0" />
+      <LineId Id="867" Count="2" />
       <LineId Id="872" Count="2" />
       <LineId Id="876" Count="20" />
       <LineId Id="898" Count="72" />
@@ -472,11 +450,11 @@ countPointList := 1;
     </LineIds>
     <LineIds Name="AStar.reset">
       <LineId Id="5" Count="4" />
-      <LineId Id="20" Count="6" />
+      <LineId Id="20" Count="5" />
       <LineId Id="14" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="15" Count="1" />
-      <LineId Id="18" Count="1" />
+      <LineId Id="19" Count="0" />
       <LineId Id="28" Count="0" />
       <LineId Id="27" Count="0" />
       <LineId Id="29" Count="0" />

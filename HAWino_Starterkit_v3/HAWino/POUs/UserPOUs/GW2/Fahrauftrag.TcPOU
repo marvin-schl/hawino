@@ -1,41 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="Fahrauftrag" Id="{d11e2ac1-1df3-4b17-bdc0-8c45421bbbdd}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM Fahrauftrag //IMPLEMENTS TrajectoryControllable
+    <Declaration><![CDATA[PROGRAM Fahrauftrag
 VAR
 	//State machine
 	sStart : BOOL := TRUE;
 	s0,s1a,s1b,s2,s3,s4,s5,s6a,s6b,s7,s8,s9,s10,s11a,s11b,s12,s13,s14,s15,s16,s17,s18,s19,s20,s21a,s21b,s22,s23,s24,s25,s26a,s26b,s27,s28,s29,s30,s31: BOOL := FALSE;
 	
-	AStar : AStar;
-	readAssigment: ReadAssigment;
-	TrajectoryController: TrajectoryControl;
+	AStar : AStar;								//A-Stern Algorithmus
+	readAssigment: ReadAssigment;				//Auswertung des Auftrags
+	TrajectoryController: TrajectoryControl;	//Schnittstelle zu GW3
 	
-	wayPointList : ARRAY[0..100] OF RobotPoseSimple;
-	actualCamX, actualCamY : LREAL;
+	wayPointList : ARRAY[0..100] OF RobotPoseSimple;	//Wegpunktliste
+	actualCamX, actualCamY : LREAL;						//letzte Kameradaten ungleich 0
 	
 	//Schnittstelle zum MQTT_PRG
-	FeedbackToGW1 AT%Q*: STRING(50);
-	resetVar AT%Q*: BOOL;
-	Auftrag AT%I*: Auftrag;
-	StatusFromGW1 AT%I*: STRING(50);
+	FeedbackToGW1 AT%Q*: STRING(50);		//Feedback/Status des Roboters an GW1
+	resetVar AT%Q*: BOOL;					//messages von MQTT zurücksetzen
+	Auftrag AT%I*: Auftrag;					//Auftrag von GW1
+	StatusFromGW1 AT%I*: STRING(50);		//Status von GW1
 	
 	//Schnittstelle zu A*-Algorithmus
-	EndNode AT%Q*: INT;							//letzter Knoten
-	xEndvalue AT%Q*: LREAL;						//Ziel xKoordinate
-	xRobotStartposition AT%Q*: LREAL;			//aktuelle xKoordinate
-	yEndvalue AT%Q*: LREAL;						//Ziel yKoordinate
-	yRobotStartposition AT%Q*: LREAL;			//aktuelle yKoordinate
-	xPointList AT%I*: ARRAY[0..100] OF LREAL;	//xKoordinatenliste
-	yPointList AT%I*: ARRAY[0..100] OF LREAL;	//yKoordinatenliste
-	enable_ASearch AT%Q* : BOOL;				//enable signal for a search
-	finished_ASearch AT%I* : BOOL;	 
-	i: INT;
-	zeile: INT;
+	EndNode : INT;							//letzter Knoten
+	xEndvalue : LREAL;						//Ziel xKoordinate
+	xRobotStartposition : LREAL;			//aktuelle xKoordinate
+	yEndvalue : LREAL;						//Ziel yKoordinate
+	yRobotStartposition : LREAL;			//aktuelle yKoordinate
+	xPointList : ARRAY[0..100] OF LREAL;	//xKoordinatenliste
+	yPointList : ARRAY[0..100] OF LREAL;	//yKoordinatenliste
+	finished_ASearch : BOOL;	 			//Variable, dass Algorithmus fertig
+	i: INT;									//Laufvariable zum Übertragen der x und y Koordinaten in die Wegpunktliste
+	zeile: INT;								//Arrayindex, wo Wegpunktliste zuende
+	reset: BOOL := FALSE;					//Fahrauftrag auf Anfang
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//Camera damit immer Daten da:
+      <ST><![CDATA[//reset für test zwecke
+IF reset THEN
+	doReset();
+END_IF
+
+//Camera damit immer Daten da:
 IF camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x <> 0 AND camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y <> 0 THEN
 	actualCamX := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
 	actualCamY := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;
@@ -100,7 +105,6 @@ END_IF
 IF s2 AND NOT s3 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
 	s2 := 0; s3 := 1;
 	trajectoryController.newWaypointListAvailable := FALSE;
-	enable_ASearch := FALSE;
 END_IF
 
 // 	RückmeldungGW3 ready abwarten
@@ -179,11 +183,12 @@ IF s10 AND NOT s11a AND StatusFromGW1 = 'WerkstueckAusgelesen' THEN
 	xEndvalue := readAssigment.storageLocation.x;
 	yEndvalue := readAssigment.storageLocation.y;
 	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
-	IF readAssigment.assigment.AbholTasche < 3 THEN
-		xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x - 200;
-	ELSE
-		xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x + 200;
-	END_IF
+	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
+	//IF readAssigment.assigment.AbholTasche < 3 THEN
+	//	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x - 200;
+	//ELSE
+	//	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x + 200;
+	//END_IF
 END_IF
 
 IF s11a AND NOT s11b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 THEN
@@ -193,11 +198,12 @@ IF s11a AND NOT s11b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 T
 	xPointList := AStar.xCoordinates;
 	yPointList := AStar.yCoordinates;
 ELSIF s11a AND NOT s11b THEN
-	IF readAssigment.assigment.AbholTasche < 3 THEN	
-		xRobotStartposition := actualCamX - 200;
-	ELSE
-		xRobotStartposition := actualCamX + 200;
-	END_IF
+	//IF readAssigment.assigment.AbholTasche < 3 THEN	
+	//	xRobotStartposition := actualCamX - 200;
+	//ELSE
+	//	xRobotStartposition := actualCamX + 200;
+	//END_IF
+	xRobotStartposition := actualCamX;
 	yRobotStartposition := actualCamY;
 END_IF
 
@@ -224,7 +230,6 @@ END_IF
 IF s12 AND NOT s13 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
 	s12 := 0; s13 := 1;
 	trajectoryController.newWaypointListAvailable := FALSE;
-	enable_ASearch := FALSE;
 END_IF
 
 // 	RückmeldungGW3 ready abwarten
@@ -290,27 +295,13 @@ IF s20 AND NOT s21a AND trajectoryController.yBoArrivedAtDestination THEN
 	EndNode := readAssigment.endNodeParking[Var_HAWIno.Robot_Number];															//todo in matlab
 	xEndvalue := readAssigment.parkingSlots[Var_HAWIno.Robot_Number].x;
 	yEndvalue := readAssigment.parkingSlots[Var_HAWIno.Robot_Number].y;
-	IF readAssigment.assigment.AblageTasche < 3 THEN
-		xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x - 200;
-	ELSE
-		xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x + 200;
-	END_IF
+	//IF readAssigment.assigment.AblageTasche < 3 THEN
+	//	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x - 200;
+	//ELSE
+	//	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x + 200;
+	//END_IF
+	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
 	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
-END_IF
-
-IF s21a AND NOT s21b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 THEN
-	s21a := 0; s21b := 1;
-	AStar(enable := TRUE, xRobotActual := xRobotStartposition, yRobotActual := yRobotStartposition, xEnd := xEndvalue, yEnd := yEndvalue, endNode := EndNode);
-	finished_ASearch := AStar.finishedASearch;
-	xPointList := AStar.xCoordinates;
-	yPointList := AStar.yCoordinates;
-ELSIF s21a AND NOT s21b THEN
-	IF readAssigment.assigment.AbholTasche < 3 THEN	
-		xRobotStartposition := actualCamX - 200;
-	ELSE
-		xRobotStartposition := actualCamX + 200;
-	END_IF
-	yRobotStartposition := actualCamY;
 END_IF
 
 				
@@ -324,7 +315,7 @@ s0 := 0; s26a := 1;
 	FeedbackToGW1 := 'Auftrag angenommen';
 	//Auftrag auswerten
 	readAssigment(assigment:= Auftrag);
-	EndNode := readAssigment.endNodePickup;
+	EndNode := readAssigment.endNodeCharging;
 	xEndvalue := readAssigment.chargingLocation.x;
 	yEndvalue := readAssigment.chargingLocation.y;
 	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
@@ -337,7 +328,7 @@ IF s26a AND NOT s26b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 T
 	finished_ASearch := AStar.finishedASearch;
 	xPointList := AStar.xCoordinates;
 	yPointList := AStar.yCoordinates;
-ELSIF s1a AND NOT s1b THEN
+ELSIF s26a AND NOT s26b THEN
 	xRobotStartposition := actualCamX;
 	yRobotStartposition := actualCamY;
 END_IF
@@ -356,6 +347,7 @@ IF s26b AND NOT s27 AND finished_ASearch THEN
 	wayPointList[zeile+2] := readAssigment.lastPointsToCharging[2];
 	TrajectoryController.setWaypointList(waypointList);
 	trajectoryController.newWaypointListAvailable := TRUE;
+	resetVar := TRUE;															//testen
 	s26b := 0; s27 := 1;
 END_IF
 
@@ -365,7 +357,6 @@ END_IF
 IF s27 AND NOT s28 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
 	s27 := 0; s28 := 1;
 	trajectoryController.newWaypointListAvailable := FALSE;
-	enable_ASearch := FALSE;
 END_IF
 
 // 	RückmeldungGW3 ready abwarten
@@ -385,6 +376,7 @@ END_IF
 IF s30 AND NOT s31 AND trajectoryController.yBoArrivedAtDestination THEN
 	s30 := 0; s31 := 1;
 	trajectoryController.xBoEnable := FALSE;
+	resetVar := FALSE;															//testen
 	//	RückmeldungGW1 Teil aufgenommen setzen
 	FeedbackToGW1 := 'An Ladestation';
 END_IF
@@ -392,18 +384,33 @@ END_IF
 IF s31 AND NOT s21a AND StatusFromGW1 = 'Fertig geladen' THEN
 	s31 := 0; s21a := 1;
 	//	Fahrauftrag zum Parkplatz
-	EndNode := 17;															//todo in matlab
+	EndNode := readAssigment.endNodeParking[Var_HAWIno.Robot_Number];															
 	xEndvalue := readAssigment.parkingSlots[Var_HAWIno.Robot_Number].x;
 	yEndvalue := readAssigment.parkingSlots[Var_HAWIno.Robot_Number].y;
 	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
 	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
-	enable_ASearch := TRUE;
 END_IF
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////Parkplatzanfahrt///////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+IF s21a AND NOT s21b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 THEN
+	s21a := 0; s21b := 1;
+	AStar(enable := TRUE, xRobotActual := xRobotStartposition, yRobotActual := yRobotStartposition, xEnd := xEndvalue, yEnd := yEndvalue, endNode := EndNode);
+	finished_ASearch := AStar.finishedASearch;
+	xPointList := AStar.xCoordinates;
+	yPointList := AStar.yCoordinates;
+ELSIF s21a AND NOT s21b THEN
+	//IF readAssigment.assigment.AbholTasche < 3 THEN	
+	//	xRobotStartposition := actualCamX - 200;
+	//ELSE
+	//	xRobotStartposition := actualCamX + 200;
+	//END_IF
+	xRobotStartposition := actualCamX;
+	yRobotStartposition := actualCamY;
+END_IF
 
 //Bahnplanung
 IF s21b AND NOT s22 AND finished_ASearch THEN
@@ -450,7 +457,70 @@ END_IF
 
 ]]></ST>
     </Implementation>
+    <Method Name="doReset" Id="{11fc1a94-8006-4f54-bbc3-6cfe2505c8b8}">
+      <Declaration><![CDATA[METHOD doReset : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//Statemaschine zurücksetzen
+sStart := TRUE;
+s0 := FALSE;
+s1a := FALSE;
+s1b := FALSE;
+s2 := FALSE;
+s3 := FALSE;
+s4 := FALSE;
+s5 := FALSE;
+s6a := FALSE;
+s6b := FALSE;
+s7 := FALSE;
+s8 := FALSE;
+s9 := FALSE;
+s10 := FALSE;
+s11a := FALSE;
+s11b := FALSE;
+s12 := FALSE;
+s13 := FALSE;
+s14 := FALSE;
+s15 := FALSE;
+s16 := FALSE;
+s17 := FALSE;
+s18 := FALSE;
+s19 := FALSE;
+s20 := FALSE;
+s21a := FALSE;
+s21b := FALSE;
+s22 := FALSE;
+s23 := FALSE;
+s24 := FALSE;
+s25 := FALSE;
+s26a := FALSE;
+s26b := FALSE;
+s27 := FALSE;
+s28 := FALSE;
+s29 := FALSE;
+s30 := FALSE;
+s31 := FALSE;
+
+ZEROS_RobotPoseSimple(wayPointList);
+actualCamX := 0;
+actualCamY := 0;
+trajectoryController.newWaypointListAvailable := FALSE;
+trajectoryController.xBoEnable := FALSE;
+FeedbackToGW1 := 'Verfuegbar';
+resetVar := FALSE;
+Gripper.closeGripperCommand := FALSE;
+//mehr reset für GW3 nötig???
+
+//reset zurücksetzen
+reset := FALSE;]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="Fahrauftrag">
+      <LineId Id="1249" Count="0" />
+      <LineId Id="1251" Count="2" />
+      <LineId Id="1250" Count="0" />
       <LineId Id="999" Count="2" />
       <LineId Id="1003" Count="0" />
       <LineId Id="1002" Count="0" />
@@ -497,7 +567,6 @@ END_IF
       <LineId Id="251" Count="0" />
       <LineId Id="250" Count="0" />
       <LineId Id="254" Count="0" />
-      <LineId Id="573" Count="0" />
       <LineId Id="252" Count="0" />
       <LineId Id="263" Count="4" />
       <LineId Id="262" Count="0" />
@@ -547,6 +616,7 @@ END_IF
       <LineId Id="563" Count="0" />
       <LineId Id="565" Count="2" />
       <LineId Id="1099" Count="0" />
+      <LineId Id="1244" Count="0" />
       <LineId Id="1094" Count="0" />
       <LineId Id="568" Count="0" />
       <LineId Id="1095" Count="2" />
@@ -557,6 +627,7 @@ END_IF
       <LineId Id="1104" Count="0" />
       <LineId Id="1106" Count="1" />
       <LineId Id="1105" Count="0" />
+      <LineId Id="1243" Count="0" />
       <LineId Id="998" Count="0" />
       <LineId Id="991" Count="0" />
       <LineId Id="608" Count="1" />
@@ -565,9 +636,7 @@ END_IF
       <LineId Id="292" Count="0" />
       <LineId Id="72" Count="0" />
       <LineId Id="293" Count="0" />
-      <LineId Id="298" Count="3" />
-      <LineId Id="572" Count="0" />
-      <LineId Id="302" Count="10" />
+      <LineId Id="298" Count="14" />
       <LineId Id="399" Count="0" />
       <LineId Id="313" Count="1" />
       <LineId Id="40" Count="0" />
@@ -602,33 +671,61 @@ END_IF
       <LineId Id="174" Count="0" />
       <LineId Id="943" Count="2" />
       <LineId Id="1100" Count="3" />
-      <LineId Id="946" Count="1" />
+      <LineId Id="946" Count="0" />
+      <LineId Id="1242" Count="0" />
+      <LineId Id="947" Count="0" />
       <LineId Id="171" Count="0" />
-      <LineId Id="1141" Count="13" />
-      <LineId Id="1140" Count="0" />
       <LineId Id="187" Count="0" />
       <LineId Id="63" Count="0" />
       <LineId Id="657" Count="0" />
       <LineId Id="656" Count="0" />
       <LineId Id="794" Count="1" />
       <LineId Id="658" Count="0" />
-      <LineId Id="730" Count="9" />
+      <LineId Id="730" Count="3" />
+      <LineId Id="1246" Count="0" />
+      <LineId Id="735" Count="1" />
+      <LineId Id="1247" Count="1" />
+      <LineId Id="737" Count="0" />
       <LineId Id="1197" Count="0" />
       <LineId Id="1199" Count="10" />
       <LineId Id="742" Count="1" />
-      <LineId Id="745" Count="41" />
+      <LineId Id="745" Count="12" />
+      <LineId Id="1288" Count="0" />
+      <LineId Id="758" Count="8" />
+      <LineId Id="768" Count="18" />
+      <LineId Id="1287" Count="0" />
       <LineId Id="789" Count="1" />
       <LineId Id="729" Count="0" />
       <LineId Id="800" Count="0" />
       <LineId Id="799" Count="0" />
       <LineId Id="801" Count="0" />
       <LineId Id="804" Count="0" />
-      <LineId Id="870" Count="7" />
+      <LineId Id="870" Count="4" />
+      <LineId Id="876" Count="1" />
       <LineId Id="802" Count="0" />
-      <LineId Id="896" Count="3" />
+      <LineId Id="896" Count="2" />
+      <LineId Id="1271" Count="14" />
+      <LineId Id="899" Count="0" />
+      <LineId Id="1286" Count="0" />
       <LineId Id="901" Count="41" />
       <LineId Id="900" Count="0" />
       <LineId Id="728" Count="0" />
+    </LineIds>
+    <LineIds Name="Fahrauftrag.doReset">
+      <LineId Id="6" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="36" />
+      <LineId Id="45" Count="1" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="51" Count="1" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="50" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
