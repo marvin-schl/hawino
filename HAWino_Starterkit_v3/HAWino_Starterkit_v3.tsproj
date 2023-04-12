@@ -3246,6 +3246,18 @@
 							<Type>UINT</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.robot.vel.n1MotorRaw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vel.n2MotorRaw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vel.n3MotorRaw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
 							<Name>ControlPRG.robotPoses</Name>
 							<Comment><![CDATA[input from camera]]></Comment>
 							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
@@ -3266,18 +3278,6 @@
 							<Name>ControlPRG.waypointList</Name>
 							<Comment><![CDATA[ implemented, Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)]]></Comment>
 							<Type GUID="{57D1290D-8922-6C29-A5EB-E802603DE228}">ARRAY [0..100] OF RobotPoseSimple</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vel.n1MotorRaw</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vel.n2MotorRaw</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vel.n3MotorRaw</Name>
-							<Type>UINT</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -3330,19 +3330,9 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>ControlPRG.yBoArrivedAtDestination</Name>
-							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yUintWaypointIndex</Name>
-							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
+							<Name>ControlPRG.kobserver.delayedCycles</Name>
+							<Comment><![CDATA[Camdelay 160ms / Cycletyme 2ms]]></Comment>
 							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yRPposition</Name>
-							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
-							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
 						</Var>
 						<Var>
 							<Name>ControlPRG.robot.vXtoRobot</Name>
@@ -3358,9 +3348,19 @@
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>ControlPRG.kobserver.delayedCycles</Name>
-							<Comment><![CDATA[Camdelay 160ms / Cycletyme 2ms]]></Comment>
+							<Name>ControlPRG.yBoArrivedAtDestination</Name>
+							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yUintWaypointIndex</Name>
+							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
 							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yRPposition</Name>
+							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
+							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="1" ContextId="1" AreaNo="16">
@@ -3414,6 +3414,10 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.shutdownButton</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>Fahrauftrag.TrajectoryController.yBoArrivedAtDestination</Name>
 							<Comment><![CDATA[ TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
 							<Type>BOOL</Type>
@@ -3433,10 +3437,6 @@
 							<Type GUID="{B9927BFC-839B-32A1-E72D-3BF836298A56}">ControllerState</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.shutdownButton</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>Fahrauftrag.Auftrag</Name>
 							<Type GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}">Auftrag</Type>
 						</Var>
@@ -3445,8 +3445,8 @@
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.batteryVoltageRaw</Name>
-							<Type>INT</Type>
+							<Name>PowerManager.requestShutdown</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.xPointList</Name>
@@ -3463,20 +3463,16 @@
 							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.batteryVoltageRaw</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
 							<Name>PowerManager.supplyCurrentRaw</Name>
 							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.SOC</Name>
 							<Type>REAL</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.requestShutdown</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.closeGripperFromSimulink</Name>
-							<Type>LREAL</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.slider</Name>
@@ -3487,6 +3483,10 @@
 							<Name>Gripper.partGripped</Name>
 							<Comment><![CDATA[Teil zwischen Greifer: partGripped := 0]]></Comment>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.closeGripperFromSimulink</Name>
+							<Type>LREAL</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" ContextId="2" AreaNo="33">
@@ -3505,14 +3505,14 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>Fahrauftrag.EndNode</Name>
-							<Comment><![CDATA[letzter Knoten]]></Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
 							<Name>Fahrauftrag.enable_ASearch</Name>
 							<Comment><![CDATA[enable signal for a search]]></Comment>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.EndNode</Name>
+							<Comment><![CDATA[letzter Knoten]]></Comment>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.TrajectoryController.xBoEnable</Name>

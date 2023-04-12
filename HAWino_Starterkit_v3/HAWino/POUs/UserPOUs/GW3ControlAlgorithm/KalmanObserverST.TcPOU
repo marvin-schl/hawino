@@ -25,7 +25,7 @@ VAR
 	camDataOld, observerError, observedPosition, vWorld: RobotPoseSimple;
 	pulseGenerator: TP;
 	
-	delayedCycles		AT%Q* 	: INT	:= 80;	//Camdelay 160ms / Cycletyme 2ms
+	delayedCycles		AT%Q* 	: INT	:= 20;	//Camdelay 160ms / Cycletyme 2ms
 	delayedPosition: ARRAY [0..140] OF RobotPoseSimple;
 	
 	
@@ -56,6 +56,8 @@ VAR
    										   0, 0, 1];
 	// TEST
 	//systime : NT_GetTime;
+	observedPositionAP: RobotPoseSimple;
+	PAP: ARRAY [0..2, 0..2] OF LREAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -75,22 +77,31 @@ CheckForNewCameraData();	//Schreibt direkt in Variable  "newCamDataArrived"
 
 delayPosition();
 
+// Step 1 Prediction
+observedPositionAP := AddRPS(observedPosition, ScaleRPS(c := Var_HAWIno.CONTROLLER_CYCLE_TIME, vWorld));
+PAP := AddMat3(P, Q);
+
+
+
+
 //if cam data arrived correct
 IF newCamDataArrived THEN
-	TEMP := AddMat3(P,RMat);
+	//Step 2 Optimize H
+	TEMP := AddMat3(PAP,RMat);
 	TEMP := MatInv3(TEMP);
-	H := MatTimesMat(P, TEMP);
+	H := MatTimesMat(PAP, TEMP);
+	
+	//step 3 Correction
 	//calculate observer error
 	observerError := SubtractRPS(xCameraPose,delayedPosition[delayedCycles]);
-	//do the feedback correction
-	observedPosition := AddRPS(observedPosition, ScaleRPS(c := Var_HAWIno.CONTROLLER_CYCLE_TIME, AddRPS(vWorld, MatTimesRPS(H, observerError))));
-	
-	TEMP := MatTimesMat(H, C);
-	TEMP := MatTimesMat(TEMP, P);
-	P := SubstractMat3(P, TEMP);
-ELSE
-	observedPosition := AddRPS(observedPosition, ScaleRPS(c := Var_HAWIno.CONTROLLER_CYCLE_TIME, vWorld));
-	P := AddMat3(P, Q);
+	//correct observed position
+	observedPosition := AddRPS(observedPositionAP, MatTimesRPS(H, observerError));
+	//correct obersvation covariance
+	P := SubstractMat3(PAP, MatTimesMat(H, PAP));
+
+ELSE 
+	observedPosition := observedPositionAP;
+	P := PAP;
 END_IF
 
 
@@ -134,20 +145,15 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[observedPosition := xCameraPose;]]></ST>
+        <ST><![CDATA[reset := FALSE;
+IF newCamDataArrived THEN
+	observedPosition := xCameraPose;
+	reset := TRUE;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="KalmanObserverST">
-      <LineId Id="568" Count="17" />
-      <LineId Id="608" Count="0" />
-      <LineId Id="626" Count="0" />
-      <LineId Id="607" Count="0" />
-      <LineId Id="586" Count="3" />
-      <LineId Id="628" Count="2" />
-      <LineId Id="627" Count="0" />
-      <LineId Id="590" Count="1" />
-      <LineId Id="599" Count="0" />
-      <LineId Id="593" Count="5" />
+      <LineId Id="745" Count="46" />
       <LineId Id="14" Count="0" />
     </LineIds>
     <LineIds Name="KalmanObserverST.checkForNewCameraData">
@@ -162,7 +168,11 @@ END_VAR
       <LineId Id="11" Count="0" />
     </LineIds>
     <LineIds Name="KalmanObserverST.reset">
+      <LineId Id="25" Count="0" />
+      <LineId Id="20" Count="0" />
       <LineId Id="13" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="23" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="LPF1" Id="{7763ceb7-d931-429f-8950-f9278aeb47f5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK LPF1
+VAR_INPUT
+	T		: LREAL;		// Filter parameter: time constant
+	K		: LREAL;		// Filter parameter: gain
+	ts		: LREAL;		// Sampling time
+	u		: LREAL;		// Filter input signal
+END_VAR	
+VAR_OUTPUT
+	y		: LREAL;		// Filter output signal
+END_VAR
+VAR
+	yLast	: LREAL := 0;	// Store last output value
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[y := yLast + (K * u - yLast) * ts / T;
+yLast := y;]]></ST>
+    </Implementation>
+    <LineIds Name="LPF1">
+      <LineId Id="9" Count="0" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

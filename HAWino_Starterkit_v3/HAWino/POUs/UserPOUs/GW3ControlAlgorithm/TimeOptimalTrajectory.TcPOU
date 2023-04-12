@@ -25,7 +25,7 @@ VAR
 	samplingTime		: LREAL				:= 0.05;
 	
 	maxVel				: LREAL				:= 0.6;
-	maxAcc				: LREAL				:= 0.4;
+	maxAcc				: LREAL				:= 0.5;
 	
 	arcLengthSlow		: LREAL				:= 0.2;
 	maxSlowVel			: LREAL				:= 0.08;
@@ -75,7 +75,8 @@ END_VAR
 finished 		:= FALSE;
 
 path.reset();
-trajectoryPlanner.reset();]]></ST>
+trajectoryPlanner.reset();
+reset := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="setRobotPose" Id="{612c742a-1fe7-4003-9836-d6bbc0467a35}">
@@ -153,6 +154,7 @@ IF path.ready THEN
       <LineId Id="21" Count="0" />
       <LineId Id="17" Count="0" />
       <LineId Id="7" Count="0" />
+      <LineId Id="25" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.setRobotPose">
       <LineId Id="5" Count="0" />

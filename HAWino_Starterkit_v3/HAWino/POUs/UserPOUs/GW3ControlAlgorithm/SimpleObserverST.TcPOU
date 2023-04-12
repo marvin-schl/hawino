@@ -25,7 +25,7 @@ VAR
 	camDataOld, observerError, observedPosition, vWorld: RobotPoseSimple;
 	pulseGenerator: TP;
 	
-	delayedCycles		AT%Q* 	: INT	:= 80;
+	delayedCycles		AT%Q* 	: INT	:= 20;
 	delayedPosition: ARRAY [0..140] OF RobotPoseSimple;
 	
 	
@@ -101,7 +101,12 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[observedPosition := xCameraPose;]]></ST>
+        <ST><![CDATA[reset := FALSE;
+IF newCamDataArrived THEN
+	observedPosition := xCameraPose;
+	reset := TRUE;
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="SimpleObserverST">
@@ -120,7 +125,9 @@ END_VAR
       <LineId Id="11" Count="0" />
     </LineIds>
     <LineIds Name="SimpleObserverST.reset">
-      <LineId Id="13" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="21" Count="3" />
+      <LineId Id="20" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
