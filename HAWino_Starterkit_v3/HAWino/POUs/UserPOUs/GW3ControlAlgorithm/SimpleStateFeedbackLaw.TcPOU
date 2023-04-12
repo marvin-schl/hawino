@@ -10,6 +10,7 @@ FUNCTION_BLOCK SimpleStateFeedbackLaw
 VAR_INPUT
 	xRobotPose: 		RobotPoseSimple; 				//current pose
 	xRobotPoseRef: 		RobotPoseSimple; 				//reference pose
+	xRobotvelRef: 		RobotPoseSimple;				//reference velocity
 	enable:				BOOL 			:= FALSE;
 END_VAR
 
@@ -23,15 +24,15 @@ END_VAR
 
 VAR
 	//static control parameters
-	K: ARRAY [0..2,0..2] OF LREAL := [3,0,0,
-									  0,3,0,
-									  0,0,3];
+	K: ARRAY [0..2,0..2] OF LREAL := [2,0,0,
+									  0,2,0,
+									  0,0,2];
 	poseError: RobotPoseSimple;
 	vtrans_max: LREAL := 934; //vY,vY
 	vrot_max: LREAL   := 1.57; //vTheta
 	u: ARRAY[0..2] OF LREAL;
 	i: INT;
-	accuracyXY: LREAL := 2;
+	accuracyXY: LREAL := 5;
 	accuracyTheta: LREAL := 0.01;
 END_VAR
 ]]></Declaration>
@@ -42,8 +43,6 @@ poseError.y 	:= xRobotPoseRef.y 		- xRobotPose.y;
 poseError.theta := xRobotPoseRef.theta 	- xRobotPose.theta;
 
 reachedReference := (ABS(poseError.x) < accuracyXY) AND (ABS(poseError.y) < accuracyXY) AND (ABS(poseError.theta) < accuracyTheta);
-
-
 
 //2.) apply gain on errors
 FOR i := 0 TO 2 DO
@@ -67,9 +66,9 @@ END_IF
 
 //4.) set control outputs
 IF enable THEN
-	vXrobot 	:= u[0];
-	vYrobot 	:= u[1];
-	omegaRobot	:= u[2];
+	vXrobot 	:= (u[0] + xRobotvelRef.x);
+	vYrobot 	:= (u[1] + xRobotvelRef.y);
+	omegaRobot	:= (u[2] + xRobotvelRef.theta);
 ELSE
 	vXrobot 	:= 0;
 	vYrobot 	:= 0;
@@ -85,7 +84,8 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[reachedReference := FALSE;]]></ST>
+        <ST><![CDATA[reachedReference := FALSE;
+reset := TRUE;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="SimpleStateFeedbackLaw">
@@ -94,7 +94,6 @@ END_VAR
       <LineId Id="22" Count="0" />
       <LineId Id="36" Count="0" />
       <LineId Id="155" Count="1" />
-      <LineId Id="162" Count="1" />
       <LineId Id="37" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="41" Count="0" />
@@ -114,7 +113,7 @@ END_VAR
       <LineId Id="24" Count="0" />
       <LineId Id="303" Count="0" />
       <LineId Id="74" Count="1" />
-      <LineId Id="72" Count="0" />
+      <LineId Id="343" Count="0" />
       <LineId Id="305" Count="3" />
       <LineId Id="237" Count="0" />
       <LineId Id="73" Count="0" />
@@ -123,6 +122,7 @@ END_VAR
     </LineIds>
     <LineIds Name="SimpleStateFeedbackLaw.reset">
       <LineId Id="5" Count="0" />
+      <LineId Id="9" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

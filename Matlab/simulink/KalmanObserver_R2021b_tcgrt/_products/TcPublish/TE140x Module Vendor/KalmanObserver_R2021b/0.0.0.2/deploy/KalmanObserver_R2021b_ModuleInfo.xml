@@ -1,0 +1,2524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TctGeneratedModules>
+   <ModuleInfo CLSID="{794560D8-C12F-050E-2B01-9FC5B0020BE2}" GUID="{794560D8-C12F-050E-2B01-9FC5B0020BE2}" LibraryId="TE140x Module Vendor|KalmanObserver_R2021b|0.0.0.2">
+      <BlockDiagram>
+         <Name>KalmanObserver_R2021b</Name>
+         <Identifier>&lt;Root&gt;</Identifier>
+         <Type>root</Type>
+         <Position h="0" w="0" x="0" y="0"/>
+         <BlockDesign/>
+         <Block>
+            <Name>Constant</Name>
+            <Identifier>&lt;Root&gt;/Constant</Identifier>
+            <Type>Constant</Type>
+            <Position h="30" w="30" x="-2130" y="-595"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+               <Image>
+                  <Placeholder Name="Value" Value="0.1"/>
+               </Image>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="-2095" y="-580"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="-2095" y="-580"/>
+                  <Point x="-2070" y="-580"/>
+               </Line>
+            </Port>
+            <Parameter Category="Parameters" Name="Value">
+               <GlobalName>KalmanObserver_R2021b_P.Constant_Value</GlobalName>
+               <AdsIdxOffs>#x82000000</AdsIdxOffs>
+            </Parameter>
+         </Block>
+         <Block>
+            <Name>DEBUG</Name>
+            <Identifier>&lt;Root&gt;/DEBUG</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="-1890" y="-530"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Inport</Type>
+               <Position x="-1905" y="-520"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;S1&gt;</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+            </Port>
+            <State Category="DWork" Name="DEBUG_PWORK" ReadOnly="true"/>
+         </Block>
+         <Block>
+            <Name>Estimator1</Name>
+            <Identifier>&lt;S1&gt;</Identifier>
+            <Type>SubSystem</Type>
+            <Position h="160" w="180" x="-2140" y="-545"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Inport</Type>
+               <Position x="-2155" y="-525"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;Root&gt;/InCameraPose</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+            </Port>
+            <Port>
+               <Type No="2">Inport</Type>
+               <Position x="-2155" y="-495"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;Root&gt;/InVXworld</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+            </Port>
+            <Port>
+               <Type No="3">Inport</Type>
+               <Position x="-2155" y="-465"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;Root&gt;/InVYworld</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+            </Port>
+            <Port>
+               <Type No="4">Inport</Type>
+               <Position x="-2155" y="-435"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;Root&gt;/InVThetaworld</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+            </Port>
+            <Port>
+               <Type No="5">Inport</Type>
+               <Position x="-2155" y="-405"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;Root&gt;/Mux1</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+            </Port>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="-1955" y="-520"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="-1955" y="-520"/>
+                  <Point x="-1895" y="-520"/>
+               </Line>
+               <Signal Category="Output" Name="debug" ReadOnly="true"/>
+            </Port>
+            <Port>
+               <Type No="2">Outport</Type>
+               <Position x="-1955" y="-465"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="-1955" y="-465"/>
+                  <Point x="-1895" y="-465"/>
+               </Line>
+            </Port>
+            <Port>
+               <Type No="3">Outport</Type>
+               <Position x="-1955" y="-410"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="-1955" y="-410"/>
+                  <Point x="-1895" y="-410"/>
+               </Line>
+            </Port>
+            <Block>
+               <Name>Kamerapose</Name>
+               <Identifier>&lt;S1&gt;/Kamerapose</Identifier>
+               <Type>Inport</Type>
+               <Position h="14" w="30" x="185" y="148"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+                  <Image>
+                     <Placeholder Name="Port" Value="1"/>
+                  </Image>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="220" y="155"/>
+                  <Name>CameraPose</Name>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Name>CameraPose</Name>
+                     <Point x="220" y="155"/>
+                     <Point x="325" y="155"/>
+                     <Line>
+                        <Name>CameraPose</Name>
+                        <Point x="325" y="155"/>
+                        <Point x="341" y="155"/>
+                        <Line>
+                           <Name>CameraPose</Name>
+                           <Point x="341" y="155"/>
+                           <Point x="415" y="155"/>
+                        </Line>
+                        <Line>
+                           <Name>CameraPose</Name>
+                           <Point x="341" y="155"/>
+                           <Point x="341" y="180"/>
+                           <Point x="695" y="180"/>
+                        </Line>
+                     </Line>
+                     <Line>
+                        <Name>CameraPose</Name>
+                        <Point x="325" y="155"/>
+                        <Point x="325" y="390"/>
+                        <Point x="700" y="390"/>
+                     </Line>
+                  </Line>
+               </Port>
+            </Block>
+            <Block>
+               <Name>vXworld</Name>
+               <Identifier>&lt;S1&gt;/vXworld</Identifier>
+               <Type>Inport</Type>
+               <Position h="14" w="30" x="185" y="213"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+                  <Image>
+                     <Placeholder Name="Port" Value="2"/>
+                  </Image>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="220" y="220"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="220" y="220"/>
+                     <Point x="245" y="220"/>
+                  </Line>
+               </Port>
+            </Block>
+            <Block>
+               <Name>vYworld</Name>
+               <Identifier>&lt;S1&gt;/vYworld</Identifier>
+               <Type>Inport</Type>
+               <Position h="14" w="30" x="185" y="233"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+                  <Image>
+                     <Placeholder Name="Port" Value="3"/>
+                  </Image>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="220" y="240"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="220" y="240"/>
+                     <Point x="245" y="240"/>
+                  </Line>
+               </Port>
+            </Block>
+            <Block>
+               <Name>vThetaWorld</Name>
+               <Identifier>&lt;S1&gt;/vThetaWorld</Identifier>
+               <Type>Inport</Type>
+               <Position h="14" w="30" x="185" y="253"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+                  <Image>
+                     <Placeholder Name="Port" Value="4"/>
+                  </Image>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="220" y="260"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="220" y="260"/>
+                     <Point x="245" y="260"/>
+                  </Line>
+               </Port>
+            </Block>
+            <Block>
+               <Name>vSoll</Name>
+               <Identifier>&lt;S1&gt;/vSoll</Identifier>
+               <Type>Inport</Type>
+               <Position h="14" w="30" x="215" y="393"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+                  <Image>
+                     <Placeholder Name="Port" Value="5"/>
+                  </Image>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="250" y="400"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="250" y="400"/>
+                     <Point x="384" y="400"/>
+                     <Point x="384" y="330"/>
+                     <Point x="700" y="330"/>
+                  </Line>
+               </Port>
+            </Block>
+            <Block>
+               <Name>CamFlag</Name>
+               <Identifier>&lt;S1&gt;/CamFlag</Identifier>
+               <Type>SubSystem</Type>
+               <Position h="40" w="210" x="420" y="135"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="405" y="155"/>
+                  <Name>CameraPose</Name>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Kamerapose</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="635" y="155"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="635" y="155"/>
+                     <Point x="666" y="155"/>
+                     <Line>
+                        <Point x="666" y="155"/>
+                        <Point x="695" y="155"/>
+                     </Line>
+                     <Line>
+                        <Point x="666" y="155"/>
+                        <Point x="666" y="158"/>
+                        <Point x="682" y="158"/>
+                        <Point x="682" y="350"/>
+                        <Point x="700" y="350"/>
+                     </Line>
+                  </Line>
+                  <Signal Category="Output" Name="newCamDataArrived" ReadOnly="true"/>
+               </Port>
+               <State Category="DWork" Name="oldCamData" ReadOnly="true"/>
+               <Annotation>
+                  <Text>function</Text>
+                  <Position x="80" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> </Text>
+                  <Position x="137" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>newCamDataArrived</Text>
+                  <Position x="145" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> = fcn(</Text>
+                  <Position x="295" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>camData</Text>
+                  <Position x="341" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>)</Text>
+                  <Position x="409" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>persistent</Text>
+                  <Position x="80" y="48"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> oldCamData</Text>
+                  <Position x="152" y="48"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="80" y="76"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> isempty(</Text>
+                  <Position x="92" y="76"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>oldCamData</Text>
+                  <Position x="159" y="76"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>)</Text>
+                  <Position x="252" y="76"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="90"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>oldCamData</Text>
+                  <Position x="100" y="90"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> = [0 0 0]';</Text>
+                  <Position x="193" y="90"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="80" y="104"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="80" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> </Text>
+                  <Position x="92" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>camData</Text>
+                  <Position x="100" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> ~= </Text>
+                  <Position x="168" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>oldCamData</Text>
+                  <Position x="198" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> </Text>
+                  <Position x="291" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%% &amp;&amp; all(camData(1:2))   % all() prueft, ob x,y-Koordinate ungleich Null, um ungültige Kamerawerte zu entfernen. Kamerasystem sendet [0 0 0], wenn Fehler in Berechnung. Nur erste beiden Elemente pruefen, da Theta=0 zulaessig.</Text>
+                  <Position x="299" y="132"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="100" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> all(</Text>
+                  <Position x="112" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>camData</Text>
+                  <Position x="140" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(1:2))</Text>
+                  <Position x="208" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="160"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>newCamDataArrived</Text>
+                  <Position x="116" y="160"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> = true;</Text>
+                  <Position x="266" y="160"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>else</Text>
+                  <Position x="100" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>        </Text>
+                  <Position x="80" y="188"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>newCamDataArrived</Text>
+                  <Position x="116" y="188"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> = false;</Text>
+                  <Position x="266" y="188"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="202"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="100" y="202"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>else</Text>
+                  <Position x="80" y="216"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="230"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>newCamDataArrived</Text>
+                  <Position x="100" y="230"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> = false;</Text>
+                  <Position x="250" y="230"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="244"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>oldCamData</Text>
+                  <Position x="100" y="244"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> = </Text>
+                  <Position x="193" y="244"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>camData</Text>
+                  <Position x="214" y="244"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>;</Text>
+                  <Position x="282" y="244"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="80" y="258"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+            </Block>
+            <Block>
+               <Name>CameraDelay</Name>
+               <Identifier>&lt;S1&gt;/CameraDelay</Identifier>
+               <Type>Delay</Type>
+               <Position h="30" w="35" x="390" y="255"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="375" y="270"/>
+                  <Name>Odometry</Name>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Integrator</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="430" y="270"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="430" y="270"/>
+                     <Point x="460" y="270"/>
+                  </Line>
+                  <Signal Category="Output" Name="CameraDelay" ReadOnly="true"/>
+               </Port>
+               <State Category="DWork" Name="CameraDelay_DSTATE" ReadOnly="true"/>
+               <Parameter Category="Parameters" Name="InitialCondition">
+                  <GlobalName>KalmanObserver_R2021b_P.CameraDelay_InitialCondition</GlobalName>
+                  <AdsIdxOffs>#x82000008</AdsIdxOffs>
+               </Parameter>
+            </Block>
+            <Block>
+               <Name>Delay One Step1</Name>
+               <Identifier>&lt;S1&gt;/Delay One Step1</Identifier>
+               <Type>Delay</Type>
+               <Position h="34" w="35" x="390" y="188"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="375" y="205"/>
+                  <Name>Odometry</Name>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Integrator</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="430" y="205"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="430" y="205"/>
+                     <Point x="460" y="205"/>
+                  </Line>
+                  <Signal Category="Output" Name="DelayOneStep1" ReadOnly="true"/>
+               </Port>
+               <State Category="DWork" Name="DelayOneStep1_DSTATE" ReadOnly="true"/>
+               <Parameter Category="Parameters" Name="InitialCondition">
+                  <GlobalName>KalmanObserver_R2021b_P.DelayOneStep1_InitialCondition</GlobalName>
+                  <AdsIdxOffs>#x82000010</AdsIdxOffs>
+               </Parameter>
+            </Block>
+            <Block>
+               <Name>Integrator</Name>
+               <Identifier>&lt;S1&gt;/Integrator</Identifier>
+               <Type>Integrator</Type>
+               <Position h="30" w="30" x="290" y="225"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="275" y="240"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Mux</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="325" y="240"/>
+                  <Name>Odometry</Name>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Name>Odometry</Name>
+                     <Point x="325" y="240"/>
+                     <Point x="354" y="240"/>
+                     <Line>
+                        <Name>Odometry</Name>
+                        <Point x="354" y="240"/>
+                        <Point x="354" y="270"/>
+                        <Point x="385" y="270"/>
+                     </Line>
+                     <Line>
+                        <Name>Odometry</Name>
+                        <Point x="354" y="240"/>
+                        <Point x="355" y="240"/>
+                        <Line>
+                           <Name>Odometry</Name>
+                           <Point x="355" y="240"/>
+                           <Point x="355" y="205"/>
+                           <Point x="385" y="205"/>
+                        </Line>
+                        <Line>
+                           <Name>Odometry</Name>
+                           <Point x="355" y="240"/>
+                           <Point x="475" y="240"/>
+                           <Line>
+                              <Name>Odometry</Name>
+                              <Point x="475" y="240"/>
+                              <Point x="475" y="255"/>
+                           </Line>
+                           <Line>
+                              <Name>Odometry</Name>
+                              <Point x="475" y="240"/>
+                              <Point x="475" y="220"/>
+                           </Line>
+                        </Line>
+                     </Line>
+                  </Line>
+                  <Signal Category="Output" Name="Odometry" ReadOnly="true"/>
+               </Port>
+               <Parameter Category="Parameters" Name="InitialCondition">
+                  <GlobalName>KalmanObserver_R2021b_P.Integrator_IC</GlobalName>
+                  <AdsIdxOffs>#x82000018</AdsIdxOffs>
+               </Parameter>
+               <State Category="ContStates" Name="Integrator_CSTATE" ReadOnly="true"/>
+            </Block>
+            <Block>
+               <Name>MATLAB Function</Name>
+               <Identifier>&lt;S1&gt;/MATLAB Function</Identifier>
+               <Type>SubSystem</Type>
+               <Position h="88" w="210" x="705" y="316"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="690" y="330"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/vSoll</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="2">Inport</Type>
+                  <Position x="690" y="350"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/CamFlag</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="3">Inport</Type>
+                  <Position x="690" y="370"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Sum2</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="4">Inport</Type>
+                  <Position x="690" y="390"/>
+                  <Name>CameraPose</Name>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Kamerapose</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="920" y="330"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="920" y="330"/>
+                     <Point x="960" y="330"/>
+                  </Line>
+                  <Signal Category="Output" Name="TmpSignalConversionAtSFunctionI" ReadOnly="true"/>
+                  <Signal Category="Output" Name="xHat" ReadOnly="true"/>
+               </Port>
+               <Port>
+                  <Type No="2">Outport</Type>
+                  <Position x="920" y="350"/>
+                  <Signal Category="Output" Name="H" ReadOnly="true"/>
+               </Port>
+               <Port>
+                  <Type No="3">Outport</Type>
+                  <Position x="920" y="370"/>
+                  <Signal Category="Output" Name="Pout" ReadOnly="true"/>
+               </Port>
+               <Port>
+                  <Type No="4">Outport</Type>
+                  <Position x="920" y="390"/>
+                  <Signal Category="Output" Name="camDataAdj" ReadOnly="true"/>
+               </Port>
+               <State Category="DWork" Name="P" ReadOnly="true"/>
+               <State Category="DWork" Name="xHatOld" ReadOnly="true"/>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="80" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> newCamData</Text>
+                  <Position x="92" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    camDataAdj = camData + odomSinceCapture;</Text>
+                  <Position x="80" y="34"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    xHat = xHatAp + H * (camDataAdj - C*xHatOld);  </Text>
+                  <Position x="80" y="48"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%normal Kalman Calculation</Text>
+                  <Position x="436" y="48"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="62"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%xHat = xHat + odomSinceCapture; % add odometrie difference since cameraMeasurement was taken to equalize cam delay</Text>
+                  <Position x="100" y="62"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    P = PAp - H*C*PAp;</Text>
+                  <Position x="80" y="76"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="90"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%P = PAp - H*PAp;</Text>
+                  <Position x="100" y="90"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="80" y="104"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+            </Block>
+            <Block>
+               <Name>Mux</Name>
+               <Identifier>&lt;S1&gt;/Mux</Identifier>
+               <Type>Mux</Type>
+               <Position h="64" w="5" x="250" y="208"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="235" y="220"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/vXworld</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="2">Inport</Type>
+                  <Position x="235" y="240"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/vYworld</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="3">Inport</Type>
+                  <Position x="235" y="260"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/vThetaWorld</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="260" y="240"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="260" y="240"/>
+                     <Point x="285" y="240"/>
+                  </Line>
+               </Port>
+            </Block>
+            <Block>
+               <Name>Mux1</Name>
+               <Identifier>&lt;S1&gt;/Mux1</Identifier>
+               <Type>Mux</Type>
+               <Position h="64" w="5" x="910" y="178"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="895" y="190"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/PoseCalculation</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>3</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="2">Inport</Type>
+                  <Position x="895" y="210"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/PoseCalculation</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>4</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="3">Inport</Type>
+                  <Position x="895" y="230"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/PoseCalculation</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>5</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="920" y="210"/>
+               </Port>
+            </Block>
+            <Block>
+               <Name>PoseCalculation</Name>
+               <Identifier>&lt;S1&gt;/PoseCalculation</Identifier>
+               <Type>SubSystem</Type>
+               <Position h="96" w="160" x="700" y="142"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="685" y="155"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/CamFlag</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="2">Inport</Type>
+                  <Position x="685" y="180"/>
+                  <Name>CameraPose</Name>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Kamerapose</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="3">Inport</Type>
+                  <Position x="685" y="205"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Sum1</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="4">Inport</Type>
+                  <Position x="685" y="230"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Sum2</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="865" y="150"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="865" y="150"/>
+                     <Point x="918" y="150"/>
+                     <Point x="918" y="140"/>
+                     <Point x="970" y="140"/>
+                  </Line>
+                  <Signal Category="Output" Name="estimatedPose" ReadOnly="true"/>
+               </Port>
+               <Port>
+                  <Type No="2">Outport</Type>
+                  <Position x="865" y="170"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="865" y="170"/>
+                     <Point x="970" y="170"/>
+                  </Line>
+                  <Signal Category="Output" Name="debug" ReadOnly="true"/>
+               </Port>
+               <Port>
+                  <Type No="3">Outport</Type>
+                  <Position x="865" y="190"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="865" y="190"/>
+                     <Point x="905" y="190"/>
+                  </Line>
+                  <Signal Category="Output" Name="estimatedX" ReadOnly="true"/>
+               </Port>
+               <Port>
+                  <Type No="4">Outport</Type>
+                  <Position x="865" y="210"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="865" y="210"/>
+                     <Point x="905" y="210"/>
+                  </Line>
+                  <Signal Category="Output" Name="estimatedY" ReadOnly="true"/>
+               </Port>
+               <Port>
+                  <Type No="5">Outport</Type>
+                  <Position x="865" y="230"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="865" y="230"/>
+                     <Point x="905" y="230"/>
+                  </Line>
+                  <Signal Category="Output" Name="estimatedTheta" ReadOnly="true"/>
+               </Port>
+               <State Category="DWork" Name="estPoseOld" ReadOnly="true"/>
+               <Annotation>
+                  <Text>function</Text>
+                  <Position x="80" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> [</Text>
+                  <Position x="137" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>estimatedPose</Text>
+                  <Position x="149" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="259" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>debug</Text>
+                  <Position x="271" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="319" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>estimatedX</Text>
+                  <Position x="331" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="415" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>estimatedY</Text>
+                  <Position x="427" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="509" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>estimatedTheta</Text>
+                  <Position x="521" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>]= fcn(</Text>
+                  <Position x="633" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>flagNewCamData</Text>
+                  <Position x="679" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="807" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>cameraPose</Text>
+                  <Position x="819" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="913" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>odom</Text>
+                  <Position x="925" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>, </Text>
+                  <Position x="969" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>odomSinceCamCapture</Text>
+                  <Position x="981" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>)</Text>
+                  <Position x="1155" y="20"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>% Variables</Text>
+                  <Position x="80" y="48"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>persistent</Text>
+                  <Position x="80" y="62"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> estPoseOld</Text>
+                  <Position x="152" y="62"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="80" y="90"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> isempty(</Text>
+                  <Position x="92" y="90"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>estPoseOld</Text>
+                  <Position x="159" y="90"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>)</Text>
+                  <Position x="245" y="90"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="104"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>estPoseOld</Text>
+                  <Position x="100" y="104"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> = [0 0 0]';</Text>
+                  <Position x="186" y="104"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="80" y="118"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>% Case 1: Camera Flag is set (New Cameradata) and CameraData is valid</Text>
+                  <Position x="80" y="146"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>if</Text>
+                  <Position x="80" y="160"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text> </Text>
+                  <Position x="92" y="160"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>flagNewCamData</Text>
+                  <Position x="100" y="160"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> == 1</Text>
+                  <Position x="228" y="160"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>estimatedPose</Text>
+                  <Position x="100" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> = </Text>
+                  <Position x="210" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>cameraPose</Text>
+                  <Position x="231" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>(1:3) + </Text>
+                  <Position x="325" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>odomSinceCamCapture</Text>
+                  <Position x="378" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>;   </Text>
+                  <Position x="552" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>%OdomSinceCamCapture describes the pose changes since the camera captured the position because the camera data is delayed. in this time the robot drives further.</Text>
+                  <Position x="572" y="174"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="188"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>estPoseOld</Text>
+                  <Position x="100" y="188"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> = </Text>
+                  <Position x="186" y="188"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>estimatedPose</Text>
+                  <Position x="207" y="188"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>;</Text>
+                  <Position x="317" y="188"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="202"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>debug</Text>
+                  <Position x="100" y="202"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> = 1;</Text>
+                  <Position x="148" y="202"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="230"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>% Case 2: No new Cameradata or invalid Cmeradata (integrate transformed velocities of</Text>
+                  <Position x="100" y="230"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="244"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>% roboter in worldframe</Text>
+                  <Position x="100" y="244"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF228B22</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>else</Text>
+                  <Position x="80" y="258"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="272"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>estimatedPose</Text>
+                  <Position x="100" y="272"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> = </Text>
+                  <Position x="210" y="272"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>estPoseOld</Text>
+                  <Position x="231" y="272"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> + </Text>
+                  <Position x="317" y="272"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>odom</Text>
+                  <Position x="338" y="272"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>;</Text>
+                  <Position x="382" y="272"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="286"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>estPoseOld</Text>
+                  <Position x="100" y="286"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> = </Text>
+                  <Position x="186" y="286"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>estimatedPose</Text>
+                  <Position x="207" y="286"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>;</Text>
+                  <Position x="317" y="286"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>    </Text>
+                  <Position x="80" y="300"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>debug</Text>
+                  <Position x="100" y="300"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text> =2;</Text>
+                  <Position x="148" y="300"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+               </Annotation>
+               <Annotation>
+                  <Text>end</Text>
+                  <Position x="80" y="314"/>
+                  <Alignment H="left" V="top"/>
+                  <FontName>Arial</FontName>
+                  <FontSize>12</FontSize>
+                  <FontColor>#FF0000FF</FontColor>
+               </Annotation>
+            </Block>
+            <Block>
+               <Name>Sum1</Name>
+               <Identifier>&lt;S1&gt;/Sum1</Identifier>
+               <Type>Sum</Type>
+               <Position h="20" w="20" x="465" y="195"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="450" y="205"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Delay One Step1</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="2">Inport</Type>
+                  <Position x="475" y="230"/>
+                  <Name>Odometry</Name>
+                  <Rotation>1.5708</Rotation>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Integrator</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="490" y="205"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="490" y="205"/>
+                     <Point x="695" y="205"/>
+                  </Line>
+                  <Signal Category="Output" Name="Sum1" ReadOnly="true"/>
+               </Port>
+            </Block>
+            <Block>
+               <Name>Sum2</Name>
+               <Identifier>&lt;S1&gt;/Sum2</Identifier>
+               <Type>Sum</Type>
+               <Position h="20" w="20" x="465" y="260"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="475" y="245"/>
+                  <Name>Odometry</Name>
+                  <Rotation>-1.5708</Rotation>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/Integrator</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="2">Inport</Type>
+                  <Position x="450" y="270"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/CameraDelay</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+               <Port>
+                  <Type No="1">Outport</Type>
+                  <Position x="490" y="270"/>
+                  <IsConnected>1</IsConnected>
+                  <Line>
+                     <Point x="490" y="270"/>
+                     <Point x="523" y="270"/>
+                     <Line>
+                        <Point x="523" y="270"/>
+                        <Point x="664" y="270"/>
+                        <Point x="664" y="230"/>
+                        <Point x="695" y="230"/>
+                     </Line>
+                     <Line>
+                        <Point x="523" y="270"/>
+                        <Point x="523" y="370"/>
+                        <Point x="700" y="370"/>
+                     </Line>
+                  </Line>
+                  <Signal Category="Output" Name="Sum2" ReadOnly="true"/>
+               </Port>
+            </Block>
+            <Block>
+               <Name>DebugCase</Name>
+               <Identifier>&lt;S1&gt;/DebugCase</Identifier>
+               <Type>Outport</Type>
+               <Position h="14" w="30" x="975" y="163"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+                  <Image>
+                     <Placeholder Name="Port" Value="1"/>
+                  </Image>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="960" y="170"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/PoseCalculation</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>2</PortNo>
+                  </Source>
+               </Port>
+            </Block>
+            <Block>
+               <Name>SimpleObsPose</Name>
+               <Identifier>&lt;S1&gt;/SimpleObsPose</Identifier>
+               <Type>Outport</Type>
+               <Position h="14" w="30" x="975" y="133"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+                  <Image>
+                     <Placeholder Name="Port" Value="2"/>
+                  </Image>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="960" y="140"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/PoseCalculation</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+            </Block>
+            <Block>
+               <Name>KalmanObsPose</Name>
+               <Identifier>&lt;S1&gt;/KalmanObsPose</Identifier>
+               <Type>Outport</Type>
+               <Position h="14" w="30" x="965" y="323"/>
+               <BlockDesign>
+                  <Border>
+                     <svg height="1" width="1"/>
+                  </Border>
+                  <Image>
+                     <Placeholder Name="Port" Value="3"/>
+                  </Image>
+               </BlockDesign>
+               <Port>
+                  <Type No="1">Inport</Type>
+                  <Position x="950" y="330"/>
+                  <IsConnected>1</IsConnected>
+                  <Source>
+                     <BlockIdentifier>&lt;S1&gt;/MATLAB Function</BlockIdentifier>
+                     <PortType>Outport</PortType>
+                     <PortNo>1</PortNo>
+                  </Source>
+               </Port>
+            </Block>
+            <Annotation>
+               <Text>vSoll in Kalman.  Würde vEnc nicht auch Sinn ergeben unterzunrigen?</Text>
+               <Position x="685" y="440"/>
+               <Alignment H="left" V="top"/>
+               <FontName>auto</FontName>
+               <FontSize>-1</FontSize>
+               <FontWeight>auto</FontWeight>
+            </Annotation>
+         </Block>
+         <Block>
+            <Name>InCameraPose</Name>
+            <Identifier>&lt;Root&gt;/InCameraPose</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="-2330" y="-535"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="-2235" y="-525"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="-2235" y="-525"/>
+                  <Point x="-2145" y="-525"/>
+               </Line>
+               <Signal Category="Output" Name="InCameraPose" ReadOnly="true"/>
+            </Port>
+            <State Category="DWork" Name="InCameraPose_PWORK" ReadOnly="true"/>
+         </Block>
+         <Block>
+            <Name>InVThetaworld</Name>
+            <Identifier>&lt;Root&gt;/InVThetaworld</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="-2330" y="-445"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="-2235" y="-435"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="-2235" y="-435"/>
+                  <Point x="-2145" y="-435"/>
+               </Line>
+               <Signal Category="Output" Name="InVThetaworld" ReadOnly="true"/>
+            </Port>
+            <State Category="DWork" Name="InVThetaworld_PWORK" ReadOnly="true"/>
+         </Block>
+         <Block>
+            <Name>InVXworld</Name>
+            <Identifier>&lt;Root&gt;/InVXworld</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="-2330" y="-505"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="-2235" y="-495"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="-2235" y="-495"/>
+                  <Point x="-2145" y="-495"/>
+               </Line>
+               <Signal Category="Output" Name="InVXworld" ReadOnly="true"/>
+            </Port>
+            <State Category="DWork" Name="InVXworld_PWORK" ReadOnly="true"/>
+         </Block>
+         <Block>
+            <Name>InVYworld</Name>
+            <Identifier>&lt;Root&gt;/InVYworld</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="-2330" y="-475"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="-2235" y="-465"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="-2235" y="-465"/>
+                  <Point x="-2145" y="-465"/>
+               </Line>
+               <Signal Category="Output" Name="InVYworld" ReadOnly="true"/>
+            </Port>
+            <State Category="DWork" Name="InVYworld_PWORK" ReadOnly="true"/>
+         </Block>
+         <Block>
+            <Name>Mux1</Name>
+            <Identifier>&lt;Root&gt;/Mux1</Identifier>
+            <Type>Mux</Type>
+            <Position h="126" w="10" x="-2460" y="-468"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Inport</Type>
+               <Position x="-2475" y="-445"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;Root&gt;/vxToRobot</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+            </Port>
+            <Port>
+               <Type No="2">Inport</Type>
+               <Position x="-2475" y="-405"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;Root&gt;/vyToRobot</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+            </Port>
+            <Port>
+               <Type No="3">Inport</Type>
+               <Position x="-2475" y="-365"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;Root&gt;/omegaToRobot</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+            </Port>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="-2445" y="-405"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="-2445" y="-405"/>
+                  <Point x="-2145" y="-405"/>
+               </Line>
+            </Port>
+         </Block>
+         <Block>
+            <Name>OutSimpleObsPose</Name>
+            <Identifier>&lt;Root&gt;/OutSimpleObsPose</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="-1890" y="-475"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Inport</Type>
+               <Position x="-1905" y="-465"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;S1&gt;</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>2</PortNo>
+               </Source>
+            </Port>
+            <State Category="DWork" Name="OutSimpleObsPose_PWORK" ReadOnly="true"/>
+         </Block>
+         <Block>
+            <Name>OutSimpleObsPose1</Name>
+            <Identifier>&lt;Root&gt;/OutSimpleObsPose1</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="-1890" y="-420"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Inport</Type>
+               <Position x="-1905" y="-410"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;S1&gt;</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>3</PortNo>
+               </Source>
+            </Port>
+            <State Category="DWork" Name="OutSimpleObsPose1_PWORK" ReadOnly="true"/>
+         </Block>
+         <Block>
+            <Name>omegaToRobot</Name>
+            <Identifier>&lt;Root&gt;/omegaToRobot</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="-2625" y="-375"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="-2530" y="-365"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="-2530" y="-365"/>
+                  <Point x="-2465" y="-365"/>
+               </Line>
+               <Signal Category="Output" Name="omegaToRobot" ReadOnly="true"/>
+            </Port>
+            <State Category="DWork" Name="omegaToRobot_PWORK" ReadOnly="true"/>
+         </Block>
+         <Block>
+            <Name>version</Name>
+            <Identifier>&lt;Root&gt;/version</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="-2065" y="-590"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Inport</Type>
+               <Position x="-2080" y="-580"/>
+               <IsConnected>1</IsConnected>
+               <Source>
+                  <BlockIdentifier>&lt;Root&gt;/Constant</BlockIdentifier>
+                  <PortType>Outport</PortType>
+                  <PortNo>1</PortNo>
+               </Source>
+            </Port>
+            <State Category="DWork" Name="version_PWORK" ReadOnly="true"/>
+         </Block>
+         <Block>
+            <Name>vxToRobot</Name>
+            <Identifier>&lt;Root&gt;/vxToRobot</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="-2625" y="-455"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="-2530" y="-445"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="-2530" y="-445"/>
+                  <Point x="-2465" y="-445"/>
+               </Line>
+               <Signal Category="Output" Name="vxToRobot" ReadOnly="true"/>
+            </Port>
+            <State Category="DWork" Name="vxToRobot_PWORK" ReadOnly="true"/>
+         </Block>
+         <Block>
+            <Name>vyToRobot</Name>
+            <Identifier>&lt;Root&gt;/vyToRobot</Identifier>
+            <Type>S-Function</Type>
+            <Position h="20" w="90" x="-2625" y="-415"/>
+            <BlockDesign>
+               <Border>
+                  <svg height="1" width="1"/>
+               </Border>
+            </BlockDesign>
+            <Port>
+               <Type No="1">Outport</Type>
+               <Position x="-2530" y="-405"/>
+               <IsConnected>1</IsConnected>
+               <Line>
+                  <Point x="-2530" y="-405"/>
+                  <Point x="-2465" y="-405"/>
+               </Line>
+               <Signal Category="Output" Name="vyToRobot" ReadOnly="true"/>
+            </Port>
+            <State Category="DWork" Name="vyToRobot_PWORK" ReadOnly="true"/>
+         </Block>
+         <Annotation>
+            <Text>Simple Estimator</Text>
+            <Position x="-2425" y="-638"/>
+            <Alignment H="left" V="top"/>
+            <FontName>auto</FontName>
+            <FontSize>12</FontSize>
+            <FontWeight>auto</FontWeight>
+         </Annotation>
+         <SubsystemHierarchy>
+            <Subsystem>
+               <ID>&lt;Root&gt;</ID>
+            </Subsystem>
+            <Subsystem>
+               <ID>&lt;S1&gt;</ID>
+               <Parent>&lt;Root&gt;</Parent>
+            </Subsystem>
+         </SubsystemHierarchy>
+         <DebugInfo>
+            <SourceFile>
+               <Name>KalmanObserver_R2021b.cpp</Name>
+               <Path>E:\hawino\Matlab\simulink\KalmanObserver_R2021b_tcgrt\KalmanObserver_R2021b.cpp</Path>
+               <CodeSection CommentStartLine="120" EndLine="152" Method="KalmanObserver_R2021b_step" StartLine="121">
+                  <Block>&lt;S1&gt;/CamFlag</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="153" EndLine="156" Method="KalmanObserver_R2021b_step" StartLine="154">
+                  <Block>&lt;S1&gt;/CameraDelay</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="157" EndLine="160" Method="KalmanObserver_R2021b_step" StartLine="158">
+                  <Block>&lt;S1&gt;/Delay One Step1</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="161" EndLine="164" Method="KalmanObserver_R2021b_step" StartLine="162">
+                  <Block>&lt;S1&gt;/CamFlag</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="165" EndLine="168" Method="KalmanObserver_R2021b_step" StartLine="166">
+                  <Block>&lt;S1&gt;/CameraDelay</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="169" EndLine="172" Method="KalmanObserver_R2021b_step" StartLine="170">
+                  <Block>&lt;S1&gt;/Delay One Step1</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="173" EndLine="176" Method="KalmanObserver_R2021b_step" StartLine="174">
+                  <Block>&lt;S1&gt;/CamFlag</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="177" EndLine="180" Method="KalmanObserver_R2021b_step" StartLine="178">
+                  <Block>&lt;S1&gt;/CameraDelay</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="181" EndLine="185" Method="KalmanObserver_R2021b_step" StartLine="182">
+                  <Block>&lt;S1&gt;/Delay One Step1</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="186" EndLine="193" Method="KalmanObserver_R2021b_step" StartLine="187">
+                  <Block>&lt;S1&gt;/Integrator</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="213" EndLine="220" Method="KalmanObserver_R2021b_step" StartLine="214">
+                  <Block>&lt;S1&gt;/Sum2</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="221" EndLine="234" Method="KalmanObserver_R2021b_step" StartLine="222">
+                  <Block>&lt;S1&gt;/Sum1</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="235" EndLine="244" Method="KalmanObserver_R2021b_step" StartLine="238">
+                  <Block>&lt;S3&gt;/ SFunction </Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="235" EndLine="244" Method="KalmanObserver_R2021b_step" StartLine="238">
+                  <Block>&lt;S1&gt;/MATLAB Function</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="245" EndLine="406" Method="KalmanObserver_R2021b_step" StartLine="246">
+                  <Block>&lt;S1&gt;/MATLAB Function</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="407" EndLine="433" Method="sizeof" StartLine="408">
+                  <Block>&lt;S1&gt;/PoseCalculation</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="434" EndLine="436" Method="sizeof" StartLine="435">
+                  <Block>&lt;S1&gt;/PoseCalculation</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="455" EndLine="463" Method="sizeof" StartLine="456">
+                  <Block>&lt;S1&gt;/Integrator</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="464" EndLine="471" Method="sizeof" StartLine="467">
+                  <Block>&lt;Root&gt;/Constant</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="490" EndLine="504" Method="sizeof" StartLine="491">
+                  <Block>&lt;S1&gt;/CameraDelay</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="505" EndLine="508" Method="sizeof" StartLine="506">
+                  <Block>&lt;S1&gt;/Delay One Step1</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="509" EndLine="512" Method="sizeof" StartLine="510">
+                  <Block>&lt;S1&gt;/CameraDelay</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="513" EndLine="516" Method="sizeof" StartLine="514">
+                  <Block>&lt;S1&gt;/Delay One Step1</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="517" EndLine="520" Method="sizeof" StartLine="518">
+                  <Block>&lt;S1&gt;/CameraDelay</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="521" EndLine="524" Method="sizeof" StartLine="522">
+                  <Block>&lt;S1&gt;/Delay One Step1</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="570" EndLine="578" Method="KalmanObserver_R2021b_derivatives" StartLine="571">
+                  <Block>&lt;S1&gt;/Integrator</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="633" EndLine="638" Method="KalmanObserver_R2021b_initialize" StartLine="634">
+                  <Block>&lt;S1&gt;/CameraDelay</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="639" EndLine="640" Method="KalmanObserver_R2021b_initialize" StartLine="640">
+                  <Block>&lt;S1&gt;/CameraDelay</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="641" EndLine="644" Method="KalmanObserver_R2021b_initialize" StartLine="642">
+                  <Block>&lt;S1&gt;/Delay One Step1</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="645" EndLine="648" Method="KalmanObserver_R2021b_initialize" StartLine="646">
+                  <Block>&lt;S1&gt;/Integrator</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="649" EndLine="651" Method="KalmanObserver_R2021b_initialize" StartLine="650">
+                  <Block>&lt;S1&gt;/CamFlag</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="652" EndLine="654" Method="KalmanObserver_R2021b_initialize" StartLine="653">
+                  <Block>&lt;S1&gt;/MATLAB Function</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="655" EndLine="658" Method="KalmanObserver_R2021b_initialize" StartLine="656">
+                  <Block>&lt;S1&gt;/Delay One Step1</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="659" EndLine="662" Method="KalmanObserver_R2021b_initialize" StartLine="660">
+                  <Block>&lt;S1&gt;/Integrator</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="663" EndLine="665" Method="KalmanObserver_R2021b_initialize" StartLine="664">
+                  <Block>&lt;S1&gt;/CamFlag</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="666" EndLine="668" Method="KalmanObserver_R2021b_initialize" StartLine="667">
+                  <Block>&lt;S1&gt;/MATLAB Function</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="669" EndLine="672" Method="KalmanObserver_R2021b_initialize" StartLine="670">
+                  <Block>&lt;S1&gt;/Delay One Step1</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="673" EndLine="676" Method="KalmanObserver_R2021b_initialize" StartLine="674">
+                  <Block>&lt;S1&gt;/Integrator</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="677" EndLine="679" Method="KalmanObserver_R2021b_initialize" StartLine="678">
+                  <Block>&lt;S1&gt;/CamFlag</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="680" EndLine="683" Method="KalmanObserver_R2021b_initialize" StartLine="681">
+                  <Block>&lt;S1&gt;/MATLAB Function</Block>
+               </CodeSection>
+               <CodeSection CommentStartLine="684" EndLine="689" Method="sizeof" StartLine="685">
+                  <Block>&lt;S1&gt;/PoseCalculation</Block>
+               </CodeSection>
+            </SourceFile>
+         </DebugInfo>
+      </BlockDiagram>
+      <DefaultValues>
+         <Value>
+            <Name>TaskOid</Name>
+         </Value>
+         <Value>
+            <Name>TaskPriority</Name>
+            <Value>0</Value>
+         </Value>
+         <Value>
+            <Name>TaskCycleTimeNs</Name>
+            <Value>0</Value>
+         </Value>
+         <Value>
+            <Name>TaskPort</Name>
+            <Value>0</Value>
+         </Value>
+         <Value>
+            <Name>TaskSortOrder</Name>
+            <Value>0</Value>
+         </Value>
+         <Value>
+            <Name>TraceLevelMax</Name>
+            <EnumText>tlInfo</EnumText>
+         </Value>
+         <Value>
+            <Name>ModuleCaller</Name>
+            <EnumText>CyclicTask</EnumText>
+         </Value>
+         <Value>
+            <Name>CallerVerification</Name>
+            <EnumText>Default</EnumText>
+         </Value>
+         <Value>
+            <Name>StepSizeAdaptation</Name>
+            <EnumText>RequireMatchingTaskCycleTime</EnumText>
+         </Value>
+         <Value>
+            <Name>ExecutionSequence</Name>
+            <EnumText>UpdateBeforeOutputMapping</EnumText>
+         </Value>
+         <Value>
+            <Name>Execute</Name>
+            <EnumText>TRUE</EnumText>
+         </Value>
+         <Value>
+            <Name>AccessLockState</Name>
+            <EnumText>TCOM_STATE_OP</EnumText>
+         </Value>
+         <Value>
+            <Name>InitExceptionHandling</Name>
+            <EnumText>CallerExceptions</EnumText>
+         </Value>
+         <Value>
+            <Name>UpdateExceptionHandling</Name>
+            <EnumText>CallerExceptions</EnumText>
+         </Value>
+         <Value>
+            <Name>KalmanObserver_R2021b_P.Constant_Value</Name>
+            <Value>0.1</Value>
+         </Value>
+         <Value>
+            <Name>KalmanObserver_R2021b_P.CameraDelay_InitialCondition</Name>
+            <Value>0.0</Value>
+         </Value>
+         <Value>
+            <Name>KalmanObserver_R2021b_P.DelayOneStep1_InitialCondition</Name>
+            <Value>0.0</Value>
+         </Value>
+         <Value>
+            <Name>KalmanObserver_R2021b_P.Integrator_IC</Name>
+            <Value>0.0</Value>
+         </Value>
+      </DefaultValues>
+      <ModuleParameters>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="WRITE">
+            <Name>CallBy</Name>
+            <Category>Module parameters</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="WRITE">
+            <Name>ExecutionSequence</Name>
+            <Category>Module parameters</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="WRITE">
+            <Name>StepSizeAdaptation</Name>
+            <Category>Module parameters</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="">
+            <Name>Initialized</Name>
+            <Category>Monitoring</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="">
+            <Name>CycleUpdateExecuted</Name>
+            <Category>Monitoring</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="" StartupValueAccess="">
+            <Name>ModuleInfo</Name>
+            <Category>Module identification</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="" OnlineValueAccess="READONLY" StartupValueAccess="">
+            <Name>ModuleBuildInfo</Name>
+            <Category>Module identification</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="WRITE" StartupValueAccess="WRITE">
+            <Name>Execute</Name>
+            <Category>Module parameters</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="">
+            <Name>SimulinkTime</Name>
+            <Category>Monitoring</Category>
+         </Parameter>
+         <Parameter DefaultValueAccess="READONLY" OnlineValueAccess="READONLY" StartupValueAccess="">
+            <Name>AccessLockState</Name>
+            <Category>Module parameters</Category>
+         </Parameter>
+      </ModuleParameters>
+      <BlockDesigns>
+         <BlockDesign>
+            <Type>Constant</Type>
+            <Image>
+               <svg height="100" id="svg3009" version="1.1" width="100">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <g id="layer1">
+                     <text id="text3001" style="font-size:8px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans" x="50" xml:space="preserve" y="50"><tspan id="tspan3003" x="50" y="50">ADS::Value Block::Value</tspan></text></g>
+               </svg>
+            </Image>
+         </BlockDesign>
+         <BlockDesign>
+            <Type SubType="Compare To Constant">SubSystem</Type>
+            <Image>
+               <svg height="100" id="svg3009" version="1.1" width="100">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <g id="layer1">
+                     <text id="text3001" style="font-size:8px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans" x="50" xml:space="preserve" y="50"><tspan id="tspan3003" x="50" y="50">Block::Operator</tspan></text></g>
+               </svg>
+            </Image>
+         </BlockDesign>
+         <BlockDesign>
+            <Type>Inport</Type>
+            <Border>
+               <svg height="30" id="svg3009" version="1.1" width="60">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <g id="layer1" transform="translate(0,-1022.3622)">
+                     <rect height="28.121166" id="rect2996" ry="14.060583" style="fill:none;stroke:#000000;stroke-width:1.87883461;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none" width="58.121166" x="0.9394173" y="1023.3016"/>
+                  </g>
+               </svg>
+            </Border>
+            <Image>
+               <svg height="30" id="svg3009" version="1.1" width="60">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <text id="text3010" style="font-size:8px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans" x="30" xml:space="preserve" y="15"><tspan id="tspan3012" x="30" y="15">Block::Port</tspan></text></svg>
+            </Image>
+         </BlockDesign>
+         <BlockDesign>
+            <Type>MCodeDisplayBlock</Type>
+            <Image>
+               <svg height="100" id="svg3009" version="1.1" width="100">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <g id="layer1">
+                     <text id="text3001" style="font-size:6px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#0000FF;fill-opacity:1;stroke:none;font-family:Sans" x="50" xml:space="preserve" y="50"><tspan id="tspan3003" x="50" y="50">ADS::Name</tspan></text></g>
+               </svg>
+            </Image>
+         </BlockDesign>
+         <BlockDesign>
+            <Type>Integrator</Type>
+            <Image>
+               <svg height="100" id="svg3009" version="1.1" width="100">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <g id="layer1">
+                     <text id="text2991" style="font-size:8px;font-style:normal;text-align:center;text-anchor:middle;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans" x="50" xml:space="preserve" y="40"><tspan id="tspan2993" x="50" y="40">1</tspan><tspan id="tspan2995" x="50" y="50">-</tspan><tspan id="tspan2997" x="50" y="60">s</tspan></text></g>
+               </svg>
+            </Image>
+         </BlockDesign>
+         <BlockDesign>
+            <Type>Mux</Type>
+            <Image>
+               <svg height="100" id="svg3009" version="1.1" width="100">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <g id="layer1" transform="translate(0,-952.36218)">
+                     <rect height="99.910004" id="rect2991" style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none" transform="translate(0,952.36218)" width="100" x="0" y="0.090000004"/>
+                  </g>
+               </svg>
+            </Image>
+         </BlockDesign>
+         <BlockDesign>
+            <Type>Sum</Type>
+            <Image>
+               <svg height="100" id="svg3009" version="1.1" width="100">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <g id="layer1">
+                     <text id="text2991" style="font-size:8px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;text-anchor:middle;text-align:center;stroke:none;font-family:Sans" x="50" xml:space="preserve" y="50"><tspan id="tspan2993" x="50" y="50">+</tspan></text></g>
+               </svg>
+            </Image>
+         </BlockDesign>
+         <BlockDesign>
+            <Type>Outport</Type>
+            <Border>
+               <svg height="30" id="svg3009" version="1.1" width="60">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <g id="layer1" transform="translate(0,-1022.3622)">
+                     <rect height="28.121166" id="rect2996" ry="14.060583" style="fill:none;stroke:#000000;stroke-width:1.87883461;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none" width="58.121166" x="0.9394173" y="1023.3016"/>
+                  </g>
+               </svg>
+            </Border>
+            <Image>
+               <svg height="30" id="svg3009" version="1.1" width="60">
+                  <defs id="defs3011"/>
+                  <metadata id="metadata3014"/>
+                  <text id="text3010" style="font-size:8px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans" x="30" xml:space="preserve" y="15"><tspan id="tspan3012" x="30" y="15">Block::Port</tspan></text></svg>
+            </Image>
+         </BlockDesign>
+      </BlockDesigns>
+   </ModuleInfo>
+</TctGeneratedModules>

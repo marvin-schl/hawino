@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="ScaleRPS" Id="{5a629f2e-08d7-4a8f-aed6-aac9109c3b54}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ScaleRPS : RobotPoseSimple
+VAR_INPUT
+	c: 		LREAL;
+	pose: 	RobotPoseSimple;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[ScaleRPS.x		:= c*pose.x;	
+ScaleRPS.y		:= c*pose.y;
+ScaleRPS.theta	:= c*pose.theta;]]></ST>
+    </Implementation>
+    <LineIds Name="ScaleRPS">
+      <LineId Id="9" Count="0" />
+      <LineId Id="12" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

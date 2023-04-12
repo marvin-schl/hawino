@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="MatDet3" Id="{06a2b9f1-9890-4208-8569-1b53b3d1ac56}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION MatDet3 : LREAL
+VAR_INPUT
+	A : ARRAY [0..2,0..2] OF LREAL;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[MatDet3 := A[0,0]*A[1,1]*A[2,2] + A[0,1]*A[1,2]*A[2,0] + A[0,2]*A[1,0]*A[2,1] - A[0,1]*A[1,0]*A[2,2] - A[0,2]*A[1,1]*A[2,0] - A[0,0]*A[1,2]*A[2,1];]]></ST>
+    </Implementation>
+    <LineIds Name="MatDet3">
+      <LineId Id="42" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

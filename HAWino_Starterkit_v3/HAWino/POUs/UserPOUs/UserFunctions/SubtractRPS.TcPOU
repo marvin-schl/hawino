@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="SubtractRPS" Id="{2325df4f-d571-47bd-811a-9a129a56ebb5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION SubtractRPS : RobotPoseSimple
+VAR_INPUT
+	pose1, pose2: RobotPoseSimple;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SubtractRPS.x		:= pose1.x - pose2.x;
+SubtractRPS.y		:= pose1.y - pose2.y;
+SubtractRPS.theta	:= pose1.theta - pose2.theta;]]></ST>
+    </Implementation>
+    <LineIds Name="SubtractRPS">
+      <LineId Id="7" Count="0" />
+      <LineId Id="9" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
