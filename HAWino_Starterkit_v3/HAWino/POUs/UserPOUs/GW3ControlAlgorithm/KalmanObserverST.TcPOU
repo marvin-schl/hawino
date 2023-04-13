@@ -1,13 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
-  <POU Name="SimpleObserverST" Id="{9bfb0c63-c7fa-4cc8-ba80-418e5355c9f5}" SpecialFunc="None">
-    <Declaration><![CDATA[//SimpleObserver:
-//Implements a simple observer which assumes the camera position is the true position of the robot whenever camera data arrives. Between new cam data
-//odometry is used to correct the robots position. The cameras latency is also considered by correcting the arrived camera data with odometry based correction
-//within the time interval of the latency. The observer is implemented in Simulink and is linked within this FB to abstract the implementation of the observer from the
-//main control algorithm. Inside the Simulink model all coordinates are considered as world coordinates, following that the transformation of between robot and world coordinates 
-//is implemented in ST.
-FUNCTION_BLOCK SimpleObserverST
+  <POU Name="KalmanObserverST" Id="{7db7eead-d75a-4327-8490-42b5b4fd681c}" SpecialFunc="None">
+    <Declaration><![CDATA[//KalmanObserver:
+//Implements a Kalman observer which fuses the camera measurement (measurement noise) and encoder data (process noise) to observe the position of the robot.
+
+FUNCTION_BLOCK KalmanObserverST
 VAR_INPUT
 	xCameraPose:	RobotPoseSimple;
 	xVxRobot: 		LREAL;
@@ -25,14 +22,21 @@ VAR
 	camDataOld, observerError, observedPosition, vWorld: RobotPoseSimple;
 	pulseGenerator: TP;
 	
-	delayedCycles		AT%Q* 	: INT	:= ControlParameters.delayedCycles;
+	delayedCycles		AT%Q* 	: INT	:= ControlParameters.kObsDelayedCycles;	//Camdelay 160ms / Cycletyme 2ms
 	delayedPosition: ARRAY [0..140] OF RobotPoseSimple;
-	
-	
-	K : ARRAY [0..2,0..2] OF LREAL 		:= ControlParameters.observerK;
-	
-	// TEST
-	//systime : NT_GetTime;
+											
+	P, H, TEMP : ARRAY [0..2,0..2] OF LREAL;
+
+	Q : ARRAY [0..2,0..2] OF LREAL 		:=ControlParameters.Q;
+											  
+	RMat : ARRAY [0..2, 0..2] OF LREAL 	:= ControlParameters.RMat;
+											
+	C : ARRAY [0..2,0..2] OF LREAL 		:=[1, 0, 0,
+    									   0, 1, 0,
+   										   0, 0, 1];
+
+	observedPositionAP: RobotPoseSimple;
+	PAP: ARRAY [0..2, 0..2] OF LREAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -46,28 +50,39 @@ Robot2World(
 	vy_world  	=> vWorld.y,
 	omega_world => vWorld.theta);
 	
-checkForNewCameraData();
-
-//systime(START:=newCamDataArrived);	// TEST
+CheckForNewCameraData();	//Schreibt direkt in Variable  "newCamDataArrived"
 
 delayPosition();
-//if cam data arrived correct
+
+// Step 1 Prediction
+observedPositionAP := AddRPS(observedPosition, ScaleRPS(c := Var_HAWIno.CONTROLLER_CYCLE_TIME, vWorld));
+PAP := AddMat3(P, Q);
+
+//if valid cam data arrived
 IF newCamDataArrived THEN
+	//Step 2 Optimize H
+	TEMP := AddMat3(PAP,RMat);
+	TEMP := MatInv3(TEMP);
+	H := MatTimesMat(PAP, TEMP);
+	
+	//step 3 Correction
 	//calculate observer error
 	observerError := SubtractRPS(xCameraPose,delayedPosition[delayedCycles]);
-	//do the feedback correction
-	observedPosition := AddRPS(observedPosition, ScaleRPS(c := Var_HAWIno.CONTROLLER_CYCLE_TIME, AddRPS(vWorld, MatrixTimesRPS(K, observerError))));
-ELSE
-	observedPosition := AddRPS(observedPosition, ScaleRPS(c := Var_HAWIno.CONTROLLER_CYCLE_TIME, vWorld));
+	//correct observed position
+	observedPosition := AddRPS(observedPositionAP, MatTimesRPS(H, observerError));
+	//correct obersvation covariance
+	P := SubstractMat3(PAP, MatTimesMat(H, PAP));
+ELSE 
+	observedPosition := observedPositionAP;
+	P := PAP;
 END_IF
-
 
 //set Outputs
 yObserverdPose 	:= observedPosition;
 camDataOld 		:= xCameraPose;
 ]]></ST>
     </Implementation>
-    <Method Name="checkForNewCameraData" Id="{f1cf2097-a90f-4703-bbdf-a246f17538d7}">
+    <Method Name="checkForNewCameraData" Id="{d7b79a97-aba5-4db5-aeac-59a0c2b4be86}">
       <Declaration><![CDATA[METHOD checkForNewCameraData : BOOL
 VAR_INPUT
 END_VAR
@@ -79,7 +94,7 @@ END_VAR
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="delayPosition" Id="{1134d261-4292-4598-b780-bc2622c2593f}">
+    <Method Name="delayPosition" Id="{016b76e0-836d-4268-9f94-66f08373c96c}">
       <Declaration><![CDATA[METHOD PRIVATE delayPosition : BOOL
 VAR_INPUT
 END_VAR
@@ -93,7 +108,7 @@ END_FOR
 delayedPosition[0] := observedPosition;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="reset" Id="{a72036aa-6b35-4ea4-8248-f4df1f99d19e}">
+    <Method Name="reset" Id="{e0675e18-d699-40d3-8169-07aa4f6de232}">
       <Declaration><![CDATA[METHOD reset : BOOL
 VAR_INPUT
 END_VAR
@@ -102,26 +117,38 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[observedPosition := xCameraPose;]]></ST>
+        <ST><![CDATA[reset := FALSE;
+IF newCamDataArrived THEN
+	observedPosition := xCameraPose;
+	reset := TRUE;
+END_IF]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="SimpleObserverST">
-      <LineId Id="465" Count="28" />
+    <LineIds Name="KalmanObserverST">
+      <LineId Id="745" Count="10" />
+      <LineId Id="758" Count="5" />
+      <LineId Id="767" Count="14" />
+      <LineId Id="783" Count="3" />
+      <LineId Id="788" Count="3" />
       <LineId Id="14" Count="0" />
     </LineIds>
-    <LineIds Name="SimpleObserverST.checkForNewCameraData">
+    <LineIds Name="KalmanObserverST.checkForNewCameraData">
       <LineId Id="5" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="7" Count="1" />
     </LineIds>
-    <LineIds Name="SimpleObserverST.delayPosition">
+    <LineIds Name="KalmanObserverST.delayPosition">
       <LineId Id="5" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="11" Count="0" />
     </LineIds>
-    <LineIds Name="SimpleObserverST.reset">
+    <LineIds Name="KalmanObserverST.reset">
+      <LineId Id="25" Count="0" />
+      <LineId Id="20" Count="0" />
       <LineId Id="13" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="23" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

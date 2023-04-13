@@ -20,18 +20,18 @@ VAR
 	wayPointListRaw		: ARRAY [0..100] OF RobotPoseSimple;
 	cnt					: INT 				:= 0;
 	
-    maxRadius		    : LREAL				:= 0.1;
+    maxRadius		    : LREAL				:= ControlParameters.maxRadius;
 	
-	samplingTime		: LREAL				:= 0.05;
+	samplingTime		: LREAL				:= ControlParameters.samplingTime;
 	
-	maxVel				: LREAL				:= 0.5;
-	maxAcc				: LREAL				:= 0.4;
+	maxVel				: LREAL				:= ControlParameters.maxVel;
+	maxAcc				: LREAL				:= ControlParameters.maxAcc;
 	
-	arcLengthSlow		: LREAL				:= 0.2;
-	maxSlowVel			: LREAL				:= 0.08;
+	arcLengthSlow		: LREAL				:= ControlParameters.arcLengthSlow;
+	maxSlowVel			: LREAL				:= ControlParameters.maxSlowVel;
 	
-	maxRotVel			: LREAL				:= 100;
-	maxRotAcc			: LREAL				:= 100;	
+	maxRotVel			: LREAL				:= ControlParameters.maxRotVel;
+	maxRotAcc			: LREAL				:= ControlParameters.maxRotAcc;	
 END_VAR
 ]]></Declaration>
     <Implementation>

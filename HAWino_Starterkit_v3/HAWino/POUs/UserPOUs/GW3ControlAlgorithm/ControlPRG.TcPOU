@@ -22,9 +22,7 @@ VAR
 	
 	state AT%Q*: ControllerState := ControllerState.init;//sets controller state
 	
-	CONTROL_ERROR_THRESH : LREAL := 5;
-	
-	FFLin: BOOL := FALSE;
+	FFLin: BOOL := ControlParameters.FeedForwardLinearization;
 	thetaLin: LREAL;
 	
 	///////////////////////////////////////////////
