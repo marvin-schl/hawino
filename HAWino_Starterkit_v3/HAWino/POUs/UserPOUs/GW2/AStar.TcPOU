@@ -209,6 +209,11 @@ FOR i := 0 TO numberOfNodes BY 1 DO
  yNode[169] := 3450;
  yNode[170] := 3450;
  
+ //Knoten für bessere Anfahrt versetzen, damit nicht zu dicht an Station
+ xNode[94] := 1500;
+ xNode[103] := 5100;
+ xNode[112] := 1500;
+ xNode[121] := 5100;
  
  ////////////////////////////////////////////////////Startposition und Endposition bestimmen //////////////////////////////////////////////////////////////////////////
  
@@ -432,6 +437,7 @@ countPointList := 1;
       <LineId Id="1310" Count="0" />
       <LineId Id="1257" Count="52" />
       <LineId Id="1256" Count="0" />
+      <LineId Id="1407" Count="4" />
       <LineId Id="825" Count="5" />
       <LineId Id="1355" Count="0" />
       <LineId Id="831" Count="1" />

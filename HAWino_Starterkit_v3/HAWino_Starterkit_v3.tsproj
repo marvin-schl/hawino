@@ -496,15 +496,6 @@
 			</SubItem>
 		</DataType>
 		<DataType>
-			<Name GUID="{160298A9-1AA9-6076-6FE5-D331BEDC2A7F}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..100] OF LREAL</Name>
-			<BitSize>6464</BitSize>
-			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-			<ArrayInfo>
-				<LBound>0</LBound>
-				<Elements>101</Elements>
-			</ArrayInfo>
-		</DataType>
-		<DataType>
 			<Name GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}" IecBaseType="true" AutoDeleteType="true">ARRAY [1..9] OF INT</Name>
 			<BitSize>144</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
@@ -3410,14 +3401,6 @@
 					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
 						<Name>PlcTask Inputs</Name>
 						<Var>
-							<Name>Fahrauftrag.finished_ASearch</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.shutdownButton</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>Fahrauftrag.TrajectoryController.yBoArrivedAtDestination</Name>
 							<Comment><![CDATA[ TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
 							<Type>BOOL</Type>
@@ -3438,33 +3421,29 @@
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.Auftrag</Name>
+							<Comment><![CDATA[Auftrag von GW1]]></Comment>
 							<Type GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}">Auftrag</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.StatusFromGW1</Name>
+							<Comment><![CDATA[Status von GW1]]></Comment>
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.requestShutdown</Name>
+							<Name>PowerManager.shutdownButton</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>Fahrauftrag.xPointList</Name>
-							<Comment><![CDATA[xKoordinatenliste]]></Comment>
-							<Type GUID="{160298A9-1AA9-6076-6FE5-D331BEDC2A7F}">ARRAY [0..100] OF LREAL</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.yPointList</Name>
-							<Comment><![CDATA[yKoordinatenliste]]></Comment>
-							<Type GUID="{160298A9-1AA9-6076-6FE5-D331BEDC2A7F}">ARRAY [0..100] OF LREAL</Type>
+							<Name>PowerManager.batteryVoltageRaw</Name>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>IrDistanceSensors.distanceRaw</Name>
 							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.batteryVoltageRaw</Name>
-							<Type>INT</Type>
+							<Name>PowerManager.requestShutdown</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.supplyCurrentRaw</Name>
@@ -3502,17 +3481,8 @@
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.resetVar</Name>
+							<Comment><![CDATA[messages von MQTT zurücksetzen]]></Comment>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.enable_ASearch</Name>
-							<Comment><![CDATA[enable signal for a search]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.EndNode</Name>
-							<Comment><![CDATA[letzter Knoten]]></Comment>
-							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.TrajectoryController.xBoEnable</Name>
@@ -3531,32 +3501,12 @@
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.FeedbackToGW1</Name>
-							<Comment><![CDATA[Schnittstelle zum MQTT_PRG]]></Comment>
+							<Comment><![CDATA[Feedback/Status des Roboters an GW1]]></Comment>
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.shutdownTrigger</Name>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.xEndvalue</Name>
-							<Comment><![CDATA[Ziel xKoordinate]]></Comment>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.xRobotStartposition</Name>
-							<Comment><![CDATA[aktuelle xKoordinate]]></Comment>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.yEndvalue</Name>
-							<Comment><![CDATA[Ziel yKoordinate]]></Comment>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.yRobotStartposition</Name>
-							<Comment><![CDATA[aktuelle yKoordinate]]></Comment>
-							<Type>LREAL</Type>
 						</Var>
 						<Var>
 							<Name>IrDistanceSensors.distance_mm</Name>
@@ -3633,7 +3583,7 @@
 							</OwnerB>
 						</OwnerA>
 					</UnrestoredVarLinks>
-					<UnrestoredVarLinks ImportTime="2023-04-06T14:32:00">
+					<UnrestoredVarLinks ImportTime="2023-04-12T16:38:14">
 						<OwnerA Name="InputDst" Prefix="TIPC^HAWino^HAWino Instance" Type="1">
 							<OwnerB Name="TIPC^HAWino^HAWino Instance">
 								<Link VarA="ControlPRG.robot.vThetaFromRobot" TypeA="LREAL" InOutA="0" GuidA="{18071995-0000-0000-0000-00000000000E}" VarB="ControlTask Outputs^WheelEncoders.vthetaCartesianFromMotors" RestoreInfo="ANotFound"/>
