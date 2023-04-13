@@ -31,7 +31,10 @@ VAR
 	maxSlowVel			: LREAL				:= ControlParameters.maxSlowVel;
 	
 	maxRotVel			: LREAL				:= ControlParameters.maxRotVel;
-	maxRotAcc			: LREAL				:= ControlParameters.maxRotAcc;	
+	maxRotAcc			: LREAL				:= ControlParameters.maxRotAcc;
+	
+	thetaDZ				: LREAL				:= ControlParameters.thetaDZ;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>

@@ -25,7 +25,7 @@ VAR
 	camDataOld, observerError, observedPosition, vWorld: RobotPoseSimple;
 	pulseGenerator: TP;
 	
-	delayedCycles		AT%Q* 	: INT	:= ControlParameters.delayedCycles;
+	delayedCycles		AT%Q* 	: INT	:= ControlParameters.sObsDelayedCycles;
 	delayedPosition: ARRAY [0..140] OF RobotPoseSimple;
 	
 	
