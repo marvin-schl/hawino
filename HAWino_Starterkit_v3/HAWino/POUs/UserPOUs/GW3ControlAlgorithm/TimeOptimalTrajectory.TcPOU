@@ -98,7 +98,7 @@ END_VAR
 VAR
 	extendedWayPointList			:	ARRAY [0..101] OF RobotPoseSimple;
 	i								: INT;
-	maxInitialPoseError				: LREAL := 100;		// unit: mm
+	maxInitialPoseError				: LREAL := 35;		// unit: mm
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Insert actual position as first waypoint if robot is too far away from first
