@@ -7,9 +7,10 @@ FUNCTION_BLOCK TrajectoryControl
 VAR_INPUT
 	//interface to GW3
 	// INPUTS to GW3
-	xBoEnable AT%Q*: BOOL := FALSE;					// Freigabesignal für Fahrt, Roboter stoppt bei FALSE
+	xBoEnable AT%Q*: BOOL := FALSE;							// Freigabesignal für Fahrt, Roboter stoppt bei FALSE
 	waypointList AT%Q*: ARRAY[0..100] OF RobotPoseSimple;	// Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)
-	newWaypointListAvailable AT%Q*: BOOL := FALSE;	// Status-Bit zur Signalisierung einer neuen WP-Liste
+	newWaypointListAvailable AT%Q*: BOOL := FALSE;			// Status-Bit zur Signalisierung einer neuen WP-Liste
+	xBoReset  AT%Q*: BOOL := FALSE;							
 END_VAR
 VAR_OUTPUT
 	// OUTPUTS from GW3		
@@ -17,6 +18,7 @@ VAR_OUTPUT
 	yUintWaypointIndex  AT%I*: INT := 0;				// COUNTER zur Anzeige, des Indexes des nächstes WP
 	yRPposition 		AT%I*: RobotPoseSimple;				// aktuelle Roboterposition, für Simulationszwecke;
 	yControllerState    AT%I*: ControllerState;
+	yVworldRef			AT%I*: RobotPoseSimple;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
