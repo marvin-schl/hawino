@@ -14,11 +14,11 @@ VAR_INPUT
 END_VAR
 VAR_OUTPUT
 	// OUTPUTS from GW3		
-	yBoArrivedAtDestination AT%I*:	BOOL := FALSE;	// TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP
-	yUintWaypointIndex  AT%I*: INT := 0;				// COUNTER zur Anzeige, des Indexes des nächstes WP
-	yRPposition 		AT%I*: RobotPoseSimple;				// aktuelle Roboterposition, für Simulationszwecke;
-	yControllerState    AT%I*: ControllerState;
-	yVworldRef			AT%I*: RobotPoseSimple;
+	yBoArrivedAtDestination AT%I*: BOOL 			:= FALSE;	// TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP
+	yUintWaypointIndex  	AT%I*: INT 				:= 0;				// COUNTER zur Anzeige, des Indexes des nächstes WP
+	yRPposition 			AT%I*: RobotPoseSimple;				// aktuelle Roboterposition, für Simulationszwecke;
+	yControllerState   	 	AT%I*: ControllerState;
+	yVworldRef				AT%I*: RobotPoseSimple;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
