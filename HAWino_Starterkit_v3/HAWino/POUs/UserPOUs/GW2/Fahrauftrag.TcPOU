@@ -138,6 +138,7 @@ IF s6a AND NOT s6b AND NOT Gripper.partGripped THEN
 	trajectoryController.newWaypointListAvailable := TRUE;
 ELSIF s6a AND NOT s6b AND Gripper.partGripped THEN
 	Gripper.closeGripperCommand := FALSE;
+	//ZEROS_RobotPoseSimple(wayPointList);										//test, sonst für alle
 	wayPointList[0] := readAssigment.lastPointsToPickup[0];
 	wayPointList[1] := readAssigment.lastPointsToPickup[1];
 	wayPointList[2] := readAssigment.lastPointsToPickup[2];
@@ -518,6 +519,30 @@ Gripper.closeGripperCommand := FALSE;
 reset := FALSE;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Kollision" Id="{e481f3ea-47ea-4ad3-a999-253ca33209f2}">
+      <Declaration><![CDATA[METHOD Kollision : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//Bin ich Roboter der Fahren darf oder der Warten muss?
+//Fahren: stoppen, neue Wegpunktliste generieren, dabei Knoten, wo anderer Roboter steht löschen
+//Warten: stoppen, Warten bis keine Kollision (???), neue Wegpunktliste (weitermachen)
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TeilVerloren" Id="{8ae8f73b-5bb8-4610-9414-56d24a08916d}">
+      <Declaration><![CDATA[METHOD TeilVerloren : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//Teil verloren, warten auf Rückmeldung das weiterfahren
+//diese Methode aufrufen, wenn LSmuss und kein Teil
+//LSmuss gesetzt sobald Greifer zu geht und rückgesetzt, wenn Greifer auf geht
+]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="Fahrauftrag">
       <LineId Id="1249" Count="0" />
       <LineId Id="1251" Count="2" />
@@ -592,6 +617,7 @@ reset := FALSE;]]></ST>
       <LineId Id="354" Count="1" />
       <LineId Id="1010" Count="0" />
       <LineId Id="1019" Count="0" />
+      <LineId Id="1322" Count="0" />
       <LineId Id="1018" Count="0" />
       <LineId Id="1015" Count="2" />
       <LineId Id="1013" Count="0" />
@@ -728,6 +754,12 @@ reset := FALSE;]]></ST>
       <LineId Id="55" Count="0" />
       <LineId Id="48" Count="0" />
       <LineId Id="50" Count="0" />
+    </LineIds>
+    <LineIds Name="Fahrauftrag.Kollision">
+      <LineId Id="5" Count="3" />
+    </LineIds>
+    <LineIds Name="Fahrauftrag.TeilVerloren">
+      <LineId Id="5" Count="3" />
     </LineIds>
   </POU>
 </TcPlcObject>
