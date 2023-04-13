@@ -82,7 +82,8 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[reachedReference := FALSE;]]></ST>
+        <ST><![CDATA[reachedReference := FALSE;
+reset := TRUE;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="SimpleStateFeedbackLaw">
@@ -118,6 +119,7 @@ END_VAR
       <LineId Id="46" Count="0" />
     </LineIds>
     <LineIds Name="SimpleStateFeedbackLaw.reset">
+      <LineId Id="9" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>

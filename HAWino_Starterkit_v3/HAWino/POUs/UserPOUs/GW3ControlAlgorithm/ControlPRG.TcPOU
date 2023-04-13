@@ -14,10 +14,11 @@ VAR_OUTPUT
 END_VAR
 VAR
 	//declare objects
-	observer 	: SimpleObserverST;					//Observer object
-	controller	: SimpleStateFeedbackLaw;			//Control law object
-	trajectory	: TimeOptimalTrajectory;			//Trajectory Object
-	robot		: Robot;							//link to physical I/O of roboter or simulation model of the roboter
+	observer 		 : SimpleObserverST;					//Observer object
+	kobserver		 : KalmanObserverST;
+	controller		 : SimpleStateFeedbackLaw;			//Control law object
+	trajectory		 : TimeOptimalTrajectory;			//Trajectory Object
+	robot			 : Robot;							//link to physical I/O of roboter or simulation model of the roboter
 	robotPoses 	AT%I*: ARRAY [1..8] OF RobotPose;	//input from camera
 	
 	state AT%Q*: ControllerState := ControllerState.init;//sets controller state
@@ -36,7 +37,7 @@ VAR
 	
 	//outputs to GW2, uncomment and link when needed
 	yBoArrivedAtDestination AT%Q*:	BOOL := FALSE;			// implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP
-	yUintWaypointIndex AT%Q*: INT  := 0;						// implemented, COUNTER zur Anzeige, des Indexes des nächstes WP
+	yUintWaypointIndex AT%Q*: INT  := 0;					// implemented, COUNTER zur Anzeige, des Indexes des nächstes WP
 	yRPposition AT%Q*: RobotPoseSimple;						// implemented, aktuelle Roboterposition, für Simulationszwecke
 
 END_VAR
@@ -60,8 +61,9 @@ CASE state OF
 	ControllerState.idle:
 		//if new waypointlist available reset trajectory and go into set trajectory state
 		IF newWaypointListAvailable THEN
-			reset();
-			state := ControllerState.setTrajectory;
+			IF reset() THEN
+				state := ControllerState.setTrajectory;
+			END_IF
 		END_IF
 	
 	ControllerState.setTrajectory:
@@ -85,22 +87,25 @@ CASE state OF
 	
 	ControllerState.ready:
 		IF newWaypointListAvailable THEN
-			reset();
 			//stop and calculate new trajectory
-			state := ControllerState.setTrajectory;
+			IF reset() THEN
+				state := ControllerState.setTrajectory;
+			END_IF
 		ELSIF xBoEnable THEN
 			state := ControllerState.driving;
 		END_IF
 	
 	ControllerState.driving:
 		IF newWaypointListAvailable THEN
-			reset();
 			//stop and calculate new trajectory
-			state := ControllerState.setTrajectory;
+			IF reset() THEN
+				state := ControllerState.setTrajectory;
+			END_IF
 		ELSIF yBoArrivedAtDestination THEN
 			//got back to idle and set arrived flag for GW2, method needed?
-			reset();
-			state := ControllerState.idle;
+			IF reset() THEN
+				state := ControllerState.idle;
+			END_IF
 		ELSIF xBoEnable THEN
 			//do the driving
 			drive();
@@ -122,23 +127,34 @@ END_IF
 //init observer
 observer(xCameraPose 	:= shiftCamAngle(camData := robotPoses[Var_HAWIno.Robot_Number], path := trajectory.path),
 		 //xCameraPose 	:= robotPoses[Var_HAWIno.Robot_Number],
-		 xVxRobot    	:= robot.vXfromRobot,						//link x-velocity with measured velocity
-		 xVyRobot    	:= robot.vYfromRobot,						//link y-velocity with measured velocity
-		 xOmegaRobot    := robot.vThetaFromRobot,
+		 xVxRobot    	:= robot.vX,						//link x-velocity with measured velocity
+		 xVyRobot    	:= robot.vY,						//link y-velocity with measured velocity
+		 xOmegaRobot    := robot.vTheta,
  		 //xVxToRobot		:= controller.vXrobot,
 		 //xVyToRobot		:= controller.vYrobot,
 		 //xOmegaToRobot	:= controller.omegaRobot,				//link theta-velocity with measured velocity
-		 theta			:= thetaLin);							//Angle for IO-Lineariztion						 
+		 theta			:= thetaLin);	
+kobserver(xCameraPose 	:= shiftCamAngle(camData := robotPoses[Var_HAWIno.Robot_Number], path := trajectory.path),
+		 //xCameraPose 	:= robotPoses[Var_HAWIno.Robot_Number],
+		 xVxRobot    	:= robot.vX,						//link x-velocity with measured velocity
+		 xVyRobot    	:= robot.vY,						//link y-velocity with measured velocity
+		 xOmegaRobot    := robot.vTheta,
+ 		 //xVxToRobot		:= controller.vXrobot,
+		 //xVyToRobot		:= controller.vYrobot,
+		 //xOmegaToRobot	:= controller.omegaRobot,				//link theta-velocity with measured velocity
+		 theta			:= thetaLin);	
+
+						//Angle for IO-Lineariztion						 
 //init controller and link to observer
-controller(xRobotPose 		:= observer.yObserverdPose,			//pass controller the observerd roboter pose
+controller(xRobotPose 		:= kobserver.yObserverdPose,			//pass controller the observerd roboter pose
 		   xRobotPoseRef	:= trajectory.referencePose,
 		   xRobotVelRef		:= trajectory.referenceVelocities,
 		   enable			:= robot.enable);		//pass controller the reference position for the next cycle comming from the trajectory
 
 //trajectory object
 trajectory(
-	drive := robot.enable,
-	currentPose 	:= observer.yObserverdPose,					//Current implementation needs observed pose for distance calculation, TODO: check if needed for final implemenation
+	drive 			:= robot.enable,
+	currentPose 	:= kobserver.yObserverdPose,					//Current implementation needs observed pose for distance calculation, TODO: check if needed for final implemenation
 	referencePose 	=> controller.xRobotPoseRef					//outputs reference pose to controller
 );
 //observer.xCameraPose 	:= shiftCamAngle(camData := robotPoses[Var_HAWIno.Robot_Number], path := trajectory.path);
@@ -199,24 +215,29 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[trajectory.reset();
-controller.reset();
-observer.reset();]]></ST>
+        <ST><![CDATA[reset := trajectory.reset() AND controller.reset() AND observer.reset() AND kobserver.reset();]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="ControlPRG">
       <LineId Id="1147" Count="14" />
       <LineId Id="1360" Count="0" />
       <LineId Id="1163" Count="1" />
-      <LineId Id="1362" Count="0" />
-      <LineId Id="1166" Count="11" />
-      <LineId Id="1179" Count="11" />
-      <LineId Id="1364" Count="0" />
-      <LineId Id="1191" Count="0" />
-      <LineId Id="1194" Count="6" />
-      <LineId Id="1363" Count="0" />
-      <LineId Id="1203" Count="4" />
+      <LineId Id="1608" Count="0" />
+      <LineId Id="1166" Count="0" />
+      <LineId Id="1609" Count="0" />
+      <LineId Id="1167" Count="10" />
+      <LineId Id="1179" Count="12" />
+      <LineId Id="1606" Count="0" />
+      <LineId Id="1194" Count="0" />
+      <LineId Id="1607" Count="0" />
+      <LineId Id="1195" Count="5" />
+      <LineId Id="1203" Count="0" />
+      <LineId Id="1603" Count="0" />
+      <LineId Id="1204" Count="0" />
+      <LineId Id="1604" Count="0" />
+      <LineId Id="1205" Count="2" />
       <LineId Id="1361" Count="0" />
+      <LineId Id="1605" Count="0" />
       <LineId Id="1210" Count="14" />
       <LineId Id="1450" Count="0" />
       <LineId Id="1456" Count="0" />
@@ -224,6 +245,9 @@ observer.reset();]]></ST>
       <LineId Id="1449" Count="0" />
       <LineId Id="1448" Count="0" />
       <LineId Id="1231" Count="5" />
+      <LineId Id="1552" Count="7" />
+      <LineId Id="1550" Count="1" />
+      <LineId Id="1549" Count="0" />
       <LineId Id="1246" Count="2" />
       <LineId Id="1506" Count="0" />
       <LineId Id="1249" Count="0" />
@@ -244,7 +268,7 @@ observer.reset();]]></ST>
       <LineId Id="26" Count="0" />
     </LineIds>
     <LineIds Name="ControlPRG.reset">
-      <LineId Id="5" Count="2" />
+      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

@@ -30,7 +30,7 @@ nextWP := waypoints[2];
 // Compute minimum required radius
 d1 := SQRT(EXPT(controlPoint.x - prevWP.x, 2) + EXPT(controlPoint.y - prevWP.y, 2)) - 1E-3;
 d2 := SQRT(EXPT(controlPoint.x - nextWP.x, 2) + EXPT(controlPoint.y - nextWP.y, 2)) - 1E-3;
-radius := MIN(d1, d2, maxRadius);
+radius := MIN(d1/2, d2/2, maxRadius);
 
 getStartEndPoint();
 
@@ -274,7 +274,7 @@ END_VAR
 
 VAR
 	t_prev: LREAL;
-	tol: LREAL := 1E-4;
+	tol: LREAL := 1E-3;
 	i: INT := 0;
 	t: LREAL;
 END_VAR]]></Declaration>

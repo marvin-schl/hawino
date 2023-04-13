@@ -17,25 +17,10 @@ VAR
 	
 	//Odometry
 	distX, distY, distTheta :LREAL :=0;
-	// Task Freqeuncy in ms
-	taskfreq: LREAL := 10;
 	
-	//the actual robot has to be selected in connecting PlcTaskInputs to actual Robot Camera data
-	// x Koordinate bei Start nach Kamera
-	camX AT%I*: LREAL := 0;
-	// y Koordinate bei Start laut Kamera
-	camY AT%I*: LREAL;
-	// theta laut Kamera zu Beginn
-	camTheta AT%I*: LREAL := 0;
-	
-	// Error in x
-	ErrX: LREAL;
-	// Error in y
-	ErrY: LREAL;
-	// Error in Theta
-	ErrTheta: LREAL;
-	//errorcam via UDP
-	ErrCam AT%I*: LREAL;
+	// Task Sample Time in ms
+	taskSampleTime: LREAL := 10;
+
 	// soll geschwindigkeit
 	vSoll: LREAL := 3;
 END_VAR
@@ -56,7 +41,7 @@ END_IF *)
 //state 0 to wait for cameraposition data
 IF state = 0 THEN
 	counter := counter+1;
-	IF counter > 199 THEN
+	IF counter > 300 THEN
 		state := 1;
 		counter := 0;
 	END_IF
@@ -64,97 +49,137 @@ END_IF
 
 IF state = 1 THEN
 	v := vSoll;
-	
-	
-	//Initiale Pose nach Kamera als Startpose setzen
-	IF counter < 1 THEN
-		distX:= camX ;
-		distY :=camY ;
-		distTheta :=camTheta ;
-	END_IF
 
-	counter := counter + 1;
-	IF counter > 199 THEN
+	IF counter > 300 THEN
 		state := 2;
 		counter := 0;
+	ELSE 
+		counter := counter + 1;
 	END_IF
 END_IF
 
 IF state = 2 THEN
 	v := 0;
-	counter := counter + 1;
-	IF counter > 199 THEN
+	
+	IF counter > 300 THEN
 		state := 3;
 		counter := 0;
+	ELSE 
+		counter := counter + 1;
 	END_IF
 END_IF
 
 IF state = 3 THEN
 	v := vSoll;
-	counter := counter + 1;
-	IF counter > 199 THEN
+	
+	IF counter > 300 THEN
 		state := 4;
 		counter := 0;
+	ELSE 
+		counter := counter + 1;
 	END_IF
 END_IF
 
 IF state = 4 THEN
+	v:= 0;
+	
+	IF counter > 300 THEN
+		state := 5;
+		counter := 0;
+	ELSE 
+		counter := counter + 1;
+	END_IF
+END_IF
+
+IF state = 5 THEN
+	v := vSoll;
+	
+	IF counter > 300 THEN
+		state := 6;
+		counter := 0;
+	ELSE 
+		counter := counter + 1;
+	END_IF
+END_IF
+
+IF state = 6 THEN
+	v := 0;
+	
+	IF counter > 300 THEN
+		state := 7;
+		counter := 0;
+	ELSE 
+		counter := counter + 1;
+	END_IF
+END_IF
+
+IF state = 7 THEN
+	v := vSoll;
+	
+	IF counter > 300 THEN
+		state := 8;
+		counter := 0;
+	ELSE 
+		counter := counter + 1;
+	END_IF
+END_IF
+
+IF state = 8 THEN
+	v := 0;
+	
+	IF counter > 300 THEN
+		state :=9;
+		counter := 0;
+	ELSE 
+		counter := counter + 1;
+	END_IF
+END_IF
+
+IF state = 9 THEN
+	v := vSoll;
+	
+	IF counter > 300 THEN
+		state := 10;
+		counter := 0;
+	ELSE 
+		counter := counter + 1;
+	END_IF
+END_IF
+
+IF state = 10 THEN
+	v := 0;
+	
+	IF counter > 100 THEN
+		state :=11;
+		counter := 0;
+	ELSE 
+		counter := counter + 1;
+	END_IF
+END_IF
+
+IF state = 11 THEN
 	v := 0;
 END_IF
 
-//Odometry calculation
-distX := distX + vXFromMotor*taskfreq/1000;
-distY := distY + vYFromMotor*taskfreq/1000;
-distTheta := distTheta + vThetaFromMotor*taskfreq/1000;
-
-//Error Calculation
-ErrX := camX-distX; 
-ErrY := camY-distY;
-ErrTheta := camTheta-distTheta;
-
-//ACHTUNG LOKALE ROBOTER DATEN MÜSSEN FÜR DIREKTE VERGLEICHBARKEI MIT KAMERAPOSE IN GLOBALE KS TRANSFORMEIRT WERDEN]]></ST>
+//Odometry calculation in mm
+distX := distX + vXFromMotor*taskSampleTime/1000;
+distY := distY + vYFromMotor*taskSampleTime/1000;
+distTheta := distTheta + vThetaFromMotor*taskSampleTime/1000;]]></ST>
     </Implementation>
     <LineIds Name="MeasureVariance">
-      <LineId Id="5" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="17" Count="2" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="15" Count="1" />
-      <LineId Id="121" Count="0" />
-      <LineId Id="115" Count="0" />
-      <LineId Id="114" Count="0" />
-      <LineId Id="116" Count="0" />
-      <LineId Id="118" Count="1" />
-      <LineId Id="156" Count="0" />
-      <LineId Id="120" Count="0" />
-      <LineId Id="117" Count="0" />
-      <LineId Id="29" Count="2" />
-      <LineId Id="77" Count="0" />
-      <LineId Id="98" Count="1" />
-      <LineId Id="86" Count="1" />
-      <LineId Id="92" Count="1" />
-      <LineId Id="88" Count="0" />
-      <LineId Id="158" Count="0" />
-      <LineId Id="157" Count="0" />
-      <LineId Id="33" Count="1" />
-      <LineId Id="59" Count="0" />
-      <LineId Id="35" Count="7" />
-      <LineId Id="60" Count="0" />
-      <LineId Id="43" Count="7" />
-      <LineId Id="61" Count="0" />
-      <LineId Id="51" Count="4" />
-      <LineId Id="28" Count="0" />
-      <LineId Id="82" Count="3" />
+      <LineId Id="344" Count="22" />
+      <LineId Id="368" Count="31" />
+      <LineId Id="471" Count="0" />
+      <LineId Id="474" Count="0" />
+      <LineId Id="401" Count="2" />
+      <LineId Id="473" Count="0" />
+      <LineId Id="472" Count="0" />
+      <LineId Id="404" Count="5" />
+      <LineId Id="411" Count="50" />
+      <LineId Id="476" Count="9" />
+      <LineId Id="475" Count="0" />
+      <LineId Id="462" Count="7" />
       <LineId Id="81" Count="0" />
-      <LineId Id="101" Count="0" />
-      <LineId Id="100" Count="0" />
-      <LineId Id="102" Count="1" />
-      <LineId Id="106" Count="0" />
-      <LineId Id="160" Count="0" />
-      <LineId Id="159" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

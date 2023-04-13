@@ -73,7 +73,8 @@ END_VAR
 finished 		:= FALSE;
 
 path.reset();
-trajectoryPlanner.reset();]]></ST>
+trajectoryPlanner.reset();
+reset := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="setRobotPose" Id="{612c742a-1fe7-4003-9836-d6bbc0467a35}">
@@ -99,7 +100,7 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Insert actual position as first waypoint if robot is too far away from first
-IF (SQRT(EXPT(currentPose.x - newWayPointList[0].x, 2) + EXPT(currentPose.y - newWayPointList[0].y, 2)) > maxInitialPoseError) THEN
+IF (SQRT(EXPT(currentPose.x - newWayPointList[0].x, 2) + EXPT(currentPose.y - newWayPointList[0].y, 2)) > maxInitialPoseError) AND currentPose.x <> 0 AND currentPose.y <> 0 THEN
 	// shift all elements +1 to right except the lat one (gets overwritten)
 	FOR i := 100 TO 0 BY -1 DO
 		extendedWayPointList[i + 1] := newWayPointList[i];
@@ -118,7 +119,7 @@ ELSE
 	extendedWayPointList[0].theta := currentPose.theta;
 END_IF
 
-path(waypointListRaw := extendedWayPointList, maxRadius := maxRadius);
+path(waypointListRaw := extendedWayPointList, maxRadius := maxRadius, thetaDZ := thetaDZ);
 
 IF path.ready THEN
 	trajectoryPlanner(path := path, 
@@ -147,36 +148,14 @@ IF path.ready THEN
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.reset">
-      <LineId Id="15" Count="1" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="17" Count="0" />
+      <LineId Id="25" Count="4" />
       <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.setRobotPose">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.setWaypointList">
-      <LineId Id="63" Count="1" />
-      <LineId Id="68" Count="6" />
-      <LineId Id="76" Count="0" />
-      <LineId Id="79" Count="3" />
-      <LineId Id="85" Count="1" />
-      <LineId Id="88" Count="0" />
-      <LineId Id="98" Count="0" />
-      <LineId Id="67" Count="0" />
-      <LineId Id="87" Count="0" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="119" Count="0" />
-      <LineId Id="118" Count="0" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="34" Count="1" />
-      <LineId Id="108" Count="0" />
-      <LineId Id="120" Count="0" />
-      <LineId Id="30" Count="0" />
+      <LineId Id="130" Count="32" />
       <LineId Id="24" Count="0" />
     </LineIds>
   </POU>

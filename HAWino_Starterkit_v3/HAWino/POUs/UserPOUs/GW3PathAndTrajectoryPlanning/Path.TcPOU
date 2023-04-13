@@ -45,6 +45,7 @@ IF generatedSubsplines AND NOT ready THEN
 	ELSIF ABS(endPoint.theta-startPoint.theta) > ABS(endPoint.theta-2*pi-startPoint.theta) THEN
 		endPoint.theta := endPoint.theta-2*pi;
 	END_IF
+	
 	ready := TRUE;
 END_IF
 ]]></ST>
@@ -157,7 +158,11 @@ END_VAR]]></Declaration>
 		wplTmpLinear[1] := waypointList[nmbOfPreprocessedWaypoints-1];
 		linearSplines[(nmbOfSubsplines+1)/2](wayPoints := wplTmpLinear);
 		subsplines[nmbOfSubsplines-1] := ADR(linearSplines[(nmbOfSubsplines+1)/2]);
-		subsplineGenerationIdx := 2;
+		IF nmbOfSubsplines = 3 THEN
+			generatedSubsplines := TRUE; //if only three subsplines path geenreation stops here
+		ELSE
+			subsplineGenerationIdx := 2; //if more then three subsplines then go on
+		END_IF
 	ELSIF (subsplineGenerationIdx MOD 2) <> 0 THEN
 		i := subsplineGenerationIdx;
 		k := 0;
@@ -319,19 +324,13 @@ endPoint.x 	:= 0;
 endPoint.y	:= 0;
 endPoint.theta:= 0;
 
+FOR i := 0 TO nmbOfSubsplines-1 DO
+	subsplines[i] := 0;
+END_FOR
+
 generatedSubsplines := FALSE;
 ready := FALSE;
-subsplineGenerationIdx := 1;
-
-//FOR i := 0 TO nmbOfPreprocessedWaypoints-1 BY 1 DO
-//	waypointList[i].x 	:= 0;
-//	waypointList[i].y	:= 0;
-//	waypointList[i].theta:= 0;
-//END_FOR
-
-//FOR i := 0 TO nmbOfSubsplines-1 BY 1 DO 
-//	subsplines[i] := 0;
-//END_FOR]]></ST>
+subsplineGenerationIdx := 1;]]></ST>
       </Implementation>
     </Method>
     <Method Name="theta" Id="{3e06842d-afd1-418d-bfed-0a225c6266f7}">
@@ -368,6 +367,7 @@ END_IF ]]></ST>
       <LineId Id="389" Count="1" />
       <LineId Id="392" Count="1" />
       <LineId Id="391" Count="0" />
+      <LineId Id="415" Count="0" />
       <LineId Id="365" Count="0" />
       <LineId Id="355" Count="1" />
     </LineIds>
@@ -397,21 +397,24 @@ END_IF ]]></ST>
       <LineId Id="116" Count="3" />
       <LineId Id="110" Count="0" />
       <LineId Id="121" Count="0" />
+      <LineId Id="196" Count="0" />
+      <LineId Id="192" Count="0" />
+      <LineId Id="194" Count="0" />
+      <LineId Id="193" Count="0" />
       <LineId Id="148" Count="16" />
       <LineId Id="147" Count="0" />
       <LineId Id="106" Count="1" />
       <LineId Id="123" Count="2" />
-      <LineId Id="122" Count="0" />
-      <LineId Id="165" Count="0" />
-      <LineId Id="127" Count="0" />
-      <LineId Id="167" Count="0" />
+      <LineId Id="181" Count="0" />
+      <LineId Id="188" Count="1" />
+      <LineId Id="186" Count="0" />
       <LineId Id="166" Count="0" />
-      <LineId Id="126" Count="0" />
+      <LineId Id="187" Count="0" />
       <LineId Id="79" Count="0" />
       <LineId Id="55" Count="0" />
       <LineId Id="57" Count="3" />
-      <LineId Id="146" Count="0" />
-      <LineId Id="5" Count="0" />
+      <LineId Id="185" Count="0" />
+      <LineId Id="182" Count="0" />
     </LineIds>
     <LineIds Name="Path.getPoint">
       <LineId Id="30" Count="2" />
@@ -434,17 +437,7 @@ END_IF ]]></ST>
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="Path.preprocessWaypointlist">
-      <LineId Id="95" Count="1" />
-      <LineId Id="79" Count="0" />
-      <LineId Id="60" Count="3" />
-      <LineId Id="82" Count="0" />
-      <LineId Id="93" Count="1" />
-      <LineId Id="81" Count="0" />
-      <LineId Id="67" Count="4" />
-      <LineId Id="104" Count="0" />
-      <LineId Id="83" Count="0" />
-      <LineId Id="91" Count="1" />
-      <LineId Id="75" Count="2" />
+      <LineId Id="112" Count="22" />
       <LineId Id="43" Count="0" />
     </LineIds>
     <LineIds Name="Path.reset">
@@ -452,19 +445,13 @@ END_IF ]]></ST>
       <LineId Id="7" Count="1" />
       <LineId Id="10" Count="2" />
       <LineId Id="9" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="46" Count="1" />
       <LineId Id="35" Count="0" />
       <LineId Id="27" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="26" Count="0" />
-      <LineId Id="34" Count="0" />
-      <LineId Id="6" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="21" Count="1" />
     </LineIds>
     <LineIds Name="Path.theta">
       <LineId Id="13" Count="6" />

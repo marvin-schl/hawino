@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="MatTimesMat" Id="{c5de75c8-0a2e-481d-b56d-f09f182e8017}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION MatTimesMat : ARRAY [0..2,0..2] OF LREAL
+VAR_INPUT
+	A,B: ARRAY [0..2,0..2] OF LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[MatTimesMat[0,0] := A[0,0]*B[0,0] + A[0,1]*B[1,0] + A[0,2]*B[2,0];
+MatTimesMat[0,1] := A[0,0]*B[0,1] + A[0,1]*B[1,1] + A[0,2]*B[2,1];
+MatTimesMat[0,2] := A[0,0]*B[0,2] + A[0,1]*B[1,2] + A[0,2]*B[2,2];
+MatTimesMat[1,0] := A[1,0]*B[0,0] + A[1,1]*B[1,0] + A[1,2]*B[2,0];
+MatTimesMat[1,1] := A[1,0]*B[0,1] + A[1,1]*B[1,1] + A[1,2]*B[2,1];
+MatTimesMat[1,2] := A[1,0]*B[0,2] + A[1,1]*B[1,2] + A[1,2]*B[2,2];
+MatTimesMat[2,0] := A[2,0]*B[0,0] + A[2,1]*B[1,0] + A[2,2]*B[2,0];
+MatTimesMat[2,1] := A[2,0]*B[0,1] + A[2,1]*B[1,1] + A[2,2]*B[2,1];
+MatTimesMat[2,2] := A[2,0]*B[0,2] + A[2,1]*B[1,2] + A[2,2]*B[2,2];]]></ST>
+    </Implementation>
+    <LineIds Name="MatTimesMat">
+      <LineId Id="19" Count="0" />
+      <LineId Id="35" Count="5" />
+      <LineId Id="43" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -243,7 +243,7 @@ zeros(vel);
 zeros(velBackward);
 
 idxForward 	:= 0;
-idxBackward :=	0;
+idxBackward := 0;
 currentStep := 1;]]></ST>
       </Implementation>
     </Method>
@@ -475,8 +475,12 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF arcLength >= path.length-arcLengthSlow THEN
-velMax := qVelMaxSlow;
+        <ST><![CDATA[IF path.length < 0.4 THEN
+	qVelMax := qVelMaxSlow;
+END_IF
+
+IF arcLength >= path.length-arcLengthSlow THEN
+	velMax := qVelMaxSlow;
 ELSE
 	velMax := qVelMax;
 END_IF]]></ST>
@@ -573,6 +577,9 @@ END_IF]]></ST>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TrajectoryPlanner.velMax">
+      <LineId Id="19" Count="0" />
+      <LineId Id="21" Count="1" />
+      <LineId Id="20" Count="0" />
       <LineId Id="11" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="12" Count="0" />

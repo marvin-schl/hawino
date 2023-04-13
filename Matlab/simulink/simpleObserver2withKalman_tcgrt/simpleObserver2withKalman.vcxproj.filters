@@ -1,0 +1,165 @@
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<Filter Include="TwinCAT">
+			<UniqueIdentifier>{392C3E92-1BBF-4C85-81BE-D31F2583670A}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\ClassFactory">
+			<UniqueIdentifier>{CDC65FA3-89B3-0ACF-BAA8-FA6BBB9B9B7A}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\RT">
+			<UniqueIdentifier>{20306B62-9B54-79E0-68D5-0D9FFC3806AF}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\OS">
+			<UniqueIdentifier>{149709C6-F933-E974-1B67-A41E21F413BD}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\UM">
+			<UniqueIdentifier>{94D19BAB-C256-C923-7E48-8A0C8D88C6D9}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\Classes">
+			<UniqueIdentifier>{24B4DD66-8408-37B8-0EED-4788B15E5DC7}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\Classes\simpleObserver2withKalman">
+			<UniqueIdentifier>{9A65B18F-1BB7-AC2F-A9C9-2AA431CCAC00}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Resource Files">
+			<UniqueIdentifier>{B02B3049-79CF-607B-7F57-9F61470229ED}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink">
+			<UniqueIdentifier>{827A2901-A86D-C333-185A-517CAE74F7AA}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink\simpleObserver2withKalman">
+			<UniqueIdentifier>{1130BCCE-8770-CA6E-C855-46E47CC3DB54}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink\simpleObserver2withKalman\Sources">
+			<UniqueIdentifier>{9CB6781C-DE9B-19A6-A589-4B1F482AF1C9}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink\simpleObserver2withKalman\Includes">
+			<UniqueIdentifier>{A6837901-069D-B460-8BC3-968CC7219D10}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="xml">
+			<UniqueIdentifier>{43F4746F-B006-988B-B03B-18647B08B877}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TMx">
+			<UniqueIdentifier>{A2AD2F9C-E296-2A17-C634-2993FA203CC6}</UniqueIdentifier>
+		</Filter>
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="TcPch.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2withKalmanServices.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2withKalmanDuts.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2withKalmanInterfaces.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2withKalmanClassFactory.h">
+			<Filter>TwinCAT\ClassFactory</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2withKalmanDrv.h">
+			<Filter>TwinCAT\RT</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2withKalmanCtrl.h">
+			<Filter>TwinCAT\UM</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2withKalmanW32.h">
+			<Filter>TwinCAT\UM</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2withKalmanW32Resource.h">
+			<Filter>TwinCAT\UM</Filter>
+		</ClInclude>
+		<ClInclude Include="TcComsimpleObserver2withKalman.h">
+			<Filter>TwinCAT\Classes\simpleObserver2withKalman</Filter>
+		</ClInclude>
+		<ClInclude Include="FbsimpleObserver2withKalman.h">
+			<Filter>TwinCAT\Classes\simpleObserver2withKalman</Filter>
+		</ClInclude>
+		<ClInclude Include="simpleObserver2withKalmanInternal.h">
+			<Filter>TwinCAT\Classes\simpleObserver2withKalman</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_simpleObserver2withKalman_START_DIR)\simpleObserver2withKalman_tcgrt\multiword_types.h">
+			<Filter>Simulink\simpleObserver2withKalman\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_simpleObserver2withKalman_START_DIR)\simpleObserver2withKalman_tcgrt\rtmodel.h">
+			<Filter>Simulink\simpleObserver2withKalman\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_simpleObserver2withKalman_START_DIR)\simpleObserver2withKalman_tcgrt\rtwtypes.h">
+			<Filter>Simulink\simpleObserver2withKalman\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_simpleObserver2withKalman_START_DIR)\simpleObserver2withKalman_tcgrt\simpleObserver2withKalman.h">
+			<Filter>Simulink\simpleObserver2withKalman\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_simpleObserver2withKalman_START_DIR)\simpleObserver2withKalman_tcgrt\simpleObserver2withKalman_private.h">
+			<Filter>Simulink\simpleObserver2withKalman\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_simpleObserver2withKalman_START_DIR)\simpleObserver2withKalman_tcgrt\simpleObserver2withKalman_types.h">
+			<Filter>Simulink\simpleObserver2withKalman\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_simpleObserver2withKalman_START_DIR)\simpleObserver2withKalman_tcgrt\zero_crossing_types.h">
+			<Filter>Simulink\simpleObserver2withKalman\Includes</Filter>
+		</ClInclude>
+	</ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="TcPch.cpp">
+			<Filter>TwinCAT</Filter>
+		</ClCompile>
+		<ClCompile Include="simpleObserver2withKalmanClassFactory.cpp">
+			<Filter>TwinCAT\ClassFactory</Filter>
+		</ClCompile>
+		<ClCompile Include="simpleObserver2withKalmanDrv.cpp">
+			<Filter>TwinCAT\RT</Filter>
+		</ClCompile>
+		<ClCompile Include="simpleObserver2withKalmanModulesMain.cpp">
+			<Filter>TwinCAT\OS</Filter>
+		</ClCompile>
+		<ClCompile Include="simpleObserver2withKalmanCtrl.cpp">
+			<Filter>TwinCAT\UM</Filter>
+		</ClCompile>
+		<ClCompile Include="simpleObserver2withKalmanW32.cpp">
+			<Filter>TwinCAT\UM</Filter>
+		</ClCompile>
+		<ClCompile Include="TcComsimpleObserver2withKalman.cpp">
+			<Filter>TwinCAT\Classes\simpleObserver2withKalman</Filter>
+		</ClCompile>
+		<ClCompile Include="FbsimpleObserver2withKalman.cpp">
+			<Filter>TwinCAT\Classes\simpleObserver2withKalman</Filter>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_simpleObserver2withKalman_START_DIR)\simpleObserver2withKalman_tcgrt\simpleObserver2withKalman.cpp">
+			<Filter>Simulink\simpleObserver2withKalman\Sources</Filter>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_simpleObserver2withKalman_MATLAB_ROOT)\rtw\c\src\common\rt_malloc_main.cpp">
+			<Filter>Simulink\simpleObserver2withKalman\Sources</Filter>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="simpleObserver2withKalmanW32.rc">
+			<Filter>TwinCAT\UM</Filter>
+		</ResourceCompile>
+		<ResourceCompile Include="simpleObserver2withKalman.rc">
+			<Filter>Resource Files</Filter>
+		</ResourceCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="simpleObserver2withKalmanArtifacts.props">
+			<Filter>simpleObserver2withKalman.vcxproj</Filter>
+		</None>
+		<None Include="simpleObserver2withKalmanW32.def">
+			<Filter>TwinCAT\UM</Filter>
+		</None>
+		<None Include="simpleObserver2withKalman_ModuleInfo.xml">
+			<Filter>TwinCAT\Classes\simpleObserver2withKalman</Filter>
+		</None>
+		<None Include="simpleObserver2withKalman.libcat.xml">
+			<Filter>xml</Filter>
+		</None>
+		<None Include="simpleObserver2withKalman.tmc">
+			<Filter>TMx</Filter>
+		</None>
+		<None Include="simpleObserver2withKalman.tml">
+			<Filter>TMx</Filter>
+		</None>
+	</ItemGroup>
+</Project>

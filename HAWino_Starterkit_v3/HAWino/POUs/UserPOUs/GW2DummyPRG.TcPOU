@@ -9,7 +9,6 @@
 PROGRAM GW2DummyPRG
 VAR
 	roboter: TrajectoryControl;
-
 	set: BOOL 		:= FALSE;
 	circle: BOOL	:= FALSE;
 	square: BOOL	:= FALSE;

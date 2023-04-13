@@ -1,0 +1,171 @@
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<Filter Include="TwinCAT">
+			<UniqueIdentifier>{A79DB8A9-D9D5-08AA-70D2-C80F046BC957}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\ClassFactory">
+			<UniqueIdentifier>{A139AE5E-CFE3-07F5-562D-7B749B49943B}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\RT">
+			<UniqueIdentifier>{F12CA191-0528-9A3C-664F-C2A889FB4DF6}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\OS">
+			<UniqueIdentifier>{1049F7A0-4EA9-956A-71AC-FFFD17B9D0FF}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\UM">
+			<UniqueIdentifier>{423125EA-0CCC-3CCC-3A97-9D34C7299C52}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\Classes">
+			<UniqueIdentifier>{4513E7D0-4586-48E1-C3D2-75CF241C4327}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TwinCAT\Classes\A_Search">
+			<UniqueIdentifier>{6BB07165-B775-67E3-5B66-0F29DB0AD5BA}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Resource Files">
+			<UniqueIdentifier>{5EE6A60F-8E67-2729-DAFA-84FF3AD6D637}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink">
+			<UniqueIdentifier>{32699F89-9D37-2AE8-4662-01D259EED391}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink\A_Search">
+			<UniqueIdentifier>{306817EF-2DDB-D569-8854-30265D25D335}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink\A_Search\Sources">
+			<UniqueIdentifier>{0CAEF88F-745A-A992-46A4-80E9D7B186F4}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Simulink\A_Search\Includes">
+			<UniqueIdentifier>{A0D1C7B5-2E68-86AB-1D92-6BB7CDE10BC8}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="xml">
+			<UniqueIdentifier>{2671BD04-FF73-3FF8-6988-FA5E8084BD7E}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="TMx">
+			<UniqueIdentifier>{ADD9E420-419A-E86D-9884-80DE2580432F}</UniqueIdentifier>
+		</Filter>
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="TcPch.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="A_SearchServices.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="A_SearchDuts.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="A_SearchInterfaces.h">
+			<Filter>TwinCAT</Filter>
+		</ClInclude>
+		<ClInclude Include="A_SearchClassFactory.h">
+			<Filter>TwinCAT\ClassFactory</Filter>
+		</ClInclude>
+		<ClInclude Include="A_SearchDrv.h">
+			<Filter>TwinCAT\RT</Filter>
+		</ClInclude>
+		<ClInclude Include="A_SearchCtrl.h">
+			<Filter>TwinCAT\UM</Filter>
+		</ClInclude>
+		<ClInclude Include="A_SearchW32.h">
+			<Filter>TwinCAT\UM</Filter>
+		</ClInclude>
+		<ClInclude Include="A_SearchW32Resource.h">
+			<Filter>TwinCAT\UM</Filter>
+		</ClInclude>
+		<ClInclude Include="TcComA_Search.h">
+			<Filter>TwinCAT\Classes\A_Search</Filter>
+		</ClInclude>
+		<ClInclude Include="A_SearchInternal.h">
+			<Filter>TwinCAT\Classes\A_Search</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_Search_START_DIR)\A_Search_tcgrt\rtGetInf.h">
+			<Filter>Simulink\A_Search\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_Search_START_DIR)\A_Search_tcgrt\rtGetNaN.h">
+			<Filter>Simulink\A_Search\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_Search_START_DIR)\A_Search_tcgrt\rt_nonfinite.h">
+			<Filter>Simulink\A_Search\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_Search_START_DIR)\A_Search_tcgrt\A_Search.h">
+			<Filter>Simulink\A_Search\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_Search_START_DIR)\A_Search_tcgrt\A_Search_private.h">
+			<Filter>Simulink\A_Search\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_Search_START_DIR)\A_Search_tcgrt\A_Search_types.h">
+			<Filter>Simulink\A_Search\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_Search_START_DIR)\A_Search_tcgrt\multiword_types.h">
+			<Filter>Simulink\A_Search\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_Search_START_DIR)\A_Search_tcgrt\rtmodel.h">
+			<Filter>Simulink\A_Search\Includes</Filter>
+		</ClInclude>
+		<ClInclude Include="$(Simulink_A_Search_START_DIR)\A_Search_tcgrt\rtwtypes.h">
+			<Filter>Simulink\A_Search\Includes</Filter>
+		</ClInclude>
+	</ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="TcPch.cpp">
+			<Filter>TwinCAT</Filter>
+		</ClCompile>
+		<ClCompile Include="A_SearchClassFactory.cpp">
+			<Filter>TwinCAT\ClassFactory</Filter>
+		</ClCompile>
+		<ClCompile Include="A_SearchDrv.cpp">
+			<Filter>TwinCAT\RT</Filter>
+		</ClCompile>
+		<ClCompile Include="A_SearchModulesMain.cpp">
+			<Filter>TwinCAT\OS</Filter>
+		</ClCompile>
+		<ClCompile Include="A_SearchCtrl.cpp">
+			<Filter>TwinCAT\UM</Filter>
+		</ClCompile>
+		<ClCompile Include="A_SearchW32.cpp">
+			<Filter>TwinCAT\UM</Filter>
+		</ClCompile>
+		<ClCompile Include="TcComA_Search.cpp">
+			<Filter>TwinCAT\Classes\A_Search</Filter>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_A_Search_START_DIR)\A_Search_tcgrt\A_Search.cpp">
+			<Filter>Simulink\A_Search\Sources</Filter>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_A_Search_START_DIR)\A_Search_tcgrt\rtGetInf.cpp">
+			<Filter>Simulink\A_Search\Sources</Filter>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_A_Search_START_DIR)\A_Search_tcgrt\rtGetNaN.cpp">
+			<Filter>Simulink\A_Search\Sources</Filter>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_A_Search_START_DIR)\A_Search_tcgrt\rt_nonfinite.cpp">
+			<Filter>Simulink\A_Search\Sources</Filter>
+		</ClCompile>
+		<ClCompile Include="$(Simulink_A_Search_MATLAB_ROOT)\rtw\c\src\common\rt_malloc_main.cpp">
+			<Filter>Simulink\A_Search\Sources</Filter>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="A_SearchW32.rc">
+			<Filter>TwinCAT\UM</Filter>
+		</ResourceCompile>
+		<ResourceCompile Include="A_Search.rc">
+			<Filter>Resource Files</Filter>
+		</ResourceCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="A_SearchArtifacts.props">
+			<Filter>A_Search.vcxproj</Filter>
+		</None>
+		<None Include="A_SearchW32.def">
+			<Filter>TwinCAT\UM</Filter>
+		</None>
+		<None Include="A_Search_ModuleInfo.xml">
+			<Filter>TwinCAT\Classes\A_Search</Filter>
+		</None>
+		<None Include="A_Search.libcat.xml">
+			<Filter>xml</Filter>
+		</None>
+		<None Include="A_Search.tmc">
+			<Filter>TMx</Filter>
+		</None>
+	</ItemGroup>
+</Project>

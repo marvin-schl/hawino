@@ -1,0 +1,151 @@
+2023-03-29 18:04:35: Log messages will be written to <a href="matlab:TwinCAT.ModuleGenerator.Utilities.OpenFileLink('E:\hawino\A search\A_Search_tcgrt\A_Search_ModuleGenerationLog.txt')">A_Search_ModuleGenerationLog.txt</a>
+2023-03-29 18:04:35: [Info]
+2023-03-29 18:04:35: [Info#ModuleGenerator]
+2023-03-29 18:04:35: ProductId: TE140x
+2023-03-29 18:04:35: ProductName: TE140x-TargetForMatlabSimulink
+2023-03-29 18:04:35: Version: 2.3.1.1
+2023-03-29 18:04:35: InstallDir: C:\TwinCAT\Functions\TE14xx-ToolsForMatlabAndSimulink\TE140x
+2023-03-29 18:04:35: SDK: C:\TwinCAT\Functions\TE14xx-ToolsForMatlabAndSimulink\TE140x\SDK
+2023-03-29 18:04:35: [Info#ModuleGeneratorHost]
+2023-03-29 18:04:35: Description: MATLAB 9.11.0.2022996 (R2021b) Update 4 (win64)
+2023-03-29 18:04:35: InstallDir: C:\Program Files\MATLAB\R2021b
+2023-03-29 18:04:35: [Info#TE140x]
+2023-03-29 18:04:35: SDK: C:\TwinCAT\Functions\TE14xx-ToolsForMatlabAndSimulink\TE140x\SDK
+2023-03-29 18:04:35: [Create Project]
+2023-03-29 18:04:35: [Export Classes]
+2023-03-29 18:04:35: [Export Classes#License]
+2023-03-29 18:04:35: [License#A_Search]
+2023-03-29 18:04:35: ExportA_Search
+2023-03-29 18:04:35: [Generate#A_Search#TcCom]
+2023-03-29 18:04:36: Implement interfaces
+2023-03-29 18:04:40: ################################################################################
+2023-03-29 18:04:40: ### Necessary source and project files have been generated successfully.
+2023-03-29 18:04:40: ### You can use the C++ project <a href="matlab:TwinCAT.ModuleGenerator.Utilities.OpenFileLink('E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj')">A_Search.vcxproj</a> to build the TcCOM module manually with Microsoft VisualStudio.
+2023-03-29 18:04:40: ### Publishing TcCOM modules ###################################################
+2023-03-29 18:04:40: ### Configuration:  "Release"
+2023-03-29 18:04:40: ### Platform(s):  "TwinCAT RT (x86);TwinCAT RT (x64);TwinCAT OS (x64)"
+2023-03-29 18:04:40: ### TwinCAT SDK:  "C:\TwinCAT\3.1\SDK\" (Version 3.1.4024.29)
+2023-03-29 18:04:40: ### Platform Toolset:  V142 (Manually selected)
+2023-03-29 18:04:40: Microsoft (R)-Build-Engine, Version 16.11.2+f32259642 fÅr .NET Framework
+2023-03-29 18:04:40: Copyright (C) Microsoft Corporation. Alle Rechte vorbehalten.
+2023-03-29 18:04:40: Der Buildvorgang wurde am 29.03.2023 18:04:40 gestartet.
+2023-03-29 18:04:40: Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" auf Knoten "1", TcPublishModule Ziel(e).
+2023-03-29 18:04:40: TcPublishTMX:
+2023-03-29 18:04:40:   TMC/TML files: E:\hawino\A search\A_Search_tcgrt\A_Search.tmc
+2023-03-29 18:04:40:   Using library vendor name "TE140x Module Vendor" defined in "E:\hawino\A search\A_Search_tcgrt\A_Search.tmc"
+2023-03-29 18:04:40:   Using library name "A_Search" defined in "E:\hawino\A search\A_Search_tcgrt\A_Search.tmc"
+2023-03-29 18:04:40:   Using library version "0.0.0.1" defined in "E:\hawino\A search\A_Search_tcgrt\A_Search.tmc"
+2023-03-29 18:04:40:   Clearing the intermediate publish folder 'E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1'
+2023-03-29 18:04:40:   Das Verzeichnis "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1" wird entfernt.
+2023-03-29 18:04:40:   Building and collecting files in the intermediate publish folder 'E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1'
+2023-03-29 18:04:40: Das Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" (1) erstellt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" (1:2) auf Knoten "1", TcPublishBinaries Ziel(e).
+2023-03-29 18:04:40: TcExtractVersion:
+2023-03-29 18:04:40:   Extracting version information
+2023-03-29 18:04:40:   "C:\TwinCAT\3.1\SDK\\Bin\ExtractVersionInfo" /RcFile:"E:\hawino\A search\A_Search_tcgrt\A_Search.rc" /HFile:"E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x86)\Release\A_Search\\A_SearchVersion.h" /FileVersionDef:"E:\hawino\A search\A_Search_tcgrt\A_Search.tmc" /ProductVersionDef:"E:\hawino\A search\A_Search_tcgrt\A_Search.tmc" /ProjName:"A_Search"
+2023-03-29 18:04:40:   ExtractVersionInfo header file "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x86)\Release\A_Search\\A_SearchVersion.h" is up-to-date!
+2023-03-29 18:04:40: InitializeBuildStatus:
+2023-03-29 18:04:40:   "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x86)\Release\A_Search\A_Search.tlog\unsuccessfulbuild" wird erstellt, da "AlwaysCreate" angegeben wurde.
+2023-03-29 18:04:40: ClCompile:
+2023-03-29 18:04:40:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:40:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:40:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:40:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:40: ResourceCompile:
+2023-03-29 18:04:40:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:40: Link:
+2023-03-29 18:04:40:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:40:   A_Search.vcxproj -> E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x86)\Release\A_Search.tmx
+2023-03-29 18:04:41: FinalizeBuildStatus:
+2023-03-29 18:04:41:   Die Datei "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x86)\Release\A_Search\A_Search.tlog\unsuccessfulbuild" wird gelîscht.
+2023-03-29 18:04:41:   Aktualisieren des Timestamps von "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x86)\Release\A_Search\A_Search.tlog\A_Search.lastbuildstate".
+2023-03-29 18:04:41: TcSign:
+2023-03-29 18:04:41:   Signing output with TwinCAT certificate 'HAW_Hamburg_VPJ_BT7_R462'
+2023-03-29 18:04:41:   "C:\TwinCAT\3.1\SDK\bin\TcSignTool.exe" sign "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x86)\Release\A_Search.tmx" /f "C:\TwinCAT\3.1\CustomConfig\Certificates\HAW_Hamburg_VPJ_BT7_R462.tccert" /q
+2023-03-29 18:04:41: TcPublishBinaries:
+2023-03-29 18:04:41:   Publishing binaries for Platform 'TwinCAT RT (x86)' with configuration 'Release'
+2023-03-29 18:04:41:   Das Verzeichnis "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x86)" wird erstellt.
+2023-03-29 18:04:41:   Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x86)\Release\A_Search.tmx" in "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x86)\A_Search.tmx" kopiert.
+2023-03-29 18:04:41: Die Erstellung von Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" ist abgeschlossen (TcPublishBinaries Ziel(e)).
+2023-03-29 18:04:41: Das Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" (1) erstellt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" (1:3) auf Knoten "1", TcPublishBinaries Ziel(e).
+2023-03-29 18:04:41: TcExtractVersion:
+2023-03-29 18:04:41:   Extracting version information
+2023-03-29 18:04:41:   "C:\TwinCAT\3.1\SDK\\Bin\ExtractVersionInfo" /RcFile:"E:\hawino\A search\A_Search_tcgrt\A_Search.rc" /HFile:"E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x64)\Release\A_Search\\A_SearchVersion.h" /FileVersionDef:"E:\hawino\A search\A_Search_tcgrt\A_Search.tmc" /ProductVersionDef:"E:\hawino\A search\A_Search_tcgrt\A_Search.tmc" /ProjName:"A_Search"
+2023-03-29 18:04:41:   ExtractVersionInfo header file "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x64)\Release\A_Search\\A_SearchVersion.h" is up-to-date!
+2023-03-29 18:04:41: InitializeBuildStatus:
+2023-03-29 18:04:41:   "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x64)\Release\A_Search\A_Search.tlog\unsuccessfulbuild" wird erstellt, da "AlwaysCreate" angegeben wurde.
+2023-03-29 18:04:41: ClCompile:
+2023-03-29 18:04:41:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:41:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:41:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:41:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:41: ResourceCompile:
+2023-03-29 18:04:41:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:41: Link:
+2023-03-29 18:04:41:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:41:   A_Search.vcxproj -> E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x64)\Release\A_Search.tmx
+2023-03-29 18:04:41: FinalizeBuildStatus:
+2023-03-29 18:04:41:   Die Datei "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x64)\Release\A_Search\A_Search.tlog\unsuccessfulbuild" wird gelîscht.
+2023-03-29 18:04:41:   Aktualisieren des Timestamps von "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x64)\Release\A_Search\A_Search.tlog\A_Search.lastbuildstate".
+2023-03-29 18:04:41: TcSign:
+2023-03-29 18:04:41:   Signing output with TwinCAT certificate 'HAW_Hamburg_VPJ_BT7_R462'
+2023-03-29 18:04:41:   "C:\TwinCAT\3.1\SDK\bin\TcSignTool.exe" sign "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x64)\Release\A_Search.tmx" /f "C:\TwinCAT\3.1\CustomConfig\Certificates\HAW_Hamburg_VPJ_BT7_R462.tccert" /q
+2023-03-29 18:04:41: TcPublishBinaries:
+2023-03-29 18:04:41:   Publishing binaries for Platform 'TwinCAT RT (x64)' with configuration 'Release'
+2023-03-29 18:04:41:   Das Verzeichnis "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x64)" wird erstellt.
+2023-03-29 18:04:41:   Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT RT (x64)\Release\A_Search.tmx" in "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x64)\A_Search.tmx" kopiert.
+2023-03-29 18:04:41: Die Erstellung von Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" ist abgeschlossen (TcPublishBinaries Ziel(e)).
+2023-03-29 18:04:41: Das Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" (1) erstellt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" (1:4) auf Knoten "1", TcPublishBinaries Ziel(e).
+2023-03-29 18:04:41: TcExtractVersion:
+2023-03-29 18:04:41:   Extracting version information
+2023-03-29 18:04:41:   "C:\TwinCAT\3.1\SDK\\Bin\ExtractVersionInfo" /RcFile:"E:\hawino\A search\A_Search_tcgrt\A_Search.rc" /HFile:"E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT OS (x64)\Release\A_Search\\A_SearchVersion.h" /FileVersionDef:"E:\hawino\A search\A_Search_tcgrt\A_Search.tmc" /ProductVersionDef:"E:\hawino\A search\A_Search_tcgrt\A_Search.tmc" /ProjName:"A_Search"
+2023-03-29 18:04:41:   ExtractVersionInfo header file "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT OS (x64)\Release\A_Search\\A_SearchVersion.h" is up-to-date!
+2023-03-29 18:04:41: InitializeBuildStatus:
+2023-03-29 18:04:41:   "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT OS (x64)\Release\A_Search\A_Search.tlog\unsuccessfulbuild" wird erstellt, da "AlwaysCreate" angegeben wurde.
+2023-03-29 18:04:41: ClCompile:
+2023-03-29 18:04:41:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:41:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:41:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:41:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:41: ResourceCompile:
+2023-03-29 18:04:41:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:41: Link:
+2023-03-29 18:04:41:   Alle Ausgaben sind aktuell.
+2023-03-29 18:04:41:   A_Search.vcxproj -> E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT OS (x64)\Release\A_Search.tmx
+2023-03-29 18:04:41: FinalizeBuildStatus:
+2023-03-29 18:04:41:   Die Datei "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT OS (x64)\Release\A_Search\A_Search.tlog\unsuccessfulbuild" wird gelîscht.
+2023-03-29 18:04:41:   Aktualisieren des Timestamps von "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT OS (x64)\Release\A_Search\A_Search.tlog\A_Search.lastbuildstate".
+2023-03-29 18:04:41: TcSign:
+2023-03-29 18:04:41:   Signing output with TwinCAT certificate 'HAW_Hamburg_VPJ_BT7_R462'
+2023-03-29 18:04:41:   "C:\TwinCAT\3.1\SDK\bin\TcSignTool.exe" sign "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT OS (x64)\Release\A_Search.tmx" /f "C:\TwinCAT\3.1\CustomConfig\Certificates\HAW_Hamburg_VPJ_BT7_R462.tccert" /q
+2023-03-29 18:04:41: TcPublishBinaries:
+2023-03-29 18:04:41:   Publishing binaries for Platform 'TwinCAT OS (x64)' with configuration 'Release'
+2023-03-29 18:04:41:   Das Verzeichnis "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT OS (x64)" wird erstellt.
+2023-03-29 18:04:41:   Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\_products\TwinCAT OS (x64)\Release\A_Search.tmx" in "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT OS (x64)\A_Search.tmx" kopiert.
+2023-03-29 18:04:41: Die Erstellung von Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" ist abgeschlossen (TcPublishBinaries Ziel(e)).
+2023-03-29 18:04:41: Das Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" (1) erstellt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" (1:5) auf Knoten "1", TcPublishAdditionalFiles Ziel(e).
+2023-03-29 18:04:41: TcPublishAdditionalFiles:
+2023-03-29 18:04:41:   Das Verzeichnis "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\deploy" wird erstellt.
+2023-03-29 18:04:41:   Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\A_Search_ModuleInfo.xml" in "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\deploy\A_Search_ModuleInfo.xml" kopiert.
+2023-03-29 18:04:41: Die Erstellung von Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" ist abgeschlossen (TcPublishAdditionalFiles Ziel(e)).
+2023-03-29 18:04:41: TcPublishTMX:
+2023-03-29 18:04:41:   Clearing the local installation folder 'C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1'
+2023-03-29 18:04:41:   Das Verzeichnis "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1" wird entfernt.
+2023-03-29 18:04:41:   Copying files to the local installation folder 'C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1'
+2023-03-29 18:04:41:   Das Verzeichnis "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1" wird erstellt.
+2023-03-29 18:04:41:   Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\A_Search.tmc" in "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\A_Search.tmc" kopiert.
+2023-03-29 18:04:41:   Das Verzeichnis "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\deploy" wird erstellt.
+2023-03-29 18:04:41:   Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\deploy\A_Search_ModuleInfo.xml" in "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\deploy\A_Search_ModuleInfo.xml" kopiert.
+2023-03-29 18:04:41:   Das Verzeichnis "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT OS (x64)" wird erstellt.
+2023-03-29 18:04:41:   Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT OS (x64)\A_Search.tmx" in "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT OS (x64)\A_Search.tmx" kopiert.
+2023-03-29 18:04:41:   Das Verzeichnis "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x64)" wird erstellt.
+2023-03-29 18:04:41:   Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x64)\A_Search.tmx" in "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x64)\A_Search.tmx" kopiert.
+2023-03-29 18:04:41:   Das Verzeichnis "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x86)" wird erstellt.
+2023-03-29 18:04:41:   Die Datei wird von "E:\hawino\A search\A_Search_tcgrt\_products\TcPublish\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x86)\A_Search.tmx" in "C:\TwinCAT\3.1\Repository\TE140x Module Vendor\A_Search\0.0.0.1\TwinCAT RT (x86)\A_Search.tmx" kopiert.
+2023-03-29 18:04:41: Die Erstellung von Projekt "E:\hawino\A search\A_Search_tcgrt\A_Search.vcxproj" ist abgeschlossen (TcPublishModule Ziel(e)).
+2023-03-29 18:04:41: Der Buildvorgang wurde erfolgreich ausgefÅhrt.
+2023-03-29 18:04:41:     0 Warnung(en)
+2023-03-29 18:04:41:     0 Fehler
+2023-03-29 18:04:41: Verstrichene Zeit 00:00:01.48
+2023-03-29 18:04:41: ### Publish procedure completed successfully for TwinCAT RT (x86);TwinCAT RT (x64);TwinCAT OS (x64)
+2023-03-29 18:04:41: ### Now you can instantiate the generated module in TwinCAT3 on the target platform(s) "TwinCAT RT (x86);TwinCAT RT (x64);TwinCAT OS (x64)".
+2023-03-29 18:04:41: Closing log file
