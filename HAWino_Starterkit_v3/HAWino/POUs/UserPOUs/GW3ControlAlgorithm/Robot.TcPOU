@@ -11,19 +11,29 @@ VAR_INPUT
 END_VAR
 VAR_OUTPUT
 	vX, vY, vTheta: LREAL;
+	sliderGotTriggered: BOOL;
+	bumperGotTriggered: BOOL;
 END_VAR
 VAR
+	sliderTrigger: F_TRIG;
+	bumperTrigger: R_TRIG;
 	//inputs to robot
 	vXtoRobot 		AT%Q*: LREAL;
 	vYtoRobot		AT%Q*: LREAL;
 	vThetaToRobot 	AT%Q*: LREAL;
 	
 	//outputs from robot
+	slider 			AT%I*: BOOL;
+	bumper			AT%I*: BOOL;
 	vel: 	VelocityMeasurement;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[vel();
+
+sliderTrigger(CLK := slider, Q => sliderGotTriggered);
+bumperTrigger(CLK := bumper, Q => bumperGotTriggered);
+
 vX 		:= vel.vXRobot;
 vY 		:= vel.vYRobot;
 vTheta  := vel.vThetaRobot;
@@ -42,6 +52,10 @@ END_IF
     </Implementation>
     <LineIds Name="Robot">
       <LineId Id="68" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="125" Count="0" />
+      <LineId Id="124" Count="0" />
       <LineId Id="70" Count="0" />
       <LineId Id="72" Count="1" />
       <LineId Id="69" Count="0" />

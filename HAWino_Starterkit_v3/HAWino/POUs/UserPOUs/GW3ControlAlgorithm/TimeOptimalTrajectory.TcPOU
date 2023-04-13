@@ -9,6 +9,7 @@ END_VAR
 VAR_OUTPUT
 	finished			: BOOL 				:= FALSE;
 	ready				: BOOL				:= FALSE;
+	generationFailed	: BOOL				:= FALSE;
 	pathReady			: BOOL				:= FALSE;
 	referencePose		: RobotPoseSimple;
 	referenceVelocities	: RobotPoseSimple;
@@ -38,8 +39,10 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[ready := trajectoryPlanner.trajectoriesReady;
-pathReady := path.ready;
+      <ST><![CDATA[ready 				:= trajectoryPlanner.trajectoriesReady;
+generationFailed	:= trajectoryPlanner.trajectoryGenerationFailed;
+pathReady 			:= path.ready;
+
 IF cnt = LREAL_TO_INT(samplingTime/Var_HAWIno.CONTROLLER_CYCLE_TIME) AND NOT finished THEN
 	WPLidx := WPLidx +1;
 	cnt := 0;
@@ -99,7 +102,7 @@ END_VAR
 VAR
 	extendedWayPointList			:	ARRAY [0..101] OF RobotPoseSimple;
 	i								: INT;
-	maxInitialPoseError				: LREAL := 100;		// unit: mm
+	maxInitialPoseError				: LREAL := 35;		// unit: mm
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Insert actual position as first waypoint if robot is too far away from first
@@ -140,7 +143,9 @@ IF path.ready THEN
     </Method>
     <LineIds Name="TimeOptimalTrajectory">
       <LineId Id="124" Count="0" />
+      <LineId Id="315" Count="0" />
       <LineId Id="279" Count="0" />
+      <LineId Id="316" Count="0" />
       <LineId Id="125" Count="6" />
       <LineId Id="133" Count="2" />
       <LineId Id="207" Count="0" />
