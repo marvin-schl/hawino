@@ -284,15 +284,16 @@ IF assigment.Art = 'Fahrauftrag' THEN
 	
 	//Abholort (3 Punkte) an Wegpunktliste anfügen
 	//lastPointsToPickup[0] := lastNodePickUp;
-	//lastPointsToPickup[0] := ToRobotPoseSimple(x := lastNodePickUp.x, y := pickupLocation.y, theta := pickupLocation.theta);
-	lastPointsToPickup[0] := pickupLocation;
-	lastPointsToPickup[1] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
+	lastPointsToPickup[0] := ToRobotPoseSimple(x := lastNodePickUp.x, y := pickupLocation.y, theta := pickupLocation.theta);
+	lastPointsToPickup[1] := pickupLocation;
+	lastPointsToPickup[2] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 	
 	//erstellen 3 Wegpunkte für fahren von Tasche zu RFID Leser
-	pointsFromSlotToReader[0] := ToRobotPoseSimple(x := lastNodePickUp.x, y := pickupLocation.y, theta := pickupLocation.theta);
-	pointsFromSlotToReader[1] := ToRobotPoseSimple(x := lastNodePickUp.x, y := readerCheckOut.y, theta := readerCheckOut.theta);
-	pointsFromSlotToReader[2] := readerCheckOut;
-	pointsFromSlotToReader[3] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
+	pointsFromSlotToReader[0] := pickupLocation;
+	pointsFromSlotToReader[1] := ToRobotPoseSimple(x := lastNodePickUp.x, y := pickupLocation.y, theta := pickupLocation.theta);
+	pointsFromSlotToReader[2] := ToRobotPoseSimple(x := lastNodePickUp.x, y := readerCheckOut.y, theta := readerCheckOut.theta);
+	pointsFromSlotToReader[3] := readerCheckOut;
+	pointsFromSlotToReader[4] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 	
 	//Ablageort (3 Punkte) an Wegpunktliste anfügen (Ankunft Reader)
 	//lastPointsToStorage[0] := lastNodeStorage;
@@ -301,10 +302,11 @@ IF assigment.Art = 'Fahrauftrag' THEN
 	lastPointsToStorage[1] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 	
 	//3 Wegpunkte von RFID Leser zu Ablageort
-	pointsFromReaderToSlot[0] := ToRobotPoseSimple(x := lastNodeStorage.x, y := readerCheckIn.y, theta := readerCheckIn.theta);
-	pointsFromReaderToSlot[1] := ToRobotPoseSimple(x := lastNodeStorage.x, y := storageLocation.y, theta := storageLocation.theta);
-	pointsFromReaderToSlot[2] := storageLocation;
-	pointsFromReaderToSlot[3] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
+	pointsFromReaderToSlot[0] := readerCheckIn;
+	pointsFromReaderToSlot[1] := ToRobotPoseSimple(x := lastNodeStorage.x, y := readerCheckIn.y, theta := readerCheckIn.theta);
+	pointsFromReaderToSlot[2] := ToRobotPoseSimple(x := lastNodeStorage.x, y := storageLocation.y, theta := storageLocation.theta);
+	pointsFromReaderToSlot[3] := storageLocation;
+	pointsFromReaderToSlot[4] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 
 ELSIF assigment.Art = 'Ladeauftrag' THEN
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -331,17 +333,16 @@ END_IF
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////Parkplätze/////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Parkplätze "unterhalb" der Ladestation
-//Roboter 4 auf Knoten 17, 3 auf 16, 2 auf 15, 1 auf 14
+//Parkplätze "seitlich" der Ladestation
 ////////TODO passt das oder brauchen die mehr Abstand??????????????
-parkingSlots[1] := ToRobotPoseSimple(x := 5400, y := 600, theta := -1);
-endNodeParking[1] := 14;
-parkingSlots[2] := ToRobotPoseSimple(x := 5800, y := 600, theta := -1);
-endNodeParking[2] := 15;
-parkingSlots[3] := ToRobotPoseSimple(x := 6200, y := 600, theta := -1);
-endNodeParking[3] := 16;
-parkingSlots[4] := ToRobotPoseSimple(x := 6600, y := 600, theta := -1);
-endNodeParking[4] := 17;
+parkingSlots[1] := ToRobotPoseSimple(x := 7000, y := 1000, theta := -1);
+endNodeParking[1] := 36;
+parkingSlots[2] := ToRobotPoseSimple(x := 7000, y := 1400, theta := -1);
+endNodeParking[2] := 54;
+parkingSlots[3] := ToRobotPoseSimple(x := 7000, y := 1800, theta := -1);
+endNodeParking[3] := 72;
+parkingSlots[4] := ToRobotPoseSimple(x := 7000, y := 2200, theta := -1);
+endNodeParking[4] := 90;
 
 ]]></ST>
     </Implementation>
@@ -547,6 +548,7 @@ endNodeParking[4] := 17;
       <LineId Id="429" Count="0" />
       <LineId Id="127" Count="1" />
       <LineId Id="137" Count="0" />
+      <LineId Id="638" Count="0" />
       <LineId Id="63" Count="0" />
       <LineId Id="138" Count="0" />
       <LineId Id="430" Count="0" />
@@ -556,6 +558,7 @@ endNodeParking[4] := 17;
       <LineId Id="431" Count="0" />
       <LineId Id="100" Count="0" />
       <LineId Id="99" Count="0" />
+      <LineId Id="639" Count="0" />
       <LineId Id="146" Count="2" />
       <LineId Id="432" Count="0" />
       <LineId Id="466" Count="0" />
@@ -580,7 +583,6 @@ endNodeParking[4] := 17;
       <LineId Id="458" Count="2" />
       <LineId Id="457" Count="0" />
       <LineId Id="483" Count="0" />
-      <LineId Id="485" Count="0" />
       <LineId Id="487" Count="0" />
       <LineId Id="489" Count="0" />
       <LineId Id="595" Count="0" />
