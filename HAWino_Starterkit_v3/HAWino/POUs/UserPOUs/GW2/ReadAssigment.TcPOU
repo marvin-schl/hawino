@@ -313,11 +313,11 @@ ELSIF assigment.Art = 'Ladeauftrag' THEN
 //Abholstation gibt an ob Ladestation 1 oder 2, Rest der Werte wird ignoriert	
 	IF assigment.AbholStation = 1 THEN
 		lastNodeCharging := ToRobotPoseSimple(x := 6200, y := 2600, theta := -1);
-		chargingLocation := ToRobotPoseSimple(x := 6117, y := 3500, theta := 17.5);
+		chargingLocation := ToRobotPoseSimple(x := 6117, y := 3500, theta := 15.2*pi/180);
 		endNodeCharging := 169;
 	ELSIF assigment.AbholStation = 2 THEN
 		lastNodeCharging := ToRobotPoseSimple(x := 6600, y := 2600, theta := -1);
-		chargingLocation := ToRobotPoseSimple(x := 6716, y := 3504, theta := 17.5);
+		chargingLocation := ToRobotPoseSimple(x := 6716, y := 3504, theta := 15.2*pi/180);
 		endNodeCharging := 170;
 	END_IF
 	
