@@ -45,6 +45,7 @@ IF camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x <> 0 AND came
 	actualCamX := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
 	actualCamY := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;
 END_IF
+
 //Ablauf einer Fahrt:
 //Init
 IF sStart AND NOT s0 THEN
@@ -524,6 +525,7 @@ reset := FALSE;]]></ST>
       <LineId Id="999" Count="2" />
       <LineId Id="1003" Count="0" />
       <LineId Id="1002" Count="0" />
+      <LineId Id="1321" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="406" Count="0" />
       <LineId Id="191" Count="0" />
