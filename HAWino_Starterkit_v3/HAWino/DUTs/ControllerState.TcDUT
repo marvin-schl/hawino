@@ -10,7 +10,8 @@ TYPE ControllerState :
 	calcTrajectory 	:= 2,
 	setTrajectory	:= 3,
 	ready			:= 4,
-	driving			:= 5
+	driving			:= 5,
+	error			:= 6
 
 );
 END_TYPE

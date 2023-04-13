@@ -34,14 +34,15 @@ VAR
 	
 	//inputs from GW2, uncomment and link when needed
 	xBoEnable AT%I*: BOOL := FALSE;							// implemented, Freigabesignal für Fahrt, Roboter stoppt bei FALSE
+	xBoReset  AT%I*: BOOL := FALSE;							// implemented, reset error state => idle
 	waypointList AT%I*: ARRAY[0..100] OF RobotPoseSimple;	// implemented, Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)
 	newWaypointListAvailable AT%I*: BOOL := FALSE;			// implemented, Status-Bit zur Signalisierung einer neuen WP-Liste
 	
 	//outputs to GW2, uncomment and link when needed
 	yBoArrivedAtDestination AT%Q*:	BOOL := FALSE;			// implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP
-	yUintWaypointIndex AT%Q*: INT  := 0;					// implemented, COUNTER zur Anzeige, des Indexes des nächstes WP
-	yRPposition AT%Q*: RobotPoseSimple;						// implemented, aktuelle Roboterposition, für Simulationszwecke
-
+	yUintWaypointIndex 	AT%Q*: INT  := 0;					// implemented, COUNTER zur Anzeige, des Indexes des nächstes WP
+	yRPposition 		AT%Q*: RobotPoseSimple;				// implemented, aktuelle Roboterposition, für Simulationszwecke
+	yVworldRef			AT%Q*: RobotPoseSimple;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -51,6 +52,7 @@ robot.enable			:= FALSE;
 //outputs to GW2
 yRPposition 			:= observer.yObserverdPose;
 yUintWaypointIndex 		:= trajectory.WPLidx;
+yVworldRef				:= controller.xRobotvelRef;
 
 //control algorithm state machine
 CASE state OF
@@ -62,7 +64,9 @@ CASE state OF
 	
 	ControllerState.idle:
 		//if new waypointlist available reset trajectory and go into set trajectory state
-		IF newWaypointListAvailable THEN
+		IF checkForFailure() THEN
+			state := ControllerState.error;
+		ELSIF newWaypointListAvailable THEN
 			IF reset() THEN
 				state := ControllerState.setTrajectory;
 			END_IF
@@ -76,13 +80,17 @@ CASE state OF
 			
 		//go into calcTrajectory as soon as GW2 resets the new waypointlist flag to avoid looping through
 		//ready --> setTrajectory --> calcTrajectory
-		IF NOT newWaypointListAvailable and trajectory.pathReady THEN
+		IF checkForFailure() THEN
+			state := ControllerState.error;	
+		ELSIF NOT newWaypointListAvailable AND trajectory.pathReady THEN
 			state := ControllerState.calcTrajectory;
 		END_IF
 		
 	 ControllerState.calcTrajectory:
 		trajectory.generateTrajectory();
-	 	IF trajectory.ready THEN
+	 	IF checkForFailure() THEN
+			state := ControllerState.error;
+		ELSIF trajectory.ready THEN
 			state := ControllerState.ready;
 		END_IF
 		
@@ -98,7 +106,10 @@ CASE state OF
 		END_IF
 	
 	ControllerState.driving:
-		IF newWaypointListAvailable THEN
+		
+		IF checkForFailure() THEN
+			state := ControllerState.error;
+		ELSIF newWaypointListAvailable THEN
 			//stop and calculate new trajectory
 			IF reset() THEN
 				state := ControllerState.setTrajectory;
@@ -115,6 +126,12 @@ CASE state OF
 		ELSE
 			//if xBoEnable isn't set anymore go into ready and wait for it again
 			state := ControllerState.ready;
+		END_IF
+		
+	ControllerState.error:
+		IF xBoReset THEN
+			reset();
+			state := ControllerState.idle;
 		END_IF
 END_CASE
 
@@ -194,6 +211,15 @@ END_VAR
         <ST><![CDATA[trajectory.setWaypointList(waypointList);]]></ST>
       </Implementation>
     </Method>
+    <Method Name="checkForFailure" Id="{446d1f43-1056-493b-9cf0-95787b7cd4d1}">
+      <Declaration><![CDATA[METHOD checkForFailure : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[checkForFailure := robot.bumperGotTriggered OR trajectory.generationFailed;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="drive" Id="{d4cf0706-755e-4b45-b3e9-0b9f8575bd33}">
       <Declaration><![CDATA[METHOD drive : BOOL
 VAR_INPUT
@@ -223,18 +249,29 @@ END_VAR
       </Implementation>
     </Method>
     <LineIds Name="ControlPRG">
-      <LineId Id="1147" Count="14" />
+      <LineId Id="1147" Count="6" />
+      <LineId Id="1724" Count="0" />
+      <LineId Id="1154" Count="7" />
       <LineId Id="1360" Count="0" />
       <LineId Id="1163" Count="1" />
+      <LineId Id="1723" Count="0" />
+      <LineId Id="1722" Count="0" />
       <LineId Id="1608" Count="0" />
       <LineId Id="1166" Count="0" />
       <LineId Id="1609" Count="0" />
-      <LineId Id="1167" Count="10" />
-      <LineId Id="1179" Count="12" />
+      <LineId Id="1167" Count="9" />
+      <LineId Id="1720" Count="1" />
+      <LineId Id="1177" Count="0" />
+      <LineId Id="1179" Count="5" />
+      <LineId Id="1719" Count="0" />
+      <LineId Id="1718" Count="0" />
+      <LineId Id="1185" Count="6" />
       <LineId Id="1606" Count="0" />
       <LineId Id="1194" Count="0" />
       <LineId Id="1607" Count="0" />
       <LineId Id="1195" Count="5" />
+      <LineId Id="1716" Count="1" />
+      <LineId Id="1715" Count="0" />
       <LineId Id="1203" Count="0" />
       <LineId Id="1603" Count="0" />
       <LineId Id="1204" Count="0" />
@@ -244,7 +281,12 @@ END_VAR
       <LineId Id="1206" Count="1" />
       <LineId Id="1361" Count="0" />
       <LineId Id="1605" Count="0" />
-      <LineId Id="1210" Count="14" />
+      <LineId Id="1210" Count="6" />
+      <LineId Id="1696" Count="2" />
+      <LineId Id="1700" Count="0" />
+      <LineId Id="1702" Count="0" />
+      <LineId Id="1701" Count="0" />
+      <LineId Id="1217" Count="7" />
       <LineId Id="1450" Count="0" />
       <LineId Id="1456" Count="0" />
       <LineId Id="1227" Count="2" />
@@ -266,6 +308,9 @@ END_VAR
       <LineId Id="94" Count="0" />
     </LineIds>
     <LineIds Name="ControlPRG.calculateTrajectory">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ControlPRG.checkForFailure">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="ControlPRG.drive">
