@@ -7,9 +7,6 @@
     <RootNamespace>Trajektorie</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="XY Scope Project.svdx">
-      <SubType>Content</SubType>
-    </Content>
     <Content Include="XY Scope Project.tcscopex">
       <SubType>Content</SubType>
     </Content>
