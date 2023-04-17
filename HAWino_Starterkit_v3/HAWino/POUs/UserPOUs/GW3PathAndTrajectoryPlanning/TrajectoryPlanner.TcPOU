@@ -21,8 +21,8 @@ VAR_INPUT
 	deltaT	   :    LREAL := 0.05;	//optional: sampling time of the velocity in [s], default: 50ms
 END_VAR
 VAR_OUTPUT
-	posTrajectory: 					ARRAY	[0..1000] 	OF RobotPoseSimple;			 	//reference position profile. position in global coordinates pver time
-	velTrajectory:					ARRAY	[0..1000] 	OF RobotPoseSimple; 			//reference velocity profile, velocity over time
+	posTrajectory: 					ARRAY	[0..3000] 	OF RobotPoseSimple;			 	//reference position profile. position in global coordinates pver time
+	velTrajectory:					ARRAY	[0..3000] 	OF RobotPoseSimple; 			//reference velocity profile, velocity over time
 	trajectoryGenerationFinished:	BOOL 									:= FALSE; 	//TRUE if trajectory generation finished successfully
 	trajectoryGenerationFailed: 	BOOL 									:= FALSE; 	//TRUE if trajectory generation failed, most likely because something went wrong while integrating backward
 	trajectoriesReady:				BOOL 									:= FALSE; 	//TRUE if the generated path trajectories are transformed back into xy-theta-Coordinates
@@ -39,12 +39,12 @@ VAR
 	swp					: ARRAY[0..99] OF LREAL;	//array of switching points, not needed entrys are filled with -1
 	nmbSWP				: INT;						//number of swichting points
 	
-	pos			: ARRAY[0..1000] OF LREAL;			//the i-th element indicates the position on the curve at time t=i*deltaT
-	vel			: ARRAY[0..1000] OF LREAL;			//the i-th element indicates the tangential path velocity on the curve at time t=i*deltaT
+	pos			: ARRAY[0..3000] OF LREAL;			//the i-th element indicates the position on the curve at time t=i*deltaT
+	vel			: ARRAY[0..3000] OF LREAL;			//the i-th element indicates the tangential path velocity on the curve at time t=i*deltaT
 	idxForward  : INT := 0;							//index Variable for writing into pos and vel, i-th element represents t=i*deltaT
 	
-	posBackward	: ARRAY[0..1000] OF LREAL;			//temp array for backward integrartion, after backward integration is finished the values are written into pos
-	velBackward	: ARRAY[0..1000] OF LREAL; 			//temp array for backward integrartion, after backward integration is finished the values are written into vel
+	posBackward	: ARRAY[0..3000] OF LREAL;			//temp array for backward integrartion, after backward integration is finished the values are written into pos
+	velBackward	: ARRAY[0..3000] OF LREAL; 			//temp array for backward integrartion, after backward integration is finished the values are written into vel
 	idxBackward : INT := 0;							//temp index Variable for writing into posBackward and velBackward, i-th element indicates time t_bw=i*deltaT since backward integration started
 
 	integratingBWfromPathEnd: 		BOOL := FALSE;	//indicates that the last backward integration process started, needed internally for setting trajectoryGenerationFinished-Flag appropriate
@@ -203,7 +203,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT trajectoryGenerationFinished AND NOT trajectoryGenerationFailed AND idxForward <= 1000 THEN
+        <ST><![CDATA[IF NOT trajectoryGenerationFinished AND NOT trajectoryGenerationFailed AND idxForward <= 3000 THEN
 	CASE currentStep OF
 		1:
 			step1();
@@ -216,7 +216,7 @@ END_VAR
 		5:
 			step5();
 	END_CASE
-ELSIF idxForward > 1000 THEN
+ELSIF idxForward > 3000 THEN
 	trajectoryGenerationFailed := TRUE;
 END_IF
 

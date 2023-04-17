@@ -129,6 +129,9 @@
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\NonLinearController.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\PI_Ctrl.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\Robot.TcPOU">
       <SubType>Code</SubType>
     </Compile>

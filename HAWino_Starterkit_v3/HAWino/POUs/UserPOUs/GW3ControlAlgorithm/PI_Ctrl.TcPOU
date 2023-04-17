@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="PI_Ctrl" Id="{8fdf9ba0-e7f1-4219-878c-7ed2496b5224}" SpecialFunc="None">
+    <Declaration><![CDATA[(*SimpleStateFeedbackLaw:
+Implements a simple state feedback law with a 3x3 control gain matrix 'K', 
+a translation speed limit 'vtrans_max' (x- and y-axis) and a rotational speed 
+limit 'vrot_max'.
+*)
+FUNCTION_BLOCK PI_Ctrl
+VAR_INPUT
+	xRobotPose: 		RobotPoseSimple; 				//current pose
+	xRobotPoseRef: 		RobotPoseSimple; 				//reference pose
+	xRobotvelRef: 		RobotPoseSimple;				//reference velocity
+	enable:				BOOL 			:= FALSE;
+END_VAR
+
+VAR_OUTPUT
+	//control outputs
+	vXrobot:			LREAL;
+	vYrobot:			LREAL;
+	omegaRobot:			LREAL;
+	reachedReference:	BOOL;
+END_VAR
+
+VAR
+	//static control parameters
+	Kp : ARRAY [0..2] OF LREAL := [2, 2, 2];
+	Ki : ARRAY [0..2] OF LREAL := [0.1, 0.1, 0.1];
+	ui : ARRAY [0..2] OF LREAL;
+	poseError: RobotPoseSimple;
+	vtrans_max: LREAL := ControlParameters.vtrans_max; //vY,vY
+	vrot_max: LREAL   := ControlParameters.vrot_max; //vTheta
+	u: ARRAY[0..2] OF LREAL;
+	i: INT;
+	accuracyXY: LREAL := ControlParameters.accuracyXY;
+	accuracyTheta: LREAL := ControlParameters.accuracyTheta;
+	resetIntegralPart: BOOL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//1.) calculate pose errors
+poseError.x 	:= xRobotPoseRef.x 		- xRobotPose.x;
+poseError.y 	:= xRobotPoseRef.y 		- xRobotPose.y;
+poseError.theta := xRobotPoseRef.theta 	- xRobotPose.theta;
+
+reachedReference := (ABS(poseError.x) < accuracyXY) AND (ABS(poseError.y) < accuracyXY) AND (ABS(poseError.theta) < accuracyTheta);
+
+//2.) Control law
+// integral part
+IF resetIntegralPart THEN
+	ui[0] := 0;
+	ui[1] := 0;
+	ui[2] := 0;
+ELSE
+	ui[0] := ui[0] + Var_HAWino.CONTROLLER_CYCLE_TIME * poseError.x;
+	ui[1] := ui[1] + Var_HAWino.CONTROLLER_CYCLE_TIME * poseError.y;
+	ui[2] := ui[2] + Var_HAWino.CONTROLLER_CYCLE_TIME * poseError.theta;
+END_IF
+
+
+
+// add proportional part
+u[0] := Ki[0] * ui[0] + Kp[0] * poseError.x;
+u[1] := Ki[1] * ui[1] + Kp[1] * poseError.y;
+u[2] := Ki[2] * ui[2] + Kp[2] * poseError.theta;
+
+//3.) apply saturation
+FOR i := 0 TO 1 DO
+	IF u[i] > vtrans_max THEN
+		u[i] := vtrans_max;
+	ELSIF u[i] < -vtrans_max THEN
+		u[i] := -vtrans_max;
+	END_IF
+END_FOR
+
+IF u[2] > vrot_max THEN
+	u[2] := vrot_max;
+ELSIF u[2] < -vrot_max THEN
+	u[2] := -vrot_max;
+END_IF
+
+//4.) set control outputs
+IF enable THEN
+	vXrobot 	:= (u[0] + xRobotvelRef.x);
+	vYrobot 	:= (u[1] + xRobotvelRef.y);
+	omegaRobot	:= (u[2] + xRobotvelRef.theta);
+ELSE
+	vXrobot 	:= 0;
+	vYrobot 	:= 0;
+	omegaRobot  := 0;
+END_IF
+
+
+]]></ST>
+    </Implementation>
+    <Method Name="reset" Id="{722592cc-4ba0-4545-b104-1cc014d17fd4}">
+      <Declaration><![CDATA[METHOD reset : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[reachedReference := FALSE;
+reset := TRUE;
+ui[0] := 0;
+ui[1] := 0;
+ui[2] := 0;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="PI_Ctrl">
+      <LineId Id="41" Count="7" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="94" Count="1" />
+      <LineId Id="98" Count="2" />
+      <LineId Id="104" Count="1" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="89" Count="1" />
+      <LineId Id="52" Count="27" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="PI_Ctrl.reset">
+      <LineId Id="6" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="2" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

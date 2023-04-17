@@ -16,7 +16,7 @@ VAR
 	//declare objects
 	observer 		 : SimpleObserverST;					//Observer object
 	kobserver		 : KalmanObserverST;
-	controller		 : SimpleStateFeedbackLaw;			//Control law object
+	controller		 : PI_Ctrl;			//Control law object
 	trajectory		 : TimeOptimalTrajectory;			//Trajectory Object
 	robot			 : Robot;							//link to physical I/O of roboter or simulation model of the roboter
 	robotPoses 	AT%I*: ARRAY [1..8] OF RobotPose;	//input from camera
@@ -44,7 +44,9 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//robot disabled by default
+      <ST><![CDATA[GW2DummyPRG();
+
+//robot disabled by default
 robot.enable			:= FALSE;
 
 //outputs to GW2
@@ -247,6 +249,7 @@ END_VAR
       </Implementation>
     </Method>
     <LineIds Name="ControlPRG">
+      <LineId Id="1766" Count="1" />
       <LineId Id="1147" Count="6" />
       <LineId Id="1724" Count="0" />
       <LineId Id="1154" Count="7" />
