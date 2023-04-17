@@ -11,6 +11,7 @@ VAR
 	readAssigment: ReadAssigment;				//Auswertung des Auftrags
 	TrajectoryController: TrajectoryControl;	//Schnittstelle zu GW3
 	
+	reset: BOOL := FALSE;								//Fahrauftrag auf Anfang
 	wayPointList : ARRAY[0..100] OF RobotPoseSimple;	//Wegpunktliste
 	actualCamX, actualCamY : LREAL;						//letzte Kameradaten ungleich 0
 	
@@ -31,20 +32,16 @@ VAR
 	finished_ASearch : BOOL;	 			//Variable, dass Algorithmus fertig
 	i: INT;									//Laufvariable zum Übertragen der x und y Koordinaten in die Wegpunktliste
 	zeile: INT;								//Arrayindex, wo Wegpunktliste zuende
-	reset: BOOL := FALSE;					//Fahrauftrag auf Anfang
 	
+	//Kollision
+	collision AT%I*: ARRAY[1..5] OF BOOL;
+	
+	//nur testen
 	test: BOOL := false;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//reset für test zwecke
-IF reset THEN
-	doReset();
-	test := TRUE;
-	resetVar := TRUE;
-END_IF
-
-//Camera damit immer Daten da:
+      <ST><![CDATA[//Camera damit immer Daten da:
 IF camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x <> 0 AND camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y <> 0 THEN
 	actualCamX := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
 	actualCamY := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;
@@ -52,7 +49,7 @@ END_IF
 
 //Ablauf einer Fahrt:
 //Init
-IF sStart AND NOT s0 THEN
+IF sStart AND NOT s0 AND Auftrag.Art = '' AND trajectoryController.yControllerState = ControllerState.idle THEN
 	sStart := 0; s0 := 1;
 	//	RückmeldungGW1 Verfügbar
 	FeedbackToGW1 := 'Verfuegbar';
@@ -92,16 +89,15 @@ END_IF
 //Bahnplanung
 IF s1b AND NOT s2 AND finished_ASearch THEN
 	ZEROS_RobotPoseSimple(wayPointList);
-	wayPointList[0] := ToRobotPoseSimple(x:= xRobotStartposition, y:= yRobotStartposition, theta:= -1);
-	FOR i := 1 TO 100 BY 1 DO
- 		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i-1], y:= yPointList[i-1], theta:= -1);
-		IF xPointList[i-1] = 0 THEN
+	FOR i := 0 TO 100 BY 1 DO
+ 		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i], y:= yPointList[i], theta:= -1);
+		IF xPointList[i] = 0 THEN
 			zeile := i;
 			EXIT;
 		END_IF
 	END_FOR
-	wayPointList[zeile] := readAssigment.lastPointsToPickup[1];
-	wayPointList[zeile+1] := readAssigment.lastPointsToPickup[2];
+	wayPointList[zeile] := readAssigment.lastPointsToPickup[0];
+	wayPointList[zeile+1] := readAssigment.lastPointsToPickup[1];
 	//wayPointList[zeile+2] := readAssigment.lastPointsToPickup[2];
 	TrajectoryController.setWaypointList(waypointList);
 	trajectoryController.newWaypointListAvailable := TRUE;
@@ -147,9 +143,9 @@ IF s6a AND NOT s6b AND NOT Gripper.partGripped THEN
 ELSIF s6a AND NOT s6b AND Gripper.partGripped THEN
 	Gripper.closeGripperCommand := FALSE;
 	ZEROS_RobotPoseSimple(wayPointList);										//test, sonst für alle
-	wayPointList[0] := readAssigment.lastPointsToPickup[0];
-	wayPointList[1] := readAssigment.lastPointsToPickup[1];
-	wayPointList[2] := readAssigment.lastPointsToPickup[2];
+	wayPointList[0] := ToRobotPoseSimple(x := readAssigment.pickupLocation.x - 100, y := readAssigment.pickupLocation.y, theta := readAssigment.pickupLocation.theta);
+	wayPointList[1] := readAssigment.lastPointsToPickup[0];
+	wayPointList[2] := readAssigment.lastPointsToPickup[1];
 	TrajectoryController.setWaypointList(waypointList);
 	trajectoryController.newWaypointListAvailable := TRUE;
 	s6a := 0; s2 := 1;
@@ -470,7 +466,12 @@ IF s25 AND NOT s0 AND trajectoryController.yBoArrivedAtDestination THEN
 	FeedbackToGW1 := 'Verfuegbar';
 END_IF
 
-]]></ST>
+//reset für test zwecke
+IF reset THEN
+	doReset();
+	test := TRUE;
+	resetVar := TRUE;
+END_IF]]></ST>
     </Implementation>
     <Method Name="doReset" Id="{11fc1a94-8006-4f54-bbc3-6cfe2505c8b8}">
       <Declaration><![CDATA[METHOD doReset : BOOL
@@ -536,12 +537,24 @@ reset := FALSE;]]></ST>
       <Declaration><![CDATA[METHOD Kollision : BOOL
 VAR_INPUT
 END_VAR
-]]></Declaration>
+
+VAR
+	roboNmb: INT;
+	todo : STRING(10);
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[//Bin ich Roboter der Fahren darf oder der Warten muss?
+FOR roboNmb := 1 TO Var_HAWIno.Robot_Number - 1 BY 1 DO
+	IF collision[roboNmb] THEN
+		todo := 'Warten';
+	END_IF
+END_FOR
+
+
 //Fahren: stoppen, neue Wegpunktliste generieren, dabei Knoten, wo anderer Roboter steht löschen
 //Warten: stoppen, Warten bis keine Kollision (???), neue Wegpunktliste (weitermachen)
-]]></ST>
+
+//]]></ST>
       </Implementation>
     </Method>
     <Method Name="TeilVerloren" Id="{8ae8f73b-5bb8-4610-9414-56d24a08916d}">
@@ -553,16 +566,13 @@ END_VAR
         <ST><![CDATA[//Teil verloren, warten auf Rückmeldung das weiterfahren
 //diese Methode aufrufen, wenn LSmuss und kein Teil
 //LSmuss gesetzt sobald Greifer zu geht und rückgesetzt, wenn Greifer auf geht
+
+//sicher das es ne gute idee ist, das werkstück zurückzulegen? Wenn runtergefallen ist, wird es kaputt sein...
+
 ]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="Fahrauftrag">
-      <LineId Id="1249" Count="0" />
-      <LineId Id="1251" Count="1" />
-      <LineId Id="1355" Count="0" />
-      <LineId Id="1371" Count="0" />
-      <LineId Id="1253" Count="0" />
-      <LineId Id="1250" Count="0" />
       <LineId Id="999" Count="2" />
       <LineId Id="1003" Count="0" />
       <LineId Id="1002" Count="0" />
@@ -597,7 +607,6 @@ END_VAR
       <LineId Id="526" Count="0" />
       <LineId Id="605" Count="0" />
       <LineId Id="1365" Count="0" />
-      <LineId Id="1370" Count="0" />
       <LineId Id="531" Count="1" />
       <LineId Id="557" Count="2" />
       <LineId Id="556" Count="0" />
@@ -764,6 +773,7 @@ END_VAR
       <LineId Id="1367" Count="1" />
       <LineId Id="903" Count="39" />
       <LineId Id="900" Count="0" />
+      <LineId Id="1406" Count="4" />
       <LineId Id="728" Count="0" />
     </LineIds>
     <LineIds Name="Fahrauftrag.doReset">
@@ -783,10 +793,23 @@ END_VAR
       <LineId Id="50" Count="0" />
     </LineIds>
     <LineIds Name="Fahrauftrag.Kollision">
-      <LineId Id="5" Count="3" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="21" Count="1" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="6" Count="1" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="8" Count="0" />
     </LineIds>
     <LineIds Name="Fahrauftrag.TeilVerloren">
-      <LineId Id="5" Count="3" />
+      <LineId Id="5" Count="2" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="8" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

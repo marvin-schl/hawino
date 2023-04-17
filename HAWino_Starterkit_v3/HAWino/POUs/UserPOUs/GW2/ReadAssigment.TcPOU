@@ -284,9 +284,9 @@ IF assigment.Art = 'Fahrauftrag' THEN
 	
 	//Abholort (3 Punkte) an Wegpunktliste anfügen
 	//lastPointsToPickup[0] := lastNodePickUp;
-	lastPointsToPickup[0] := ToRobotPoseSimple(x := lastNodePickUp.x, y := pickupLocation.y, theta := pickupLocation.theta);
-	lastPointsToPickup[1] := pickupLocation;
-	lastPointsToPickup[2] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
+	//lastPointsToPickup[0] := ToRobotPoseSimple(x := lastNodePickUp.x, y := pickupLocation.y, theta := pickupLocation.theta);
+	lastPointsToPickup[0] := pickupLocation;
+	lastPointsToPickup[1] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 	
 	//erstellen 3 Wegpunkte für fahren von Tasche zu RFID Leser
 	pointsFromSlotToReader[0] := pickupLocation;
