@@ -14,7 +14,6 @@ VAR_OUTPUT
 END_VAR
 VAR
 	//declare objects
-	observer 		 : SimpleObserverST;					//Observer object
 	kobserver		 : KalmanObserverST;
 	controller		 : SimpleStateFeedbackLaw;			//Control law object
 	trajectory		 : TimeOptimalTrajectory;			//Trajectory Object
@@ -50,7 +49,7 @@ END_VAR
 robot.enable			:= FALSE;
 
 //outputs to GW2
-yRPposition 			:= observer.yObserverdPose;
+yRPposition 			:= kobserver.yObserverdPose;
 yUintWaypointIndex 		:= trajectory.WPLidx;
 yVworldRef				:= controller.xRobotvelRef;
 
@@ -139,21 +138,12 @@ END_CASE
 IF FFLin = TRUE THEN
 	thetaLin := trajectory.referencePose.theta;
 ELSE
-	thetaLin := observer.yObserverdPose.theta;		
+	thetaLin := kobserver.yObserverdPose.theta;		
 END_IF
 
 
 //initilizing and linking of control algorithm individual components
 //init observer
-observer(xCameraPose 	:= shiftCamAngle(camData := robotPoses[Var_HAWIno.Robot_Number], path := trajectory.path),
-		 //xCameraPose 	:= robotPoses[Var_HAWIno.Robot_Number],
-		 xVxRobot    	:= robot.vX,						//link x-velocity with measured velocity
-		 xVyRobot    	:= robot.vY,						//link y-velocity with measured velocity
-		 xOmegaRobot    := robot.vTheta,
- 		 //xVxToRobot		:= controller.vXrobot,
-		 //xVyToRobot		:= controller.vYrobot,
-		 //xOmegaToRobot	:= controller.omegaRobot,				//link theta-velocity with measured velocity
-		 theta			:= thetaLin);	
 kobserver(xCameraPose 	:= shiftCamAngle(camData := robotPoses[Var_HAWIno.Robot_Number], path := trajectory.path),
 		 //xCameraPose 	:= robotPoses[Var_HAWIno.Robot_Number],
 		 xVxRobot    	:= robot.vX,						//link x-velocity with measured velocity
@@ -245,7 +235,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[reset := trajectory.reset() AND controller.reset() AND observer.reset() AND kobserver.reset();]]></ST>
+        <ST><![CDATA[reset := trajectory.reset() AND controller.reset() AND kobserver.reset();]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="ControlPRG">
@@ -289,10 +279,7 @@ END_VAR
       <LineId Id="1217" Count="7" />
       <LineId Id="1450" Count="0" />
       <LineId Id="1456" Count="0" />
-      <LineId Id="1227" Count="2" />
-      <LineId Id="1449" Count="0" />
-      <LineId Id="1448" Count="0" />
-      <LineId Id="1231" Count="5" />
+      <LineId Id="1227" Count="1" />
       <LineId Id="1552" Count="7" />
       <LineId Id="1550" Count="1" />
       <LineId Id="1549" Count="0" />

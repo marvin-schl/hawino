@@ -101,12 +101,12 @@ END_VAR
 VAR
 	extendedWayPointList			:	ARRAY [0..101] OF RobotPoseSimple;
 	i								: INT;
-	maxInitialPoseError				: LREAL := 35;		// unit: mm
+	maxInitialPoseError				: LREAL := 50;		// unit: mm
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Insert actual position as first waypoint if robot is too far away from first
 // x and y have to be < 100 => noise of encoder integrates onto invalid cam data, (100,100) is still an invalid point
-IF (SQRT(EXPT(currentPose.x - newWayPointList[0].x, 2) + EXPT(currentPose.y - newWayPointList[0].y, 2)) > maxInitialPoseError) AND currentPose.x < 100 AND currentPose.y < 100 THEN
+IF (SQRT(EXPT(currentPose.x - newWayPointList[0].x, 2) + EXPT(currentPose.y - newWayPointList[0].y, 2)) > maxInitialPoseError) AND currentPose.x > 100 AND currentPose.y > 100 THEN
 	// shift all elements +1 to right except the lat one (gets overwritten)
 	FOR i := 100 TO 0 BY -1 DO
 		extendedWayPointList[i + 1] := newWayPointList[i];
@@ -115,7 +115,7 @@ IF (SQRT(EXPT(currentPose.x - newWayPointList[0].x, 2) + EXPT(currentPose.y - ne
 	// insert actual pose as first waypoint
 	extendedWayPointList[0] := currentPose;
 ELSE
-	// shift all elements +1 to right except the lat one (gets overwritten)
+	//dont shift all elements
 	FOR i := 0 TO 100 BY 1 DO
 		extendedWayPointList[i] := newWayPointList[i];
 	END_FOR
