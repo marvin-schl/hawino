@@ -16,7 +16,7 @@ VAR
 	//declare objects
 	observer 		 : SimpleObserverST;					//Observer object
 	kobserver		 : KalmanObserverST;
-	controller		 : PI_Ctrl;			//Control law object
+	controller		 : SimpleStateFeedbackLaw;			//Control law object
 	trajectory		 : TimeOptimalTrajectory;			//Trajectory Object
 	robot			 : Robot;							//link to physical I/O of roboter or simulation model of the roboter
 	robotPoses 	AT%I*: ARRAY [1..8] OF RobotPose;	//input from camera

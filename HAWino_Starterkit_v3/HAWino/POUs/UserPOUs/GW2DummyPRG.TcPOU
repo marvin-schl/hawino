@@ -103,7 +103,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[alpha := 0;
 
-FOR i := 0 TO 49 DO
+FOR i := 0 TO 99 DO
 	alpha := i * 3*2*PI/100.0;
 	KreisX[i] := radius * COS(alpha) + xCenter;
 	KreisY[i] := radius * SIN(alpha) + yCenter;
