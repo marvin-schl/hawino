@@ -32,12 +32,16 @@ VAR
 	i: INT;									//Laufvariable zum Übertragen der x und y Koordinaten in die Wegpunktliste
 	zeile: INT;								//Arrayindex, wo Wegpunktliste zuende
 	reset: BOOL := FALSE;					//Fahrauftrag auf Anfang
+	
+	test: BOOL := false;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//reset für test zwecke
 IF reset THEN
 	doReset();
+	test := TRUE;
+	resetVar := TRUE;
 END_IF
 
 //Camera damit immer Daten da:
@@ -53,7 +57,9 @@ IF sStart AND NOT s0 THEN
 	//	RückmeldungGW1 Verfügbar
 	FeedbackToGW1 := 'Verfuegbar';
 	resetVar := FALSE;
+	TrajectoryController.xBoReset := FALSE;
 END_IF
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////FAHRAUFTRAG/////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,16 +91,18 @@ END_IF
 
 //Bahnplanung
 IF s1b AND NOT s2 AND finished_ASearch THEN
-	FOR i := 0 TO 100 BY 1 DO
- 		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i], y:= yPointList[i], theta:= -1);
-		IF xPointList[i] = 0 THEN
+	ZEROS_RobotPoseSimple(wayPointList);
+	wayPointList[0] := ToRobotPoseSimple(x:= xRobotStartposition, y:= yRobotStartposition, theta:= -1);
+	FOR i := 1 TO 100 BY 1 DO
+ 		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i-1], y:= yPointList[i-1], theta:= -1);
+		IF xPointList[i-1] = 0 THEN
 			zeile := i;
 			EXIT;
 		END_IF
 	END_FOR
-	wayPointList[zeile] := readAssigment.lastPointsToPickup[0];
-	wayPointList[zeile+1] := readAssigment.lastPointsToPickup[1];
-	wayPointList[zeile+2] := readAssigment.lastPointsToPickup[2];
+	wayPointList[zeile] := readAssigment.lastPointsToPickup[1];
+	wayPointList[zeile+1] := readAssigment.lastPointsToPickup[2];
+	//wayPointList[zeile+2] := readAssigment.lastPointsToPickup[2];
 	TrajectoryController.setWaypointList(waypointList);
 	trajectoryController.newWaypointListAvailable := TRUE;
 	s1b := 0; s2 := 1;
@@ -138,6 +146,7 @@ IF s6a AND NOT s6b AND NOT Gripper.partGripped THEN
 	trajectoryController.newWaypointListAvailable := TRUE;
 ELSIF s6a AND NOT s6b AND Gripper.partGripped THEN
 	Gripper.closeGripperCommand := FALSE;
+	ZEROS_RobotPoseSimple(wayPointList);										//test, sonst für alle
 	wayPointList[0] := readAssigment.lastPointsToPickup[0];
 	wayPointList[1] := readAssigment.lastPointsToPickup[1];
 	wayPointList[2] := readAssigment.lastPointsToPickup[2];
@@ -210,16 +219,18 @@ END_IF
 
 //Bahnplanung
 IF s11b AND NOT s12 AND finished_ASearch THEN
-	FOR i := 0 TO 100 BY 1 DO
- 		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i], y:= yPointList[i], theta:= -1);
-		IF xPointList[i] = 0 THEN
+	ZEROS_RobotPoseSimple(wayPointList);
+	wayPointList[0] := readAssigment.pointsFromSlotToReader[3];
+	FOR i := 1 TO 100 BY 1 DO
+ 		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i-1], y:= yPointList[i-1], theta:= -1);
+		IF xPointList[i-1] = 0 THEN
 			zeile := i;
 			EXIT;
 		END_IF
 	END_FOR
 	wayPointList[zeile] := readAssigment.lastPointsToStorage[0];
 	wayPointList[zeile+1] := readAssigment.lastPointsToStorage[1];
-	wayPointList[zeile+2] := readAssigment.lastPointsToStorage[2];
+	//wayPointList[zeile+2] := readAssigment.lastPointsToStorage[2];
 	TrajectoryController.setWaypointList(waypointList);
 	trajectoryController.newWaypointListAvailable := TRUE;
 	s11b := 0; s12 := 1;
@@ -336,6 +347,7 @@ END_IF
 
 //Bahnplanung
 IF s26b AND NOT s27 AND finished_ASearch THEN
+	ZEROS_RobotPoseSimple(wayPointList);
 	FOR i := 0 TO 100 BY 1 DO
  		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i], y:= yPointList[i], theta:= -1);
 		IF xPointList[i] = 0 THEN
@@ -415,9 +427,11 @@ END_IF
 
 //Bahnplanung
 IF s21b AND NOT s22 AND finished_ASearch THEN
-	FOR i := 0 TO 100 BY 1 DO
- 		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i], y:= yPointList[i], theta:= -1);
-		IF xPointList[i] = 0 THEN
+	ZEROS_RobotPoseSimple(wayPointList);
+	wayPointList[0] := ToRobotPoseSimple(x:= xRobotStartposition, y:= yRobotStartposition, theta:= -1);
+	FOR i := 1 TO 100 BY 1 DO
+ 		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i-1], y:= yPointList[i-1], theta:= -1);
+		IF xPointList[i-1] = 0 THEN
 			zeile := i;
 			EXIT;
 		END_IF
@@ -510,17 +524,44 @@ actualCamY := 0;
 trajectoryController.newWaypointListAvailable := FALSE;
 trajectoryController.xBoEnable := FALSE;
 FeedbackToGW1 := 'Verfuegbar';
-resetVar := FALSE;
+resetVar := TRUE;
 Gripper.closeGripperCommand := FALSE;
-//mehr reset für GW3 nötig???
+TrajectoryController.xBoReset := TRUE;
 
 //reset zurücksetzen
 reset := FALSE;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Kollision" Id="{e481f3ea-47ea-4ad3-a999-253ca33209f2}">
+      <Declaration><![CDATA[METHOD Kollision : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//Bin ich Roboter der Fahren darf oder der Warten muss?
+//Fahren: stoppen, neue Wegpunktliste generieren, dabei Knoten, wo anderer Roboter steht löschen
+//Warten: stoppen, Warten bis keine Kollision (???), neue Wegpunktliste (weitermachen)
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TeilVerloren" Id="{8ae8f73b-5bb8-4610-9414-56d24a08916d}">
+      <Declaration><![CDATA[METHOD TeilVerloren : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//Teil verloren, warten auf Rückmeldung das weiterfahren
+//diese Methode aufrufen, wenn LSmuss und kein Teil
+//LSmuss gesetzt sobald Greifer zu geht und rückgesetzt, wenn Greifer auf geht
+]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="Fahrauftrag">
       <LineId Id="1249" Count="0" />
-      <LineId Id="1251" Count="2" />
+      <LineId Id="1251" Count="1" />
+      <LineId Id="1355" Count="0" />
+      <LineId Id="1371" Count="0" />
+      <LineId Id="1253" Count="0" />
       <LineId Id="1250" Count="0" />
       <LineId Id="999" Count="2" />
       <LineId Id="1003" Count="0" />
@@ -533,7 +574,9 @@ reset := FALSE;]]></ST>
       <LineId Id="192" Count="0" />
       <LineId Id="194" Count="0" />
       <LineId Id="400" Count="0" />
+      <LineId Id="1369" Count="0" />
       <LineId Id="193" Count="0" />
+      <LineId Id="1360" Count="0" />
       <LineId Id="663" Count="0" />
       <LineId Id="662" Count="0" />
       <LineId Id="796" Count="1" />
@@ -553,6 +596,8 @@ reset := FALSE;]]></ST>
       <LineId Id="527" Count="0" />
       <LineId Id="526" Count="0" />
       <LineId Id="605" Count="0" />
+      <LineId Id="1365" Count="0" />
+      <LineId Id="1370" Count="0" />
       <LineId Id="531" Count="1" />
       <LineId Id="557" Count="2" />
       <LineId Id="556" Count="0" />
@@ -592,6 +637,7 @@ reset := FALSE;]]></ST>
       <LineId Id="354" Count="1" />
       <LineId Id="1010" Count="0" />
       <LineId Id="1019" Count="0" />
+      <LineId Id="1322" Count="0" />
       <LineId Id="1018" Count="0" />
       <LineId Id="1015" Count="2" />
       <LineId Id="1013" Count="0" />
@@ -633,7 +679,10 @@ reset := FALSE;]]></ST>
       <LineId Id="998" Count="0" />
       <LineId Id="991" Count="0" />
       <LineId Id="608" Count="1" />
-      <LineId Id="611" Count="13" />
+      <LineId Id="611" Count="0" />
+      <LineId Id="1364" Count="0" />
+      <LineId Id="1363" Count="0" />
+      <LineId Id="612" Count="12" />
       <LineId Id="607" Count="0" />
       <LineId Id="292" Count="0" />
       <LineId Id="72" Count="0" />
@@ -691,7 +740,9 @@ reset := FALSE;]]></ST>
       <LineId Id="1197" Count="0" />
       <LineId Id="1199" Count="10" />
       <LineId Id="742" Count="1" />
-      <LineId Id="745" Count="12" />
+      <LineId Id="745" Count="0" />
+      <LineId Id="1366" Count="0" />
+      <LineId Id="746" Count="11" />
       <LineId Id="1288" Count="0" />
       <LineId Id="758" Count="8" />
       <LineId Id="768" Count="18" />
@@ -709,7 +760,9 @@ reset := FALSE;]]></ST>
       <LineId Id="1271" Count="14" />
       <LineId Id="899" Count="0" />
       <LineId Id="1286" Count="0" />
-      <LineId Id="901" Count="41" />
+      <LineId Id="901" Count="1" />
+      <LineId Id="1367" Count="1" />
+      <LineId Id="903" Count="39" />
       <LineId Id="900" Count="0" />
       <LineId Id="728" Count="0" />
     </LineIds>
@@ -724,10 +777,16 @@ reset := FALSE;]]></ST>
       <LineId Id="54" Count="0" />
       <LineId Id="53" Count="0" />
       <LineId Id="56" Count="0" />
-      <LineId Id="49" Count="0" />
+      <LineId Id="60" Count="0" />
       <LineId Id="55" Count="0" />
       <LineId Id="48" Count="0" />
       <LineId Id="50" Count="0" />
+    </LineIds>
+    <LineIds Name="Fahrauftrag.Kollision">
+      <LineId Id="5" Count="3" />
+    </LineIds>
+    <LineIds Name="Fahrauftrag.TeilVerloren">
+      <LineId Id="5" Count="3" />
     </LineIds>
   </POU>
 </TcPlcObject>

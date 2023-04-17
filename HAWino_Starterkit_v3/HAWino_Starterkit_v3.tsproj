@@ -3423,54 +3423,6 @@
 					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
 						<Name>PlcTask Inputs</Name>
 						<Var>
-							<Name>PowerManager.shutdownButton</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.Auftrag</Name>
-							<Comment><![CDATA[Auftrag von GW1]]></Comment>
-							<Type GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}">Auftrag</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.StatusFromGW1</Name>
-							<Comment><![CDATA[Status von GW1]]></Comment>
-							<Type>STRING(50)</Type>
-						</Var>
-						<Var>
-							<Name>IrDistanceSensors.distanceRaw</Name>
-							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.batteryVoltageRaw</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.supplyCurrentRaw</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.requestShutdown</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.SOC</Name>
-							<Type>REAL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.slider</Name>
-							<Comment><![CDATA[closeGripperCommand		AT%I* : BOOL;				//True: opening, false: closing]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.partGripped</Name>
-							<Comment><![CDATA[Teil zwischen Greifer: partGripped := 0]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.closeGripperFromSimulink</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
 							<Name>Fahrauftrag.TrajectoryController.yBoArrivedAtDestination</Name>
 							<Comment><![CDATA[ TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
 							<Type>BOOL</Type>
@@ -3493,6 +3445,54 @@
 							<Name>Fahrauftrag.TrajectoryController.yVworldRef</Name>
 							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
 						</Var>
+						<Var>
+							<Name>Fahrauftrag.Auftrag</Name>
+							<Comment><![CDATA[Auftrag von GW1]]></Comment>
+							<Type GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}">Auftrag</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.StatusFromGW1</Name>
+							<Comment><![CDATA[Status von GW1]]></Comment>
+							<Type>STRING(50)</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.shutdownButton</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IrDistanceSensors.distanceRaw</Name>
+							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.batteryVoltageRaw</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.requestShutdown</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.supplyCurrentRaw</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.SOC</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.slider</Name>
+							<Comment><![CDATA[closeGripperCommand		AT%I* : BOOL;				//True: opening, false: closing]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.partGripped</Name>
+							<Comment><![CDATA[Teil zwischen Greifer: partGripped := 0]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.closeGripperFromSimulink</Name>
+							<Type>LREAL</Type>
+						</Var>
 					</Vars>
 					<Vars VarGrpType="2" ContextId="2" AreaNo="33">
 						<Name>PlcTask Outputs</Name>
@@ -3511,13 +3511,28 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>Fahrauftrag.TrajectoryController.xBoEnable</Name>
+							<Comment><![CDATA[ Freigabesignal für Fahrt, Roboter stoppt bei FALSE]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.TrajectoryController.waypointList</Name>
+							<Comment><![CDATA[ Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)]]></Comment>
+							<Type GUID="{57D1290D-8922-6C29-A5EB-E802603DE228}">ARRAY [0..100] OF RobotPoseSimple</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.TrajectoryController.newWaypointListAvailable</Name>
+							<Comment><![CDATA[ Status-Bit zur Signalisierung einer neuen WP-Liste]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.TrajectoryController.xBoReset</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>Fahrauftrag.FeedbackToGW1</Name>
 							<Comment><![CDATA[Feedback/Status des Roboters an GW1]]></Comment>
 							<Type>STRING(50)</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.shutdownTrigger</Name>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>IrDistanceSensors.distance_mm</Name>
@@ -3538,6 +3553,10 @@
 						<Var>
 							<Name>Camera.cameraData.SS</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.shutdownTrigger</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.batteryVoltage_V</Name>
@@ -3567,25 +3586,6 @@
 						<Var>
 							<Name>Gripper.partInGripperToSimulink</Name>
 							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.TrajectoryController.xBoEnable</Name>
-							<Comment><![CDATA[ Freigabesignal für Fahrt, Roboter stoppt bei FALSE]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.TrajectoryController.waypointList</Name>
-							<Comment><![CDATA[ Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)]]></Comment>
-							<Type GUID="{57D1290D-8922-6C29-A5EB-E802603DE228}">ARRAY [0..100] OF RobotPoseSimple</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.TrajectoryController.newWaypointListAvailable</Name>
-							<Comment><![CDATA[ Status-Bit zur Signalisierung einer neuen WP-Liste]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.TrajectoryController.xBoReset</Name>
-							<Type>BOOL</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2022-04-26T16:44:07">
@@ -6549,6 +6549,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^PowerManager.shutdownTrigger" VarB="InitiateShutdown^Output"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Digitale Eingänge A4 (EL1008)">
+				<Link VarA="ControlTask Inputs^ControlPRG.robot.bumper" VarB="Bumper (S1)^Input"/>
 				<Link VarA="ControlTask Inputs^ControlPRG.robot.slider" VarB="Channel 5^Input"/>
 				<Link VarA="ControlTask Inputs^MotorDrivers.bumper" VarB="Channel 3^Input"/>
 				<Link VarA="PlcTask Inputs^Gripper.partGripped" VarB="Channel 6^Input"/>
@@ -6580,6 +6581,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="ControlTask Inputs^ControlPRG.robotPoses" VarB="PlcTask Outputs^Camera.cameraData.robotPosition"/>
 				<Link VarA="ControlTask Inputs^ControlPRG.waypointList" VarB="PlcTask Outputs^Fahrauftrag.TrajectoryController.waypointList"/>
 				<Link VarA="ControlTask Inputs^ControlPRG.xBoEnable" VarB="PlcTask Outputs^Fahrauftrag.TrajectoryController.xBoEnable"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.xBoReset" VarB="PlcTask Outputs^Fahrauftrag.TrajectoryController.xBoReset"/>
 				<Link VarA="ControlTask Inputs^MotorDrivers.vThetaCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vThetaToRobot"/>
 				<Link VarA="ControlTask Inputs^MotorDrivers.vXCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vXtoRobot"/>
 				<Link VarA="ControlTask Inputs^MotorDrivers.vYCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vYtoRobot"/>
@@ -6594,6 +6596,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yControllerState" VarB="ControlTask Outputs^ControlPRG.state"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yRPposition" VarB="ControlTask Outputs^ControlPRG.yRPposition"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yUintWaypointIndex" VarB="ControlTask Outputs^ControlPRG.yUintWaypointIndex"/>
+				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yVworldRef" VarB="ControlTask Outputs^ControlPRG.yVworldRef"/>
 			</OwnerB>
 			<OwnerB Name="TIRC^TcCOM Objects^Object2 (SoC_Model_Data_Aquisition_2022)">
 				<Link VarA="PlcTask Outputs^PowerManager.stMqtt_HAWino_IN^fActualBatteryCurrent" VarB="SoC_Model_Data_Aquisition_202_U^Current"/>
