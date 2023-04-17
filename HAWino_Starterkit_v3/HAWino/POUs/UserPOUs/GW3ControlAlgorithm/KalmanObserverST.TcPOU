@@ -22,7 +22,7 @@ END_VAR
 
 VAR
 	newCamDataArrived: BOOL;
-	camDataOld, observerError, observedPosition, vWorld: RobotPoseSimple;
+	camDataOld, observerError, observedPosition, lastValidCamData, vWorld: RobotPoseSimple;
 	pulseGenerator: TP;
 	
 	delayedCycles		AT%Q* 	: INT	:= 20;	//Camdelay 160ms / Cycletyme 2ms
@@ -98,7 +98,7 @@ IF newCamDataArrived THEN
 	observedPosition := AddRPS(observedPositionAP, MatTimesRPS(H, observerError));
 	//correct obersvation covariance
 	P := SubstractMat3(PAP, MatTimesMat(H, PAP));
-
+	lastValidCamData := xCameraPose;
 ELSE 
 	observedPosition := observedPositionAP;
 	P := PAP;
@@ -145,10 +145,11 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[reset := FALSE;
+        <ST><![CDATA[reset := TRUE;
 IF newCamDataArrived THEN
 	observedPosition := xCameraPose;
-	reset := TRUE;
+ELSE
+	observedPosition := lastValidCamData;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -171,7 +172,7 @@ END_IF]]></ST>
       <LineId Id="25" Count="0" />
       <LineId Id="20" Count="0" />
       <LineId Id="13" Count="0" />
-      <LineId Id="24" Count="0" />
+      <LineId Id="32" Count="1" />
       <LineId Id="23" Count="0" />
     </LineIds>
   </POU>
