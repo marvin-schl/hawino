@@ -7,9 +7,9 @@ VAR
 	sStart : BOOL := TRUE;
 	s0,s1a,s1b,s2,s3,s4,s5,s6a,s6b,s7,s8,s9,s10,s11a,s11b,s12,s13,s14,s15,s16,s17,s18,s19,s20,s21a,s21b,s22,s23,s24,s25,s26a,s26b,s27,s28,s29,s30,s31: BOOL := FALSE;
 	
-	AStar : AStar;								//A-Stern Algorithmus
-	readAssigment: ReadAssigment;				//Auswertung des Auftrags
-	TrajectoryController: TrajectoryControl;	//Schnittstelle zu GW3
+	AStar : AStar;										//A-Stern Algorithmus
+	readAssigment: ReadAssigment;						//Auswertung des Auftrags
+	TrajectoryController: TrajectoryControl;			//Schnittstelle zu GW3
 	
 	reset: BOOL := FALSE;								//Fahrauftrag auf Anfang
 	wayPointList : ARRAY[0..100] OF RobotPoseSimple;	//Wegpunktliste
@@ -49,7 +49,7 @@ END_IF
 
 //Ablauf einer Fahrt:
 //Init
-IF sStart AND NOT s0 AND Auftrag.Art = '' AND trajectoryController.yControllerState = ControllerState.idle THEN
+IF sStart AND NOT s0 AND Auftrag.Art = '' AND (trajectoryController.yControllerState = ControllerState.idle OR trajectoryController.yControllerState = ControllerState.ready) THEN
 	sStart := 0; s0 := 1;
 	//	RückmeldungGW1 Verfügbar
 	FeedbackToGW1 := 'Verfuegbar';
@@ -96,8 +96,8 @@ IF s1b AND NOT s2 AND finished_ASearch THEN
 			EXIT;
 		END_IF
 	END_FOR
-	wayPointList[zeile] := readAssigment.lastPointsToPickup[0];
-	wayPointList[zeile+1] := readAssigment.lastPointsToPickup[1];
+	wayPointList[zeile] := readAssigment.pickupLocation;
+	wayPointList[zeile+1] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 	//wayPointList[zeile+2] := readAssigment.lastPointsToPickup[2];
 	TrajectoryController.setWaypointList(waypointList);
 	trajectoryController.newWaypointListAvailable := TRUE;
@@ -144,8 +144,8 @@ ELSIF s6a AND NOT s6b AND Gripper.partGripped THEN
 	Gripper.closeGripperCommand := FALSE;
 	ZEROS_RobotPoseSimple(wayPointList);										//test, sonst für alle
 	wayPointList[0] := ToRobotPoseSimple(x := readAssigment.pickupLocation.x - 100, y := readAssigment.pickupLocation.y, theta := readAssigment.pickupLocation.theta);
-	wayPointList[1] := readAssigment.lastPointsToPickup[0];
-	wayPointList[2] := readAssigment.lastPointsToPickup[1];
+	wayPointList[1] := readAssigment.pickupLocation;
+	wayPointList[2] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 	TrajectoryController.setWaypointList(waypointList);
 	trajectoryController.newWaypointListAvailable := TRUE;
 	s6a := 0; s2 := 1;
@@ -216,17 +216,15 @@ END_IF
 //Bahnplanung
 IF s11b AND NOT s12 AND finished_ASearch THEN
 	ZEROS_RobotPoseSimple(wayPointList);
-	wayPointList[0] := readAssigment.pointsFromSlotToReader[3];
-	FOR i := 1 TO 100 BY 1 DO
- 		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i-1], y:= yPointList[i-1], theta:= -1);
-		IF xPointList[i-1] = 0 THEN
+	FOR i := 0 TO 100 BY 1 DO
+ 		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i], y:= yPointList[i], theta:= -1);
+		IF xPointList[i] = 0 THEN
 			zeile := i;
 			EXIT;
 		END_IF
 	END_FOR
-	wayPointList[zeile] := readAssigment.lastPointsToStorage[0];
-	wayPointList[zeile+1] := readAssigment.lastPointsToStorage[1];
-	//wayPointList[zeile+2] := readAssigment.lastPointsToStorage[2];
+	wayPointList[zeile] := readAssigment.readerCheckIn;
+	wayPointList[zeile+1] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 	TrajectoryController.setWaypointList(waypointList);
 	trajectoryController.newWaypointListAvailable := TRUE;
 	s11b := 0; s12 := 1;
@@ -351,9 +349,8 @@ IF s26b AND NOT s27 AND finished_ASearch THEN
 			EXIT;
 		END_IF
 	END_FOR
-	wayPointList[zeile] := readAssigment.lastPointsToCharging[0];
-	wayPointList[zeile+1] := readAssigment.lastPointsToCharging[1];
-	wayPointList[zeile+2] := readAssigment.lastPointsToCharging[2];
+	wayPointList[zeile] := readAssigment.chargingLocation;
+	wayPointList[zeile+1] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 	TrajectoryController.setWaypointList(waypointList);
 	trajectoryController.newWaypointListAvailable := TRUE;
 	resetVar := TRUE;															//testen
@@ -424,10 +421,9 @@ END_IF
 //Bahnplanung
 IF s21b AND NOT s22 AND finished_ASearch THEN
 	ZEROS_RobotPoseSimple(wayPointList);
-	wayPointList[0] := ToRobotPoseSimple(x:= xRobotStartposition, y:= yRobotStartposition, theta:= -1);
-	FOR i := 1 TO 100 BY 1 DO
- 		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i-1], y:= yPointList[i-1], theta:= -1);
-		IF xPointList[i-1] = 0 THEN
+	FOR i := 0 TO 100 BY 1 DO
+ 		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i], y:= yPointList[i], theta:= -1);
+		IF xPointList[i] = 0 THEN
 			zeile := i;
 			EXIT;
 		END_IF
@@ -690,8 +686,8 @@ END_VAR
       <LineId Id="608" Count="1" />
       <LineId Id="611" Count="0" />
       <LineId Id="1364" Count="0" />
-      <LineId Id="1363" Count="0" />
-      <LineId Id="612" Count="12" />
+      <LineId Id="612" Count="8" />
+      <LineId Id="622" Count="2" />
       <LineId Id="607" Count="0" />
       <LineId Id="292" Count="0" />
       <LineId Id="72" Count="0" />
@@ -751,7 +747,8 @@ END_VAR
       <LineId Id="742" Count="1" />
       <LineId Id="745" Count="0" />
       <LineId Id="1366" Count="0" />
-      <LineId Id="746" Count="11" />
+      <LineId Id="746" Count="8" />
+      <LineId Id="756" Count="1" />
       <LineId Id="1288" Count="0" />
       <LineId Id="758" Count="8" />
       <LineId Id="768" Count="18" />
@@ -770,7 +767,7 @@ END_VAR
       <LineId Id="899" Count="0" />
       <LineId Id="1286" Count="0" />
       <LineId Id="901" Count="1" />
-      <LineId Id="1367" Count="1" />
+      <LineId Id="1367" Count="0" />
       <LineId Id="903" Count="39" />
       <LineId Id="900" Count="0" />
       <LineId Id="1406" Count="4" />

@@ -14,12 +14,12 @@ VAR_OUTPUT
 END_VAR
 VAR
 	numberOfNodes : INT := 144;
-	a, b, c, d, e, i, j, k, m, o, p, q, t, v, w, counter, number, cnt1, cnt2 : INT;
+	a, b, c, d, e, i, j, k, m, o, p, q, t, v, w, counter, number, cnt1, cnt2, cntPark : INT;
 	numberOfColumns : INT := 18;
 	matrix : ARRAY[1..170,1..170] OF LREAL;
 	row, col : LREAL;
 	xNode, yNode : ARRAY[1..170] OF LREAL;
-	removeNode : ARRAY[0..11] OF INT := [93, 96, 99, 102, 111, 114, 117, 120, 124, 125, 142, 143];
+	removeNode : ARRAY[0..15] OF INT := [36, 54, 72, 90, 93, 96, 99, 102, 111, 114, 117, 120, 124, 125, 142, 143];
 	startNode : INT := 0; //fragwürdig
 	diff_x, diff_y, diff_total : ARRAY[1..170] OF LREAL;
 	min_total : LREAL;
@@ -79,7 +79,7 @@ FOR i := 0 TO numberOfNodes BY 1 DO
  
  
 //Löschen der Knoten über Station und die nahegelegenen diagonalen Verbindungen
- FOR counter := 0 TO 11 BY 1 DO
+ FOR counter := 0 TO 15 BY 1 DO
 	FOR j := 1 TO numberOfNodes BY 1 DO
 		matrix[removeNode[counter],j] := 0;
 		matrix[j, removeNode[counter]] := 0;
@@ -135,6 +135,12 @@ FOR i := 0 TO numberOfNodes BY 1 DO
  matrix[106, numberOfNodes + number] := 1000;
  matrix[numberOfNodes + number + 1, 107] := 1000;
  matrix[107, numberOfNodes + number + 1] := 1000;
+ 
+ //Parkplätze mit nur einer Verbindung
+ FOR cntPark := 36 TO 91 BY 18 DO
+	 matrix[cntPark, cntPark-1] := 1000;
+	 matrix[cntPark-1, cntPark] := 1000;
+ END_FOR
  
  //Umrechnung von Knoten in Koordinaten
  row := 600;
@@ -203,17 +209,17 @@ FOR i := 0 TO numberOfNodes BY 1 DO
  yNode[163] := 2732;
  yNode[164] := 2838;
  yNode[165] := 2944;
- yNode[166] := 2746;
+ yNode[166] := 2737;
  yNode[167] := 2855;
  yNode[168] := 2942;
- yNode[169] := 3300;
- yNode[170] := 3300;
+ yNode[169] := 3100;
+ yNode[170] := 3100;
  
  //Knoten für bessere Anfahrt versetzen, damit nicht zu dicht an Station
- xNode[94] := 1500;
- xNode[103] := 5100;
- xNode[112] := 1500;
- xNode[121] := 5100;
+ //xNode[94] := 1500;
+ //xNode[103] := 5100;
+ //xNode[112] := 1500;
+ //xNode[121] := 5100;
  
  ////////////////////////////////////////////////////Startposition und Endposition bestimmen //////////////////////////////////////////////////////////////////////////
  
@@ -430,6 +436,11 @@ countPointList := 1;
       <LineId Id="1231" Count="0" />
       <LineId Id="1233" Count="18" />
       <LineId Id="1229" Count="1" />
+      <LineId Id="1454" Count="1" />
+      <LineId Id="1457" Count="0" />
+      <LineId Id="1459" Count="0" />
+      <LineId Id="1458" Count="0" />
+      <LineId Id="1456" Count="0" />
       <LineId Id="812" Count="3" />
       <LineId Id="1022" Count="11" />
       <LineId Id="824" Count="0" />
