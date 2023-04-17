@@ -14,13 +14,85 @@
           <FileName></FileName>
           <Children>
             <Node>
-              <Title>TcModuleOutput_DEBUG</Title>
+              <Title>newCamDataArrived</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>thetaCam</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
             </Node>
             <Node>
               <Title>thetaKalman</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>vTheta</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>vThetaContr</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>vThetaRef</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>vX</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>vXContr</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>vXRef</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>vYContr</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>vYRef</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>xKalman</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>yKalman</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>vY</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -44,12 +116,6 @@
               <Children />
             </Node>
             <Node>
-              <Title>xKalman</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
               <Title>xObs</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
@@ -63,12 +129,6 @@
             </Node>
             <Node>
               <Title>yCam</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>yKalman</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -178,12 +238,12 @@
           </Children>
         </Node>
         <Node>
-          <Title>YT Chart</Title>
+          <Title>PositionOverTime</Title>
           <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
-              <Title>Axis Group (3)</Title>
+              <Title>theta</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
@@ -199,6 +259,18 @@
                   <FileName></FileName>
                   <Children />
                 </Node>
+                <Node>
+                  <Title>thetaCam</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>thetaKalman</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
               </Children>
             </Node>
             <Node>
@@ -207,7 +279,7 @@
               <FileName></FileName>
               <Children>
                 <Node>
-                  <Title>TcModuleOutput_DEBUG (2)</Title>
+                  <Title>newCamDataArrived</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
@@ -215,10 +287,22 @@
               </Children>
             </Node>
             <Node>
-              <Title>Axis Group (1)</Title>
+              <Title>x</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
+                <Node>
+                  <Title>xObs</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>xRef</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
                 <Node>
                   <Title>xCam</Title>
                   <Expanded>False</Expanded>
@@ -226,7 +310,7 @@
                   <Children />
                 </Node>
                 <Node>
-                  <Title>yCam</Title>
+                  <Title>xKalman</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
@@ -234,7 +318,7 @@
               </Children>
             </Node>
             <Node>
-              <Title>Axis Group (8)</Title>
+              <Title>y</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
@@ -245,46 +329,19 @@
                   <Children />
                 </Node>
                 <Node>
-                  <Title>xObs</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-              </Children>
-            </Node>
-            <Node>
-              <Title>Axis Group (9)</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children>
-                <Node>
-                  <Title>xRef</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
                   <Title>yRef</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
                 </Node>
-              </Children>
-            </Node>
-          </Children>
-        </Node>
-        <Node>
-          <Title>YT Chart (1)</Title>
-          <Expanded>False</Expanded>
-          <FileName></FileName>
-          <Children>
-            <Node>
-              <Title>Axis Group (2)</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children>
                 <Node>
-                  <Title>thetaObs</Title>
+                  <Title>yCam</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>yKalman</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
@@ -294,56 +351,79 @@
           </Children>
         </Node>
         <Node>
-          <Title>YT Chart (2)</Title>
-          <Expanded>False</Expanded>
-          <FileName></FileName>
-          <Children />
-        </Node>
-        <Node>
-          <Title>Array Bar Chart</Title>
+          <Title>VelocityOverTime</Title>
           <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
-              <Title>Axis Group (5)</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-          </Children>
-        </Node>
-        <Node>
-          <Title>YT Chart (3)</Title>
-          <Expanded>False</Expanded>
-          <FileName></FileName>
-          <Children>
-            <Node>
-              <Title>Axis Group (6)</Title>
+              <Title>vX</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
-                  <Title>TcModuleOutput_DEBUG</Title>
+                  <Title>vX</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>vXRef</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>vXContr</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
                 </Node>
               </Children>
             </Node>
-          </Children>
-        </Node>
-        <Node>
-          <Title>YT Chart (4)</Title>
-          <Expanded>False</Expanded>
-          <FileName></FileName>
-          <Children>
             <Node>
-              <Title>Axis Group (7)</Title>
+              <Title>vY</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
-                  <Title>TcModuleOutput_DEBUG (1)</Title>
+                  <Title>vY</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>vYRef</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>vYContr</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+              </Children>
+            </Node>
+            <Node>
+              <Title>vTheta</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children>
+                <Node>
+                  <Title>vTheta</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>vThetaRef</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>vThetaContr</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
