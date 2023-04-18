@@ -25,7 +25,8 @@ VAR
 	
 	// Skalierung auf Ansteuersignale LREAL=>WORD   Skalierung hängt mit CoE Register 8020:07 8020:08 zusammen !!!
 	skalPos:LREAL:=34.7668668;//  MaxValue/MaxVelocity   [1/ mm/s]   32767/(942mm/s)   MaxVelocity=D*PI*n/(16*60) //16:1 Getriebeübersetzung  
-	skalNeg:LREAL:=34.76792783;//  MaxVelau/MaxVelocity   [1/ mm/s]   32768/(942mm/s)   MaxVelocity=(80mm*PI*3600 U/min)/(16*60sec/min)
+	skalNeg:LREAL:=34.7668668;
+	//skalNeg:LREAL:=34.76792783;//  MaxVelau/MaxVelocity   [1/ mm/s]   32768/(942mm/s)   MaxVelocity=(80mm*PI*3600 U/min)/(16*60sec/min)
 	
 	//Inputs: CartesianToMotors + Bumper
 	vXCartesianToMotors 	AT%I*:	LREAL:=0;
@@ -87,9 +88,10 @@ IF (velocityMotor1 > velocityMax) OR (velocityMotor1 < -velocityMax) THEN
     IF (velocityMotorsTf = 0) THEN
 			velocityMotorsTf:=1;
 	END_IF
-    velocityMotor1:= velocityMax;
-    velocityMotor2:= velocityMax * velocityMotor2 / velocityMotorsTf;
-    velocityMotor3:= velocityMax * velocityMotor3 / velocityMotorsTf;
+	// sign(velocityMotorsTf/ABS(velocityMotorsTf) = velocityMotorsTf/ABS(velocityMotorsTf)
+    velocityMotor1:= velocityMotorsTf/ABS(velocityMotorsTf)*velocityMax;
+    velocityMotor2:= velocityMotorsTf/ABS(velocityMotorsTf)*velocityMax/velocityMotorsTf * velocityMotor2 ;
+    velocityMotor3:= velocityMotorsTf/ABS(velocityMotorsTf)*velocityMax/velocityMotorsTf * velocityMotor3 ;
 END_IF
 
 IF (velocityMotor2 > velocityMax) OR (velocityMotor2 < -velocityMax) THEN
@@ -97,9 +99,10 @@ IF (velocityMotor2 > velocityMax) OR (velocityMotor2 < -velocityMax) THEN
     IF (velocityMotorsTf = 0) THEN
 		velocityMotorsTf:=1;
 	END_IF
-    velocityMotor1:= velocityMax * velocityToMotor1 / velocityMotorsTf;
-    velocityMotor2:= velocityMax;
-    velocityMotor3:= velocityMax * velocityToMotor3 / velocityMotorsTf;
+	// sign(velocityMotorsTf/ABS(velocityMotorsTf) = velocityMotorsTf/ABS(velocityMotorsTf)
+    velocityMotor1:= velocityMotorsTf/ABS(velocityMotorsTf)*velocityMax/velocityMotorsTf * velocityToMotor1;
+    velocityMotor2:= velocityMotorsTf/ABS(velocityMotorsTf)*velocityMax;
+    velocityMotor3:= velocityMotorsTf/ABS(velocityMotorsTf)*velocityMax/velocityMotorsTf * velocityToMotor3;
 END_IF
 
 IF (velocityMotor3 > velocityMax) OR (velocityMotor3 < -velocityMax) THEN
@@ -107,9 +110,10 @@ IF (velocityMotor3 > velocityMax) OR (velocityMotor3 < -velocityMax) THEN
     IF (velocityMotorsTf = 0) THEN
 			velocityMotorsTf:=1;
 	END_IF
-    velocityMotor1:= velocityMax * velocityMotor1 / velocityMotorsTf;
-    velocityMotor2:= velocityMax * velocityMotor2 / velocityMotorsTf;
-    velocityMotor3:= velocityMax;
+	// sign(velocityMotorsTf/ABS(velocityMotorsTf) = velocityMotorsTf/ABS(velocityMotorsTf)
+    velocityMotor1:= velocityMotorsTf/ABS(velocityMotorsTf)*velocityMax/velocityMotorsTf * velocityMotor1;
+    velocityMotor2:= velocityMotorsTf/ABS(velocityMotorsTf)*velocityMax/velocityMotorsTf * velocityMotor2 ;
+    velocityMotor3:= velocityMotorsTf/ABS(velocityMotorsTf)*velocityMax;
 END_IF
 // Konvertierung ToMotors ENDE********************************************************
 
@@ -184,14 +188,19 @@ END_CASE
       <LineId Id="1361" Count="0" />
       <LineId Id="898" Count="2" />
       <LineId Id="1480" Count="1" />
+      <LineId Id="1697" Count="0" />
       <LineId Id="901" Count="3" />
       <LineId Id="924" Count="2" />
       <LineId Id="1484" Count="1" />
-      <LineId Id="927" Count="3" />
+      <LineId Id="927" Count="0" />
+      <LineId Id="1701" Count="0" />
+      <LineId Id="928" Count="2" />
       <LineId Id="905" Count="0" />
       <LineId Id="932" Count="2" />
       <LineId Id="1482" Count="1" />
-      <LineId Id="935" Count="3" />
+      <LineId Id="935" Count="0" />
+      <LineId Id="1702" Count="0" />
+      <LineId Id="936" Count="2" />
       <LineId Id="931" Count="0" />
       <LineId Id="639" Count="0" />
       <LineId Id="1107" Count="0" />
