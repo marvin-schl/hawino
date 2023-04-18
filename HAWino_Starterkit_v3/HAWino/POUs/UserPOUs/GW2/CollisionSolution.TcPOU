@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="CollisionSolution" Id="{c7459f14-ce99-4bd7-b016-6091a64de96e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK CollisionSolution
+VAR_INPUT
+	collision : ARRAY[1..5] OF BOOL;
+	state : STRING(5);
+END_VAR
+VAR_OUTPUT
+	removeNodeCollision : ARRAY[0..10] OF INT;
+	todo : STRING(10);
+END_VAR
+VAR
+	lastCollision : ARRAY[1..5] OF BOOL;
+	roboNmb, nmb, n : INT;
+	i : INT := 1;
+	otherRobo : ARRAY[1..4] OF INT;
+	collisionFree : BOOL := FALSE;
+	newCollision : BOOL := FALSE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//wenn Zielknoten gelöscht wird weil Roboter im Weg steht, dann paar Schritte zurückfahren und dem anderen Platz machen...
+
+//neue Kollision angekommen oder noch alte?
+IF lastCollision[1] <> collision[1] OR lastCollision[2] <> collision[2] OR lastCollision[3] <> collision[3] OR lastCollision[4] <> collision[4] OR lastCollision[5] <> collision[5] THEN
+	newCollision := TRUE;
+	lastCollision := collision;
+END_IF
+
+IF newCollision THEN
+	//gestoppt
+	//alle States zurücknehmen
+	Fahrauftrag.removeAllToken();
+	i := 1;
+	
+	collisionFree := NOT collision[Var_HAWIno.Robot_Number];
+	
+	//rausfinden welche Roboter beteiligt
+	FOR nmb := 1 TO 5 BY 1 DO
+		IF collision[nmb] AND nmb <> Var_HAWIno.Robot_Number THEN
+			otherRobo[i] := nmb;
+			i := i + 1;
+		END_IF
+	END_FOR
+	
+	IF NOT collisionFree THEN
+		todo := 'Warten';
+	
+		//darf ich fahren? nur wenn kleinere Roboternummer
+		FOR n := 1 TO 4 BY 1 DO
+			IF otherRobo[n] > Var_HAWIno.Robot_Number THEN
+				todo := 'Fahren';
+			END_IF
+		END_FOR
+	END_IF
+	
+	//höhrer Priorität
+	IF todo = 'Fahren' THEN
+		//update removeNode
+		findNodesToRemove(collisionRobo := otherRobo, xPositionCollisionRobo := 4000, yPositionCollisionRobo := 1404);
+		
+		//in richtigen State zurück zum neuplanen und weiterfahren
+		//richtiger State: s1a, s11a, s26a, s21a - einfach immer den letzten merken... (in Statemaschine einbauen)
+		//auch die anderen Pfade einfügen, wo nur zwischen Reader und Tasche
+		IF state = 's1a' THEN
+			Fahrauftrag.s1a := 1;
+		ELSIF state = 's11a' THEN
+			Fahrauftrag.s11a := 1;
+		ELSIF state = 's21a' THEN
+			Fahrauftrag.s21a := 1;
+		ELSIF state = 's26a' THEN
+			Fahrauftrag.s26a := 1;
+		END_IF
+		todo := '';
+		
+	ELSIF todo = 'Warten' THEN
+		IF collisionFree THEN
+			IF state = 's1a' THEN
+				Fahrauftrag.s1a := 1;
+			ELSIF state = 's11a' THEN
+				Fahrauftrag.s11a := 1;
+			ELSIF state = 's21a' THEN
+				Fahrauftrag.s21a := 1;
+			ELSIF state = 's26a' THEN
+				Fahrauftrag.s26a := 1;
+			END_IF
+			todo := '';
+		END_IF
+	END_IF
+END_IF
+
+//TODO
+// wenn schon einer zwischen Stationen bekommt Roboter nummer 10 und muss immer warten - interne Kollision
+]]></ST>
+    </Implementation>
+    <LineIds Name="CollisionSolution">
+      <LineId Id="27" Count="0" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="29" Count="2" />
+      <LineId Id="36" Count="39" />
+      <LineId Id="77" Count="12" />
+      <LineId Id="91" Count="3" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="95" Count="1" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
