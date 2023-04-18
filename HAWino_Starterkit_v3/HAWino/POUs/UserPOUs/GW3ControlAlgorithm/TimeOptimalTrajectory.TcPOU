@@ -31,7 +31,7 @@ VAR
 	arcLengthSlow		: LREAL				:= 0.224352;
 	maxSlowVel			: LREAL				:= 0.12;
 	
-	maxRotVel			: LREAL				:= 100;
+	maxRotVel			: LREAL				:= 1;
 	maxRotAcc			: LREAL				:= 100;	
 	
 	thetaDZ				: LREAL				:= 0.2;
