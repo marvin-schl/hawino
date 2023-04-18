@@ -25,8 +25,7 @@ VAR
 	
 	// Skalierung auf Ansteuersignale LREAL=>WORD   Skalierung hängt mit CoE Register 8020:07 8020:08 zusammen !!!
 	skalPos:LREAL:=34.7668668;//  MaxValue/MaxVelocity   [1/ mm/s]   32767/(942mm/s)   MaxVelocity=D*PI*n/(16*60) //16:1 Getriebeübersetzung  
-	skalNeg:LREAL:=34.7668668;
-	//skalNeg:LREAL:=34.76792783;//  MaxVelau/MaxVelocity   [1/ mm/s]   32768/(942mm/s)   MaxVelocity=(80mm*PI*3600 U/min)/(16*60sec/min)
+	skalNeg:LREAL:=34.76792783;//  MaxVelau/MaxVelocity   [1/ mm/s]   32768/(942mm/s)   MaxVelocity=(80mm*PI*3600 U/min)/(16*60sec/min)
 	
 	//Inputs: CartesianToMotors + Bumper
 	vXCartesianToMotors 	AT%I*:	LREAL:=0;
