@@ -1,12 +1,12 @@
 <Node>
-  <Title>Trajektorie</Title>
+  <Title>Scopes</Title>
   <Expanded>False</Expanded>
   <FileName></FileName>
   <Children>
     <Node>
-      <Title>XY Scope Project</Title>
-      <Expanded>False</Expanded>
-      <FileName>E:\hawino\Trajektorie\XY Scope Project.tcscopex</FileName>
+      <Title>Measurements</Title>
+      <Expanded>True</Expanded>
+      <FileName>E:\hawino\Trajektorie\Measurements.tcscopex</FileName>
       <Children>
         <Node>
           <Title>DataPool</Title>
@@ -45,6 +45,24 @@
             </Node>
             <Node>
               <Title>FeedForwardLinearization</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>i1</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>i2</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>i3</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -147,12 +165,6 @@
             </Node>
             <Node>
               <Title>state</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>state (1)</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -304,12 +316,12 @@
           </Children>
         </Node>
         <Node>
-          <Title>XY Chart</Title>
+          <Title>Robot Pose XY Plot</Title>
           <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
-              <Title>Axis Group</Title>
+              <Title>xyPlot</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
@@ -394,54 +406,10 @@
           </Children>
         </Node>
         <Node>
-          <Title>PositionOverTime</Title>
+          <Title>Robot Pose Over Time</Title>
           <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
-            <Node>
-              <Title>theta</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children>
-                <Node>
-                  <Title>thetaObs (1)</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>thetaRef</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>thetaCam</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>thetaKalman</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-              </Children>
-            </Node>
-            <Node>
-              <Title>Axis Group (4)</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children>
-                <Node>
-                  <Title>newCamDataArrived</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-              </Children>
-            </Node>
             <Node>
               <Title>x</Title>
               <Expanded>False</Expanded>
@@ -504,16 +472,47 @@
                 </Node>
               </Children>
             </Node>
+            <Node>
+              <Title>theta</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children>
+                <Node>
+                  <Title>thetaObs</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>thetaCam</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>thetaKalman</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>thetaRef</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+              </Children>
+            </Node>
           </Children>
         </Node>
         <Node>
-          <Title>VelocityOverTime</Title>
-          <Expanded>False</Expanded>
+          <Title>Velocity Over Time</Title>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>vX</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -589,12 +588,32 @@
           </Children>
         </Node>
         <Node>
-          <Title>Digital Chart</Title>
+          <Title>Status Flags Over Time</Title>
           <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
-              <Title>Axis Group (1)</Title>
+              <Title>statusFlagsOverTime</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children>
+                <Node>
+                  <Title>newCamDataArrived</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+              </Children>
+            </Node>
+          </Children>
+        </Node>
+        <Node>
+          <Title>System Parameters</Title>
+          <Expanded>False</Expanded>
+          <FileName></FileName>
+          <Children>
+            <Node>
+              <Title>systemParameters</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
@@ -617,7 +636,7 @@
                   <Children />
                 </Node>
                 <Node>
-                  <Title>controllerK (1)</Title>
+                  <Title>controllerK</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
@@ -671,19 +690,19 @@
                   <Children />
                 </Node>
                 <Node>
-                  <Title>observerK (1)</Title>
+                  <Title>observerK</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
                 </Node>
                 <Node>
-                  <Title>Q (1)</Title>
+                  <Title>Q</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
                 </Node>
                 <Node>
-                  <Title>RMat (1)</Title>
+                  <Title>RMat</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
@@ -720,13 +739,32 @@
                 </Node>
               </Children>
             </Node>
+          </Children>
+        </Node>
+        <Node>
+          <Title>Current Measurement</Title>
+          <Expanded>False</Expanded>
+          <FileName></FileName>
+          <Children>
             <Node>
-              <Title>Axis Group (2)</Title>
+              <Title>currentMeasurement</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
-                  <Title>state (1)</Title>
+                  <Title>i1</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>i2</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>i3</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
@@ -734,12 +772,6 @@
               </Children>
             </Node>
           </Children>
-        </Node>
-        <Node>
-          <Title>YT Chart</Title>
-          <Expanded>False</Expanded>
-          <FileName></FileName>
-          <Children />
         </Node>
       </Children>
     </Node>

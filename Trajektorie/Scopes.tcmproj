@@ -3,11 +3,11 @@
   <PropertyGroup>
     <ProjectGuid>{3b6e4056-8812-44fe-994b-461db392306a}</ProjectGuid>
     <AssemblyName>Trajektorie</AssemblyName>
-    <Name>Trajektorie</Name>
+    <Name>Scopes</Name>
     <RootNamespace>Trajektorie</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="XY Scope Project.tcscopex">
+    <Content Include="Measurements.tcscopex">
       <SubType>Content</SubType>
     </Content>
   </ItemGroup>

@@ -3241,27 +3241,6 @@
 							<Type>UINT</Type>
 						</Var>
 						<Var>
-							<Name>ControlPRG.robot.slider</Name>
-							<Comment><![CDATA[outputs from robot]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.bumper</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vel.n1MotorRaw</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vel.n2MotorRaw</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vel.n3MotorRaw</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
 							<Name>ControlPRG.robotPoses</Name>
 							<Comment><![CDATA[input from camera]]></Comment>
 							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
@@ -3287,6 +3266,39 @@
 							<Name>ControlPRG.waypointList</Name>
 							<Comment><![CDATA[ implemented, Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)]]></Comment>
 							<Type GUID="{57D1290D-8922-6C29-A5EB-E802603DE228}">ARRAY [0..100] OF RobotPoseSimple</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.slider</Name>
+							<Comment><![CDATA[outputs from robot]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.bumper</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vel.n1MotorRaw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vel.n2MotorRaw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vel.n3MotorRaw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.i1_raw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.i2_raw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.i3_raw</Name>
+							<Type>UINT</Type>
 						</Var>
 						<Var>
 							<Name>GW2DummyPRG.roboter.yBoArrivedAtDestination</Name>
@@ -3358,6 +3370,25 @@
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.yBoArrivedAtDestination</Name>
+							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yUintWaypointIndex</Name>
+							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yRPposition</Name>
+							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
+							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yVworldRef</Name>
+							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
+						</Var>
+						<Var>
 							<Name>ControlPRG.observer.delayedCycles</Name>
 							<Type>INT</Type>
 						</Var>
@@ -3378,25 +3409,6 @@
 						<Var>
 							<Name>ControlPRG.robot.vThetaToRobot</Name>
 							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yBoArrivedAtDestination</Name>
-							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yUintWaypointIndex</Name>
-							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yRPposition</Name>
-							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
-							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yVworldRef</Name>
-							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
 						</Var>
 						<Var>
 							<Name>GW2DummyPRG.roboter.xBoEnable</Name>
@@ -6597,6 +6609,8 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^PowerManager.shutdownButton" VarB="ShutdownRequested (S11)^Input"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Motorklemme A2 (EL7342)">
+				<Link VarA="ControlTask Inputs^ControlPRG.robot.i1_raw" VarB="DCM Synchron info data Channel 1^Info data 2"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.robot.i2_raw" VarB="DCM Synchron info data Channel 2^Info data 2"/>
 				<Link VarA="ControlTask Inputs^ControlPRG.robot.vel.n1MotorRaw" VarB="DCM Synchron info data Channel 1^Info data 1"/>
 				<Link VarA="ControlTask Inputs^ControlPRG.robot.vel.n2MotorRaw" VarB="DCM Synchron info data Channel 2^Info data 1"/>
 				<Link VarA="ControlTask Inputs^WheelEncoders.encDataFromMotor1" VarB="ENC Status compact Channel 1^Counter value"/>
@@ -6607,7 +6621,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="ControlTask Outputs^MotorDrivers.velocityToMotor2" VarB="DCM Velocity Channel 2^Velocity"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Motorklemme A3 (EL7342)">
-				<Link VarA="ControlTask Inputs^ControlPRG.robot.vel.n3MotorRaw" VarB="DCM Synchron info data Channel 1^Info data 1"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.robot.i3_raw" VarB="DCM Synchron info data Channel 1^Info data 1"/>
 				<Link VarA="ControlTask Inputs^WheelEncoders.encDataFromMotor3" VarB="ENC Status compact Channel 1^Counter value"/>
 				<Link VarA="ControlTask Outputs^MotorDrivers.enableToMotor3" VarB="DCM Control Channel 1^Control^Enable"/>
 				<Link VarA="ControlTask Outputs^MotorDrivers.velocityToMotor3" VarB="DCM Velocity Channel 1^Velocity"/>

@@ -32,23 +32,11 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Ströme umrechnen
-IF i1 > 32.767 THEN
-	i1 := UINT_TO_INT(i1_raw - 65535);
-ELSE
-	i1 := UINT_TO_INT(i1_raw);
-END_IF
 
-IF i2 > 32.767 THEN
-	i2 := UINT_TO_INT(i2_raw - 65535);
-ELSE
-	i2 := UINT_TO_INT(i2_raw);
-END_IF
+i1 := UINT_TO_INT(i1_raw);
+i2 := UINT_TO_INT(i2_raw);
+i3 := UINT_TO_INT(i3_raw);
 
-IF i3 > 32.767 THEN
-	i3 := UINT_TO_INT(i3_raw - 65535);
-ELSE
-	i3 := UINT_TO_INT(i3_raw);
-END_IF
 
 //Statemaschien Kovarianzvermessung
 cnt_max := REAL_TO_INT(tmess/Tsample);
@@ -130,11 +118,8 @@ END_IF
       <LineId Id="32" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="10" Count="0" />
-      <LineId Id="13" Count="1" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="16" Count="4" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="22" Count="4" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="24" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="33" Count="0" />
       <LineId Id="29" Count="0" />
