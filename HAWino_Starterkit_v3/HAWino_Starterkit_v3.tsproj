@@ -3344,6 +3344,11 @@
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.kobserver.delayedCycles</Name>
+							<Comment><![CDATA[Camdelay 160ms / Cycletyme 2ms]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
 							<Name>ControlPRG.robot.vXtoRobot</Name>
 							<Comment><![CDATA[inputs to robot]]></Comment>
 							<Type>LREAL</Type>
@@ -3374,11 +3379,6 @@
 						<Var>
 							<Name>ControlPRG.yVworldRef</Name>
 							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.kobserver.delayedCycles</Name>
-							<Comment><![CDATA[Camdelay 160ms / Cycletyme 2ms]]></Comment>
-							<Type>INT</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="1" ContextId="1" AreaNo="16">
@@ -3428,11 +3428,6 @@
 					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
 						<Name>PlcTask Inputs</Name>
 						<Var>
-							<Name>Fahrauftrag.collision</Name>
-							<Comment><![CDATA[Kollision]]></Comment>
-							<Type GUID="{29CAAFD0-28B6-D9D0-3B0E-64B337839191}">ARRAY [1..5] OF BOOL</Type>
-						</Var>
-						<Var>
 							<Name>Fahrauftrag.TrajectoryController.yBoArrivedAtDestination</Name>
 							<Comment><![CDATA[ TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
 							<Type>BOOL</Type>
@@ -3470,12 +3465,21 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>Fahrauftrag.collision</Name>
+							<Comment><![CDATA[Kollision]]></Comment>
+							<Type GUID="{29CAAFD0-28B6-D9D0-3B0E-64B337839191}">ARRAY [1..5] OF BOOL</Type>
+						</Var>
+						<Var>
 							<Name>IrDistanceSensors.distanceRaw</Name>
 							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.batteryVoltageRaw</Name>
 							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.requestShutdown</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.supplyCurrentRaw</Name>
@@ -3486,14 +3490,6 @@
 							<Type>REAL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.requestShutdown</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.closeGripperFromSimulink</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
 							<Name>Gripper.slider</Name>
 							<Comment><![CDATA[closeGripperCommand		AT%I* : BOOL;				//True: opening, false: closing]]></Comment>
 							<Type>BOOL</Type>
@@ -3502,6 +3498,10 @@
 							<Name>Gripper.partGripped</Name>
 							<Comment><![CDATA[Teil zwischen Greifer: partGripped := 0]]></Comment>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.closeGripperFromSimulink</Name>
+							<Type>LREAL</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" ContextId="2" AreaNo="33">
@@ -3545,10 +3545,6 @@
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.shutdownTrigger</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>IrDistanceSensors.distance_mm</Name>
 							<Type GUID="{E653CDAE-1A31-0819-E492-0347803C1564}">ARRAY [1..9] OF REAL</Type>
 						</Var>
@@ -3567,6 +3563,10 @@
 						<Var>
 							<Name>Camera.cameraData.SS</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.shutdownTrigger</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.batteryVoltage_V</Name>

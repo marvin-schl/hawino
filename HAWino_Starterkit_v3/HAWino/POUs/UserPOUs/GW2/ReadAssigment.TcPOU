@@ -207,7 +207,7 @@ IF assigment.Art = 'Fahrauftrag' THEN
 		ELSIF assigment.AblageTasche = 4 THEN
 			//RFID rechts anfahren	
 			lastNodeStorage := ToRobotPoseSimple(x := 2550, y := 2732, theta := -1);
-			storageLocation := ToRobotPoseSimple(x := 2490, y := 2732, theta := pi);
+			storageLocation := ToRobotPoseSimple(x := 2445, y := 2732, theta := pi);
 			readerCheckIn := ToRobotPoseSimple(x := 2445, y := 2940, theta := pi);
 			endNodeStorage := 156;			
 		ELSE

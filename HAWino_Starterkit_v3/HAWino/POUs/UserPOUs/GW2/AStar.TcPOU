@@ -23,16 +23,16 @@ VAR
 	startNode : INT := 0; //fragwürdig
 	diff_x, diff_y, diff_total : ARRAY[1..170] OF LREAL;
 	min_total : LREAL;
-	openList : ARRAY[1..144,1..6] OF LREAL;
-	nullOpenList : ARRAY[1..144,1..6] OF LREAL := [864(0)];
-	closedList : ARRAY[1..144] OF LREAL;
+	openList : ARRAY[1..170,1..6] OF LREAL;
+	nullOpenList : ARRAY[1..170,1..6] OF LREAL := [1020(0)];
+	closedList : ARRAY[1..170] OF LREAL;
 	h, f, gprev : LREAL;
 	g : LREAL := 0;
 	parentNode : INT ;
 	countNeighbor, indexMin, currentNode : INT;
 	neighborList:ARRAY[1..8,1..5] OF LREAL;
 	nullMatrix_Neighbor : ARRAY[1..8,1..5] OF LREAL := [40(0)];
-	nullMatrix_TempArray : ARRAY[1..170,1..7] OF LREAL := [1008(0)];
+	nullMatrix_TempArray : ARRAY[1..170,1..7] OF LREAL := [1190(0)];
 	flag : BOOL;
 	countOpen : INT := 1;
 	tempArray : ARRAY[1..170,1..7] OF LREAL;
@@ -76,11 +76,9 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 	 END_IF
  END_FOR
  
- 
- 
 //Löschen der Knoten über Station und die nahegelegenen diagonalen Verbindungen
  FOR counter := 0 TO 15 BY 1 DO
-	FOR j := 1 TO numberOfNodes BY 1 DO
+	FOR j := 1 TO 170 BY 1 DO
 		matrix[removeNode[counter],j] := 0;
 		matrix[j, removeNode[counter]] := 0;
  	END_FOR
@@ -109,8 +107,11 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 		matrix[removeNode[counter] - numberOfColumns, removeNode[counter] + 1] := 0;	
 	END_IF
 	
-	xNode[removeNode[counter]] := 10000;
-	yNode[removeNode[counter]] := 10000;
+	//alle entfernten Knoten auf unrealistische Koordinaten setzen, damit sie nicht als Startknoten in Frage kommen, außer die Partplätze
+	IF counter > 3 THEN
+		xNode[removeNode[counter]] := 10000;
+		yNode[removeNode[counter]] := 10000;
+	END_IF
  END_FOR
  
  //neues Raster für Taschenanfahrt
@@ -264,6 +265,7 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 	neighborList := nullMatrix_Neighbor;
 	
 	//search the neightbor and put in neighborlist
+	gprev := g;																		//ausversehen gelöscht??? geht jetzt?
 	FOR v := 1 TO 170 BY 1 DO
 		//calculate forwards
 		IF matrix[currentNode,v] <> 0 THEN
@@ -281,7 +283,7 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 	//possible neighbors will be inserted in openList
 	FOR w := 1 TO 8 BY 1 DO
 		flag := 0;
-		FOR a := 1 TO 144 BY 1 DO
+		FOR a := 1 TO 170 BY 1 DO
 			//if already exist, update g, h, g and parent
 			IF neighborList[w,1] = openList[a,2] THEN
 				openList[a,5] := MIN(openList[a,5], neighborList[w,4]);
@@ -411,7 +413,8 @@ countPointList := 1;
     <LineIds Name="AStar">
       <LineId Id="1084" Count="0" />
       <LineId Id="1130" Count="0" />
-      <LineId Id="773" Count="30" />
+      <LineId Id="773" Count="27" />
+      <LineId Id="803" Count="0" />
       <LineId Id="1193" Count="5" />
       <LineId Id="1228" Count="0" />
       <LineId Id="1199" Count="0" />
@@ -429,8 +432,10 @@ countPointList := 1;
       <LineId Id="1211" Count="0" />
       <LineId Id="1226" Count="0" />
       <LineId Id="1212" Count="2" />
+      <LineId Id="1546" Count="1" />
       <LineId Id="1227" Count="0" />
       <LineId Id="1215" Count="1" />
+      <LineId Id="1545" Count="0" />
       <LineId Id="810" Count="1" />
       <LineId Id="1253" Count="0" />
       <LineId Id="1231" Count="0" />
@@ -459,6 +464,7 @@ countPointList := 1;
       <LineId Id="867" Count="2" />
       <LineId Id="872" Count="2" />
       <LineId Id="876" Count="20" />
+      <LineId Id="1502" Count="0" />
       <LineId Id="898" Count="72" />
       <LineId Id="1217" Count="0" />
       <LineId Id="971" Count="18" />
