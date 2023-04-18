@@ -73,7 +73,7 @@ VAR_GLOBAL
 	samplingTime		: LREAL				:= 0.05;
 	
 	
-	maxVel				: LREAL				:= 0.5;
+	maxVel				: LREAL				:= 0.3;
 	maxAcc				: LREAL				:= 0.4;
 	
 	arcLengthSlow		: LREAL				:= 0.2;

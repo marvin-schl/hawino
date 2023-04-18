@@ -5,7 +5,7 @@
   <Children>
     <Node>
       <Title>Measurements</Title>
-      <Expanded>True</Expanded>
+      <Expanded>False</Expanded>
       <FileName>E:\hawino\Trajektorie\Measurements.tcscopex</FileName>
       <Children>
         <Node>
@@ -32,13 +32,13 @@
               <Children />
             </Node>
             <Node>
-              <Title>controllerK</Title>
+              <Title>bumper</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
             </Node>
             <Node>
-              <Title>controllerK (1)</Title>
+              <Title>controllerK</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -122,31 +122,13 @@
               <Children />
             </Node>
             <Node>
-              <Title>observerK (1)</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
               <Title>Q</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
             </Node>
             <Node>
-              <Title>Q (1)</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
               <Title>RMat</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>RMat (1)</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -507,12 +489,12 @@
         </Node>
         <Node>
           <Title>Velocity Over Time</Title>
-          <Expanded>True</Expanded>
+          <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>vX</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -603,6 +585,12 @@
                   <FileName></FileName>
                   <Children />
                 </Node>
+                <Node>
+                  <Title>bumper</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
               </Children>
             </Node>
           </Children>
@@ -631,12 +619,6 @@
                 </Node>
                 <Node>
                   <Title>arcLengthSlow</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>controllerK</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
@@ -685,24 +667,6 @@
                 </Node>
                 <Node>
                   <Title>maxVel</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>observerK</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>Q</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>RMat</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />

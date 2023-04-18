@@ -23,7 +23,9 @@ VAR
 	
 	state AT%Q*: ControllerState := ControllerState.init;//sets controller state
 	
-	FFLin: BOOL := ControlParameters.FeedForwardLinearization;
+	CONTROL_ERROR_THRESH : LREAL := 5;
+	
+	FFLin: BOOL := FALSE;
 	thetaLin: LREAL;
 	
 	///////////////////////////////////////////////
@@ -50,7 +52,7 @@ END_VAR
 robot.enable			:= FALSE;
 
 //outputs to GW2
-yRPposition 			:= observer.yObserverdPose;
+yRPposition 			:= kobserver.yObserverdPose;
 yUintWaypointIndex 		:= trajectory.WPLidx;
 yVworldRef				:= controller.xRobotvelRef;
 
@@ -139,7 +141,7 @@ END_CASE
 IF FFLin = TRUE THEN
 	thetaLin := trajectory.referencePose.theta;
 ELSE
-	thetaLin := observer.yObserverdPose.theta;		
+	thetaLin := kobserver.yObserverdPose.theta;		
 END_IF
 
 
@@ -249,7 +251,7 @@ END_VAR
       </Implementation>
     </Method>
     <LineIds Name="ControlPRG">
-      <LineId Id="1766" Count="1" />
+      <LineId Id="1778" Count="1" />
       <LineId Id="1147" Count="6" />
       <LineId Id="1724" Count="0" />
       <LineId Id="1154" Count="7" />
@@ -290,10 +292,9 @@ END_VAR
       <LineId Id="1217" Count="7" />
       <LineId Id="1450" Count="0" />
       <LineId Id="1456" Count="0" />
-      <LineId Id="1227" Count="2" />
-      <LineId Id="1449" Count="0" />
-      <LineId Id="1448" Count="0" />
-      <LineId Id="1231" Count="5" />
+      <LineId Id="1227" Count="1" />
+      <LineId Id="1770" Count="7" />
+      <LineId Id="1768" Count="0" />
       <LineId Id="1552" Count="7" />
       <LineId Id="1550" Count="1" />
       <LineId Id="1549" Count="0" />

@@ -26,6 +26,7 @@ VAR
 	slider 			AT%I*: BOOL;
 	bumper			AT%I*: BOOL;
 	vel: 	VelocityMeasurement;
+	// Current measurement
 	i1_raw, i2_raw, i3_raw	AT%I*: 					UINT;
 	i1, i2, i3 : INT;
 END_VAR
@@ -53,23 +54,11 @@ END_IF
 
 i1 := UINT_TO_INT(i1_raw);
 i2 := UINT_TO_INT(i2_raw);
-i3 := UINT_TO_INT(i3_raw);
-]]></ST>
+i3 := UINT_TO_INT(i3_raw);]]></ST>
     </Implementation>
     <LineIds Name="Robot">
-      <LineId Id="68" Count="0" />
-      <LineId Id="97" Count="0" />
-      <LineId Id="96" Count="0" />
-      <LineId Id="125" Count="0" />
-      <LineId Id="124" Count="0" />
-      <LineId Id="70" Count="0" />
-      <LineId Id="72" Count="1" />
-      <LineId Id="69" Count="0" />
-      <LineId Id="23" Count="1" />
-      <LineId Id="44" Count="1" />
-      <LineId Id="33" Count="5" />
-      <LineId Id="153" Count="2" />
-      <LineId Id="152" Count="0" />
+      <LineId Id="147" Count="18" />
+      <LineId Id="195" Count="2" />
       <LineId Id="9" Count="0" />
     </LineIds>
   </POU>

@@ -1285,7 +1285,7 @@
 		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1006">424de6000000000000007600000028000000100000000e000000010004000000000070000000000000000000000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffff788833338887ffff78883bb38887ffffffff3bb3ffffffffffff8778fffffffffffffffffffffffffffffffff999ffff78f78fffffffffff78f78ffff999ffff78f7888fffffffff78f78f78f999ffff78f78f78ffffffff78f7888ff999ffffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.214.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.200.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="2">
 				<Cpu BaseTime="1000"/>
@@ -3241,6 +3241,40 @@
 							<Type>UINT</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.robot.slider</Name>
+							<Comment><![CDATA[outputs from robot]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.bumper</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vel.n1MotorRaw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vel.n2MotorRaw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vel.n3MotorRaw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.i1_raw</Name>
+							<Comment><![CDATA[ Current measurement]]></Comment>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.i2_raw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.i3_raw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
 							<Name>ControlPRG.robotPoses</Name>
 							<Comment><![CDATA[input from camera]]></Comment>
 							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
@@ -3266,39 +3300,6 @@
 							<Name>ControlPRG.waypointList</Name>
 							<Comment><![CDATA[ implemented, Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)]]></Comment>
 							<Type GUID="{57D1290D-8922-6C29-A5EB-E802603DE228}">ARRAY [0..100] OF RobotPoseSimple</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.slider</Name>
-							<Comment><![CDATA[outputs from robot]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.bumper</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vel.n1MotorRaw</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vel.n2MotorRaw</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vel.n3MotorRaw</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.i1_raw</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.i2_raw</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.i3_raw</Name>
-							<Type>UINT</Type>
 						</Var>
 						<Var>
 							<Name>GW2DummyPRG.roboter.yBoArrivedAtDestination</Name>
@@ -3370,25 +3371,6 @@
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>ControlPRG.yBoArrivedAtDestination</Name>
-							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yUintWaypointIndex</Name>
-							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yRPposition</Name>
-							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
-							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yVworldRef</Name>
-							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
-						</Var>
-						<Var>
 							<Name>ControlPRG.observer.delayedCycles</Name>
 							<Type>INT</Type>
 						</Var>
@@ -3409,6 +3391,25 @@
 						<Var>
 							<Name>ControlPRG.robot.vThetaToRobot</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yBoArrivedAtDestination</Name>
+							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yUintWaypointIndex</Name>
+							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yRPposition</Name>
+							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
+							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yVworldRef</Name>
+							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
 						</Var>
 						<Var>
 							<Name>GW2DummyPRG.roboter.xBoEnable</Name>
@@ -6603,6 +6604,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^PowerManager.shutdownTrigger" VarB="InitiateShutdown^Output"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Digitale Eingänge A4 (EL1008)">
+				<Link VarA="ControlTask Inputs^ControlPRG.robot.bumper" VarB="Bumper (S1)^Input"/>
 				<Link VarA="ControlTask Inputs^MotorDrivers.bumper" VarB="Channel 3^Input"/>
 				<Link VarA="PlcTask Inputs^Gripper.partGripped" VarB="Channel 6^Input"/>
 				<Link VarA="PlcTask Inputs^Gripper.slider" VarB="Channel 5^Input"/>
@@ -6621,7 +6623,8 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="ControlTask Outputs^MotorDrivers.velocityToMotor2" VarB="DCM Velocity Channel 2^Velocity"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Motorklemme A3 (EL7342)">
-				<Link VarA="ControlTask Inputs^ControlPRG.robot.i3_raw" VarB="DCM Synchron info data Channel 1^Info data 1"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.robot.i3_raw" VarB="DCM Synchron info data Channel 1^Info data 2"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.robot.vel.n3MotorRaw" VarB="DCM Synchron info data Channel 1^Info data 1"/>
 				<Link VarA="ControlTask Inputs^WheelEncoders.encDataFromMotor3" VarB="ENC Status compact Channel 1^Counter value"/>
 				<Link VarA="ControlTask Outputs^MotorDrivers.enableToMotor3" VarB="DCM Control Channel 1^Control^Enable"/>
 				<Link VarA="ControlTask Outputs^MotorDrivers.velocityToMotor3" VarB="DCM Velocity Channel 1^Velocity"/>
