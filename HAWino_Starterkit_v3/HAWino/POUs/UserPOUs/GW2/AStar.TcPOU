@@ -265,7 +265,7 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 	neighborList := nullMatrix_Neighbor;
 	
 	//search the neightbor and put in neighborlist
-	gprev := g;																		//ausversehen gelöscht??? geht jetzt?
+	//gprev := g;																		//ausversehen gelöscht??? geht jetzt?
 	FOR v := 1 TO 170 BY 1 DO
 		//calculate forwards
 		IF matrix[currentNode,v] <> 0 THEN
