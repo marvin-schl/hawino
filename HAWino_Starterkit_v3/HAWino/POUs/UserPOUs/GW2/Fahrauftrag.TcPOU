@@ -50,9 +50,9 @@ END_VAR
       <ST><![CDATA[collisionFree := NOT collision[Var_HAWIno.Robot_Number];
 
 IF collision[Var_HAWIno.Robot_Number] THEN
-	TrajectoryController.xBoEnable := FALSE;
 	//neue Kollision angekommen oder noch alte?
 	IF lastCollision[1] <> collision[1] OR lastCollision[2] <> collision[2] OR lastCollision[3] <> collision[3] OR lastCollision[4] <> collision[4] OR lastCollision[5] <> collision[5] THEN
+		TrajectoryController.xBoEnable := FALSE;
 		lastCollision := collision;
 		CollisionSolution();
 	END_IF
@@ -505,6 +505,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[//wenn Zielknoten gelöscht wird weil Roboter im Weg steht, dann paar Schritte zurückfahren und dem anderen Platz machen...
+//wenn an Parkplatz dann zurück zu s0 oder ähnlichem
 
 //gestoppt
 //alle States zurücknehmen
@@ -799,8 +800,9 @@ END_VAR
     </Method>
     <LineIds Name="Fahrauftrag">
       <LineId Id="1471" Count="1" />
-      <LineId Id="1458" Count="1" />
+      <LineId Id="1458" Count="0" />
       <LineId Id="1477" Count="2" />
+      <LineId Id="1483" Count="0" />
       <LineId Id="1482" Count="0" />
       <LineId Id="1481" Count="0" />
       <LineId Id="1469" Count="1" />
@@ -1017,6 +1019,7 @@ END_VAR
     </LineIds>
     <LineIds Name="Fahrauftrag.CollisionSolution">
       <LineId Id="22" Count="0" />
+      <LineId Id="94" Count="0" />
       <LineId Id="30" Count="63" />
       <LineId Id="5" Count="0" />
     </LineIds>

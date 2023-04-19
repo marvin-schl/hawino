@@ -3461,13 +3461,13 @@
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.shutdownButton</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>Fahrauftrag.collision</Name>
 							<Comment><![CDATA[Kollision]]></Comment>
 							<Type GUID="{29CAAFD0-28B6-D9D0-3B0E-64B337839191}">ARRAY [1..5] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.shutdownButton</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>IrDistanceSensors.distanceRaw</Name>
@@ -3577,17 +3577,13 @@
 							<Type>REAL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.stMqtt_HAWino_IN</Name>
-							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
-							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
-						</Var>
-						<Var>
 							<Name>Gripper.driveEnable</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>Gripper.driveVelocity</Name>
-							<Type>INT</Type>
+							<Name>PowerManager.stMqtt_HAWino_IN</Name>
+							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
+							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.sliderToSimulink</Name>
@@ -3596,6 +3592,10 @@
 						<Var>
 							<Name>Gripper.partInGripperToSimulink</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.driveVelocity</Name>
+							<Type>INT</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2022-04-26T16:44:07">
