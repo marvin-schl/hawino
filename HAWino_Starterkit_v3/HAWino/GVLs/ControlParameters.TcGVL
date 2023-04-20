@@ -22,7 +22,7 @@ VAR_GLOBAL
 	//Maximal Translational Velocity (vX, vY)
 	vtrans_max: LREAL := 934;
 	//Maximal rotational Velocity (vTheta)
-	vrot_max: LREAL   := 1.57;
+	vrot_max: LREAL   := 6.9;
 	
 	// accuracy tolerance
 	accuracyXY: LREAL := 3;
@@ -34,7 +34,7 @@ VAR_GLOBAL
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++
 	
 	//amount of cycles camera is delayed (Camdelay 160ms / Cycletyme 2ms)
-	kObsDelayedCycles: INT	:= 80;
+	kObsDelayedCycles: INT	:= 61;
 	
 	//Camera Measurement Covariance Matrix
 	Q : ARRAY [0..2,0..2] OF LREAL 		:=[9.3047,    0.4415,   -0.0036,
@@ -64,7 +64,7 @@ VAR_GLOBAL
 	maxAcc				: LREAL				:= 0.5;
 	
 	arcLengthSlow		: LREAL				:= 0.22;
-	maxSlowVel			: LREAL				:= 0.08;
+	maxSlowVel			: LREAL				:= 0.12;
 	
 	maxRotVel			: LREAL				:= 100;
 	maxRotAcc			: LREAL				:= 100;	
