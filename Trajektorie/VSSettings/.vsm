@@ -345,7 +345,7 @@
           <Children>
             <Node>
               <Title>x</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -370,7 +370,7 @@
             </Node>
             <Node>
               <Title>y</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -395,7 +395,7 @@
             </Node>
             <Node>
               <Title>theta</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -433,7 +433,7 @@
           <Children>
             <Node>
               <Title>vX</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -458,7 +458,7 @@
             </Node>
             <Node>
               <Title>vY</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -483,7 +483,7 @@
             </Node>
             <Node>
               <Title>vTheta</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -515,7 +515,7 @@
           <Children>
             <Node>
               <Title>statusFlagsOverTime</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -541,7 +541,7 @@
           <Children>
             <Node>
               <Title>systemParameters</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
