@@ -1294,7 +1294,7 @@
 		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1006">424de6000000000000007600000028000000100000000e000000010004000000000070000000000000000000000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffff788833338887ffff78883bb38887ffffffff3bb3ffffffffffff8778fffffffffffffffffffffffffffffffff999ffff78f78fffffffffff78f78ffff999ffff78f7888fffffffff78f78f78f999ffff78f78f78ffffffff78f7888ff999ffffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.200.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.207.184.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="2">
 				<Cpu BaseTime="1000"/>
@@ -6578,6 +6578,8 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^PowerManager.shutdownButton" VarB="ShutdownRequested (S11)^Input"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Motorklemme A2 (EL7342)">
+				<Link VarA="ControlTask Inputs^ControlPRG.robot.i1Raw" VarB="DCM Synchron info data Channel 1^Info data 2"/>
+				<Link VarA="ControlTask Inputs^ControlPRG.robot.i2Raw" VarB="DCM Synchron info data Channel 2^Info data 2"/>
 				<Link VarA="ControlTask Inputs^ControlPRG.robot.vel.n1MotorRaw" VarB="DCM Synchron info data Channel 1^Info data 1"/>
 				<Link VarA="ControlTask Inputs^ControlPRG.robot.vel.n2MotorRaw" VarB="DCM Synchron info data Channel 2^Info data 1"/>
 				<Link VarA="ControlTask Inputs^WheelEncoders.encDataFromMotor1" VarB="ENC Status compact Channel 1^Counter value"/>
@@ -6588,6 +6590,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="ControlTask Outputs^MotorDrivers.velocityToMotor2" VarB="DCM Velocity Channel 2^Velocity"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Motorklemme A3 (EL7342)">
+				<Link VarA="ControlTask Inputs^ControlPRG.robot.i3Raw" VarB="DCM Synchron info data Channel 1^Info data 2"/>
 				<Link VarA="ControlTask Inputs^ControlPRG.robot.vel.n3MotorRaw" VarB="DCM Synchron info data Channel 1^Info data 1"/>
 				<Link VarA="ControlTask Inputs^WheelEncoders.encDataFromMotor3" VarB="ENC Status compact Channel 1^Counter value"/>
 				<Link VarA="ControlTask Outputs^MotorDrivers.enableToMotor3" VarB="DCM Control Channel 1^Control^Enable"/>

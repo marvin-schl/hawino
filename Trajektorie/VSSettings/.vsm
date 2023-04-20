@@ -5,12 +5,12 @@
   <Children>
     <Node>
       <Title>Measurements</Title>
-      <Expanded>True</Expanded>
+      <Expanded>False</Expanded>
       <FileName>E:\hawino\Trajektorie\Measurements.tcscopex</FileName>
       <Children>
         <Node>
           <Title>DataPool</Title>
-          <Expanded>True</Expanded>
+          <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
@@ -279,7 +279,7 @@
               <Children>
                 <Node>
                   <Title>xCam, yCam</Title>
-                  <Expanded>False</Expanded>
+                  <Expanded>True</Expanded>
                   <FileName></FileName>
                   <Children>
                     <Node>
@@ -298,7 +298,7 @@
                 </Node>
                 <Node>
                   <Title>xRef, yRef</Title>
-                  <Expanded>False</Expanded>
+                  <Expanded>True</Expanded>
                   <FileName></FileName>
                   <Children>
                     <Node>
@@ -317,7 +317,7 @@
                 </Node>
                 <Node>
                   <Title>xKalman, yKalman</Title>
-                  <Expanded>False</Expanded>
+                  <Expanded>True</Expanded>
                   <FileName></FileName>
                   <Children>
                     <Node>
@@ -345,7 +345,7 @@
           <Children>
             <Node>
               <Title>x</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -370,7 +370,7 @@
             </Node>
             <Node>
               <Title>y</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -395,7 +395,7 @@
             </Node>
             <Node>
               <Title>theta</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -428,12 +428,12 @@
         </Node>
         <Node>
           <Title>Velocity Over Time</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>vX</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -458,7 +458,7 @@
             </Node>
             <Node>
               <Title>vY</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -483,7 +483,7 @@
             </Node>
             <Node>
               <Title>vTheta</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -510,12 +510,12 @@
         </Node>
         <Node>
           <Title>Status Flags Over Time</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>statusFlagsOverTime</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -536,12 +536,12 @@
         </Node>
         <Node>
           <Title>System Parameters</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>systemParameters</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
