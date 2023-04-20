@@ -24,16 +24,14 @@ END_VAR
 
 VAR
 	//static control parameters
-	K: ARRAY [0..2,0..2] OF LREAL := [2,0,0,
-									  0,2,0,
-									  0,0,2];
+	K: ARRAY [0..2,0..2] OF LREAL := ControlParameters.controllerK;
 	poseError: RobotPoseSimple;
-	vtrans_max: LREAL := 934; //vY,vY
-	vrot_max: LREAL   := 1.57; //vTheta
+	vtrans_max: LREAL := ControlParameters.vtrans_max;
+	vrot_max: LREAL   := ControlParameters.vrot_max; //vTheta
 	u: ARRAY[0..2] OF LREAL;
 	i: INT;
-	accuracyXY: LREAL := 3;
-	accuracyTheta: LREAL := 0.01;
+	accuracyXY: LREAL := ControlParameters.accuracyXY;
+	accuracyTheta: LREAL := ControlParameters.accuracyTheta;
 END_VAR
 ]]></Declaration>
     <Implementation>

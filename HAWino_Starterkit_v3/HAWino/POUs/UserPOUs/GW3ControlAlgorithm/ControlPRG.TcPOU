@@ -24,7 +24,7 @@ VAR
 	
 	CONTROL_ERROR_THRESH : LREAL := 5;
 	
-	FFLin: BOOL := FALSE;
+	FFLin: BOOL := ControlParameters.FeedForwardLinearization;
 	thetaLin: LREAL;
 	
 	///////////////////////////////////////////////
