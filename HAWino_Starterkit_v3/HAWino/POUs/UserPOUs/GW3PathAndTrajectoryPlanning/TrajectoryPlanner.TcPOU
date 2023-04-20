@@ -135,7 +135,7 @@ FOR i := 0 TO maxIdx BY 2 DO
 END_FOR
 
 //only add deacceleation swp if path is long enough 
-IF path.length > arcLengthSlow+0.1 THEN
+IF path.length > arcLengthSlow+0.1 AND nmbSWP > 0 THEN
 	//add last swp at the correct indices for slow deaccelarion at the end
 	IF swp[nmbSWP-1] < path.length - arcLengthSlow THEN
 		swp[nmbSWP] := path.length - arcLengthSlow;
@@ -151,7 +151,11 @@ IF path.length > arcLengthSlow+0.1 THEN
 		END_FOR
 	END_IF
 	nmbSWP := nmbSWP+1;
+ELSIF path.length > arcLengthSlow+0.1 AND nmbSWP = 0 THEN
+	swp[0] := path.length - arcLengthSlow;
+	nmbSWP := 1;
 END_IF
+
 
 //add middle of path for theta-swp
 //FOR i := 0 TO nmbSWP-1 DO
@@ -572,7 +576,9 @@ END_IF]]></ST>
       <LineId Id="92" Count="0" />
       <LineId Id="90" Count="0" />
       <LineId Id="50" Count="0" />
+      <LineId Id="161" Count="2" />
       <LineId Id="115" Count="0" />
+      <LineId Id="160" Count="0" />
       <LineId Id="129" Count="0" />
       <LineId Id="128" Count="0" />
       <LineId Id="137" Count="5" />
