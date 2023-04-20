@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <GVL Name="ControlParameters" Id="{aab61412-1d67-46c3-bb09-a45aba2cddc3}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++	
+	//Parameters for ControlPRG
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++
+	
+	FeedForwardLinearization: BOOL := FALSE;
+
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++	
+	//Parameters for SimpleStateFeedbackLaw (Controller)
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++
+	
+	//controller Gain Matrix
+	controllerK: ARRAY [0..2,0..2] OF LREAL := [2,0,0,
+									  0,2,0,
+									  0,0,2];
+									  
+	//Maximal Translational Velocity (vX, vY)
+	vtrans_max: LREAL := 934;
+	//Maximal rotational Velocity (vTheta)
+	vrot_max: LREAL   := 6.9;
+	
+	// accuracy tolerance
+	accuracyXY: LREAL := 3;
+	accuracyTheta: LREAL := 0.01;
+	
+					
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++	
+	//Parameters for KalmanST (Observer)
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++
+	
+	//amount of cycles camera is delayed (Camdelay 160ms / Cycletyme 2ms)
+	kObsDelayedCycles: INT	:= 61;
+	
+	//Camera Measurement Covariance Matrix
+	Q : ARRAY [0..2,0..2] OF LREAL 		:=[9.3047,    0.4415,   -0.0036,
+    									   0.4415,    26.0708,   -0.0078,
+   										  -0.0036,   -0.0078,    0.0007];
+	
+	//Encoder Process Noise Covariance Matrix										  
+	RMat : ARRAY [0..2, 0..2] OF LREAL 	:= [0.00127820524383046,    -0.00144745069148629,    1.57202639633006E-06,
+											-0.00144745069148629,    0.0142936660651043,      -2.43008878392535E-05,
+											1.57202639633006E-06,    -2.43008878392535E-05,	  2.50703907504212E-07];
+	
+													
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++	
+	//Parameters for TimeOptimalTrajectory
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++
+	
+	//!!! IMPORTANT: Parameters in m not mm!!!
+	
+	// Bezier radius												
+    maxRadius		    : LREAL				:= 0.1;
+	
+	//
+	samplingTime		: LREAL				:= 0.05;
+	
+	
+	maxVel				: LREAL				:= 0.6;
+	maxAcc				: LREAL				:= 0.5;
+	
+	arcLengthSlow		: LREAL				:= 0.22;
+	maxSlowVel			: LREAL				:= 0.12;
+	
+	maxRotVel			: LREAL				:= 100;
+	maxRotAcc			: LREAL				:= 100;	
+	
+	thetaDZ				: LREAL				:= 0.2;
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

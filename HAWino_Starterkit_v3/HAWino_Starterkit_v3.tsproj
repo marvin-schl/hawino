@@ -3250,6 +3250,18 @@
 							<Type>UINT</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.robot.i1Raw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.i2Raw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.i3Raw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
 							<Name>ControlPRG.robot.slider</Name>
 							<Comment><![CDATA[outputs from robot]]></Comment>
 							<Type>BOOL</Type>
@@ -3474,16 +3486,16 @@
 							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.supplyCurrentRaw</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
 							<Name>PowerManager.batteryVoltageRaw</Name>
 							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.requestShutdown</Name>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.supplyCurrentRaw</Name>
-							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.SOC</Name>
@@ -3521,6 +3533,16 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>Fahrauftrag.TrajectoryController.newWaypointListAvailable</Name>
+							<Comment><![CDATA[ Status-Bit zur Signalisierung einer neuen WP-Liste]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.FeedbackToGW1</Name>
+							<Comment><![CDATA[Feedback/Status des Roboters an GW1]]></Comment>
+							<Type>STRING(50)</Type>
+						</Var>
+						<Var>
 							<Name>Fahrauftrag.TrajectoryController.xBoEnable</Name>
 							<Comment><![CDATA[ Freigabesignal für Fahrt, Roboter stoppt bei FALSE]]></Comment>
 							<Type>BOOL</Type>
@@ -3531,18 +3553,8 @@
 							<Type GUID="{57D1290D-8922-6C29-A5EB-E802603DE228}">ARRAY [0..100] OF RobotPoseSimple</Type>
 						</Var>
 						<Var>
-							<Name>Fahrauftrag.TrajectoryController.newWaypointListAvailable</Name>
-							<Comment><![CDATA[ Status-Bit zur Signalisierung einer neuen WP-Liste]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>Fahrauftrag.TrajectoryController.xBoReset</Name>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.FeedbackToGW1</Name>
-							<Comment><![CDATA[Feedback/Status des Roboters an GW1]]></Comment>
-							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
 							<Name>IrDistanceSensors.distance_mm</Name>

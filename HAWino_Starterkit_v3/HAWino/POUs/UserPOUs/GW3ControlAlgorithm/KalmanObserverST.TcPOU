@@ -25,27 +25,19 @@ VAR
 	camDataOld, observerError, observedPosition, lastValidCamData, vWorld: RobotPoseSimple;
 	pulseGenerator: TP;
 	
-	delayedCycles		AT%Q* 	: INT	:= 20;	//Camdelay 160ms / Cycletyme 2ms
+	delayedCycles		AT%Q* 	: INT	:= ControlParameters.kObsDelayedCycles;	//Camdelay 160ms / Cycletyme 2ms
 	delayedPosition: ARRAY [0..140] OF RobotPoseSimple;
-	
-	
-	K : ARRAY [0..2,0..2] OF LREAL 		:= [18, 0 ,0,
-									  		0, 18, 0,
-									  		0, 0, 18];
+
 											
 	P, H, TEMP : ARRAY [0..2,0..2] OF LREAL;
 
-	Q : ARRAY [0..2,0..2] OF LREAL 		:=[9.3047,    0.4415,   -0.0036,
-    									   0.4415,    26.0708,   -0.0078,
-   										  -0.0036,   -0.0078,    0.0007];
+	Q : ARRAY [0..2,0..2] OF LREAL 		:= ControlParameters.Q;
 										  
 	(*Q : ARRAY [0..2,0..2] OF LREAL 		:=[0.0145,    0.2583,   -0.1632,
     									   0.1352,    0.0092,    0.2404,
    										   -0.4028,   0.1352,    0.0001]; *)
 											  
-	RMat : ARRAY [0..2, 0..2] OF LREAL 	:= [0.00127820524383046,    -0.00144745069148629,    1.57202639633006E-06,
-											-0.00144745069148629,    0.0142936660651043,      -2.43008878392535E-05,
-											1.57202639633006E-06,    -2.43008878392535E-05,	  2.50703907504212E-07];
+	RMat : ARRAY [0..2, 0..2] OF LREAL 	:= ControlParameters.RMat;
 											
 (*	RMat : ARRAY [0..2, 0..2] OF LREAL 	:= [0.0291,		0.6199,		-0.5602,
 											0.6455,		0.0307,      0.2979,
