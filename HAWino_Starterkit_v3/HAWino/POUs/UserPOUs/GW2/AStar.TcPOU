@@ -249,8 +249,6 @@ FOR i := 0 TO numberOfNodes BY 1 DO
  h := SQRT(EXPT(xNode[startNode]-xEnd,2) + EXPT(yNode[startNode]-yEnd,2));
  f := g + h;
  
- //übergibt hier zu entfernende Nodes in closed List -> nötig?
- 
  //insert start node in openList
  openList[1,1] := 1;
  openList[1,2] := startNode;
@@ -270,7 +268,6 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 	neighborList := nullMatrix_Neighbor;
 	
 	//search the neightbor and put in neighborlist
-	//gprev := g;																		//ausversehen gelöscht??? geht jetzt?
 	FOR v := 1 TO 170 BY 1 DO
 		//calculate forwards
 		IF matrix[currentNode,v] <> 0 THEN
@@ -482,8 +479,7 @@ error := FALSE;
       <LineId Id="1356" Count="0" />
       <LineId Id="867" Count="2" />
       <LineId Id="872" Count="2" />
-      <LineId Id="876" Count="20" />
-      <LineId Id="1502" Count="0" />
+      <LineId Id="878" Count="18" />
       <LineId Id="898" Count="72" />
       <LineId Id="1217" Count="0" />
       <LineId Id="971" Count="1" />
@@ -491,9 +487,10 @@ error := FALSE;
       <LineId Id="1600" Count="0" />
       <LineId Id="1593" Count="0" />
       <LineId Id="973" Count="16" />
-      <LineId Id="1002" Count="16" />
+      <LineId Id="1002" Count="15" />
+      <LineId Id="1649" Count="0" />
       <LineId Id="67" Count="0" />
-      <LineId Id="1595" Count="0" />
+      <LineId Id="1651" Count="0" />
     </LineIds>
     <LineIds Name="AStar.reset">
       <LineId Id="5" Count="4" />

@@ -39,7 +39,7 @@ IF vyRobot <> 0 AND vxRobot <> 0 THEN
 END_IF
 beta := ATAN(laenge/breite); //Winkel des festen Dreiecks
 
-//Die Kameradatane verfügbar 
+//Kameradaten verfügbar 
 IF xRobot <> 0 AND yRobot <> 0 THEN
 	FOR l := 1 TO 5 BY 1 DO
 		robotCollision[l] := FALSE; 
@@ -59,7 +59,7 @@ IF xRobot <> 0 AND yRobot <> 0 THEN
 		y4Box := yRobot + SIN(alpha) * breite;	
 	ELSIF gamma >= pi/2 AND gamma <= pi THEN //Quadrant 2
 		quadrant := 2;
-		alpha := ABS(gamma - pi);
+		alpha := pi - gamma;
 		x1Box := xRobot + SIN(alpha) * breite;
 		y1Box := yRobot + COS(alpha) * breite;
 		x2Box := xRobot - COS(alpha + beta) * diagonal;
@@ -70,7 +70,7 @@ IF xRobot <> 0 AND yRobot <> 0 THEN
 		y4Box := yRobot - COS(alpha) * breite;
 	ELSIF gamma > -pi AND gamma < -pi/2 THEN //Quadrant 3
 		quadrant := 3;
-		alpha := ABS(gamma + pi/2);
+		alpha := pi + gamma;
 		x1Box := xRobot - SIN(alpha) * breite;
 		y1Box := yRobot + COS(alpha) * breite;
 		x2Box := xRobot - SIN(alpha + beta) * diagonal;
@@ -134,15 +134,26 @@ IF xRobot <> 0 AND yRobot <> 0 THEN
 			robotCollision[collide] := TRUE;
 		END_IF
 	END_FOR
-//die Kamerandaten ausfallen	
+	
+//Kameradaten ausfallen	
 ELSE
 	FOR l := 1 TO 5 BY 1 DO
 		robotCollision[l] := TRUE; 
 	END_FOR
+	x1Box := 0;
+	y1Box := 0;
+	x2Box := 0;
+	y2Box := 0;
+	x3Box := 0;
+	y3Box := 0;
+	x4Box := 0;
+	y4Box := 0;
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="Kollisionserkennung">
-      <LineId Id="22" Count="12" />
+      <LineId Id="22" Count="5" />
+      <LineId Id="342" Count="0" />
+      <LineId Id="29" Count="5" />
       <LineId Id="36" Count="1" />
       <LineId Id="40" Count="0" />
       <LineId Id="305" Count="0" />
@@ -197,10 +208,11 @@ END_IF]]></ST>
       <LineId Id="168" Count="0" />
       <LineId Id="170" Count="0" />
       <LineId Id="156" Count="0" />
+      <LineId Id="322" Count="0" />
       <LineId Id="310" Count="0" />
       <LineId Id="307" Count="0" />
-      <LineId Id="315" Count="1" />
-      <LineId Id="312" Count="0" />
+      <LineId Id="352" Count="9" />
+      <LineId Id="351" Count="0" />
       <LineId Id="306" Count="0" />
     </LineIds>
   </POU>
