@@ -43,6 +43,7 @@ VAR
 	countClosed : INT := 1;
 	countPointList : INT := 1;
 	error : BOOL := FALSE;
+	//destinationUnreachable : BOOL := FALSE;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -82,40 +83,42 @@ FOR i := 0 TO numberOfNodes BY 1 DO
  END_FOR
  
 //Löschen der Knoten über Station und die nahegelegenen diagonalen Verbindungen
- FOR counter := 0 TO 15 BY 1 DO
-	FOR j := 1 TO 170 BY 1 DO
-		matrix[removeNode[counter],j] := 0;
-		matrix[j, removeNode[counter]] := 0;
- 	END_FOR
-	
-	//diagonale Verbindung oben links
-	IF removeNode[counter] - 1 > 0 AND removeNode[counter] + numberOfColumns <= numberOfNodes THEN 
-		matrix[removeNode[counter] - 1, removeNode[counter] + numberOfColumns] := 0;	
-		matrix[removeNode[counter] + numberOfColumns, removeNode[counter] - 1] := 0;	
-	END_IF
-	
-	//diagonale Verbindung unten links
-	IF removeNode[counter] - 1 > 0 AND removeNode[counter] - numberOfColumns > 0 THEN 
-		matrix[removeNode[counter] - 1, removeNode[counter] - numberOfColumns] := 0;	
-		matrix[removeNode[counter] - numberOfColumns, removeNode[counter] - 1] := 0;	
-	END_IF
-	
-	//diagonale Verbindung oben rechts
-	IF removeNode[counter] + 1 <= numberOfNodes AND removeNode[counter] + numberOfColumns <= numberOfNodes THEN 
-		matrix[removeNode[counter] + 1, removeNode[counter] + numberOfColumns] := 0;	
-		matrix[removeNode[counter] + numberOfColumns, removeNode[counter] + 1] := 0;	
-	END_IF
-	
-	//diagonale Verbindung unten rechts
-	IF removeNode[counter] + 1 <= numberOfNodes AND removeNode[counter] - numberOfColumns > 0 THEN
-		matrix[removeNode[counter] + 1, removeNode[counter] - numberOfColumns] := 0;	
-		matrix[removeNode[counter] - numberOfColumns, removeNode[counter] + 1] := 0;	
-	END_IF
-	
-	//alle entfernten Knoten auf unrealistische Koordinaten setzen, damit sie nicht als Startknoten in Frage kommen, außer die Partplätze
-	IF counter > 3 THEN
-		xNode[removeNode[counter]] := 10000;
-		yNode[removeNode[counter]] := 10000;
+ FOR counter := 0 TO 30 BY 1 DO 
+	IF removeNode[counter] > 0 THEN 
+		FOR j := 1 TO 170 BY 1 DO
+			matrix[removeNode[counter],j] := 0;
+			matrix[j, removeNode[counter]] := 0;
+		END_FOR
+		
+		//diagonale Verbindung oben links
+		IF removeNode[counter] - 1 > 0 AND removeNode[counter] + numberOfColumns <= numberOfNodes THEN 
+			matrix[removeNode[counter] - 1, removeNode[counter] + numberOfColumns] := 0;	
+			matrix[removeNode[counter] + numberOfColumns, removeNode[counter] - 1] := 0;	
+		END_IF
+		
+		//diagonale Verbindung unten links
+		IF removeNode[counter] - 1 > 0 AND removeNode[counter] - numberOfColumns > 0 THEN 
+			matrix[removeNode[counter] - 1, removeNode[counter] - numberOfColumns] := 0;	
+			matrix[removeNode[counter] - numberOfColumns, removeNode[counter] - 1] := 0;	
+		END_IF
+		
+		//diagonale Verbindung oben rechts
+		IF removeNode[counter] + 1 <= numberOfNodes AND removeNode[counter] + numberOfColumns <= numberOfNodes THEN 
+			matrix[removeNode[counter] + 1, removeNode[counter] + numberOfColumns] := 0;	
+			matrix[removeNode[counter] + numberOfColumns, removeNode[counter] + 1] := 0;	
+		END_IF
+		
+		//diagonale Verbindung unten rechts
+		IF removeNode[counter] + 1 <= numberOfNodes AND removeNode[counter] - numberOfColumns > 0 THEN
+			matrix[removeNode[counter] + 1, removeNode[counter] - numberOfColumns] := 0;	
+			matrix[removeNode[counter] - numberOfColumns, removeNode[counter] + 1] := 0;	
+		END_IF
+		
+		//alle entfernten Knoten auf unrealistische Koordinaten setzen, damit sie nicht als Startknoten in Frage kommen, außer die Partplätze
+		IF counter > 3 THEN
+			xNode[removeNode[counter]] := 10000;
+			yNode[removeNode[counter]] := 10000;
+		END_IF
 	END_IF
  END_FOR
  
@@ -393,7 +396,10 @@ END_FOR
       <Declaration><![CDATA[METHOD reset : BOOL
 VAR_INPUT
 END_VAR
-]]></Declaration>
+
+VAR
+	numb: INT;
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[Zeros_INT(wayPointList_finished);
 Zeros(closedList);
@@ -422,6 +428,10 @@ countClosed := 1;
 countPointList := 1;
 error := FALSE;
 
+FOR numb := 16 TO 30 BY 1 DO
+	removeNode[numb] := 0;
+END_FOR
+
 
 ]]></ST>
       </Implementation>
@@ -434,7 +444,9 @@ error := FALSE;
       <LineId Id="1605" Count="0" />
       <LineId Id="774" Count="26" />
       <LineId Id="803" Count="0" />
-      <LineId Id="1193" Count="5" />
+      <LineId Id="1193" Count="1" />
+      <LineId Id="1650" Count="0" />
+      <LineId Id="1195" Count="3" />
       <LineId Id="1228" Count="0" />
       <LineId Id="1199" Count="0" />
       <LineId Id="1218" Count="1" />
@@ -455,6 +467,7 @@ error := FALSE;
       <LineId Id="1227" Count="0" />
       <LineId Id="1215" Count="1" />
       <LineId Id="1545" Count="0" />
+      <LineId Id="1651" Count="0" />
       <LineId Id="810" Count="1" />
       <LineId Id="1253" Count="0" />
       <LineId Id="1231" Count="0" />
@@ -511,6 +524,9 @@ error := FALSE;
       <LineId Id="30" Count="0" />
       <LineId Id="33" Count="1" />
       <LineId Id="43" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="49" Count="1" />
       <LineId Id="39" Count="1" />
       <LineId Id="32" Count="0" />
     </LineIds>
