@@ -39,7 +39,7 @@ VAR
 	lastCollision: ARRAY [1..5] OF BOOL;
 	//CollisionSolution : CollisionSolution;
 	collisionFree : BOOL := FALSE;
-	removeNodeCollision : ARRAY[0..10] OF INT;
+	removeNodeCollision : ARRAY[1..11] OF INT;
 	todo : STRING(10);
 	
 	//nur testen
@@ -98,7 +98,7 @@ END_IF
 
 IF s1a AND NOT s1b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 THEN
 	s1a := 0; s1b := 1;
-	AStar(enable := TRUE, xRobotActual := xRobotStartposition, yRobotActual := yRobotStartposition, xEnd := xEndvalue, yEnd := yEndvalue, endNode := EndNode);
+	AStar(xRobotActual := xRobotStartposition, yRobotActual := yRobotStartposition, xEnd := xEndvalue, yEnd := yEndvalue, endNode := EndNode, blockedNodes := removeNodeCollision);
 	finished_ASearch := AStar.finishedASearch;
 	xPointList := AStar.xCoordinates;
 	yPointList := AStar.yCoordinates;
@@ -223,7 +223,7 @@ END_IF
 
 IF s11a AND NOT s11b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 THEN
 	s11a := 0; s11b := 1;
-	AStar(enable := TRUE, xRobotActual := xRobotStartposition, yRobotActual := yRobotStartposition, xEnd := xEndvalue, yEnd := yEndvalue, endNode := EndNode);
+	AStar(xRobotActual := xRobotStartposition, yRobotActual := yRobotStartposition, xEnd := xEndvalue, yEnd := yEndvalue, endNode := EndNode, blockedNodes := removeNodeCollision);
 	finished_ASearch := AStar.finishedASearch;
 	xPointList := AStar.xCoordinates;
 	yPointList := AStar.yCoordinates;
@@ -358,7 +358,7 @@ END_IF
 
 IF s26a AND NOT s26b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 THEN
 	s26a := 0; s26b := 1;
-	AStar(enable := TRUE, xRobotActual := xRobotStartposition, yRobotActual := yRobotStartposition, xEnd := xEndvalue, yEnd := yEndvalue, endNode := EndNode);
+	AStar(xRobotActual := xRobotStartposition, yRobotActual := yRobotStartposition, xEnd := xEndvalue, yEnd := yEndvalue, endNode := EndNode, blockedNodes := removeNodeCollision);
 	finished_ASearch := AStar.finishedASearch;
 	xPointList := AStar.xCoordinates;
 	yPointList := AStar.yCoordinates;
@@ -416,7 +416,7 @@ IF s30 AND NOT s31 AND trajectoryController.yBoArrivedAtDestination THEN
 	FeedbackToGW1 := 'An Ladestation';
 END_IF
 
-IF s31 AND NOT s21a AND StatusFromGW1 = 'Fertig geladen' THEN
+IF s31 AND NOT s21a AND StatusFromGW1 = 'FertigGeladen' THEN
 	s31 := 0; s21a := 1;
 	lastRelevantStateForCollision := 's21a';
 	//	Fahrauftrag zum Parkplatz
@@ -434,7 +434,7 @@ END_IF
 
 IF s21a AND NOT s21b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 THEN
 	s21a := 0; s21b := 1;
-	AStar(enable := TRUE, xRobotActual := xRobotStartposition, yRobotActual := yRobotStartposition, xEnd := xEndvalue, yEnd := yEndvalue, endNode := EndNode);
+	AStar(xRobotActual := xRobotStartposition, yRobotActual := yRobotStartposition, xEnd := xEndvalue, yEnd := yEndvalue, endNode := EndNode, blockedNodes := removeNodeCollision);
 	finished_ASearch := AStar.finishedASearch;
 	xPointList := AStar.xCoordinates;
 	yPointList := AStar.yCoordinates;
@@ -511,18 +511,16 @@ VAR
 	roboNmb, nmb, n : INT;
 	i : INT := 1;
 	otherRobo : ARRAY[1..4] OF INT;
+	otherRoboAtStop : bool;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[//wenn Zielknoten gelöscht wird weil Roboter im Weg steht, dann paar Schritte zurückfahren und dem anderen Platz machen...
-//wenn an Parkplatz dann zurück zu s0 oder ähnlichem
 
 //gestoppt
 //alle States zurücknehmen
 removeAllToken();
 i := 1;
-	
-//collisionFree := NOT collision[Var_HAWIno.Robot_Number];
 	
 //rausfinden welche Roboter beteiligt
 FOR nmb := 1 TO 5 BY 1 DO
@@ -531,6 +529,16 @@ FOR nmb := 1 TO 5 BY 1 DO
 		i := i + 1;
 	END_IF
 END_FOR
+
+//Anderer Roboter auf Parkplatz
+IF camera.cameraData.robotPositionArray[otherRobo[1]].x > 7000 AND camera.cameraData.robotPositionArray[otherRobo[1]].x < 7200  THEN
+	otherRoboAtStop := TRUE;
+END_IF
+
+//Anderer Roboter an Ladestation
+IF camera.cameraData.robotPositionArray[otherRobo[1]].x > 6100 AND camera.cameraData.robotPositionArray[otherRobo[1]].x < 6800 AND camera.cameraData.robotPositionArray[otherRobo[1]].y > 3400 AND camera.cameraData.robotPositionArray[otherRobo[1]].y < 3600  THEN
+	otherRoboAtStop := TRUE;
+END_IF
 	
 IF NOT collisionFree THEN
 	todo := 'Warten';
@@ -555,7 +563,7 @@ IF todo = 'Fahren' THEN
 	todo := '';
 	
 ELSIF todo = 'Warten' THEN
-	IF collisionFree THEN
+	IF collisionFree OR otherRoboAtStop THEN
 		xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
 		yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
 		continueAfterCollision();
@@ -573,21 +581,51 @@ END_IF
       <Declaration><![CDATA[METHOD continueAfterCollision : BOOL
 VAR_INPUT
 END_VAR
-]]></Declaration>
+VAR
+	diffToList : ARRAY[0..100] OF LREAL;
+	sortedDiff : ARRAY[0..100,1..2] OF LREAL;
+	nextIndex, j, n, l, i : INT;
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF lastRelevantStateForCollision = 's0' THEN
 	s0 := 1;
 ELSIF lastRelevantStateForCollision = 's1a' THEN
 	s1a := 1;
 ELSIF lastRelevantStateForCollision = 's6a' THEN
-	//s6a := 1;
+	s6b := 1;
 	//readAssigment.pointsFromSlotToReader
-	//FOR i := 0 TO 100 - yUintWaypointIndex BY 1 DO 						//wollen wir hier nochmal zurück zum Letzen oder direkt den nächsten anfahren??? (nochmal genau 
-	//	wayPointList[i] := pointsFromReaderToSlot[yUintWaypointIndex + i];
-	//end_for 
-	//TrajectoryController.setWaypointList(wayPoinList);
-	//trajectoryController.newWaypointListAvailable := TRUE;
-
+	
+	FOR i := 0 TO 10 BY 1 DO
+		IF readAssigment.pointsFromSlotToReader[i].x <> 0 AND readAssigment.pointsFromSlotToReader[i].y <> -1 THEN
+			//Abstände Roboter zu Wegpunkten
+			diffToList[i] := SQRT(EXPT(camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x - readAssigment.pointsFromSlotToReader[i].x,2) + EXPT(camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y - readAssigment.pointsFromSlotToReader[i].y,2));
+			FOR n := 0 TO 10 BY 1 DO
+				IF diffToList[i] < sortedDiff[n,2] THEN
+					FOR l := 9 TO n BY -1 DO
+						sortedDiff[l+1,1] := sortedDiff[l,1];
+						sortedDiff[l+1,2] := sortedDiff[l,2];
+					END_FOR
+					sortedDiff[n,2] := diffToList[i];
+					sortedDiff[n,1] := i;
+					EXIT;
+				ELSIF i = 0 THEN
+					sortedDiff[0,2] := diffToList[0];
+					sortedDiff[0,1] := 0;
+					EXIT;
+				END_IF
+			END_FOR
+		END_IF	
+	END_FOR
+	
+	ZEROS_RobotPoseSimple(wayPointList);
+	nextIndex := LREAL_TO_INT(MAX(sortedDiff[0,1],sortedDiff[1,1]));
+	
+	FOR i := 0 TO 100 - nextIndex BY 1 DO 
+		wayPointList[i] := readAssigment.pointsFromSlotToReader[nextIndex + i];
+	END_FOR 
+	TrajectoryController.setWaypointList(wayPointList);
+	trajectoryController.newWaypointListAvailable := TRUE;
+	
 ELSIF lastRelevantStateForCollision = 's10' THEN
 	s10 := 1;
 ELSIF lastRelevantStateForCollision = 's11a' THEN
@@ -595,8 +633,40 @@ ELSIF lastRelevantStateForCollision = 's11a' THEN
 ELSIF lastRelevantStateForCollision = 's16' THEN
 	s16 := 1;
 ELSIF lastRelevantStateForCollision = 's17' THEN
-	//s17 := 1;
+	s17 := 1;
 	//readAssigment.pointsFromReaderToSlot
+	
+	FOR i := 0 TO 10 BY 1 DO
+		IF readAssigment.pointsFromReaderToSlot[i].x <> 0 AND readAssigment.pointsFromReaderToSlot[i].y <> -1 THEN
+			//Abstände Roboter zu Wegpunkten
+			diffToList[i] := SQRT(EXPT(camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x - readAssigment.pointsFromReaderToSlot[i].x,2) + EXPT(camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y - readAssigment.pointsFromReaderToSlot[i].y,2));
+			FOR n := 0 TO 10 BY 1 DO
+				IF diffToList[i] < sortedDiff[n,2] THEN
+					FOR l := 9 TO n BY -1 DO
+						sortedDiff[l+1,1] := sortedDiff[l,1];
+						sortedDiff[l+1,2] := sortedDiff[l,2];
+					END_FOR
+					sortedDiff[n,2] := diffToList[i];
+					sortedDiff[n,1] := i;
+					EXIT;
+				ELSIF i = 0 THEN
+					sortedDiff[0,2] := diffToList[0];
+					sortedDiff[0,1] := 0;
+					EXIT;
+				END_IF
+			END_FOR
+		END_IF	
+	END_FOR
+	
+	ZEROS_RobotPoseSimple(wayPointList);
+	nextIndex := LREAL_TO_INT(MAX(sortedDiff[0,1],sortedDiff[1,1]));
+	
+	FOR i := 0 TO 100 - nextIndex BY 1 DO 
+		wayPointList[i] := readAssigment.pointsFromReaderToSlot[nextIndex + i];
+	END_FOR 
+	TrajectoryController.setWaypointList(wayPointList);
+	trajectoryController.newWaypointListAvailable := TRUE;
+	
 ELSIF lastRelevantStateForCollision = 's21a' THEN
 	s21a := 1;
 ELSIF lastRelevantStateForCollision = 's26a' THEN
@@ -661,6 +731,7 @@ FeedbackToGW1 := 'Verfuegbar';
 resetVar := TRUE;
 Gripper.closeGripperCommand := FALSE;
 TrajectoryController.xBoReset := TRUE;
+ZEROS_INT(removeNodeCollision);
 
 ]]></ST>
       </Implementation>
@@ -1066,8 +1137,17 @@ END_VAR
     </LineIds>
     <LineIds Name="Fahrauftrag.CollisionSolution">
       <LineId Id="22" Count="0" />
-      <LineId Id="94" Count="0" />
-      <LineId Id="30" Count="32" />
+      <LineId Id="30" Count="4" />
+      <LineId Id="37" Count="7" />
+      <LineId Id="126" Count="0" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="121" Count="0" />
+      <LineId Id="123" Count="1" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="130" Count="1" />
+      <LineId Id="129" Count="0" />
+      <LineId Id="45" Count="17" />
       <LineId Id="104" Count="1" />
       <LineId Id="111" Count="0" />
       <LineId Id="74" Count="3" />
@@ -1080,8 +1160,13 @@ END_VAR
       <LineId Id="6" Count="3" />
       <LineId Id="17" Count="1" />
       <LineId Id="28" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="83" Count="21" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="51" Count="0" />
       <LineId Id="30" Count="4" />
-      <LineId Id="29" Count="0" />
+      <LineId Id="108" Count="0" />
       <LineId Id="24" Count="0" />
       <LineId Id="23" Count="0" />
       <LineId Id="16" Count="0" />
@@ -1091,6 +1176,10 @@ END_VAR
       <LineId Id="22" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="27" Count="0" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="111" Count="28" />
+      <LineId Id="110" Count="0" />
+      <LineId Id="140" Count="0" />
       <LineId Id="12" Count="3" />
       <LineId Id="26" Count="0" />
       <LineId Id="25" Count="0" />
@@ -1108,6 +1197,7 @@ END_VAR
       <LineId Id="53" Count="0" />
       <LineId Id="56" Count="0" />
       <LineId Id="60" Count="0" />
+      <LineId Id="64" Count="0" />
       <LineId Id="55" Count="0" />
       <LineId Id="50" Count="0" />
     </LineIds>
