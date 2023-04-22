@@ -1294,7 +1294,7 @@
 		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1006">424de6000000000000007600000028000000100000000e000000010004000000000070000000000000000000000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffff788833338887ffff78883bb38887ffffffff3bb3ffffffffffff8778fffffffffffffffffffffffffffffffff999ffff78f78fffffffffff78f78ffff999ffff78f7888fffffffff78f78f78f999ffff78f78f78ffffffff78f7888ff999ffffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.214.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.207.184.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="2">
 				<Cpu BaseTime="1000"/>
@@ -1319,6 +1319,9 @@
 				</Task>
 				<Task Id="8" Priority="22" CycleTime="200000" AmsPort="355" DisableFpExceptions="true" AdtTasks="true">
 					<Name>A_search</Name>
+				</Task>
+				<Task Id="9" Priority="21" CycleTime="100000" AmsPort="356" AdtTasks="true">
+					<Name>Kollisionserkennung</Name>
 				</Task>
 			</Tasks>
 			<Modules>
@@ -3477,9 +3480,22 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+<<<<<<< HEAD
 							<Name>Fahrauftrag.collision</Name>
 							<Comment><![CDATA[Kollision]]></Comment>
 							<Type GUID="{ED505E53-AC03-A7B8-5B0E-7E9F26DE47AE}">ARRAY [0..4] OF BOOL</Type>
+=======
+							<Name>Kollisionserkennung.robotPoseArray</Name>
+							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
+						</Var>
+						<Var>
+							<Name>Kollisionserkennung.vxRobot</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Kollisionserkennung.vyRobot</Name>
+							<Type>LREAL</Type>
+>>>>>>> 9f6e8619c416a2c1a7d53f846bdce221a4a4c966
 						</Var>
 						<Var>
 							<Name>IrDistanceSensors.distanceRaw</Name>
@@ -3561,6 +3577,7 @@
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
+<<<<<<< HEAD
 							<Name>Fahrauftrag.resetGoBack</Name>
 							<Comment><![CDATA[messages von MQTT zurücksetzen]]></Comment>
 							<Type>BOOL</Type>
@@ -3568,6 +3585,10 @@
 						<Var>
 							<Name>Fahrauftrag.RoboNmbToGoBack</Name>
 							<Type>INT</Type>
+=======
+							<Name>Kollisionserkennung.robotCollision</Name>
+							<Type GUID="{29CAAFD0-28B6-D9D0-3B0E-64B337839191}">ARRAY [1..5] OF BOOL</Type>
+>>>>>>> 9f6e8619c416a2c1a7d53f846bdce221a4a4c966
 						</Var>
 						<Var>
 							<Name>IrDistanceSensors.distance_mm</Name>
@@ -3605,6 +3626,7 @@
 							<Name>PowerManager.stMqtt_HAWino_IN</Name>
 							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
 							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
+<<<<<<< HEAD
 						</Var>
 						<Var>
 							<Name>Gripper.driveEnable</Name>
@@ -3613,6 +3635,8 @@
 						<Var>
 							<Name>Gripper.driveVelocity</Name>
 							<Type>INT</Type>
+=======
+>>>>>>> 9f6e8619c416a2c1a7d53f846bdce221a4a4c966
 						</Var>
 						<Var>
 							<Name>Gripper.sliderToSimulink</Name>
@@ -3622,6 +3646,17 @@
 							<Name>Gripper.partInGripperToSimulink</Name>
 							<Type>LREAL</Type>
 						</Var>
+<<<<<<< HEAD
+=======
+						<Var>
+							<Name>Gripper.driveEnable</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.driveVelocity</Name>
+							<Type>INT</Type>
+						</Var>
+>>>>>>> 9f6e8619c416a2c1a7d53f846bdce221a4a4c966
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2022-04-26T16:44:07">
 						<OwnerA Name="InputDst" Prefix="TIPC^HAWino^HAWino Instance" Type="1">
@@ -6556,6 +6591,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500810000403}" Id="#x02030010"/>
 		<MappingInfo Identifier="{00000000-2002-0850-0020-500800205008}" Id="#x02030090"/>
 		<MappingInfo Identifier="{00000000-2002-0850-0120-500831000403}" Id="#x02030030"/>
+		<MappingInfo Identifier="{00000000-2003-0850-0020-500800205008}" Id="#x02030070"/>
 		<MappingInfo Identifier="{00000000-2003-0850-0220-500842000403}" Id="#x02030060"/>
 		<MappingInfo Identifier="{08502001-2003-0850-0020-500802205008}" Id="#x020300a0" Watchdog="14000000040000000400000004000000"/>
 		<MappingInfo Identifier="{08502001-0040-0304-0020-500840000403}" Id="#x02030040" Watchdog="00000000000000000000000000000000"/>
@@ -6634,7 +6670,13 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yRPposition" VarB="ControlTask Outputs^ControlPRG.yRPposition"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yUintWaypointIndex" VarB="ControlTask Outputs^ControlPRG.yUintWaypointIndex"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yVworldRef" VarB="ControlTask Outputs^ControlPRG.yVworldRef"/>
+<<<<<<< HEAD
 				<Link VarA="PlcTask Inputs^Fahrauftrag.goBack" VarB="MQTT_1 Outputs^MQTT.goBack"/>
+=======
+				<Link VarA="PlcTask Inputs^Kollisionserkennung.robotPoseArray" VarB="PlcTask Outputs^Camera.cameraData.robotPosition"/>
+				<Link VarA="PlcTask Inputs^Kollisionserkennung.vxRobot" VarB="ControlTask Outputs^ControlPRG.robot.vXtoRobot"/>
+				<Link VarA="PlcTask Inputs^Kollisionserkennung.vyRobot" VarB="ControlTask Outputs^ControlPRG.robot.vYtoRobot"/>
+>>>>>>> 9f6e8619c416a2c1a7d53f846bdce221a4a4c966
 			</OwnerB>
 			<OwnerB Name="TIRC^TcCOM Objects^Object2 (SoC_Model_Data_Aquisition_2022)">
 				<Link VarA="PlcTask Outputs^PowerManager.stMqtt_HAWino_IN^fActualBatteryCurrent" VarB="SoC_Model_Data_Aquisition_202_U^Current"/>
