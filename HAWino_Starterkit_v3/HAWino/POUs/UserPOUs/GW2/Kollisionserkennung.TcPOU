@@ -6,7 +6,7 @@ VAR
 	robotPoseArray AT%I*: ARRAY[1..8] OF RobotPose;
 	vxRobot AT%I*: LREAL;
 	vyRobot AT%I*: LREAL;
-	collisionDetected AT%Q*: BOOL := FALSE;
+	collisionDetected : BOOL := FALSE;
 	robotCollision AT%Q* : ARRAY[1..5] OF BOOL;
 		
 	robotNumber : INT := Var_HAWIno.Robot_Number;
@@ -36,25 +36,35 @@ laenge := 350 + 80;
 diagonal := SQRT(EXPT(breite,2) + EXPT(laenge,2));
 IF vyRobot <> 0 AND vxRobot <> 0 THEN
 	gamma  := ATAN2(vyRobot,vxRobot); //Drehung des Roboters
-	alpha := ABS(ATAN(vyRobot/vxRobot)); //Winkel des gedrehten Boxes
 END_IF
 beta := ATAN(laenge/breite); //Winkel des festen Dreiecks
 
 //Bounding Box dreht mit der Roboterblickrichtung
 IF gamma >= 0 AND gamma < pi/2 THEN //Quadrant 1
 	quadrant := 1;
-	alpha := gamma;
+	alpha := pi/2 - gamma; //Winkel des gedrehten Boxes
 	x1Box := xRobot + COS(alpha) * breite;
-	y1Box := yRobot + SIN(alpha) * breite;
-	x2Box := xRobot + COS(alpha + beta) * diagonal;
-	y2Box := yRobot + SIN(alpha + beta) * diagonal;
-	x3Box := xRobot - SIN(alpha + beta) * diagonal;
-	y3Box := yRobot + COS(alpha + beta) * diagonal;
+	y1Box := yRobot - SIN(alpha) * breite;
+	x2Box := xRobot + SIN(alpha + beta) * diagonal;
+	y2Box := yRobot + COS(alpha + beta) * diagonal;
+	x3Box := xRobot - COS(alpha + beta) * diagonal;
+	y3Box := yRobot + SIN(alpha + beta) * diagonal;
 	x4Box := xRobot - COS(alpha) * breite;
-	y4Box := yRobot - SIN(alpha) * breite; 
+	y4Box := yRobot + SIN(alpha) * breite;	
 ELSIF gamma >= pi/2 AND gamma <= pi THEN //Quadrant 2
 	quadrant := 2;
-	alpha := gamma - pi/2;
+	alpha := ABS(gamma - pi);
+	x1Box := xRobot + SIN(alpha) * breite;
+	y1Box := yRobot + COS(alpha) * breite;
+	x2Box := xRobot - COS(alpha + beta) * diagonal;
+	y2Box := yRobot + SIN(alpha + beta) * diagonal;
+	x3Box := xRobot - SIN(alpha + beta) * diagonal;
+	y3Box := yRobot - COS(alpha + beta) * diagonal;
+	x4Box := xRobot - SIN(alpha) * breite;
+	y4Box := yRobot - COS(alpha) * breite;
+ELSIF gamma > -pi AND gamma < -pi/2 THEN //Quadrant 3
+	quadrant := 3;
+	alpha := ABS(gamma + pi/2);
 	x1Box := xRobot - SIN(alpha) * breite;
 	y1Box := yRobot + COS(alpha) * breite;
 	x2Box := xRobot - SIN(alpha + beta) * diagonal;
@@ -62,28 +72,17 @@ ELSIF gamma >= pi/2 AND gamma <= pi THEN //Quadrant 2
 	x3Box := xRobot - COS(alpha + beta) * diagonal;
 	y3Box := yRobot - SIN(alpha + beta) * diagonal;
 	x4Box := xRobot + SIN(alpha) * breite;
-	y4Box := yRobot - COS(alpha) * breite;
-ELSIF gamma > -pi AND gamma < -pi/2 THEN //Quadrant 3
-	quadrant := 3;
-	alpha := ABS(gamma + pi/2);
-	x1Box := xRobot - SIN(alpha) * breite;
-	y1Box := yRobot - COS(alpha) * breite;
-	x2Box := xRobot + COS(alpha + beta) * diagonal;
-	y2Box := yRobot - SIN(alpha + beta) * diagonal;
-	x3Box := xRobot + SIN(alpha + beta) * diagonal;
-	y3Box := yRobot + COS(alpha + beta) * diagonal;
-	x4Box := xRobot + SIN(alpha) * breite;
-	y4Box := yRobot + COS(alpha) * breite;
+	y4Box := yRobot - COS(alpha) * breite;	
 ELSIF gamma >= -pi/2 AND gamma < 0 THEN //Quadrant 4
 	quadrant := 4;
-	alpha := gamma;
-	x1Box := xRobot + COS(alpha) * breite;
+	alpha := gamma + pi/2;
+	x1Box := xRobot - COS(alpha) * breite;
 	y1Box := yRobot - SIN(alpha) * breite;
-	x2Box := xRobot + COS(alpha + beta) * diagonal;
-	y2Box := yRobot + SIN(alpha + beta) * diagonal;
-	x3Box := xRobot - COS(alpha + beta) * diagonal;
-	y3Box := yRobot + SIN(alpha + beta) * diagonal;
-	x4Box := xRobot - COS(alpha) * breite;
+	x2Box := xRobot - COS(alpha + beta) * diagonal;
+	y2Box := yRobot - SIN(alpha + beta) * diagonal;
+	x3Box := xRobot + SIN(alpha + beta) * diagonal;
+	y3Box := yRobot - COS(alpha + beta) * diagonal;
+	x4Box := xRobot + COS(alpha) * breite;
 	y4Box := yRobot + SIN(alpha) * breite;
 END_IF
 
@@ -96,22 +95,30 @@ END_FOR
 
 //Erkennt Roboter Kollision in Box?
 FOR k := 1 TO 5 BY 1 DO
-	IF robotActive [k] <> 0 THEN
+	IF robotActive [k] <> 0 AND robotActive [k] <> robotNumber THEN
 		IF quadrant = 1 THEN
-			IF robotPoseArray[robotActive[k]].x < x1Box AND robotPoseArray[robotActive[k]].x > x3Box AND robotPoseArray[robotActive[k]].y < y2Box AND robotPoseArray[robotActive[k]].y > y4Box THEN
-				collisionDetected := TRUE;
-			END_IF
-		ELSIF quadrant = 2 THEN
-			IF robotPoseArray[robotActive[k]].x < x4Box AND robotPoseArray[robotActive[k]].x > x2Box AND robotPoseArray[robotActive[k]].y < y1Box AND robotPoseArray[robotActive[k]].y > y3Box THEN
-				collisionDetected := TRUE;
-			END_IF
-		ELSIF quadrant = 3 THEN
-			IF robotPoseArray[robotActive[k]].x < x3Box AND robotPoseArray[robotActive[k]].x > x1Box AND robotPoseArray[robotActive[k]].y < y4Box AND robotPoseArray[robotActive[k]].y > y2Box THEN
-				collisionDetected := TRUE;
-			END_IF
-		ELSIF quadrant = 4 THEN
 			IF robotPoseArray[robotActive[k]].x < x2Box AND robotPoseArray[robotActive[k]].x > x4Box AND robotPoseArray[robotActive[k]].y < y3Box AND robotPoseArray[robotActive[k]].y > y1Box THEN
 				collisionDetected := TRUE;
+			ELSE
+				collisionDetected := FALSE;
+			END_IF
+		ELSIF quadrant = 2 THEN
+			IF robotPoseArray[robotActive[k]].x < x1Box AND robotPoseArray[robotActive[k]].x > x3Box AND robotPoseArray[robotActive[k]].y < y2Box AND robotPoseArray[robotActive[k]].y > y4Box THEN
+				collisionDetected := TRUE;
+			ELSE
+				collisionDetected := FALSE;
+			END_IF
+		ELSIF quadrant = 3 THEN
+			IF robotPoseArray[robotActive[k]].x < x4Box AND robotPoseArray[robotActive[k]].x > x2Box AND robotPoseArray[robotActive[k]].y < y1Box AND robotPoseArray[robotActive[k]].y > y3Box THEN
+				collisionDetected := TRUE;
+			ELSE
+				collisionDetected := FALSE;
+			END_IF
+		ELSIF quadrant = 4 THEN
+			IF robotPoseArray[robotActive[k]].x < x3Box AND robotPoseArray[robotActive[k]].x > x1Box AND robotPoseArray[robotActive[k]].y < y4Box AND robotPoseArray[robotActive[k]].y > y2Box THEN
+				collisionDetected := TRUE;
+			ELSE
+				collisionDetected := FALSE;
 			END_IF
 		END_IF
 	END_IF
@@ -119,52 +126,58 @@ FOR k := 1 TO 5 BY 1 DO
 	IF collisionDetected = TRUE AND collide <> robotActive[k] THEN
 		collide := robotActive[k];
 		robotCollision[collide] := TRUE;
-		collisionDetected := FALSE;
 	END_IF
-END_FOR
-
-//TODO
-//Besprechung mit Gewerk 3 über vx und vy. Werte sind nicht ausgegeben]]></ST>
+END_FOR]]></ST>
     </Implementation>
     <LineIds Name="Kollisionserkennung">
-      <LineId Id="22" Count="15" />
+      <LineId Id="22" Count="12" />
+      <LineId Id="36" Count="1" />
       <LineId Id="39" Count="2" />
       <LineId Id="177" Count="0" />
       <LineId Id="173" Count="0" />
-      <LineId Id="42" Count="8" />
+      <LineId Id="229" Count="6" />
+      <LineId Id="228" Count="0" />
+      <LineId Id="50" Count="0" />
       <LineId Id="178" Count="0" />
-      <LineId Id="174" Count="0" />
-      <LineId Id="51" Count="8" />
+      <LineId Id="291" Count="0" />
+      <LineId Id="238" Count="6" />
+      <LineId Id="237" Count="0" />
+      <LineId Id="59" Count="0" />
       <LineId Id="179" Count="0" />
-      <LineId Id="176" Count="0" />
-      <LineId Id="61" Count="8" />
+      <LineId Id="292" Count="0" />
+      <LineId Id="246" Count="6" />
+      <LineId Id="245" Count="0" />
+      <LineId Id="69" Count="0" />
       <LineId Id="180" Count="0" />
-      <LineId Id="175" Count="0" />
-      <LineId Id="70" Count="13" />
+      <LineId Id="293" Count="0" />
+      <LineId Id="254" Count="6" />
+      <LineId Id="253" Count="0" />
+      <LineId Id="78" Count="5" />
       <LineId Id="85" Count="1" />
       <LineId Id="157" Count="3" />
       <LineId Id="181" Count="0" />
       <LineId Id="196" Count="1" />
+      <LineId Id="261" Count="0" />
+      <LineId Id="264" Count="0" />
       <LineId Id="188" Count="0" />
       <LineId Id="190" Count="0" />
       <LineId Id="198" Count="1" />
+      <LineId Id="265" Count="1" />
       <LineId Id="195" Count="0" />
       <LineId Id="192" Count="0" />
       <LineId Id="201" Count="1" />
+      <LineId Id="267" Count="1" />
       <LineId Id="200" Count="0" />
       <LineId Id="194" Count="0" />
       <LineId Id="204" Count="1" />
+      <LineId Id="269" Count="1" />
       <LineId Id="203" Count="0" />
       <LineId Id="183" Count="0" />
       <LineId Id="165" Count="2" />
       <LineId Id="207" Count="0" />
       <LineId Id="168" Count="0" />
-      <LineId Id="172" Count="0" />
       <LineId Id="170" Count="0" />
       <LineId Id="156" Count="0" />
-      <LineId Id="121" Count="0" />
-      <LineId Id="120" Count="0" />
-      <LineId Id="123" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
