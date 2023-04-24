@@ -48,11 +48,13 @@ VAR
 	otherRoboAtStation : BOOL := FALSE;			//anderer beteiligter HAWino ist im Stationsbereich
 	
 	//error
-	noCamera, AStarFailed, error : BOOL;
+	noCamera, AStarFailed, error, test : BOOL;
+	resetTimer : TON;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[timerCollision();
+resetTimer();
 
 IF noCamera THEN
 	error := TRUE;	
@@ -532,10 +534,16 @@ END_IF
 //reset für test zwecke
 IF reset THEN
 	doReset();
-	IF Auftrag.Art = '' AND (trajectoryController.yControllerState = ControllerState.idle OR trajectoryController.yControllerState = ControllerState.ready) THEN
-		//reset zurücksetzen
-		reset := FALSE;
-	END_IF
+	resetTimer.PT := T#1S;
+	resetTimer.IN := TRUE;
+END_IF
+
+IF Auftrag.Art = '' AND (trajectoryController.yControllerState = ControllerState.idle OR trajectoryController.yControllerState = ControllerState.ready) AND resetTimer.Q THEN
+	//reset zurücksetzen
+	resetTimer.IN := FALSE;
+	reset := FALSE;
+	test := TRUE;
+	sStart := TRUE;
 END_IF]]></ST>
     </Implementation>
     <Method Name="CollisionSolution" Id="{4b28bc3d-12ae-4013-b4ca-5ace32b6b8ab}">
@@ -736,8 +744,20 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//Statemaschine zurücksetzen
-sStart := TRUE;
+        <ST><![CDATA[resetVar := TRUE;
+TrajectoryController.xBoReset := TRUE;
+ZEROS_RobotPoseSimple(wayPointList);
+actualCamX := 0;
+actualCamY := 0;
+trajectoryController.newWaypointListAvailable := FALSE;
+trajectoryController.xBoEnable := FALSE;
+FeedbackToGW1 := 'Verfuegbar';
+Gripper.closeGripperCommand := FALSE;
+ZEROS_INT(removeNodeCollision);
+error := FALSE;
+
+//Statemaschine zurücksetzen
+sStart := FALSE;
 s0 := FALSE;
 s1a := FALSE;
 s1b := FALSE;
@@ -776,17 +796,7 @@ s29 := FALSE;
 s30 := FALSE;
 s31 := FALSE;
 
-ZEROS_RobotPoseSimple(wayPointList);
-actualCamX := 0;
-actualCamY := 0;
-trajectoryController.newWaypointListAvailable := FALSE;
-trajectoryController.xBoEnable := FALSE;
-FeedbackToGW1 := 'Verfuegbar';
-resetVar := TRUE;
-Gripper.closeGripperCommand := FALSE;
-TrajectoryController.xBoReset := TRUE;
-ZEROS_INT(removeNodeCollision);
-error := FALSE;
+
 
 ]]></ST>
       </Implementation>
@@ -1043,6 +1053,7 @@ END_VAR
     </Method>
     <LineIds Name="Fahrauftrag">
       <LineId Id="1741" Count="0" />
+      <LineId Id="1863" Count="0" />
       <LineId Id="1740" Count="0" />
       <LineId Id="1668" Count="1" />
       <LineId Id="1672" Count="0" />
@@ -1299,11 +1310,11 @@ END_VAR
       <LineId Id="939" Count="3" />
       <LineId Id="900" Count="0" />
       <LineId Id="1406" Count="2" />
-      <LineId Id="1529" Count="0" />
-      <LineId Id="1409" Count="0" />
-      <LineId Id="1528" Count="0" />
-      <LineId Id="1530" Count="0" />
+      <LineId Id="1857" Count="0" />
+      <LineId Id="1859" Count="0" />
       <LineId Id="1410" Count="0" />
+      <LineId Id="1866" Count="6" />
+      <LineId Id="1865" Count="0" />
     </LineIds>
     <LineIds Name="Fahrauftrag.CollisionSolution">
       <LineId Id="22" Count="0" />
@@ -1383,18 +1394,16 @@ END_VAR
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="Fahrauftrag.doReset">
-      <LineId Id="6" Count="0" />
-      <LineId Id="5" Count="0" />
+      <LineId Id="73" Count="1" />
+      <LineId Id="77" Count="5" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="72" Count="0" />
       <LineId Id="7" Count="36" />
-      <LineId Id="45" Count="1" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="47" Count="0" />
-      <LineId Id="51" Count="1" />
-      <LineId Id="54" Count="0" />
-      <LineId Id="53" Count="0" />
-      <LineId Id="56" Count="0" />
-      <LineId Id="60" Count="0" />
-      <LineId Id="64" Count="0" />
+      <LineId Id="45" Count="0" />
       <LineId Id="68" Count="0" />
       <LineId Id="55" Count="0" />
       <LineId Id="50" Count="0" />

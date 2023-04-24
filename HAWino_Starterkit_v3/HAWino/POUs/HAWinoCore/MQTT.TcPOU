@@ -206,6 +206,7 @@ IF txtReadInit THEN
 			bSubscribed := fbIotMqttClient.Subscribe(sTopic:=sTopicSubToGW1_Status, eQoS:=TcIotMqttQos.AtMostOnceDelivery);
 			bSubscribed := fbIotMqttClient.Subscribe(sTopic:=sTopicSubToGW1_Auftrag, eQoS:=TcIotMqttQos.AtMostOnceDelivery);
 			bSubscribed := fbIotMqttClient.Subscribe(sTopic:=sTopicSubCollision, eQoS:=TcIotMqttQos.AtMostOnceDelivery);
+			bSubscribed := fbIotMqttClient.Subscribe(sTopic:=sTopicSubReset, eQoS:=TcIotMqttQos.AtMostOnceDelivery);
 			
 			
 			//bSubscribed := fbIotMqttClient.Subscribe(sTopic:=sTopicSubToFleetMgmt, eQoS:=TcIotMqttQos.AtMostOnceDelivery);
@@ -507,6 +508,7 @@ END_IF]]></ST>
       <LineId Id="956" Count="0" />
       <LineId Id="1211" Count="0" />
       <LineId Id="1706" Count="0" />
+      <LineId Id="1955" Count="0" />
       <LineId Id="955" Count="0" />
       <LineId Id="294" Count="0" />
       <LineId Id="300" Count="0" />

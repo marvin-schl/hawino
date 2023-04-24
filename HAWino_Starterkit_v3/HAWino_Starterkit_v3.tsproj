@@ -1294,7 +1294,7 @@
 		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1006">424de6000000000000007600000028000000100000000e000000010004000000000070000000000000000000000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffff788833338887ffff78883bb38887ffffffff3bb3ffffffffffff8778fffffffffffffffffffffffffffffffff999ffff78f78fffffffffff78f78ffff999ffff78f7888fffffffff78f78f78f999ffff78f78f78ffffffff78f7888ff999ffffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.214.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.200.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="2">
 				<Cpu BaseTime="1000"/>
@@ -3436,6 +3436,10 @@
 							<Name>MQTT.goBack</Name>
 							<Type>BOOL</Type>
 						</Var>
+						<Var>
+							<Name>MQTT.resetButton</Name>
+							<Type>BOOL</Type>
+						</Var>
 					</Vars>
 					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
 						<Name>PlcTask Inputs</Name>
@@ -3474,32 +3478,38 @@
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.goBack</Name>
+							<Comment><![CDATA[zurückfahren auf Befehl von anderem HAWino]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.reset</Name>
+							<Comment><![CDATA[Fahrauftrag und GW3 zurücksetzen auf Befehl von GW1]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.collision</Name>
-							<Comment><![CDATA[Kollision]]></Comment>
+							<Comment><![CDATA[Collision wurde erkannt]]></Comment>
 							<Type GUID="{ED505E53-AC03-A7B8-5B0E-7E9F26DE47AE}">ARRAY [0..4] OF BOOL</Type>
-						</Var>
-						<Var>
-							<Name>IrDistanceSensors.distanceRaw</Name>
-							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.shutdownButton</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.batteryVoltageRaw</Name>
-							<Type>INT</Type>
+							<Name>IrDistanceSensors.distanceRaw</Name>
+							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.supplyCurrentRaw</Name>
+							<Name>PowerManager.batteryVoltageRaw</Name>
 							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.requestShutdown</Name>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.supplyCurrentRaw</Name>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.SOC</Name>
@@ -3574,10 +3584,6 @@
 							<Type GUID="{E653CDAE-1A31-0819-E492-0347803C1564}">ARRAY [1..9] OF REAL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.shutdownTrigger</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>Camera.cameraData.robotPosition</Name>
 							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
 						</Var>
@@ -3592,6 +3598,10 @@
 						<Var>
 							<Name>Camera.cameraData.SS</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.shutdownTrigger</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.batteryVoltage_V</Name>
@@ -6635,6 +6645,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yUintWaypointIndex" VarB="ControlTask Outputs^ControlPRG.yUintWaypointIndex"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yVworldRef" VarB="ControlTask Outputs^ControlPRG.yVworldRef"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.goBack" VarB="MQTT_1 Outputs^MQTT.goBack"/>
+				<Link VarA="PlcTask Inputs^Fahrauftrag.reset" VarB="MQTT_1 Outputs^MQTT.resetButton"/>
 			</OwnerB>
 			<OwnerB Name="TIRC^TcCOM Objects^Object2 (SoC_Model_Data_Aquisition_2022)">
 				<Link VarA="PlcTask Outputs^PowerManager.stMqtt_HAWino_IN^fActualBatteryCurrent" VarB="SoC_Model_Data_Aquisition_202_U^Current"/>
