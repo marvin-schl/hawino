@@ -56,9 +56,12 @@ END_VAR
       <ST><![CDATA[timerCollision();
 resetTimer();
 
-IF noCamera THEN
-	error := TRUE;	
+IF gripper.state = CoreGripperControlState.Open AND Gripper.partGripped THEN
+	error := TRUE;
+	TrajectoryController.xBoEnable := FALSE;	
 	removeAllToken();
+	FeedbackToGW1 := 'ErrorTeilVerloren';
+	Gripper.closeGripperCommand := FALSE;
 END_IF
 
 collisionFree := NOT collision[Var_HAWIno.Robot_Number];
@@ -202,7 +205,7 @@ END_IF
 /////////////////////////////////////////////////////FahrtZumLesekopf/////////////////////////////////////////////////////////
 
 // 	RückmeldungGW3 Wegpunkte erhalten abwarten
-IF s6b AND NOT s7 AND trajectoryController.yControllerState = ControllerState.setTrajectory THEN
+IF s6b AND NOT s7 AND trajectoryController.yControllerState = ControllerState.setTrajectory AND gripper.state = CoreGripperControlState.Open THEN
 	s6b := 0; s7 := 1;
 	trajectoryController.newWaypointListAvailable := FALSE;
 END_IF
@@ -461,7 +464,7 @@ END_IF
 ///////////////////////////////////////Parkplatzanfahrt///////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-IF s21a AND NOT s21b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 THEN
+IF s21a AND NOT s21b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 AND gripper.state = CoreGripperControlState.Closed THEN
 	s21a := 0; s21b := 1;
 	AStar(xRobotActual := xRobotStartposition, yRobotActual := yRobotStartposition, xEnd := xEndvalue, yEnd := yEndvalue, endNode := EndNode, blockedNodes := removeNodeCollision);
 	finished_ASearch := AStar.finishedASearch;
@@ -488,7 +491,8 @@ IF s21b AND NOT s22 AND finished_ASearch THEN
 			EXIT;
 		END_IF
 	END_FOR
-	wayPointList[zeile] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
+	wayPointList[zeile] := readAssigment.parkingSlots[Var_HAWIno.Robot_Number];
+	wayPointList[zeile+1] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 	TrajectoryController.setWaypointList(waypointList);
 	trajectoryController.newWaypointListAvailable := TRUE;
 	s21b := 0; s22 := 1;
@@ -543,7 +547,19 @@ IF Auftrag.Art = '' AND (trajectoryController.yControllerState = ControllerState
 	resetTimer.IN := FALSE;
 	reset := FALSE;
 	test := TRUE;
-	sStart := TRUE;
+	IF error THEN
+		error := FALSE;
+		EndNode := readAssigment.endNodeParking[Var_HAWIno.Robot_Number];															//todo in matlab
+		xEndvalue := readAssigment.parkingSlots[Var_HAWIno.Robot_Number].x;
+		yEndvalue := readAssigment.parkingSlots[Var_HAWIno.Robot_Number].y;
+		xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
+		yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
+		s21a := TRUE;
+		resetVar := FALSE;
+		TrajectoryController.xBoReset := FALSE;
+	ELSE
+		sStart := TRUE;
+	END_IF
 END_IF]]></ST>
     </Implementation>
     <Method Name="CollisionSolution" Id="{4b28bc3d-12ae-4013-b4ca-5ace32b6b8ab}">
@@ -754,7 +770,7 @@ trajectoryController.xBoEnable := FALSE;
 FeedbackToGW1 := 'Verfuegbar';
 Gripper.closeGripperCommand := FALSE;
 ZEROS_INT(removeNodeCollision);
-error := FALSE;
+//error := FALSE;
 
 //Statemaschine zurücksetzen
 sStart := FALSE;
@@ -1056,7 +1072,10 @@ END_VAR
       <LineId Id="1863" Count="0" />
       <LineId Id="1740" Count="0" />
       <LineId Id="1668" Count="1" />
+      <LineId Id="1925" Count="0" />
       <LineId Id="1672" Count="0" />
+      <LineId Id="1924" Count="0" />
+      <LineId Id="1926" Count="0" />
       <LineId Id="1670" Count="1" />
       <LineId Id="1471" Count="0" />
       <LineId Id="1531" Count="2" />
@@ -1297,7 +1316,9 @@ END_VAR
       <LineId Id="1286" Count="0" />
       <LineId Id="901" Count="1" />
       <LineId Id="1367" Count="0" />
-      <LineId Id="903" Count="30" />
+      <LineId Id="903" Count="7" />
+      <LineId Id="1923" Count="0" />
+      <LineId Id="911" Count="22" />
       <LineId Id="1735" Count="0" />
       <LineId Id="1729" Count="0" />
       <LineId Id="934" Count="0" />
@@ -1313,7 +1334,15 @@ END_VAR
       <LineId Id="1857" Count="0" />
       <LineId Id="1859" Count="0" />
       <LineId Id="1410" Count="0" />
-      <LineId Id="1866" Count="6" />
+      <LineId Id="1866" Count="5" />
+      <LineId Id="1930" Count="1" />
+      <LineId Id="1937" Count="2" />
+      <LineId Id="1944" Count="0" />
+      <LineId Id="1936" Count="0" />
+      <LineId Id="1933" Count="0" />
+      <LineId Id="1946" Count="1" />
+      <LineId Id="1934" Count="1" />
+      <LineId Id="1932" Count="0" />
       <LineId Id="1865" Count="0" />
     </LineIds>
     <LineIds Name="Fahrauftrag.CollisionSolution">

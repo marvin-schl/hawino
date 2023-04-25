@@ -17,7 +17,7 @@ VAR
 	driveEnable				AT%Q* : BOOL;
 	driveVelocity 			AT%Q* : INT;
 	
-	state : CoreGripperControlState := CoreGripperControlState.Open;
+	state : CoreGripperControlState := CoreGripperControlState.Closed;	//bei open hat der Greifer gegriffen (war mit open initialisiert)
 	
 	timer : TON;
 	
