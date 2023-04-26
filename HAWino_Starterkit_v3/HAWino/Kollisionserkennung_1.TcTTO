@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <Task Name="Kollisionserkennung_1" Id="{dfaeca5e-9e1a-41fd-8d72-a32775f03325}">
+    <!--CycleTime in micro seconds.-->
+    <CycleTime>10000</CycleTime>
+    <Priority>21</Priority>
+    <PouCall>
+      <Name>Kollisionserkennung</Name>
+    </PouCall>
+    <TaskFBGuid>{0e5dc118-fd91-45d2-944b-5e316fbbc9c3}</TaskFBGuid>
+    <Fb_init>{241f791c-00e1-40ed-ba17-2677d471b3bf}</Fb_init>
+    <Fb_exit>{cd6aeab2-5f6e-4120-bcfc-f874333e2fc2}</Fb_exit>
+    <CycleUpdate>{89b09cf6-4f81-4fad-8c75-66c1ce43de19}</CycleUpdate>
+    <PostCycleUpdate>{ac39996b-3e33-4715-8685-f018712e2c0b}</PostCycleUpdate>
+  </Task>
+</TcPlcObject>
