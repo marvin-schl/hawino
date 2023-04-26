@@ -736,7 +736,7 @@ END_IF
 
 //////////////////////////////////////////////////////////////ATSTATION///////////////////////////////////////////////////////////////////////////
 
-IF sk0 AND NOT sk20 AND otherRoboAtStation AND NOT thisRoboAtStation AND timerCollision.Q THEN
+IF sk0 AND NOT sk20 AND (otherRoboAtStation OR thisRoboAtStation) AND timerCollision.Q THEN
 	sk0 := 0; sk20 := 1;
 	timerCollision.IN := FALSE;
 END_IF
@@ -754,7 +754,7 @@ IF sk21 AND NOT sk22 AND NOT otherRoboAtStation THEN
 	sk21 := 0; sk22 := 1;
 END_IF
 
-//
+//nur dieser Robo an Station
 IF sk20 AND NOT sk23 AND NOT otherRoboAtStation AND thisRoboAtStation THEN
 	findNodesToRemove(collisionRobo := otherRobo);
 	
@@ -1109,12 +1109,12 @@ IF gripper.state = CoreGripperControlState.Open AND Gripper.partGripped THEN
 	FeedbackToGW1 := 'Error Teil verloren';
 	Gripper.closeGripperCommand := FALSE;
 END_IF
-
+	
 //ERROR: Error von GW3
 IF trajectoryController.yControllerState = ControllerState.error THEN
 	error := TRUE;
 	removeAllToken();
-	FeedbackToGW1 := 'Error GW3';
+	FeedbackToGW1 := 'Error';
 	Gripper.closeGripperCommand := FALSE;
 END_IF
 ]]></ST>
@@ -1275,7 +1275,7 @@ IF otherRobo[0] > 0 THEN
 		//anderen Wegschicken
 		IF newCollision THEN
 			RoboNmbToGoBack := otherRobo[0];
-		ELSE
+		ELSIF NOT otherRoboAtStation THEN
 			RoboNmbToGoBack := 0;
 		END_IF 
 		drivingAtStation := TRUE;
@@ -1848,8 +1848,7 @@ sk31 := FALSE;]]></ST>
     <LineIds Name="Fahrauftrag.errorTest">
       <LineId Id="12" Count="0" />
       <LineId Id="6" Count="5" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="14" Count="0" />
+      <LineId Id="33" Count="1" />
       <LineId Id="13" Count="0" />
       <LineId Id="15" Count="1" />
       <LineId Id="18" Count="2" />

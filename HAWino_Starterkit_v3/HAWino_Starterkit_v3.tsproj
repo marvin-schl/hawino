@@ -3262,6 +3262,23 @@
 							<Type>UINT</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.xBoEnable</Name>
+							<Comment><![CDATA[////////////////////////////////////////////
+////////// LINKS TO GW2  ///////////////////
+////////////////////////////////////////////]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.xBoReset</Name>
+							<Comment><![CDATA[ implemented, reset error state => idle]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.newWaypointListAvailable</Name>
+							<Comment><![CDATA[ implemented, Status-Bit zur Signalisierung einer neuen WP-Liste]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>ControlPRG.robot.slider</Name>
 							<Comment><![CDATA[outputs from robot]]></Comment>
 							<Type>BOOL</Type>
@@ -3286,23 +3303,6 @@
 							<Name>ControlPRG.robotPoses</Name>
 							<Comment><![CDATA[input from camera]]></Comment>
 							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.xBoEnable</Name>
-							<Comment><![CDATA[////////////////////////////////////////////
-////////// LINKS TO GW2  ///////////////////
-////////////////////////////////////////////]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.xBoReset</Name>
-							<Comment><![CDATA[ implemented, reset error state => idle]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.newWaypointListAvailable</Name>
-							<Comment><![CDATA[ implemented, Status-Bit zur Signalisierung einer neuen WP-Liste]]></Comment>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>ControlPRG.waypointList</Name>
@@ -3343,6 +3343,11 @@
 							<Type GUID="{4D01AD9A-1F2F-377C-0812-CF417AB6D9DE}">ControllerState</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.yBoArrivedAtDestination</Name>
+							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>WheelEncoders.vXCartesianFromMotors</Name>
 							<Comment><![CDATA[OUTPUTS]]></Comment>
 							<Type>LREAL</Type>
@@ -3372,11 +3377,6 @@
 						<Var>
 							<Name>ControlPRG.robot.vThetaToRobot</Name>
 							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yBoArrivedAtDestination</Name>
-							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>ControlPRG.yUintWaypointIndex</Name>
@@ -3413,6 +3413,10 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
+							<Name>MQTT.resetGoBack</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>MQTT.stMqtt_HAWino_In</Name>
 							<Comment><![CDATA[ Attention! Don't link TIME Variables, otherwise we get an error!]]></Comment>
 							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
@@ -3421,15 +3425,19 @@
 							<Name>MQTT.FeedbackToGW1</Name>
 							<Type>STRING(50)</Type>
 						</Var>
-						<Var>
-							<Name>MQTT.resetGoBack</Name>
-							<Type>BOOL</Type>
-						</Var>
 					</Vars>
 					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
 						<Name>MQTT_1 Outputs</Name>
 						<Var>
 							<Name>MQTT.bComCheckAnswer</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MQTT.goBack</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MQTT.resetButton</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -3444,17 +3452,14 @@
 							<Name>MQTT.StatusFromGW1</Name>
 							<Type>STRING(50)</Type>
 						</Var>
-						<Var>
-							<Name>MQTT.goBack</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MQTT.resetButton</Name>
-							<Type>BOOL</Type>
-						</Var>
 					</Vars>
 					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
 						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>Fahrauftrag.goBack</Name>
+							<Comment><![CDATA[zurückfahren auf Befehl von anderem HAWino]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
 						<Var>
 							<Name>Fahrauftrag.TrajectoryController.yBoArrivedAtDestination</Name>
 							<Comment><![CDATA[ TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
@@ -3479,6 +3484,11 @@
 							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
 						</Var>
 						<Var>
+							<Name>Fahrauftrag.reset</Name>
+							<Comment><![CDATA[Fahrauftrag und GW3 zurücksetzen auf Befehl von GW1]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>Fahrauftrag.Auftrag</Name>
 							<Comment><![CDATA[Auftrag von GW1]]></Comment>
 							<Type GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}">Auftrag</Type>
@@ -3487,16 +3497,6 @@
 							<Name>Fahrauftrag.StatusFromGW1</Name>
 							<Comment><![CDATA[Status von GW1]]></Comment>
 							<Type>STRING(50)</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.goBack</Name>
-							<Comment><![CDATA[zurückfahren auf Befehl von anderem HAWino]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.reset</Name>
-							<Comment><![CDATA[Fahrauftrag und GW3 zurücksetzen auf Befehl von GW1]]></Comment>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.collision</Name>
@@ -3508,22 +3508,12 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>IrDistanceSensors.distanceRaw</Name>
-							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.slider</Name>
-							<Comment><![CDATA[closeGripperCommand		AT%I* : BOOL;				//True: opening, false: closing]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.partGripped</Name>
-							<Comment><![CDATA[Teil zwischen Greifer: partGripped := 0]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>PowerManager.batteryVoltageRaw</Name>
 							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>IrDistanceSensors.distanceRaw</Name>
+							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.supplyCurrentRaw</Name>
@@ -3534,8 +3524,18 @@
 							<Type>REAL</Type>
 						</Var>
 						<Var>
+							<Name>Gripper.slider</Name>
+							<Comment><![CDATA[closeGripperCommand		AT%I* : BOOL;				//True: opening, false: closing]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>Gripper.closeGripperFromSimulink</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.partGripped</Name>
+							<Comment><![CDATA[Teil zwischen Greifer: partGripped := 0]]></Comment>
+							<Type>BOOL</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" ContextId="2" AreaNo="33">
@@ -3546,6 +3546,11 @@
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.resetVar</Name>
+							<Comment><![CDATA[messages von MQTT zurücksetzen]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.resetGoBack</Name>
 							<Comment><![CDATA[messages von MQTT zurücksetzen]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
@@ -3572,11 +3577,6 @@
 							<Name>Fahrauftrag.FeedbackToGW1</Name>
 							<Comment><![CDATA[Feedback/Status des Roboters an GW1]]></Comment>
 							<Type>STRING(50)</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.resetGoBack</Name>
-							<Comment><![CDATA[messages von MQTT zurücksetzen]]></Comment>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.RoboNmbToGoBack</Name>
@@ -3611,13 +3611,17 @@
 							<Type>REAL</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.stMqtt_HAWino_IN</Name>
+							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
+							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
+						</Var>
+						<Var>
 							<Name>Gripper.driveEnable</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.stMqtt_HAWino_IN</Name>
-							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
-							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
+							<Name>Gripper.driveVelocity</Name>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.sliderToSimulink</Name>
@@ -3626,10 +3630,6 @@
 						<Var>
 							<Name>Gripper.partInGripperToSimulink</Name>
 							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.driveVelocity</Name>
-							<Type>INT</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="1" ContextId="3" AreaNo="48">
@@ -3654,13 +3654,13 @@
 					<Vars VarGrpType="2" ContextId="3" AreaNo="49">
 						<Name>Kollisionserkennung_1 Outputs</Name>
 						<Var>
+							<Name>Kollisionserkennung.robotCollision</Name>
+							<Type GUID="{29CAAFD0-28B6-D9D0-3B0E-64B337839191}">ARRAY [1..5] OF BOOL</Type>
+						</Var>
+						<Var>
 							<Name>HAWino.Robot_Number</Name>
 							<Comment><![CDATA[CX35CDD6]]></Comment>
 							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>Kollisionserkennung.robotCollision</Name>
-							<Type GUID="{29CAAFD0-28B6-D9D0-3B0E-64B337839191}">ARRAY [1..5] OF BOOL</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.shutdownTrigger</Name>

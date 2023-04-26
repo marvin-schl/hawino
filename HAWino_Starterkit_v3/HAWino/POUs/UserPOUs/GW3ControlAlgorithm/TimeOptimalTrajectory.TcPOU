@@ -29,7 +29,7 @@ VAR
 	maxAcc				: LREAL				:= 0.5;
 	
 	arcLengthSlow		: LREAL				:= 0.224352;
-	maxSlowVel			: LREAL				:= 0.12;
+	maxSlowVel			: LREAL				:= 0.08;
 	
 	maxRotVel			: LREAL				:= 1;
 	maxRotAcc			: LREAL				:= 100;	
