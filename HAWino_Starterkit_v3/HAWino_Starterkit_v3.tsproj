@@ -3380,6 +3380,11 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.adaptiveKObserver.delayedCycles</Name>
+							<Comment><![CDATA[Camdelay 160ms / Cycletyme 2ms]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
 							<Name>ControlPRG.robot.vXtoRobot</Name>
 							<Comment><![CDATA[inputs to robot]]></Comment>
 							<Type>LREAL</Type>

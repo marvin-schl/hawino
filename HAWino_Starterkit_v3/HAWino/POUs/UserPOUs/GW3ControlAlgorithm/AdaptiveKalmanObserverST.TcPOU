@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
-  <POU Name="KalmanObserverST" Id="{7db7eead-d75a-4327-8490-42b5b4fd681c}" SpecialFunc="None">
+  <POU Name="AdaptiveKalmanObserverST" Id="{1186a501-be3f-4ebc-9c38-7ef7659d2773}" SpecialFunc="None">
     <Declaration><![CDATA[//KalmanObserver:
 //Implements a Kalman observer which fuses the camera measurement (measurement noise) and encoder data (process noise) to observe the position of the robot.
+// Adaptive because the covariance matrix Q is a weighted mean of the covariance measurements matrices respetively to the current velocities
 
-FUNCTION_BLOCK KalmanObserverST
+FUNCTION_BLOCK AdaptiveKalmanObserverST
 VAR_INPUT
 	xCameraPose:	RobotPoseSimple;
 	xVxRobot: 		LREAL;	//measured velocities
 	xVyRobot: 		LREAL;
 	xOmegaRobot: 	LREAL;
-	theta:			LREAL; //theta for I/O Lineraztion only explicitly Input for FF-Linearization
+	theta:			LREAL; //theta for I/O Lineraztion only explicitly Input for FF-Linearization;
 END_VAR
 
 VAR_OUTPUT
@@ -59,6 +60,8 @@ CheckForNewCameraData();	//Schreibt direkt in Variable  "newCamDataArrived"
 
 delayPosition();
 
+Q := calculateQMatrix();
+
 // Step 1 Prediction
 observedPositionAP := AddRPS(observedPosition, ScaleRPS(c := Var_HAWIno.CONTROLLER_CYCLE_TIME, vWorld));
 PAP := AddMat3(P, Q);
@@ -87,7 +90,51 @@ yObserverdPose 	:= observedPosition;
 camDataOld 		:= xCameraPose;
 ]]></ST>
     </Implementation>
-    <Method Name="checkForNewCameraData" Id="{d7b79a97-aba5-4db5-aeac-59a0c2b4be86}">
+    <Method Name="calculateQMatrix" Id="{27a638c4-8125-4fe1-9f4c-e71da7ebacf0}">
+      <Declaration><![CDATA[METHOD calculateQMatrix : ARRAY [0..2,0..2] OF LREAL
+VAR_INPUT
+	
+END_VAR
+
+VAR
+	scaledCovMatX, scaledCovMatY, scaledCovMatT, tempMat : ARRAY[0..2,0..2] OF LREAL;
+	multiplierX, multiplierY, multiplierT : LREAL;
+	
+	vXRef,vYRef : LREAL := 300;
+	vTRef : LREAL := 1;
+	
+	QT1 : ARRAY[0..2,0..2] OF LREAL :=[0.7645,	-0.2488,	0.0015,
+									  -0.2488,	1.0596,		-0.0026,
+									  0.0015,	-0.0026,	0.0007];
+									  
+	QY300 : ARRAY[0..2,0..2] OF LREAL :=[1.5214,	0.3889,		0.0002,
+										 0.3889,	26.0708,	-0.0210,
+										 0.0002,	-0.0210,	0.0003];
+										 
+	QX300 : ARRAY[0..2,0..2] OF LREAL :=[9.3047,	1.1844,		-0.0125,
+										 1.1844,	1.0394,		0.0001,
+										 -0.0125,	0.0001,		0.0001];
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Calcualte Factor current vRef to vMeasurement from evaluating Covariances
+multiplierX := xVxRobot / vXRef;
+multiplierY := xVyRobot / vYRef;
+multiplierT := xOmegaRobot / vTRef;
+
+//Multiply respective Matrix with multiplier
+scaledCovMatX := MultiplyMatrix3(multiplier:=multiplierX, matrix:= QX300);
+scaledCovMatY := MultiplyMatrix3(multiplier:=multiplierY, matrix:= QY300);
+scaledCovMatT := MultiplyMatrix3(multiplier:=multiplierT, matrix:= QT1);
+
+//Calculate mean
+tempMat := AddMat3(mat1:=scaledCovMatX, mat2:=scaledCovMatY);
+tempMat := AddMat3(mat1:=tempMat, mat2:= scaledCovMatT);
+Q := MultiplyMatrix3(matrix:=tempMat, multiplier:=0.3333);	//Set new Q directly in Kalman FB
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="checkForNewCameraData" Id="{1b408c7c-3602-4583-a07d-63fd82822918}">
       <Declaration><![CDATA[METHOD checkForNewCameraData : BOOL
 VAR_INPUT
 END_VAR
@@ -99,7 +146,7 @@ END_VAR
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="delayPosition" Id="{016b76e0-836d-4268-9f94-66f08373c96c}">
+    <Method Name="delayPosition" Id="{cc016d51-b2c3-42d5-96b7-225e88728129}">
       <Declaration><![CDATA[METHOD PRIVATE delayPosition : BOOL
 VAR_INPUT
 END_VAR
@@ -113,7 +160,7 @@ END_FOR
 delayedPosition[0] := observedPosition;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="reset" Id="{e0675e18-d699-40d3-8169-07aa4f6de232}">
+    <Method Name="reset" Id="{ba4df63c-4587-4dcd-ac73-d64764d2f997}">
       <Declaration><![CDATA[METHOD reset : BOOL
 VAR_INPUT
 END_VAR
@@ -129,28 +176,38 @@ IF newCamDataArrived THEN
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="KalmanObserverST">
-      <LineId Id="745" Count="10" />
-      <LineId Id="758" Count="0" />
-      <LineId Id="838" Count="0" />
-      <LineId Id="760" Count="3" />
-      <LineId Id="767" Count="14" />
-      <LineId Id="783" Count="3" />
-      <LineId Id="788" Count="3" />
+    <LineIds Name="AdaptiveKalmanObserverST">
+      <LineId Id="883" Count="41" />
       <LineId Id="14" Count="0" />
     </LineIds>
-    <LineIds Name="KalmanObserverST.checkForNewCameraData">
+    <LineIds Name="AdaptiveKalmanObserverST.calculateQMatrix">
+      <LineId Id="35" Count="0" />
+      <LineId Id="37" Count="2" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="43" Count="0" />
+    </LineIds>
+    <LineIds Name="AdaptiveKalmanObserverST.checkForNewCameraData">
       <LineId Id="5" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="7" Count="1" />
     </LineIds>
-    <LineIds Name="KalmanObserverST.delayPosition">
+    <LineIds Name="AdaptiveKalmanObserverST.delayPosition">
       <LineId Id="5" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="11" Count="0" />
     </LineIds>
-    <LineIds Name="KalmanObserverST.reset">
+    <LineIds Name="AdaptiveKalmanObserverST.reset">
       <LineId Id="25" Count="0" />
       <LineId Id="20" Count="0" />
       <LineId Id="13" Count="0" />

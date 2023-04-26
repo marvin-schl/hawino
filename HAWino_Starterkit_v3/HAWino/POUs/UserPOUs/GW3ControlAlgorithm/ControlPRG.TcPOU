@@ -16,6 +16,7 @@ VAR
 	//declare objects
 	observer 		 : SimpleObserverST;					//Observer object
 	kobserver		 : KalmanObserverST;
+	adaptiveKObserver: AdaptiveKalmanObserverST;
 	controller		 : SimpleStateFeedbackLaw;			//Control law object
 	trajectory		 : TimeOptimalTrajectory;			//Trajectory Object
 	robot			 : Robot;							//link to physical I/O of roboter or simulation model of the roboter
@@ -165,6 +166,16 @@ kobserver(xCameraPose 	:= shiftCamAngle(camData := robotPoses[Var_HAWIno.Robot_N
 		 //xVyToRobot		:= controller.vYrobot,
 		 //xOmegaToRobot	:= controller.omegaRobot,				//link theta-velocity with measured velocity
 		 theta			:= thetaLin);	
+		 
+adaptiveKObserver(xCameraPose 	:= shiftCamAngle(camData := robotPoses[Var_HAWIno.Robot_Number], path := trajectory.path),
+		 //xCameraPose 	:= robotPoses[Var_HAWIno.Robot_Number],
+		 xVxRobot    	:= robot.vX,						//link x-velocity with measured velocity
+		 xVyRobot    	:= robot.vY,						//link y-velocity with measured velocity
+		 xOmegaRobot    := robot.vTheta,
+ 		 //xVxToRobot		:= controller.vXrobot,
+		 //xVyToRobot		:= controller.vYrobot,
+		 //xOmegaToRobot	:= controller.omegaRobot,				//link theta-velocity with measured velocity
+		 theta			:= thetaLin);	
 
 						//Angle for IO-Lineariztion						 
 //init controller and link to observer
@@ -296,7 +307,11 @@ END_VAR
       <LineId Id="1770" Count="7" />
       <LineId Id="1768" Count="0" />
       <LineId Id="1552" Count="7" />
-      <LineId Id="1550" Count="1" />
+      <LineId Id="1550" Count="0" />
+      <LineId Id="1823" Count="0" />
+      <LineId Id="1825" Count="7" />
+      <LineId Id="1824" Count="0" />
+      <LineId Id="1551" Count="0" />
       <LineId Id="1549" Count="0" />
       <LineId Id="1246" Count="2" />
       <LineId Id="1506" Count="0" />

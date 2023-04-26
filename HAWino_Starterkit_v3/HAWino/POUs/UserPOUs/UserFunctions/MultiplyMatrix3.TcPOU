@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="MultiplyMatrix3" Id="{fdd6595b-fa60-401c-a9b6-d71a39c93ebd}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION MultiplyMatrix3 : ARRAY[0..2, 0..2] OF LREAL
+VAR_INPUT
+	matrix : ARRAY[0..2,0..2] OF LREAL;
+	multiplier : LREAL;
+END_VAR
+
+VAR
+	i, j : INT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[FOR i := 0 TO 2 DO
+	FOR j := 0 TO 2 DO
+		MultiplyMatrix3[i, j] := matrix[i, j] * multiplier;
+	END_FOR;
+END_FOR]]></ST>
+    </Implementation>
+    <LineIds Name="MultiplyMatrix3">
+      <LineId Id="66" Count="3" />
+      <LineId Id="74" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

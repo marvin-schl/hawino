@@ -120,6 +120,9 @@
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\KalmanObserverST.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\AdaptiveKalmanObserverST.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\LPF1.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -226,6 +229,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\MatTimesMat.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\UserPOUs\UserFunctions\MultiplyMatrix3.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\MatTimesRPS.TcPOU">
