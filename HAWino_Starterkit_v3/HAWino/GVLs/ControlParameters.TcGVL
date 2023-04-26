@@ -20,9 +20,9 @@ VAR_GLOBAL
 									  0,0,2];
 									  
 	//Maximal Translational Velocity (vX, vY)
-	vtrans_max: LREAL := 3000;
+	vtrans_max: LREAL := 934;
 	//Maximal rotational Velocity (vTheta)
-	vrot_max: LREAL   := 5;
+	vrot_max: LREAL   := 3;
 	
 	// accuracy tolerance
 	accuracyXY: LREAL := 2;

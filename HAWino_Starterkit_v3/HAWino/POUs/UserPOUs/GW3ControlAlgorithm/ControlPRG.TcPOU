@@ -258,7 +258,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[reset := trajectory.reset() AND controller.reset() AND observer.reset() AND kobserver.reset();]]></ST>
+        <ST><![CDATA[reset := trajectory.reset() AND controller.reset() AND observer.reset() AND kobserver.reset() AND adaptiveKObserver.reset();]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="ControlPRG">
