@@ -5,12 +5,12 @@
   <Children>
     <Node>
       <Title>Measurements</Title>
-      <Expanded>True</Expanded>
+      <Expanded>False</Expanded>
       <FileName>E:\hawino\Trajektorie\Measurements.tcscopex</FileName>
       <Children>
         <Node>
           <Title>DataPool</Title>
-          <Expanded>True</Expanded>
+          <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
@@ -116,6 +116,12 @@
               <Children />
             </Node>
             <Node>
+              <Title>observerK</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
               <Title>Q</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
@@ -134,6 +140,12 @@
               <Children />
             </Node>
             <Node>
+              <Title>sObsDelayedCycles</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
               <Title>state</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
@@ -147,6 +159,12 @@
             </Node>
             <Node>
               <Title>thetaDZ</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>thetaKalman</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -230,7 +248,7 @@
               <Children />
             </Node>
             <Node>
-              <Title>theta</Title>
+              <Title>thetaObs</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -248,6 +266,12 @@
               <Children />
             </Node>
             <Node>
+              <Title>xObs</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
               <Title>xRef</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
@@ -255,6 +279,12 @@
             </Node>
             <Node>
               <Title>yCam</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>yObs</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -269,7 +299,7 @@
         </Node>
         <Node>
           <Title>Robot Pose XY Plot</Title>
-          <Expanded>True</Expanded>
+          <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
@@ -290,6 +320,25 @@
                     </Node>
                     <Node>
                       <Title>Y: yCam</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                  </Children>
+                </Node>
+                <Node>
+                  <Title>xObs, yObs</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children>
+                    <Node>
+                      <Title>X: xObs</Title>
+                      <Expanded>False</Expanded>
+                      <FileName></FileName>
+                      <Children />
+                    </Node>
+                    <Node>
+                      <Title>Y: yObs</Title>
                       <Expanded>False</Expanded>
                       <FileName></FileName>
                       <Children />
@@ -349,6 +398,12 @@
               <FileName></FileName>
               <Children>
                 <Node>
+                  <Title>xObs</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
                   <Title>xRef</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
@@ -373,6 +428,12 @@
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
+                <Node>
+                  <Title>yObs</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
                 <Node>
                   <Title>yRef</Title>
                   <Expanded>False</Expanded>
@@ -399,7 +460,7 @@
               <FileName></FileName>
               <Children>
                 <Node>
-                  <Title>theta</Title>
+                  <Title>thetaObs</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
@@ -411,7 +472,7 @@
                   <Children />
                 </Node>
                 <Node>
-                  <Title>theta (1)</Title>
+                  <Title>thetaKalman</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
@@ -617,6 +678,12 @@
                   <Children />
                 </Node>
                 <Node>
+                  <Title>sObsDelayedCycles</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
                   <Title>thetaDZ</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
@@ -640,12 +707,12 @@
         </Node>
         <Node>
           <Title>Current Measurement</Title>
-          <Expanded>True</Expanded>
+          <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>currentMeasurement</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
