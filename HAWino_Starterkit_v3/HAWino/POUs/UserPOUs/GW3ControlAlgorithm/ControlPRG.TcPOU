@@ -53,86 +53,8 @@ yRPposition 			:= kobserver.yObserverdPose;
 yUintWaypointIndex 		:= trajectory.WPLidx;
 yVworldRef				:= controller.xRobotvelRef;
 
-//control algorithm state machine
-CASE state OF
-	ControllerState.init:
-		//initilize objects and link them
-		init();
-		//go into idle
-		state := ControllerState.idle;
-	
-	ControllerState.idle:
-		//if new waypointlist available reset trajectory and go into set trajectory state
-		IF checkForFailure() THEN
-			state := ControllerState.error;
-		ELSIF newWaypointListAvailable THEN
-			IF reset() THEN
-				state := ControllerState.setTrajectory;
-			END_IF
-		END_IF
-	
-	ControllerState.setTrajectory:
-		//got new trajectory so not anymore at destination
-		yBoArrivedAtDestination := FALSE;
-		//calculate trajectory
-		trajectory.setWaypointList(waypointList);
-			
-		//go into calcTrajectory as soon as GW2 resets the new waypointlist flag to avoid looping through
-		//ready --> setTrajectory --> calcTrajectory
-		IF checkForFailure() THEN
-			state := ControllerState.error;	
-		ELSIF NOT newWaypointListAvailable AND trajectory.pathReady THEN
-			state := ControllerState.calcTrajectory;
-		END_IF
-		
-	 ControllerState.calcTrajectory:
-		trajectory.generateTrajectory();
-	 	IF checkForFailure() THEN
-			state := ControllerState.error;
-		ELSIF trajectory.ready THEN
-			state := ControllerState.ready;
-		END_IF
-		
-	
-	ControllerState.ready:
-		IF newWaypointListAvailable THEN
-			//stop and calculate new trajectory
-			IF reset() THEN
-				state := ControllerState.setTrajectory;
-			END_IF
-		ELSIF xBoEnable THEN
-			state := ControllerState.driving;
-		END_IF
-	
-	ControllerState.driving:
-		
-		IF checkForFailure() THEN
-			state := ControllerState.error;
-		ELSIF newWaypointListAvailable THEN
-			//stop and calculate new trajectory
-			IF reset() THEN
-				state := ControllerState.setTrajectory;
-			END_IF
-		ELSIF yBoArrivedAtDestination OR robot.sliderGotTriggered THEN
-			yBoArrivedAtDestination := TRUE; //only relevant if transition is triggered through the slider
-			//got back to idle and set arrived flag for GW2, method needed?
-			IF reset() THEN
-				state := ControllerState.idle;
-			END_IF
-		ELSIF xBoEnable THEN
-			//do the driving
-			drive();
-		ELSE
-			//if xBoEnable isn't set anymore go into ready and wait for it again
-			state := ControllerState.ready;
-		END_IF
-		
-	ControllerState.error:
-		IF xBoReset THEN
-			reset();
-			state := ControllerState.idle;
-		END_IF
-END_CASE
+//call controller state machine
+stateMachine();
 
 //Select FF or FB linearization
 IF FFLin = TRUE THEN
@@ -140,7 +62,6 @@ IF FFLin = TRUE THEN
 ELSE
 	thetaLin := kobserver.yObserverdPose.theta;		
 END_IF
-
 
 //initilizing and linking of control algorithm individual components
 //init observer
@@ -238,46 +159,105 @@ END_VAR
         <ST><![CDATA[reset := trajectory.reset() AND controller.reset() AND kobserver.reset();]]></ST>
       </Implementation>
     </Method>
+    <Method Name="stateMachine" Id="{b78dbbfe-fbe2-4845-ae04-710ba9036014}">
+      <Declaration><![CDATA[METHOD stateMachine : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//control algorithms state machine
+CASE state OF
+	ControllerState.init:
+		//initilize objects and link them
+		init();
+		//go into idle
+		state := ControllerState.idle;
+	
+	ControllerState.idle:
+		//if new waypointlist available reset trajectory and go into set trajectory state
+		IF checkForFailure() THEN
+			state := ControllerState.error;
+		ELSIF newWaypointListAvailable THEN
+			IF reset() THEN
+				state := ControllerState.setTrajectory;
+			END_IF
+		END_IF
+	
+	ControllerState.setTrajectory:
+		//got new trajectory so not anymore at destination
+		yBoArrivedAtDestination := FALSE;
+		//calculate trajectory
+		trajectory.setWaypointList(waypointList);
+			
+		//go into calcTrajectory as soon as GW2 resets the new waypointlist flag to avoid looping through
+		//ready --> setTrajectory --> calcTrajectory
+		IF checkForFailure() THEN
+			state := ControllerState.error;	
+		ELSIF NOT newWaypointListAvailable AND trajectory.pathReady THEN
+			state := ControllerState.calcTrajectory;
+		END_IF
+		
+	 ControllerState.calcTrajectory:
+		trajectory.generateTrajectory();
+	 	IF checkForFailure() THEN
+			state := ControllerState.error;
+		ELSIF trajectory.ready THEN
+			state := ControllerState.ready;
+		END_IF
+		
+	
+	ControllerState.ready:
+		IF newWaypointListAvailable THEN
+			//stop and calculate new trajectory
+			IF reset() THEN
+				state := ControllerState.setTrajectory;
+			END_IF
+		ELSIF xBoEnable THEN
+			state := ControllerState.driving;
+		END_IF
+	
+	ControllerState.driving:
+		
+		IF checkForFailure() THEN
+			state := ControllerState.error;
+		ELSIF newWaypointListAvailable THEN
+			//stop and calculate new trajectory
+			IF reset() THEN
+				state := ControllerState.setTrajectory;
+			END_IF
+		ELSIF yBoArrivedAtDestination OR robot.sliderGotTriggered THEN
+			yBoArrivedAtDestination := TRUE; //only relevant if transition is triggered through the slider
+			//got back to idle and set arrived flag for GW2, method needed?
+			IF reset() THEN
+				state := ControllerState.idle;
+			END_IF
+		ELSIF xBoEnable THEN
+			//do the driving
+			drive();
+		ELSE
+			//if xBoEnable isn't set anymore go into ready and wait for it again
+			state := ControllerState.ready;
+		END_IF
+		
+	ControllerState.error:
+		IF xBoReset THEN
+			reset();
+			state := ControllerState.idle;
+		END_IF
+END_CASE
+
+
+]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="ControlPRG">
       <LineId Id="1147" Count="6" />
-      <LineId Id="1724" Count="0" />
-      <LineId Id="1154" Count="7" />
-      <LineId Id="1360" Count="0" />
-      <LineId Id="1163" Count="1" />
-      <LineId Id="1723" Count="0" />
-      <LineId Id="1722" Count="0" />
-      <LineId Id="1608" Count="0" />
-      <LineId Id="1166" Count="0" />
-      <LineId Id="1609" Count="0" />
-      <LineId Id="1167" Count="9" />
-      <LineId Id="1720" Count="1" />
-      <LineId Id="1177" Count="0" />
-      <LineId Id="1179" Count="5" />
-      <LineId Id="1719" Count="0" />
-      <LineId Id="1718" Count="0" />
-      <LineId Id="1185" Count="6" />
-      <LineId Id="1606" Count="0" />
-      <LineId Id="1194" Count="0" />
-      <LineId Id="1607" Count="0" />
-      <LineId Id="1195" Count="5" />
-      <LineId Id="1716" Count="1" />
-      <LineId Id="1715" Count="0" />
-      <LineId Id="1203" Count="0" />
-      <LineId Id="1603" Count="0" />
-      <LineId Id="1204" Count="0" />
-      <LineId Id="1604" Count="0" />
-      <LineId Id="1205" Count="0" />
-      <LineId Id="1653" Count="0" />
-      <LineId Id="1206" Count="1" />
-      <LineId Id="1361" Count="0" />
-      <LineId Id="1605" Count="0" />
-      <LineId Id="1210" Count="6" />
-      <LineId Id="1696" Count="2" />
-      <LineId Id="1700" Count="0" />
-      <LineId Id="1702" Count="0" />
-      <LineId Id="1701" Count="0" />
-      <LineId Id="1217" Count="7" />
-      <LineId Id="1450" Count="0" />
+      <LineId Id="1770" Count="0" />
+      <LineId Id="1769" Count="0" />
+      <LineId Id="1768" Count="0" />
+      <LineId Id="1771" Count="0" />
+      <LineId Id="1773" Count="4" />
+      <LineId Id="1772" Count="0" />
       <LineId Id="1456" Count="0" />
       <LineId Id="1227" Count="1" />
       <LineId Id="1552" Count="7" />
@@ -307,6 +287,11 @@ END_VAR
       <LineId Id="26" Count="0" />
     </LineIds>
     <LineIds Name="ControlPRG.reset">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ControlPRG.stateMachine">
+      <LineId Id="6" Count="80" />
+      <LineId Id="92" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
