@@ -4,26 +4,35 @@
     <Declaration><![CDATA[PROGRAM Kollisionserkennung
 VAR
 	robotPoseArray AT%I*: ARRAY[1..8] OF RobotPose;
+	robotPoseLokal : ARRAY[1..8] OF RobotPose;
 	vxRobot AT%I*: LREAL;
 	vyRobot AT%I*: LREAL;
 	collisionDetected : BOOL := FALSE;
-	robotCollision AT%Q* : ARRAY[1..5] OF BOOL;
+	robotCollision AT%Q* : ARRAY[0..4] OF BOOL;
 		
 	robotNumber : INT := Var_HAWIno.Robot_Number;
 	xRobot, yRobot: LREAL;
-	i, j, k, l : INT := 1;
+	i, j, k, l, m : INT := 1;
 	detected : INT := 1;
 	quadrant, collide : INT := 0;
-	robotActive :ARRAY[1..5] OF INT;
+	robotActive :ARRAY[1..4] OF INT;
+	noCamera, flag : BOOL := FALSE;
 	
 	//Bounding Box
 	x1Box,y1Box,x2Box,y2Box,x3Box,y3Box,x4Box,y4Box : LREAL; 
 	alpha, beta, gamma, diagonal : LREAL := 0.0;
 	breite, laenge : INT;
+	
+	//Timer
+	timer :TON;
+	timeValue : TIME := T#2S;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[FOR i := 1 TO 4 BY 1 DO
+      <ST><![CDATA[timer(IN:= noCamera, PT := timeValue); //Roboter darf 2s blind fahren
+
+//suche die Position des passenden Roboters
+FOR i := 1 TO 4 BY 1 DO
 	IF i = robotNumber THEN
 		xRobot := robotPoseArray[i].x;
 		yRobot := robotPoseArray[i].y;
@@ -41,116 +50,138 @@ beta := ATAN(laenge/breite); //Winkel des festen Dreiecks
 
 //Kameradaten verfügbar 
 IF xRobot <> 0 AND yRobot <> 0 THEN
-	FOR l := 1 TO 5 BY 1 DO
+	noCamera := FALSE;
+	flag := FALSE;
+	FOR l := 0 TO 4 BY 1 DO
 		robotCollision[l] := FALSE; 
 	END_FOR
 	
-	//Bounding Box dreht mit der Roboterblickrichtung
-	IF gamma >= 0 AND gamma < pi/2 THEN //Quadrant 1
-		quadrant := 1;
-		alpha := pi/2 - gamma; //Winkel des gedrehten Boxes
-		x1Box := xRobot + COS(alpha) * breite;
-		y1Box := yRobot - SIN(alpha) * breite;
-		x2Box := xRobot + SIN(alpha + beta) * diagonal;
-		y2Box := yRobot + COS(alpha + beta) * diagonal;
-		x3Box := xRobot - COS(alpha + beta) * diagonal;
-		y3Box := yRobot + SIN(alpha + beta) * diagonal;
-		x4Box := xRobot - COS(alpha) * breite;
-		y4Box := yRobot + SIN(alpha) * breite;	
-	ELSIF gamma >= pi/2 AND gamma <= pi THEN //Quadrant 2
-		quadrant := 2;
-		alpha := pi - gamma;
-		x1Box := xRobot + SIN(alpha) * breite;
-		y1Box := yRobot + COS(alpha) * breite;
-		x2Box := xRobot - COS(alpha + beta) * diagonal;
-		y2Box := yRobot + SIN(alpha + beta) * diagonal;
-		x3Box := xRobot - SIN(alpha + beta) * diagonal;
-		y3Box := yRobot - COS(alpha + beta) * diagonal;
-		x4Box := xRobot - SIN(alpha) * breite;
-		y4Box := yRobot - COS(alpha) * breite;
-	ELSIF gamma > -pi AND gamma < -pi/2 THEN //Quadrant 3
-		quadrant := 3;
-		alpha := pi + gamma;
-		x1Box := xRobot - SIN(alpha) * breite;
-		y1Box := yRobot + COS(alpha) * breite;
-		x2Box := xRobot - SIN(alpha + beta) * diagonal;
-		y2Box := yRobot + COS(alpha + beta) * diagonal;
-		x3Box := xRobot - COS(alpha + beta) * diagonal;
-		y3Box := yRobot - SIN(alpha + beta) * diagonal;
-		x4Box := xRobot + SIN(alpha) * breite;
-		y4Box := yRobot - COS(alpha) * breite;	
-	ELSIF gamma >= -pi/2 AND gamma < 0 THEN //Quadrant 4
-		quadrant := 4;
-		alpha := gamma + pi/2;
-		x1Box := xRobot - COS(alpha) * breite;
-		y1Box := yRobot - SIN(alpha) * breite;
-		x2Box := xRobot - COS(alpha + beta) * diagonal;
-		y2Box := yRobot - SIN(alpha + beta) * diagonal;
-		x3Box := xRobot + SIN(alpha + beta) * diagonal;
-		y3Box := yRobot - COS(alpha + beta) * diagonal;
-		x4Box := xRobot + COS(alpha) * breite;
-		y4Box := yRobot + SIN(alpha) * breite;
-	END_IF
-
-	//Finde alle aktiven Roboter im Feld
-	FOR j := 1 TO 5 BY 1 DO
-		IF robotPoseArray[j].x <> 0 AND robotPoseArray[j].y <> 0 AND j <> robotNumber THEN
-			robotActive[j] := j;
-		END_IF
-	END_FOR
-	
-	//Erkennt Roboter Kollision in Box?
-	FOR k := 1 TO 5 BY 1 DO
-		IF robotActive [k] <> 0 AND robotActive [k] <> robotNumber THEN
-			IF quadrant = 1 THEN
-				IF robotPoseArray[robotActive[k]].x < x2Box AND robotPoseArray[robotActive[k]].x > x4Box AND robotPoseArray[robotActive[k]].y < y3Box AND robotPoseArray[robotActive[k]].y > y1Box THEN
-					collisionDetected := TRUE;
-				ELSE
-					collisionDetected := FALSE;
-				END_IF
-			ELSIF quadrant = 2 THEN
-				IF robotPoseArray[robotActive[k]].x < x1Box AND robotPoseArray[robotActive[k]].x > x3Box AND robotPoseArray[robotActive[k]].y < y2Box AND robotPoseArray[robotActive[k]].y > y4Box THEN
-					collisionDetected := TRUE;
-				ELSE
-					collisionDetected := FALSE;
-				END_IF
-			ELSIF quadrant = 3 THEN
-				IF robotPoseArray[robotActive[k]].x < x4Box AND robotPoseArray[robotActive[k]].x > x2Box AND robotPoseArray[robotActive[k]].y < y1Box AND robotPoseArray[robotActive[k]].y > y3Box THEN
-					collisionDetected := TRUE;
-				ELSE
-					collisionDetected := FALSE;
-				END_IF
-			ELSIF quadrant = 4 THEN
-				IF robotPoseArray[robotActive[k]].x < x3Box AND robotPoseArray[robotActive[k]].x > x1Box AND robotPoseArray[robotActive[k]].y < y4Box AND robotPoseArray[robotActive[k]].y > y2Box THEN
-					collisionDetected := TRUE;
-				ELSE
-					collisionDetected := FALSE;
-				END_IF
-			END_IF
-		END_IF
-		
-		IF collisionDetected = TRUE AND collide <> robotActive[k] THEN
-			collide := robotActive[k];
-			robotCollision[collide] := TRUE;
-		END_IF
+	//Zwischenspeicher der letzten Positionen wenn die Kameradaten ausfallen
+	FOR m := 1 TO 8 BY 1 DO
+		robotPoseLokal[m].x := robotPoseArray[m].x;
+		robotPoseLokal[m].y := robotPoseArray[m].y;
+		robotPoseLokal[m].theta := robotPoseArray[m].theta;
+		robotPoseLokal[m].e := robotPoseArray[m].e;
 	END_FOR
 	
 //Kameradaten ausfallen	
 ELSE
-	FOR l := 1 TO 5 BY 1 DO
-		robotCollision[l] := TRUE; 
+	noCamera := TRUE;
+	flag := TRUE;
+	//Kameradaten länger als 2s ausfallen, setzen die Array auf true
+	IF timer.Q THEN
+		FOR l := 0 TO 4 BY 1 DO
+			robotCollision[l] := TRUE; 
+		END_FOR
+	END_IF
+END_IF
+
+//Kameradaten ausfallen, dann die lokale Position wird zugegriffen
+IF FLAG THEN
+	xRobot := robotPoseLokal[robotNumber].x;
+	yRobot := robotPoseLokal[robotNumber].y;
+	FOR m := 1 TO 8 BY 1 DO
+		robotPoseArray[m].x := robotPoseLokal[m].x;
+		robotPoseArray[m].y := robotPoseLokal[m].y;
+		robotPoseArray[m].theta := robotPoseLokal[m].theta;
+		robotPoseArray[m].e := robotPoseLokal[m].e;
 	END_FOR
-	x1Box := 0;
-	y1Box := 0;
-	x2Box := 0;
-	y2Box := 0;
-	x3Box := 0;
-	y3Box := 0;
-	x4Box := 0;
-	y4Box := 0;
-END_IF]]></ST>
+END_IF
+
+//Bounding Box dreht mit der Roboterblickrichtung
+IF gamma >= 0 AND gamma < pi/2 THEN //Quadrant 1
+	quadrant := 1;
+	alpha := pi/2 - gamma; //Winkel des gedrehten Boxes
+	x1Box := xRobot + COS(alpha) * breite;
+	y1Box := yRobot - SIN(alpha) * breite;
+	x2Box := xRobot + SIN(alpha + beta) * diagonal;
+	y2Box := yRobot + COS(alpha + beta) * diagonal;
+	x3Box := xRobot - COS(alpha + beta) * diagonal;
+	y3Box := yRobot + SIN(alpha + beta) * diagonal;
+	x4Box := xRobot - COS(alpha) * breite;
+	y4Box := yRobot + SIN(alpha) * breite;	
+ELSIF gamma >= pi/2 AND gamma <= pi THEN //Quadrant 2
+	quadrant := 2;
+	alpha := pi - gamma;
+	x1Box := xRobot + SIN(alpha) * breite;
+	y1Box := yRobot + COS(alpha) * breite;
+	x2Box := xRobot - COS(alpha + beta) * diagonal;
+	y2Box := yRobot + SIN(alpha + beta) * diagonal;
+	x3Box := xRobot - SIN(alpha + beta) * diagonal;
+	y3Box := yRobot - COS(alpha + beta) * diagonal;
+	x4Box := xRobot - SIN(alpha) * breite;
+	y4Box := yRobot - COS(alpha) * breite;
+ELSIF gamma > -pi AND gamma < -pi/2 THEN //Quadrant 3
+	quadrant := 3;
+	alpha := pi + gamma;
+	x1Box := xRobot - SIN(alpha) * breite;
+	y1Box := yRobot + COS(alpha) * breite;
+	x2Box := xRobot - SIN(alpha + beta) * diagonal;
+	y2Box := yRobot + COS(alpha + beta) * diagonal;
+	x3Box := xRobot - COS(alpha + beta) * diagonal;
+	y3Box := yRobot - SIN(alpha + beta) * diagonal;
+	x4Box := xRobot + SIN(alpha) * breite;
+	y4Box := yRobot - COS(alpha) * breite;	
+ELSIF gamma >= -pi/2 AND gamma < 0 THEN //Quadrant 4
+	quadrant := 4;
+	alpha := gamma + pi/2;
+	x1Box := xRobot - COS(alpha) * breite;
+	y1Box := yRobot - SIN(alpha) * breite;
+	x2Box := xRobot - COS(alpha + beta) * diagonal;
+	y2Box := yRobot - SIN(alpha + beta) * diagonal;
+	x3Box := xRobot + SIN(alpha + beta) * diagonal;
+	y3Box := yRobot - COS(alpha + beta) * diagonal;
+	x4Box := xRobot + COS(alpha) * breite;
+	y4Box := yRobot + SIN(alpha) * breite;
+END_IF
+
+//Finde alle aktiven Roboter im Feld
+FOR j := 1 TO 4 BY 1 DO
+	IF robotPoseArray[j].x <> 0 AND robotPoseArray[j].y <> 0 AND j <> robotNumber THEN
+		robotActive[j] := j;
+	END_IF
+END_FOR
+
+//Erkennt Roboter Kollision in Box?
+FOR k := 1 TO 4 BY 1 DO
+	IF robotActive [k] <> 0 AND robotActive [k] <> robotNumber THEN
+		IF quadrant = 1 THEN
+			IF robotPoseArray[robotActive[k]].x < x2Box AND robotPoseArray[robotActive[k]].x > x4Box AND robotPoseArray[robotActive[k]].y < y3Box AND robotPoseArray[robotActive[k]].y > y1Box THEN
+				collisionDetected := TRUE;
+			ELSE
+				collisionDetected := FALSE;
+			END_IF
+		ELSIF quadrant = 2 THEN
+			IF robotPoseArray[robotActive[k]].x < x1Box AND robotPoseArray[robotActive[k]].x > x3Box AND robotPoseArray[robotActive[k]].y < y2Box AND robotPoseArray[robotActive[k]].y > y4Box THEN
+				collisionDetected := TRUE;
+			ELSE
+				collisionDetected := FALSE;
+			END_IF
+		ELSIF quadrant = 3 THEN
+			IF robotPoseArray[robotActive[k]].x < x4Box AND robotPoseArray[robotActive[k]].x > x2Box AND robotPoseArray[robotActive[k]].y < y1Box AND robotPoseArray[robotActive[k]].y > y3Box THEN
+				collisionDetected := TRUE;
+			ELSE
+				collisionDetected := FALSE;
+			END_IF
+		ELSIF quadrant = 4 THEN
+			IF robotPoseArray[robotActive[k]].x < x3Box AND robotPoseArray[robotActive[k]].x > x1Box AND robotPoseArray[robotActive[k]].y < y4Box AND robotPoseArray[robotActive[k]].y > y2Box THEN
+				collisionDetected := TRUE;
+			ELSE
+				collisionDetected := FALSE;
+			END_IF
+		END_IF
+	END_IF
+	
+	IF collisionDetected = TRUE AND collide <> robotActive[k] THEN
+		collide := robotActive[k];
+		robotCollision[collide] := TRUE;
+	END_IF
+END_FOR ]]></ST>
     </Implementation>
     <LineIds Name="Kollisionserkennung">
+      <LineId Id="398" Count="0" />
+      <LineId Id="515" Count="0" />
+      <LineId Id="399" Count="0" />
       <LineId Id="22" Count="5" />
       <LineId Id="342" Count="0" />
       <LineId Id="29" Count="5" />
@@ -158,62 +189,35 @@ END_IF]]></ST>
       <LineId Id="40" Count="0" />
       <LineId Id="305" Count="0" />
       <LineId Id="294" Count="0" />
+      <LineId Id="389" Count="0" />
+      <LineId Id="514" Count="0" />
       <LineId Id="317" Count="1" />
       <LineId Id="314" Count="0" />
-      <LineId Id="321" Count="0" />
-      <LineId Id="319" Count="0" />
-      <LineId Id="41" Count="0" />
-      <LineId Id="177" Count="0" />
-      <LineId Id="173" Count="0" />
-      <LineId Id="229" Count="6" />
-      <LineId Id="228" Count="0" />
-      <LineId Id="50" Count="0" />
-      <LineId Id="178" Count="0" />
-      <LineId Id="291" Count="0" />
-      <LineId Id="238" Count="6" />
-      <LineId Id="237" Count="0" />
-      <LineId Id="59" Count="0" />
-      <LineId Id="179" Count="0" />
-      <LineId Id="292" Count="0" />
-      <LineId Id="246" Count="6" />
-      <LineId Id="245" Count="0" />
-      <LineId Id="69" Count="0" />
-      <LineId Id="180" Count="0" />
-      <LineId Id="293" Count="0" />
-      <LineId Id="254" Count="6" />
-      <LineId Id="253" Count="0" />
-      <LineId Id="78" Count="5" />
-      <LineId Id="85" Count="1" />
-      <LineId Id="157" Count="3" />
-      <LineId Id="181" Count="0" />
-      <LineId Id="196" Count="1" />
-      <LineId Id="261" Count="0" />
-      <LineId Id="264" Count="0" />
-      <LineId Id="188" Count="0" />
-      <LineId Id="190" Count="0" />
-      <LineId Id="198" Count="1" />
-      <LineId Id="265" Count="1" />
-      <LineId Id="195" Count="0" />
-      <LineId Id="192" Count="0" />
-      <LineId Id="201" Count="1" />
-      <LineId Id="267" Count="1" />
-      <LineId Id="200" Count="0" />
-      <LineId Id="194" Count="0" />
-      <LineId Id="204" Count="1" />
-      <LineId Id="269" Count="1" />
-      <LineId Id="203" Count="0" />
-      <LineId Id="183" Count="0" />
-      <LineId Id="165" Count="2" />
-      <LineId Id="207" Count="0" />
-      <LineId Id="168" Count="0" />
-      <LineId Id="170" Count="0" />
+      <LineId Id="401" Count="0" />
+      <LineId Id="408" Count="0" />
+      <LineId Id="402" Count="1" />
+      <LineId Id="405" Count="2" />
+      <LineId Id="404" Count="0" />
       <LineId Id="156" Count="0" />
-      <LineId Id="322" Count="0" />
       <LineId Id="310" Count="0" />
       <LineId Id="307" Count="0" />
-      <LineId Id="352" Count="9" />
-      <LineId Id="351" Count="0" />
+      <LineId Id="391" Count="0" />
+      <LineId Id="516" Count="1" />
+      <LineId Id="392" Count="0" />
+      <LineId Id="395" Count="1" />
+      <LineId Id="393" Count="1" />
       <LineId Id="306" Count="0" />
+      <LineId Id="507" Count="0" />
+      <LineId Id="501" Count="0" />
+      <LineId Id="411" Count="0" />
+      <LineId Id="502" Count="0" />
+      <LineId Id="504" Count="0" />
+      <LineId Id="509" Count="4" />
+      <LineId Id="508" Count="0" />
+      <LineId Id="503" Count="0" />
+      <LineId Id="506" Count="0" />
+      <LineId Id="412" Count="87" />
+      <LineId Id="409" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
