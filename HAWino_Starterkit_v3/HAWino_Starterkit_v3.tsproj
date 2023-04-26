@@ -1329,6 +1329,9 @@
 				<Task Id="8" Priority="22" CycleTime="200000" AmsPort="355" DisableFpExceptions="true" AdtTasks="true">
 					<Name>A_search</Name>
 				</Task>
+				<Task Id="9" Priority="21" CycleTime="100000" AmsPort="356" AdtTasks="true">
+					<Name>Kollisionserkennung</Name>
+				</Task>
 			</Tasks>
 			<Modules>
 				<Module Id="#x01010010" KeepUnrestoredLinks="2" ClassFactoryId="TE140x Module Vendor|SoC_Model_Data_Aquisition_2022|0.0.0.2">
