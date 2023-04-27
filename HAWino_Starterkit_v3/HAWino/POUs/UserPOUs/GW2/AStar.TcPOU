@@ -3,36 +3,36 @@
   <POU Name="AStar" Id="{7641bcc2-8598-421f-b509-a825c115c758}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK AStar
 VAR_INPUT
-	enable : BOOL := FALSE;
 	xRobotActual, yRobotActual : LREAL;
 	xEnd, yEnd : LREAL;
 	endNode : INT ;
+	blockedNodes : ARRAY[1..11] OF INT;
 END_VAR
 VAR_OUTPUT
 	finishedASearch : BOOL := FALSE;
 	xCoordinates, yCoordinates : ARRAY[0..100] OF LREAL;
 END_VAR
 VAR
+	nullMatrix_Neighbor : ARRAY[1..8,1..5] OF LREAL := [40(0)];
+	nullMatrix_TempArray : ARRAY[1..170,1..7] OF LREAL := [1190(0)];
+	nullOpenList : ARRAY[1..170,1..6] OF LREAL := [1020(0)];
 	numberOfNodes : INT := 144;
-	a, b, c, d, e, i, j, k, m, o, p, q, t, v, w, counter, number, cnt1, cnt2, cntPark : INT;
+	a, b, c, d, e, i, j, k, m, o, p, q, t, v, w, counter, counter1, number, cnt1, cnt2, cntPark : INT;
 	numberOfColumns : INT := 18;
 	matrix : ARRAY[1..170,1..170] OF LREAL;
 	row, col : LREAL;
 	xNode, yNode : ARRAY[1..170] OF LREAL;
-	removeNode : ARRAY[0..15] OF INT := [36, 54, 72, 90, 93, 96, 99, 102, 111, 114, 117, 120, 124, 125, 142, 143];
+	removeNode : ARRAY[0..30] OF INT := [36, 54, 72, 90, 93, 96, 99, 102, 111, 114, 117, 120, 124, 125, 142, 143];
 	startNode : INT := 0; //fragwürdig
 	diff_x, diff_y, diff_total : ARRAY[1..170] OF LREAL;
 	min_total : LREAL;
 	openList : ARRAY[1..170,1..6] OF LREAL;
-	nullOpenList : ARRAY[1..170,1..6] OF LREAL := [1020(0)];
 	closedList : ARRAY[1..170] OF LREAL;
 	h, f, gprev : LREAL;
 	g : LREAL := 0;
 	parentNode : INT ;
 	countNeighbor, indexMin, currentNode : INT;
 	neighborList:ARRAY[1..8,1..5] OF LREAL;
-	nullMatrix_Neighbor : ARRAY[1..8,1..5] OF LREAL := [40(0)];
-	nullMatrix_TempArray : ARRAY[1..170,1..7] OF LREAL := [1190(0)];
 	flag : BOOL;
 	countOpen : INT := 1;
 	tempArray : ARRAY[1..170,1..7] OF LREAL;
@@ -42,11 +42,17 @@ VAR
 	wayPointList_finished : ARRAY[0..100] OF INT;
 	countClosed : INT := 1;
 	countPointList : INT := 1;
+	error : BOOL := FALSE;
+	//destinationUnreachable : BOOL := FALSE;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[reset();
 openList := nullOpenList;
+
+FOR counter1 := 1 TO 11 DO
+	removeNode[15 + counter1] := blockedNodes[counter1];
+END_FOR 
 
 ///////////////////////////////////////////Erstellen der Adjezenzmatrix//////////////////////////////////////////////////////////////////
 FOR i := 0 TO numberOfNodes BY 1 DO
@@ -77,40 +83,42 @@ FOR i := 0 TO numberOfNodes BY 1 DO
  END_FOR
  
 //Löschen der Knoten über Station und die nahegelegenen diagonalen Verbindungen
- FOR counter := 0 TO 15 BY 1 DO
-	FOR j := 1 TO 170 BY 1 DO
-		matrix[removeNode[counter],j] := 0;
-		matrix[j, removeNode[counter]] := 0;
- 	END_FOR
-	
-	//diagonale Verbindung oben links
-	IF removeNode[counter] - 1 > 0 AND removeNode[counter] + numberOfColumns <= numberOfNodes THEN 
-		matrix[removeNode[counter] - 1, removeNode[counter] + numberOfColumns] := 0;	
-		matrix[removeNode[counter] + numberOfColumns, removeNode[counter] - 1] := 0;	
-	END_IF
-	
-	//diagonale Verbindung unten links
-	IF removeNode[counter] - 1 > 0 AND removeNode[counter] - numberOfColumns > 0 THEN 
-		matrix[removeNode[counter] - 1, removeNode[counter] - numberOfColumns] := 0;	
-		matrix[removeNode[counter] - numberOfColumns, removeNode[counter] - 1] := 0;	
-	END_IF
-	
-	//diagonale Verbindung oben rechts
-	IF removeNode[counter] + 1 <= numberOfNodes AND removeNode[counter] + numberOfColumns <= numberOfNodes THEN 
-		matrix[removeNode[counter] + 1, removeNode[counter] + numberOfColumns] := 0;	
-		matrix[removeNode[counter] + numberOfColumns, removeNode[counter] + 1] := 0;	
-	END_IF
-	
-	//diagonale Verbindung unten rechts
-	IF removeNode[counter] + 1 <= numberOfNodes AND removeNode[counter] - numberOfColumns > 0 THEN
-		matrix[removeNode[counter] + 1, removeNode[counter] - numberOfColumns] := 0;	
-		matrix[removeNode[counter] - numberOfColumns, removeNode[counter] + 1] := 0;	
-	END_IF
-	
-	//alle entfernten Knoten auf unrealistische Koordinaten setzen, damit sie nicht als Startknoten in Frage kommen, außer die Partplätze
-	IF counter > 3 THEN
-		xNode[removeNode[counter]] := 10000;
-		yNode[removeNode[counter]] := 10000;
+ FOR counter := 0 TO 30 BY 1 DO 
+	IF removeNode[counter] > 0 THEN 
+		FOR j := 1 TO 170 BY 1 DO
+			matrix[removeNode[counter],j] := 0;
+			matrix[j, removeNode[counter]] := 0;
+		END_FOR
+		
+		//diagonale Verbindung oben links
+		IF removeNode[counter] - 1 > 0 AND removeNode[counter] + numberOfColumns <= numberOfNodes THEN 
+			matrix[removeNode[counter] - 1, removeNode[counter] + numberOfColumns] := 0;	
+			matrix[removeNode[counter] + numberOfColumns, removeNode[counter] - 1] := 0;	
+		END_IF
+		
+		//diagonale Verbindung unten links
+		IF removeNode[counter] - 1 > 0 AND removeNode[counter] - numberOfColumns > 0 THEN 
+			matrix[removeNode[counter] - 1, removeNode[counter] - numberOfColumns] := 0;	
+			matrix[removeNode[counter] - numberOfColumns, removeNode[counter] - 1] := 0;	
+		END_IF
+		
+		//diagonale Verbindung oben rechts
+		IF removeNode[counter] + 1 <= numberOfNodes AND removeNode[counter] + numberOfColumns <= numberOfNodes THEN 
+			matrix[removeNode[counter] + 1, removeNode[counter] + numberOfColumns] := 0;	
+			matrix[removeNode[counter] + numberOfColumns, removeNode[counter] + 1] := 0;	
+		END_IF
+		
+		//diagonale Verbindung unten rechts
+		IF removeNode[counter] + 1 <= numberOfNodes AND removeNode[counter] - numberOfColumns > 0 THEN
+			matrix[removeNode[counter] + 1, removeNode[counter] - numberOfColumns] := 0;	
+			matrix[removeNode[counter] - numberOfColumns, removeNode[counter] + 1] := 0;	
+		END_IF
+		
+		//alle entfernten Knoten auf unrealistische Koordinaten setzen, damit sie nicht als Startknoten in Frage kommen, außer die Partplätze
+		IF counter > 3 THEN
+			xNode[removeNode[counter]] := 10000;
+			yNode[removeNode[counter]] := 10000;
+		END_IF
 	END_IF
  END_FOR
  
@@ -244,8 +252,6 @@ FOR i := 0 TO numberOfNodes BY 1 DO
  h := SQRT(EXPT(xNode[startNode]-xEnd,2) + EXPT(yNode[startNode]-yEnd,2));
  f := g + h;
  
- //übergibt hier zu entfernende Nodes in closed List -> nötig?
- 
  //insert start node in openList
  openList[1,1] := 1;
  openList[1,2] := startNode;
@@ -265,7 +271,6 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 	neighborList := nullMatrix_Neighbor;
 	
 	//search the neightbor and put in neighborlist
-	//gprev := g;																		//ausversehen gelöscht??? geht jetzt?
 	FOR v := 1 TO 170 BY 1 DO
 		//calculate forwards
 		IF matrix[currentNode,v] <> 0 THEN
@@ -342,6 +347,11 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 	gprev := openList[indexMin,3];
 	countClosed := countClosed + 1;
 	closedList[countClosed] := currentNode;
+	
+	IF currentNode = 0 THEN
+		error := TRUE;
+		EXIT;
+	END_IF
  END_WHILE
  
  //Optimal path is generated by starting of the goal node to start node
@@ -375,14 +385,18 @@ FOR t := 0 TO 100 BY 1 DO
 	END_IF
 END_FOR
  
- 
- finishedASearch := TRUE;]]></ST>
+ IF error = FALSE THEN
+	 finishedASearch := TRUE;
+ END_IF]]></ST>
     </Implementation>
     <Method Name="reset" Id="{1844f933-5385-4c4f-b16b-9087fe62c4bc}">
       <Declaration><![CDATA[METHOD reset : BOOL
 VAR_INPUT
 END_VAR
-]]></Declaration>
+
+VAR
+	numb: INT;
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[Zeros_INT(wayPointList_finished);
 Zeros(closedList);
@@ -395,6 +409,7 @@ zeros(yNode);
 //removeNode?
 zeros(diff_x);
 zeros(diff_y);
+zeros(diff_total);
 
 finishedASearch := FALSE;
 numberOfNodes := 144;
@@ -402,20 +417,33 @@ q := 0;
 numberOfColumns := 18;
 parentNode := 0;
 g := 0;
+gprev := 0;
 flag := FALSE;
 countOpen := 1;
 countTemp := 1;
 countClosed := 1;
 countPointList := 1;
+error := FALSE;
+
+FOR numb := 16 TO 30 BY 1 DO
+	removeNode[numb] := 0;
+END_FOR
+
+
 ]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="AStar">
       <LineId Id="1084" Count="0" />
       <LineId Id="1130" Count="0" />
-      <LineId Id="773" Count="27" />
+      <LineId Id="1601" Count="2" />
+      <LineId Id="773" Count="0" />
+      <LineId Id="1605" Count="0" />
+      <LineId Id="774" Count="26" />
       <LineId Id="803" Count="0" />
-      <LineId Id="1193" Count="5" />
+      <LineId Id="1193" Count="1" />
+      <LineId Id="1650" Count="0" />
+      <LineId Id="1195" Count="3" />
       <LineId Id="1228" Count="0" />
       <LineId Id="1199" Count="0" />
       <LineId Id="1218" Count="1" />
@@ -436,6 +464,7 @@ countPointList := 1;
       <LineId Id="1227" Count="0" />
       <LineId Id="1215" Count="1" />
       <LineId Id="1545" Count="0" />
+      <LineId Id="1651" Count="0" />
       <LineId Id="810" Count="1" />
       <LineId Id="1253" Count="0" />
       <LineId Id="1231" Count="0" />
@@ -463,27 +492,39 @@ countPointList := 1;
       <LineId Id="1356" Count="0" />
       <LineId Id="867" Count="2" />
       <LineId Id="872" Count="2" />
-      <LineId Id="876" Count="20" />
-      <LineId Id="1502" Count="0" />
+      <LineId Id="878" Count="18" />
       <LineId Id="898" Count="72" />
       <LineId Id="1217" Count="0" />
-      <LineId Id="971" Count="18" />
-      <LineId Id="1002" Count="16" />
+      <LineId Id="971" Count="1" />
+      <LineId Id="1590" Count="2" />
+      <LineId Id="1600" Count="0" />
+      <LineId Id="1593" Count="0" />
+      <LineId Id="973" Count="16" />
+      <LineId Id="1002" Count="15" />
+      <LineId Id="1649" Count="0" />
       <LineId Id="67" Count="0" />
+      <LineId Id="1651" Count="0" />
     </LineIds>
     <LineIds Name="AStar.reset">
       <LineId Id="5" Count="4" />
       <LineId Id="20" Count="5" />
+      <LineId Id="41" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="15" Count="1" />
       <LineId Id="19" Count="0" />
       <LineId Id="28" Count="0" />
       <LineId Id="27" Count="0" />
+      <LineId Id="42" Count="0" />
       <LineId Id="29" Count="0" />
       <LineId Id="31" Count="0" />
       <LineId Id="30" Count="0" />
       <LineId Id="33" Count="1" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="49" Count="1" />
+      <LineId Id="39" Count="1" />
       <LineId Id="32" Count="0" />
     </LineIds>
   </POU>

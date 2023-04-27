@@ -117,6 +117,9 @@
     <Compile Include="POUs\UserPOUs\GW2\Fahrauftrag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\GW2\Kollisionserkennung.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\GW2\ReadAssigment.TcPOU">
       <SubType>Code</SubType>
     </Compile>
