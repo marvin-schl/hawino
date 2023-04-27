@@ -1091,7 +1091,6 @@ IF trajectoryController.yBoArrivedAtDestination THEN //hier and goBack entfernt
 	trajectoryController.xBoEnable := FALSE;
 	resetGoBack := true;
 	firstTime := TRUE;
-	otherRoboAtStation := FALSE;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -1842,7 +1841,6 @@ sk31 := FALSE;]]></ST>
       <LineId Id="139" Count="0" />
       <LineId Id="41" Count="0" />
       <LineId Id="110" Count="0" />
-      <LineId Id="140" Count="0" />
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="Fahrauftrag.errorTest">
