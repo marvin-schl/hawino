@@ -70,23 +70,22 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF path.length-2*ControlParameters.thetaDZ > 0 THEN
+        <ST><![CDATA[maxVel  := ControlParameters.maxVel;
+maxAcc	:= ControlParameters.maxAcc;
+IF path.length-2*ControlParameters.thetaDZ > 0 THEN
 	endPoint := path.endPointVal;
 	startPoint :=  path.startPointVal;
-	rotationPerArcLength := ABS(endpoint.theta-startPoint.theta/path.length-2*ControlParameters.thetaDZ);
-	IF rotationPerArcLength <= pi/1.1 THEN
-		maxVel  := ControlParameters.maxVel;
-		maxAcc	:= ControlParameters.maxAcc;
-	ELSIF rotationPerArcLength >= pi/0.6 THEN
+	rotationPerArcLength := ABS((endpoint.theta-startPoint.theta)/(path.length-2*ControlParameters.thetaDZ));
+	IF rotationPerArcLength >= pi/(1-2*ControlParameters.thetaDZ) THEN
 		maxVel  := 0.3;
 		maxAcc	:= 0.2;
-	ELSIF rotationPerArcLength > pi/1.1 AND  rotationPerArcLength < pi/0.6 THEN
-		mVel :=  (0.3-ControlParameters.maxVel)/(pi/0.6 - pi/1.1);
+	ELSIF rotationPerArcLength > pi/(1.5-2*ControlParameters.thetaDZ) AND  rotationPerArcLength < pi/(1-2*ControlParameters.thetaDZ) THEN
+		mVel :=  (0.3-ControlParameters.maxVel)/(pi/(1-2*ControlParameters.thetaDZ- pi/(1.5-2*ControlParameters.thetaDZ)));
 		bVel := ControlParameters.maxVel-mVel*pi/1.1;
-		mAcc :=  (0.2-ControlParameters.maxAcc)/(pi/0.6 - pi/1.1);
+		mAcc :=  (0.2-ControlParameters.maxAcc)/(pi/(1-2*ControlParameters.thetaDZ- pi/(1.5-2*ControlParameters.thetaDZ)));
 		bAcc := ControlParameters.maxAcc-mAcc*pi/1.1;
 		maxVel := mVel*rotationPerArcLength + bVel;
-		maxVel := mAcc*rotationPerArcLength + bAcc;
+		maxAcc := mAcc*rotationPerArcLength + bAcc;
 	END_IF
 END_IF]]></ST>
       </Implementation>
@@ -159,7 +158,10 @@ END_IF
 
 path(waypointListRaw := extendedWayPointList, maxRadius := maxRadius, thetaDZ := thetaDZ);
 
+
+
 IF path.ready THEN
+	calculateTrajectoryContraints();
 	trajectoryPlanner(path := path, 
 				  qAccMax := maxAcc, 
 				  qVelMax := maxVel, 
@@ -185,11 +187,11 @@ IF path.ready THEN
       <LineId Id="71" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.calculateTrajectoryContraints">
+      <LineId Id="41" Count="0" />
+      <LineId Id="40" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="30" Count="1" />
       <LineId Id="5" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="17" Count="1" />
       <LineId Id="15" Count="0" />
       <LineId Id="19" Count="2" />
       <LineId Id="25" Count="3" />
@@ -224,7 +226,10 @@ IF path.ready THEN
       <LineId Id="87" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="119" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="140" Count="0" />
       <LineId Id="118" Count="0" />
+      <LineId Id="142" Count="0" />
       <LineId Id="18" Count="0" />
       <LineId Id="20" Count="0" />
       <LineId Id="19" Count="0" />
