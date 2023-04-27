@@ -3329,6 +3329,11 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.state</Name>
+							<Comment><![CDATA[sets controller state]]></Comment>
+							<Type GUID="{4D01AD9A-1F2F-377C-0812-CF417AB6D9DE}">ControllerState</Type>
+						</Var>
+						<Var>
 							<Name>WheelEncoders.vXCartesianFromMotors</Name>
 							<Comment><![CDATA[OUTPUTS]]></Comment>
 							<Type>LREAL</Type>
@@ -3358,11 +3363,6 @@
 						<Var>
 							<Name>ControlPRG.robot.vThetaToRobot</Name>
 							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.state</Name>
-							<Comment><![CDATA[sets controller state]]></Comment>
-							<Type GUID="{4D01AD9A-1F2F-377C-0812-CF417AB6D9DE}">ControllerState</Type>
 						</Var>
 						<Var>
 							<Name>ControlPRG.yBoArrivedAtDestination</Name>
@@ -3447,11 +3447,6 @@
 					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
 						<Name>PlcTask Inputs</Name>
 						<Var>
-							<Name>Fahrauftrag.goBack</Name>
-							<Comment><![CDATA[zurückfahren auf Befehl von anderem HAWino]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>Fahrauftrag.TrajectoryController.yBoArrivedAtDestination</Name>
 							<Comment><![CDATA[ TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
 							<Type>BOOL</Type>
@@ -3475,8 +3470,8 @@
 							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
 						</Var>
 						<Var>
-							<Name>Fahrauftrag.reset</Name>
-							<Comment><![CDATA[Fahrauftrag und GW3 zurücksetzen auf Befehl von GW1]]></Comment>
+							<Name>Fahrauftrag.goBack</Name>
+							<Comment><![CDATA[zurückfahren auf Befehl von anderem HAWino]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -3490,6 +3485,11 @@
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
+							<Name>Fahrauftrag.reset</Name>
+							<Comment><![CDATA[Fahrauftrag und GW3 zurücksetzen auf Befehl von GW1]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>Fahrauftrag.collision</Name>
 							<Comment><![CDATA[Collision wurde erkannt]]></Comment>
 							<Type GUID="{ED505E53-AC03-A7B8-5B0E-7E9F26DE47AE}">ARRAY [0..4] OF BOOL</Type>
@@ -3499,12 +3499,12 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>IrDistanceSensors.distanceRaw</Name>
-							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
-						</Var>
-						<Var>
 							<Name>PowerManager.batteryVoltageRaw</Name>
 							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>IrDistanceSensors.distanceRaw</Name>
+							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.supplyCurrentRaw</Name>
@@ -3546,10 +3546,6 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>Fahrauftrag.RoboNmbToGoBack</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
 							<Name>Fahrauftrag.TrajectoryController.xBoEnable</Name>
 							<Comment><![CDATA[ Freigabesignal für Fahrt, Roboter stoppt bei FALSE]]></Comment>
 							<Type>BOOL</Type>
@@ -3572,6 +3568,10 @@
 							<Name>Fahrauftrag.FeedbackToGW1</Name>
 							<Comment><![CDATA[Feedback/Status des Roboters an GW1]]></Comment>
 							<Type>STRING(50)</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.RoboNmbToGoBack</Name>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>IrDistanceSensors.distance_mm</Name>
@@ -3602,13 +3602,17 @@
 							<Type>REAL</Type>
 						</Var>
 						<Var>
+							<Name>PowerManager.stMqtt_HAWino_IN</Name>
+							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
+							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
+						</Var>
+						<Var>
 							<Name>Gripper.driveEnable</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.stMqtt_HAWino_IN</Name>
-							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
-							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
+							<Name>Gripper.driveVelocity</Name>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.sliderToSimulink</Name>
@@ -3617,10 +3621,6 @@
 						<Var>
 							<Name>Gripper.partInGripperToSimulink</Name>
 							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>Gripper.driveVelocity</Name>
-							<Type>INT</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="1" ContextId="3" AreaNo="48">
@@ -6607,9 +6607,12 @@ Bit1: Value smaller than Limit2]]></Comment>
 		<MappingInfo Identifier="{00000000-2003-0850-0220-500842000403}" Id="#x02030060"/>
 		<MappingInfo Identifier="{00000000-2004-0850-0320-500853000403}" Id="#x02030070"/>
 		<MappingInfo Identifier="{08502001-2003-0850-0020-500802205008}" Id="#x020300a0" Watchdog="14000000040000000400000004000000"/>
+		<MappingInfo Identifier="{08502001-2004-0850-0020-500803205008}" Id="#x020300d0" Watchdog="14000000040000000400000004000000"/>
 		<MappingInfo Identifier="{08502001-0040-0304-0020-500840000403}" Id="#x02030040" Watchdog="00000000000000000000000000000000"/>
 		<MappingInfo Identifier="{08502002-2003-0850-0120-500802205008}" Id="#x02030100" Watchdog="04000000280000000400000004000000"/>
+		<MappingInfo Identifier="{08502002-2004-0850-0120-500803205008}" Id="#x020300e0" Watchdog="04000000280000000400000004000000"/>
 		<MappingInfo Identifier="{08502002-0060-0201-0120-500820000101}" Id="#x020300c0" Watchdog="04000000280000000400000004000000"/>
+		<MappingInfo Identifier="{08502003-2004-0850-0220-500803205008}" Id="#x020300f0" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{08502003-0010-0304-0020-500810000403}" Id="#x02030020" Watchdog="04000000140000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-2003-0850-1000-010102205008}" Id="#x020300b0" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-0060-0201-1000-010120000101}" Id="#x02030080" Watchdog="04000000040000000400000004000000"/>
@@ -6669,11 +6672,15 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="ControlTask Inputs^MotorDrivers.vThetaCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vThetaToRobot"/>
 				<Link VarA="ControlTask Inputs^MotorDrivers.vXCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vXtoRobot"/>
 				<Link VarA="ControlTask Inputs^MotorDrivers.vYCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vYtoRobot"/>
+				<Link VarA="Kollisionserkennung_1 Inputs^Kollisionserkennung.robotPoseArray" VarB="PlcTask Outputs^Camera.cameraData.robotPosition"/>
+				<Link VarA="Kollisionserkennung_1 Inputs^Kollisionserkennung.vxRobot" VarB="ControlTask Outputs^ControlPRG.robot.vXtoRobot"/>
+				<Link VarA="Kollisionserkennung_1 Inputs^Kollisionserkennung.vyRobot" VarB="ControlTask Outputs^ControlPRG.robot.vYtoRobot"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.FeedbackToGW1" VarB="PlcTask Outputs^Fahrauftrag.FeedbackToGW1"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.RoboNmbToGoBack" VarB="PlcTask Outputs^Fahrauftrag.RoboNmbToGoBack"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.resetGoBack" VarB="PlcTask Outputs^Fahrauftrag.resetGoBack"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.resetVar" VarB="PlcTask Outputs^Fahrauftrag.resetVar"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^bComCheckAnswer" VarB="MQTT_1 Outputs^MQTT.bComCheckAnswer"/>
+				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^nRobotNumber" VarB="Kollisionserkennung_1 Outputs^HAWino.Robot_Number"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.txtReadInit" VarB="PlcTask Outputs^HAWino.initDone"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.Auftrag" VarB="MQTT_1 Outputs^MQTT.Auftrag"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.StatusFromGW1" VarB="MQTT_1 Outputs^MQTT.StatusFromGW1"/>
