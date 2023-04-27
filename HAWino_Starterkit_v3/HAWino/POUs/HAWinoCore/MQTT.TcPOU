@@ -82,7 +82,7 @@ VAR
 	//Timer2 : TON;
 	//startTime1: BOOL;
 	//startTime2: BOOL;
-	//WerkstueckAusgelesen: BOOL;
+	WerkstueckAusgelesen: BOOL;
 	//i: INT := 0;
 	sPayloadPub1 : STRING(2000);
 	Robotstatus : RobotStatusGW1;
@@ -389,7 +389,7 @@ IF txtReadInit THEN
 				fbJsonDataType.SetSymbolFromJson(sPayloadRcv_Status,'RobotStatusGW1',SIZEOF(RobotStatus),ADR(RobotStatus));
 				StatusFromGW1 := Robotstatus.Status;
 				//IF Robotstatus.Status = 'WerkstueckAusgelesen' THEN
-				//	WerkstueckAusgelesen := 1;
+					WerkstueckAusgelesen := 1;
 				//END_IF
 				Robotstatus.Status := '';
 			END_IF
@@ -417,6 +417,7 @@ IF txtReadInit THEN
 	
 	IF resetVar THEN
 		StatusFromGW1 := '';
+		Robotstatus.Status := '';
 		Auftrag.AbholStation := 0;
 		Auftrag.AbholTasche := 0;
 		Auftrag.AblageStation := 0;
@@ -601,6 +602,7 @@ END_IF]]></ST>
       <LineId Id="419" Count="0" />
       <LineId Id="1400" Count="0" />
       <LineId Id="1603" Count="0" />
+      <LineId Id="2054" Count="0" />
       <LineId Id="1606" Count="3" />
       <LineId Id="1605" Count="0" />
       <LineId Id="1854" Count="0" />

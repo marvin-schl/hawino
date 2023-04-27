@@ -5,7 +5,8 @@
 VAR
 	//State machine
 	sStart : BOOL := TRUE;
-	s0,s1a,s1b,s2,s3,s4,s5,s6a,s6b,s7,s8,s9,s10,s11a,s11b,s12,s13,s14,s15,s16,s17,s18,s19,s20,s21a,s21b,s22,s23,s24,s25,s26a,s26b,s27,s28,s29,s30,s31: BOOL := FALSE;
+	s0,s1a,s1b,s2,s3,s4,s5,s6a,s6b,s7,s8,s9,s10,s11a,s11b,s12,s13,s14,s15,s16,s17,s18,s19,s20,s21a,s21b,s22,s23,s24,s25,s25b,s26a,s26b,s27,s28,s29,s30,s31: BOOL := FALSE;
+	sk0, sk1, sk2, sk3, sk4, sk10, sk20, sk21, sk22, sk23, sk24, sk25, sk26, sk27, sk28, sk29, sk30, sk31, sk32, sk33 : BOOL := FALSE; //States von Kollision
 	
 	AStar : AStar;										//A-Stern Algorithmus
 	readAssigment: ReadAssigment;						//Auswertung des Auftrags
@@ -39,13 +40,13 @@ VAR
 	//Kollision
 	collision AT%I*: ARRAY[0..4] OF BOOL;		//Collision wurde erkannt
 	lastCollision: ARRAY [0..4] OF BOOL;		//letzte Collision gespeichert
-	collisionFree : BOOL := FALSE;				//keine Kollision aktuell
+	collisionFree, collisionSolutionWorking : BOOL;				//keine Kollision aktuell
 	removeNodeCollision : ARRAY[1..11] OF INT;	//Nodes die durch anderen HAWino blockiert
 	todo : STRING(10);							//Aufgabe von diesem HAWino bei Kollision (fahren oder warten)
 	firstTime: BOOL := TRUE;	
 	timerCollision : TON;						//Zeit die bei Kollision gewartet wird, bevor Reaktion folgt
 	otherRobo : ARRAY[0..4] OF INT;				//andere HAWinos, die an Kollision beteilgit
-	otherRoboAtStation : BOOL := FALSE;			//anderer beteiligter HAWino ist im Stationsbereich
+	otherRoboAtStation, otherRoboAtStop, thisRoboAtStation, drivingAtStation, newCollision, sameStation : BOOL;			//anderer beteiligter HAWino ist im Stationsbereich
 	
 	//error
 	noCamera, AStarFailed, error, test : BOOL;
@@ -55,34 +56,48 @@ END_VAR
     <Implementation>
       <ST><![CDATA[timerCollision();
 resetTimer();
-
-IF gripper.state = CoreGripperControlState.Open AND Gripper.partGripped THEN
-	error := TRUE;
-	TrajectoryController.xBoEnable := FALSE;	
-	removeAllToken();
-	FeedbackToGW1 := 'ErrorTeilVerloren';
-	Gripper.closeGripperCommand := FALSE;
-END_IF
+errorTest();
 
 collisionFree := NOT collision[Var_HAWIno.Robot_Number];
 
 //neue Kollision angekommen oder noch alte?
+//IF lastCollision[1] <> collision[1] OR lastCollision[2] <> collision[2] OR lastCollision[3] <> collision[3] OR lastCollision[4] <> collision[4] OR collision[0] THEN
+//	IF collision[Var_HAWIno.Robot_Number] THEN
+//		TrajectoryController.xBoEnable := FALSE;
+//		CollisionSolution();
+//		timerCollision.IN := TRUE;
+//		timerCollision.PT := T#2S;
+//	END_IF
+//	lastCollision := collision;
+//LSIF (todo = 'Warten' AND collisionFree) OR timerCollision.Q THEN
+//	CollisionSolution();	
+//	timerCollision.IN := FALSE;
+//ELSIF (goBack AND NOT resetGoBack) OR (otherRoboAtStation AND todo = 'Warten') THEN
+//	drivingBack();
+//	todo := 'Warten';
+//ELSIF resetGoBack AND NOT goBack THEN
+//	resetGoBack := FALSE;
+//END_IF
+
 IF lastCollision[1] <> collision[1] OR lastCollision[2] <> collision[2] OR lastCollision[3] <> collision[3] OR lastCollision[4] <> collision[4] OR collision[0] THEN
-	IF collision[Var_HAWIno.Robot_Number] THEN
-		TrajectoryController.xBoEnable := FALSE;
-		CollisionSolution();
-		timerCollision.IN := TRUE;
-		timerCollision.PT := T#2S;
-	END_IF
+	newCollision := TRUE;
 	lastCollision := collision;
-ELSIF (todo = 'Warten' AND collisionFree) OR timerCollision.Q THEN
-	CollisionSolution();	
-	timerCollision.IN := FALSE;
-ELSIF (goBack AND NOT resetGoBack) OR (otherRoboAtStation AND todo = 'Warten') THEN
-	drivingBack();
-	todo := 'Warten';
-ELSIF resetGoBack AND NOT goBack THEN
-	resetGoBack := FALSE;
+END_IF
+
+IF collision[0] THEN
+	TrajectoryController.xBoEnable := FALSE;
+	FeedbackToGW1 := 'Kameraausfall';
+ELSIF collision[Var_HAWIno.Robot_Number] AND newCollision THEN //hier doch eher noch "and collisionSolutionWorking" hinzufügen
+	TrajectoryController.xBoEnable := FALSE;
+	IF NOT collisionSolutionWorking THEN
+		sk0 := TRUE;
+	END_IF
+	CollisionsSolution_new();
+	newCollision := FALSE;
+	timerCollision.IN := TRUE;
+	timerCollision.PT := T#2S;
+ELSIF collisionSolutionWorking THEN
+	CollisionsSolution_new();
 END_IF
 
 //Camera damit immer Daten da
@@ -91,7 +106,8 @@ IF camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x <> 0 AND came
 	actualCamY := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;
 END_IF
 
-//Ablauf einer Fahrt:
+////////////////////////////////////////////////////////StateMaschine/////////////////////////////////////////////////
+
 //Init
 IF sStart AND NOT s0 THEN
 	lastRelevantStateForCollision := 's0';
@@ -192,8 +208,12 @@ IF s6a AND NOT s6b AND NOT Gripper.partGripped THEN
 	trajectoryController.newWaypointListAvailable := TRUE;
 ELSIF s6a AND NOT s6b AND Gripper.partGripped THEN
 	Gripper.closeGripperCommand := FALSE;
-	ZEROS_RobotPoseSimple(wayPointList);										//test, sonst für alle
-	wayPointList[0] := ToRobotPoseSimple(x := readAssigment.pickupLocation.x - 100, y := readAssigment.pickupLocation.y, theta := readAssigment.pickupLocation.theta);
+	ZEROS_RobotPoseSimple(wayPointList);
+	IF auftrag.AbholTasche = 1 OR auftrag.AbholTasche = 2 THEN
+		wayPointList[0] := ToRobotPoseSimple(x := readAssigment.pickupLocation.x - 100, y := readAssigment.pickupLocation.y, theta := readAssigment.pickupLocation.theta);
+	ELSIF auftrag.AbholTasche = 3 OR auftrag.AbholTasche = 4 THEN
+		wayPointList[0] := ToRobotPoseSimple(x := readAssigment.pickupLocation.x + 100, y := readAssigment.pickupLocation.y, theta := readAssigment.pickupLocation.theta);
+	END_IF
 	wayPointList[1] := readAssigment.pickupLocation;
 	wayPointList[2] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 	TrajectoryController.setWaypointList(waypointList);
@@ -300,7 +320,8 @@ END_IF
 //	RückmeldungGW3 Fahrt abwarten
 IF s14 AND NOT s15 AND trajectoryController.yControllerState = ControllerState.driving THEN
 	s14 := 0; s15 := 1;
-	resetVar := FALSE;
+	resetVar := TRUE;
+	//resetVar := FALSE;
 	//	RückmeldungGW1 Auf Anfahrt setzen
 	FeedbackToGW1 := 'Auf Transport';
 END_IF
@@ -310,6 +331,7 @@ IF s15 AND NOT s16 AND trajectoryController.yBoArrivedAtDestination THEN
 	s15 := 0; s16 := 1;
 	lastRelevantStateForCollision := 's16';	
 	trajectoryController.xBoEnable := FALSE;
+	resetVar := FALSE;
 	//	RückmeldungGW1 Anmeldung
 	FeedbackToGW1 := 'Anmeldung';
 END_IF
@@ -343,12 +365,14 @@ END_IF
 //	RückmeldungGW3 Fahrt abwarten
 IF s19 AND NOT s20 AND trajectoryController.yControllerState = ControllerState.driving THEN
 	s19 := 0; s20 := 1;
-	resetVar := FALSE;
+	resetVar := TRUE;
+	//resetVar := FALSE;
 END_IF
 
 //	RückmeldungGW3 am Ziel abwarten
 IF s20 AND NOT s21a AND trajectoryController.yBoArrivedAtDestination THEN
 	s20 := 0; s21a := 1;
+	resetVar := FALSE;
 	lastRelevantStateForCollision := 's21a';
 	trajectoryController.xBoEnable := FALSE;
 	//	Greifersteuerung
@@ -520,10 +544,14 @@ IF s24 AND NOT s25 AND trajectoryController.yControllerState = ControllerState.d
 	FeedbackToGW1 := 'Verfuegbar';
 END_IF
 
-IF s25 AND trajectoryController.yControllerState = ControllerState.driving AND Auftrag.Art = 'Fahrauftrag' THEN
+IF s25 AND NOT s25b AND trajectoryController.yControllerState = ControllerState.driving AND Auftrag.Art = 'Fahrauftrag' THEN
 	lastRelevantStateForCollision := 's0';
-		trajectoryController.xBoEnable := FALSE;
-		s25 := 0; s0 := 1;
+	trajectoryController.xBoEnable := FALSE;
+	s25 := 0; s25b := 1;
+END_IF
+
+IF s25b AND NOT s0 AND trajectoryController.yControllerState = ControllerState.ready THEN
+	s25b := 0; s0 := 1;
 END_IF
 
 //	RückmeldungGW3 am Ziel abwarten
@@ -535,8 +563,9 @@ IF s25 AND NOT s0 AND trajectoryController.yBoArrivedAtDestination THEN
 	FeedbackToGW1 := 'Verfuegbar';
 END_IF
 
-//reset für test zwecke
+////////////////////////////////////////////////////////RESET/////////////////////////////////////////////////////
 IF reset THEN
+	TrajectoryController.xBoEnable := FALSE;
 	doReset();
 	resetTimer.PT := T#1S;
 	resetTimer.IN := TRUE;
@@ -546,20 +575,16 @@ IF Auftrag.Art = '' AND (trajectoryController.yControllerState = ControllerState
 	//reset zurücksetzen
 	resetTimer.IN := FALSE;
 	reset := FALSE;
-	test := TRUE;
-	IF error THEN
-		error := FALSE;
-		EndNode := readAssigment.endNodeParking[Var_HAWIno.Robot_Number];															//todo in matlab
-		xEndvalue := readAssigment.parkingSlots[Var_HAWIno.Robot_Number].x;
-		yEndvalue := readAssigment.parkingSlots[Var_HAWIno.Robot_Number].y;
-		xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
-		yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
-		s21a := TRUE;
-		resetVar := FALSE;
-		TrajectoryController.xBoReset := FALSE;
-	ELSE
-		sStart := TRUE;
-	END_IF
+	readAssigment(assigment := Auftrag);
+	EndNode := readAssigment.endNodeParking[Var_HAWIno.Robot_Number];															//todo in matlab
+	xEndvalue := readAssigment.parkingSlots[Var_HAWIno.Robot_Number].x;
+	yEndvalue := readAssigment.parkingSlots[Var_HAWIno.Robot_Number].y;
+	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
+	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
+	s21a := TRUE;
+	lastRelevantStateForCollision := 's21a';
+	resetVar := FALSE;
+	TrajectoryController.xBoReset := FALSE;
 END_IF]]></ST>
     </Implementation>
     <Method Name="CollisionSolution" Id="{4b28bc3d-12ae-4013-b4ca-5ace32b6b8ab}">
@@ -626,7 +651,7 @@ END_IF
 
 IF timerCollision.Q OR collisionFree OR otherRoboAtStop THEN
 //warten auf Timer??? - in allen fällen
-
+	RoboNmbToGoBack := 0;
 	//höhrer Priorität
 	IF todo = 'Fahren' THEN
 		//update removeNode - nur wenn nicht an Station
@@ -655,6 +680,201 @@ END_IF
  ]]></ST>
       </Implementation>
     </Method>
+    <Method Name="CollisionsSolution_new" Id="{b549cdcd-badb-48a4-b744-c413f414dadb}">
+      <Declaration><![CDATA[METHOD CollisionsSolution_new : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	n, higherXRobo, lowerXRobo : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[otherRoboInfo();
+collisionSolutionWorking := TRUE;
+/////////////////////////////////////////////////////////////////NORMAL////////////////////////////////////////////////////////////////////////
+
+IF sk0 AND NOT sk1 AND NOT otherRoboAtStation AND NOT thisRoboAtStation AND NOT otherRoboAtStop AND timerCollision.Q THEN
+	todo := 'Warten';
+	//darf ich fahren? nur wenn kleinere Roboternummer
+	FOR n := 0 TO 4 BY 1 DO
+		IF otherRobo[n] > Var_HAWIno.Robot_Number THEN
+			todo := 'Fahren';
+		END_IF
+	END_FOR
+	sk0 := 0; sk1 := 1;
+	timerCollision.IN := FALSE;
+END_IF
+
+IF sk1 AND NOT sk2 AND todo = 'Fahren' THEN
+	findNodesToRemove(collisionRobo := otherRobo);
+	
+	//in richtigen State zurück zum neuplanen und weiterfahren
+	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
+	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
+	continueAfterCollision();
+	todo := '';
+	sk1 := 0; sk2 := 1;
+END_IF
+
+IF sk1 AND NOT sk3 AND todo = 'Warten' THEN
+	sk1 := 0; sk3 := 1;
+END_IF
+
+IF sk3 AND NOT sk4 AND collisionFree THEN
+	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
+	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;
+	continueAfterCollision();
+	todo := '';
+	sk3 := 0; sk4 := 1;
+END_IF
+
+IF sk2 OR sk4 THEN
+	sk2 := 0; sk4 := 0; 
+	resetCollision();
+END_IF
+
+
+/////////////////////////////////////////////////////////////ATSTOP////////////////////////////////////////////////////////////////////////////
+
+IF sk0 AND NOT sk10 AND otherRoboAtStop AND timerCollision.Q THEN
+	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
+	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;
+	continueAfterCollision();
+	timerCollision.IN := FALSE;
+	sk0 := 0; sk10 := 1;
+END_IF
+
+IF sk10 THEN
+	sk10 := 0;
+	resetCollision();
+END_IF
+
+
+//////////////////////////////////////////////////////////////ATSTATION///////////////////////////////////////////////////////////////////////////
+
+IF sk0 AND NOT sk20 AND (otherRoboAtStation OR thisRoboAtStation) AND timerCollision.Q THEN
+	sk0 := 0; sk20 := 1;
+	timerCollision.IN := FALSE;
+END_IF
+
+//nur anderer Robo an Station
+IF sk20 AND NOT sk21 AND otherRoboAtStation AND NOT thisRoboAtStation THEN
+	sk20 := 0; sk21 := 1;
+	//zurückfahren??? - nein erstmal
+END_IF
+
+IF sk21 AND NOT sk22 AND NOT otherRoboAtStation THEN
+	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
+	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;
+	continueAfterCollision();
+	sk21 := 0; sk22 := 1;
+END_IF
+
+//nur dieser Robo an Station
+IF sk20 AND NOT sk23 AND NOT otherRoboAtStation AND thisRoboAtStation THEN
+	findNodesToRemove(collisionRobo := otherRobo);
+	
+	//in richtigen State zurück zum neuplanen und weiterfahren
+	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
+	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
+	continueAfterCollision();
+	sk20 := 0; sk23 := 1;
+END_IF
+
+//beide an Station
+IF sk20 AND NOT sk24 AND otherRoboAtStation AND thisRoboAtStation THEN
+	sk20 := 0; sk24 := 1;
+	//checken, ob an gleicher Station
+	higherXRobo := SEL((camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x > camera.cameraData.robotPositionArray[otherRobo[0]].x), otherRobo[0], Var_HAWIno.Robot_Number);
+	lowerXRobo := SEL((camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x < camera.cameraData.robotPositionArray[otherRobo[0]].x), otherRobo[0], Var_HAWIno.Robot_Number);
+	IF camera.cameraData.robotPositionArray[higherXRobo].theta = pi AND camera.cameraData.robotPositionArray[lowerXRobo].theta = 0 THEN
+		sameStation := TRUE;
+	ELSE
+		sameStation := FALSE;
+	END_IF  
+END_IF
+
+//an gleicher Station
+IF sk24 AND NOT sk25 AND sameStation THEN
+	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
+	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
+	continueAfterCollision();
+	sk24 := 0; sk25 := 1;
+END_IF
+
+//gleicher Bereich nicht gleiche Station
+IF sk24 AND NOT sk26 AND NOT sameStation THEN
+	sk24 := 0; sk26 := 1;
+END_IF
+
+//dieser Robo auf Transport an Station
+IF sk26 AND NOT sk27 AND drivingAtStation THEN
+	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
+	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
+	continueAfterCollision();
+	sk26 := 0; sk27 := 1;
+END_IF
+
+//dieser nicht aber anderer auf Transport an Station
+IF sk26 AND NOT sk28 AND NOT drivingAtStation AND goBack THEN
+	drivingBack();
+	IF resetGoBack THEN
+		sk26 := 0; sk28 := 1;
+	END_IF
+END_IF
+
+IF sk28 AND NOT sk29 AND NOT otherRoboAtStation THEN
+	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
+	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
+	continueAfterCollision();
+	sk28 := 0; sk29 := 1;
+END_IF
+
+//beide im Stationsbereich und keiner auf Transport an Station
+IF sk26 AND NOT sk30 AND NOT drivingAtStation AND NOT goBack THEN
+	todo := 'Warten';
+	//darf ich fahren? nur wenn kleinere Roboternummer
+	FOR n := 0 TO 4 BY 1 DO
+		IF otherRobo[n] > Var_HAWIno.Robot_Number THEN
+			todo := 'Fahren';
+		END_IF
+	END_FOR
+	sk26 := 0; sk30 := 1;
+END_IF
+
+IF sk30 AND NOT sk31 AND todo = 'Fahren' THEN
+	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
+	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
+	continueAfterCollision();
+	sk30 := 0; sk31 := 1;
+END_IF
+
+IF sk30 AND NOT sk32 AND todo = 'Warten' THEN
+	drivingBack();
+	IF resetGoBack THEN
+		sk30 := 0; sk32 := 1;
+	END_IF
+END_IF
+
+IF sk32 AND NOT sk33 AND NOT otherRoboAtStation THEN
+	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
+	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
+	continueAfterCollision();
+	sk30 := 0; sk31 := 1;
+END_IF
+
+IF resetGoBack AND NOT goBack THEN
+	resetGoBack := FALSE;
+END_IF
+
+/////////////////////////////////////////Am Ende der Kollisionsauflösung//////////////////////////////////////////////
+IF sk22 OR sk23 OR sk25 OR sk27 OR sk29 OR sk31 OR sk33 THEN
+	sk22 := 0; sk23 := 0; sk25 := 0; sk27 := 0; sk29 := 0; sk31 := 0; sk33 := 0;
+	resetCollision();
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="continueAfterCollision" Id="{bdb23939-8772-4122-86ab-be757c2f916b}">
       <Declaration><![CDATA[METHOD continueAfterCollision : BOOL
 VAR_INPUT
@@ -663,6 +883,7 @@ VAR
 	diffToList : ARRAY[0..100] OF LREAL;
 	sortedDiff : ARRAY[0..100,1..2] OF LREAL;
 	nextIndex, j, n, l, i : INT;
+	nullSortedDiff : ARRAY[0..100,1..2] OF LREAL := [202(0)];
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF lastRelevantStateForCollision = 's0' THEN
@@ -672,6 +893,9 @@ ELSIF lastRelevantStateForCollision = 's1a' THEN
 ELSIF lastRelevantStateForCollision = 's6a' THEN
 	s6b := 1;
 	//readAssigment.pointsFromSlotToReader
+	//Arrays resetten
+	ZEROS(diffToList);
+	sortedDiff := nullSortedDiff;
 	
 	FOR i := 0 TO 10 BY 1 DO
 		IF readAssigment.pointsFromSlotToReader[i].x > 0 AND readAssigment.pointsFromSlotToReader[i].y > 0 THEN
@@ -713,6 +937,9 @@ ELSIF lastRelevantStateForCollision = 's16' THEN
 ELSIF lastRelevantStateForCollision = 's17' THEN
 	s17 := 1;
 	//readAssigment.pointsFromReaderToSlot
+	//Arrays resetten
+	ZEROS(diffToList);
+	sortedDiff := nullSortedDiff;
 	
 	FOR i := 0 TO 10 BY 1 DO
 		IF readAssigment.pointsFromReaderToSlot[i].x <> 0 AND readAssigment.pointsFromReaderToSlot[i].y <> -1 THEN
@@ -770,7 +997,7 @@ trajectoryController.xBoEnable := FALSE;
 FeedbackToGW1 := 'Verfuegbar';
 Gripper.closeGripperCommand := FALSE;
 ZEROS_INT(removeNodeCollision);
-//error := FALSE;
+error := FALSE;
 
 //Statemaschine zurücksetzen
 sStart := FALSE;
@@ -812,7 +1039,7 @@ s29 := FALSE;
 s30 := FALSE;
 s31 := FALSE;
 
-
+resetCollision();
 
 ]]></ST>
       </Implementation>
@@ -829,9 +1056,16 @@ VAR
 	index, n, l, i : INT;
 	camX, camY : LREAL;
 	alternativeGoAway: BOOL;
+	nullSortedDiff : ARRAY[0..100,1..2] OF LREAL := [202(0)];
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF firstTime THEN //hier and goBack entfernt
+	//Arrays resetten
+	ZEROS_RobotPoseSimple(gbWayPointList);
+	ZEROS(diffToList);
+	sortedDiff := nullSortedDiff;
+	alternativeGoAway := FALSE;
+
 	camX := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
 	camY := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;
 	IF camX = 0 AND camY = 0 THEN
@@ -894,8 +1128,32 @@ IF trajectoryController.yBoArrivedAtDestination THEN //hier and goBack entfernt
 	trajectoryController.xBoEnable := FALSE;
 	resetGoBack := true;
 	firstTime := TRUE;
-	otherRoboAtStation := FALSE;
 END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="errorTest" Id="{e469cc9c-ca1f-4674-b1dd-16db9e33a62d}">
+      <Declaration><![CDATA[METHOD errorTest : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//ERROR: Teil verloren
+IF gripper.state = CoreGripperControlState.Open AND Gripper.partGripped THEN
+	//error := TRUE;
+	//TrajectoryController.xBoEnable := FALSE;	
+	//removeAllToken();
+	//FeedbackToGW1 := 'Error Teil verloren';
+	//Gripper.closeGripperCommand := FALSE;
+END_IF
+	
+//ERROR: Error von GW3
+IF trajectoryController.yControllerState = ControllerState.error THEN
+	error := TRUE;
+	removeAllToken();
+	FeedbackToGW1 := 'Error';
+	Gripper.closeGripperCommand := FALSE;
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="findNodesToRemove" Id="{ef8384d2-b9d5-47a0-af76-48b877d17d18}">
@@ -1005,6 +1263,68 @@ END_FOR
 ]]></ST>
       </Implementation>
     </Method>
+    <Method Name="otherRoboInfo" Id="{e2679d78-4ec4-4c4f-a55e-7f22b5fbb268}">
+      <Declaration><![CDATA[METHOD otherRoboInfo : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	nmb: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF newCollision THEN
+	removeAllToken();
+	i := 0;
+	FOR nmb := 0 TO 4 BY 1 DO
+		IF collision[nmb] AND nmb <> Var_HAWIno.Robot_Number THEN
+			otherRobo[i] := nmb;
+			i := i + 1;
+		END_IF
+	END_FOR
+END_IF
+
+IF otherRobo[0] > 0 THEN
+	IF camera.cameraData.robotPositionArray[otherRobo[0]].x > 7000 AND camera.cameraData.robotPositionArray[otherRobo[0]].x < 7200  THEN
+		//Anderer Roboter auf Parkplatz
+		otherRoboAtStop := TRUE;	
+	ELSIF camera.cameraData.robotPositionArray[otherRobo[0]].x > 6100 AND camera.cameraData.robotPositionArray[otherRobo[0]].x < 6800 AND camera.cameraData.robotPositionArray[otherRobo[0]].y > 3400 AND camera.cameraData.robotPositionArray[otherRobo[0]].y < 3600  THEN
+		//Anderer Roboter an Ladestation
+		otherRoboAtStop := TRUE;
+	ELSE
+		otherRoboAtStop := FALSE;
+	END_IF
+	
+	IF camera.cameraData.robotPositionArray[otherRobo[0]].x > 600 AND camera.cameraData.robotPositionArray[otherRobo[0]].x < 5200 AND camera.cameraData.robotPositionArray[otherRobo[0]].y > 2400 AND camera.cameraData.robotPositionArray[otherRobo[0]].y < 3200  THEN
+		//Anderer Roboter im Bereich der Stationen
+		otherRoboAtStation := TRUE;
+	ELSE
+		otherRoboAtStation := FALSE;
+	END_IF
+	
+	IF camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x > 600 AND camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x < 5200 AND camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y > 2400 AND camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y < 3200  THEN
+		thisRoboAtStation := TRUE;
+	ELSE
+		thisRoboAtStation := FALSE;
+	END_IF
+	
+	//Stationsfahrt: anderen Robo wegschicken -> Timer nötig????
+	IF lastRelevantStateForCollision = 's6a' OR lastRelevantStateForCollision = 's10' OR lastRelevantStateForCollision = 's16' OR lastRelevantStateForCollision = 's17' THEN
+		//anderen Wegschicken
+		IF newCollision THEN
+			RoboNmbToGoBack := otherRobo[0];
+		ELSIF NOT otherRoboAtStation THEN
+			RoboNmbToGoBack := 0;
+		END_IF 
+		drivingAtStation := TRUE;
+	else
+		drivingAtStation := FALSE;
+	END_IF
+ELSE
+	error := TRUE;
+	removeAllToken();
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="removeAllToken" Id="{ae306339-8136-4758-9f9e-43c55251323b}">
       <Declaration><![CDATA[METHOD removeAllToken : BOOL
 VAR_INPUT
@@ -1052,31 +1372,47 @@ s30 := FALSE;
 s31 := FALSE;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="TeilVerloren" Id="{8ae8f73b-5bb8-4610-9414-56d24a08916d}">
-      <Declaration><![CDATA[METHOD TeilVerloren : BOOL
+    <Method Name="resetCollision" Id="{55e9b937-ae96-4a1c-b254-a88952f35d6c}">
+      <Declaration><![CDATA[METHOD resetCollision : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//Teil verloren, warten auf Rückmeldung das weiterfahren
-//diese Methode aufrufen, wenn LSmuss und kein Teil
-//LSmuss gesetzt sobald Greifer zu geht und rückgesetzt, wenn Greifer auf geht
+        <ST><![CDATA[collisionSolutionWorking := FALSE; //Kollision behoben
 
-//sicher das es ne gute idee ist, das werkstück zurückzulegen? Wenn runtergefallen ist, wird es kaputt sein...
+Zeros_INT(otherRobo);
+otherRoboAtStop := FALSE;
+otherRoboAtStation := FALSE;
+thisRoboAtStation := FALSE;
+RoboNmbToGoBack := 0;
+drivingAtStation := FALSE;
+todo := '';
 
-]]></ST>
+sk0 := FALSE;
+sk1 := FALSE;
+sk2 := FALSE;
+sk3 := FALSE;
+sk4 := FALSE;
+sk10 := FALSE;
+sk20 := FALSE;
+sk21 := FALSE;
+sk22 := FALSE;
+sk23 := FALSE;
+sk24 := FALSE;
+sk25 := FALSE;
+sk26 := FALSE;
+sk27 := FALSE;
+sk28 := FALSE;
+sk29 := FALSE;
+sk30 := FALSE;
+sk31 := FALSE;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="Fahrauftrag">
       <LineId Id="1741" Count="0" />
       <LineId Id="1863" Count="0" />
-      <LineId Id="1740" Count="0" />
-      <LineId Id="1668" Count="1" />
-      <LineId Id="1925" Count="0" />
-      <LineId Id="1672" Count="0" />
-      <LineId Id="1924" Count="0" />
-      <LineId Id="1926" Count="0" />
-      <LineId Id="1670" Count="1" />
+      <LineId Id="2122" Count="0" />
+      <LineId Id="1671" Count="0" />
       <LineId Id="1471" Count="0" />
       <LineId Id="1531" Count="2" />
       <LineId Id="1472" Count="0" />
@@ -1094,10 +1430,24 @@ END_VAR
       <LineId Id="1797" Count="0" />
       <LineId Id="1614" Count="1" />
       <LineId Id="1460" Count="0" />
-      <LineId Id="1457" Count="0" />
+      <LineId Id="2005" Count="4" />
+      <LineId Id="2179" Count="0" />
+      <LineId Id="1999" Count="0" />
+      <LineId Id="2180" Count="1" />
+      <LineId Id="2000" Count="1" />
+      <LineId Id="2124" Count="0" />
+      <LineId Id="2123" Count="0" />
+      <LineId Id="2125" Count="0" />
+      <LineId Id="2070" Count="0" />
+      <LineId Id="2014" Count="0" />
+      <LineId Id="2003" Count="1" />
+      <LineId Id="2010" Count="1" />
+      <LineId Id="1998" Count="0" />
+      <LineId Id="2066" Count="0" />
       <LineId Id="999" Count="2" />
       <LineId Id="1003" Count="0" />
       <LineId Id="1002" Count="0" />
+      <LineId Id="2069" Count="0" />
       <LineId Id="1321" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="406" Count="0" />
@@ -1174,8 +1524,11 @@ END_VAR
       <LineId Id="1010" Count="0" />
       <LineId Id="1019" Count="0" />
       <LineId Id="1322" Count="0" />
-      <LineId Id="1018" Count="0" />
-      <LineId Id="1015" Count="2" />
+      <LineId Id="2186" Count="1" />
+      <LineId Id="1015" Count="0" />
+      <LineId Id="2189" Count="1" />
+      <LineId Id="2188" Count="0" />
+      <LineId Id="1016" Count="1" />
       <LineId Id="1013" Count="0" />
       <LineId Id="1011" Count="0" />
       <LineId Id="122" Count="0" />
@@ -1198,7 +1551,7 @@ END_VAR
       <LineId Id="139" Count="1" />
       <LineId Id="1454" Count="0" />
       <LineId Id="204" Count="0" />
-      <LineId Id="570" Count="0" />
+      <LineId Id="2191" Count="0" />
       <LineId Id="563" Count="0" />
       <LineId Id="565" Count="2" />
       <LineId Id="1099" Count="0" />
@@ -1228,6 +1581,7 @@ END_VAR
       <LineId Id="72" Count="0" />
       <LineId Id="293" Count="0" />
       <LineId Id="298" Count="14" />
+      <LineId Id="2194" Count="0" />
       <LineId Id="399" Count="0" />
       <LineId Id="313" Count="1" />
       <LineId Id="40" Count="0" />
@@ -1236,6 +1590,7 @@ END_VAR
       <LineId Id="150" Count="1" />
       <LineId Id="1540" Count="0" />
       <LineId Id="351" Count="0" />
+      <LineId Id="2195" Count="0" />
       <LineId Id="152" Count="1" />
       <LineId Id="149" Count="0" />
       <LineId Id="155" Count="0" />
@@ -1252,11 +1607,13 @@ END_VAR
       <LineId Id="295" Count="0" />
       <LineId Id="316" Count="13" />
       <LineId Id="402" Count="0" />
+      <LineId Id="2192" Count="0" />
       <LineId Id="404" Count="0" />
       <LineId Id="168" Count="0" />
       <LineId Id="170" Count="0" />
       <LineId Id="78" Count="0" />
       <LineId Id="172" Count="1" />
+      <LineId Id="2193" Count="0" />
       <LineId Id="1455" Count="0" />
       <LineId Id="352" Count="0" />
       <LineId Id="175" Count="0" />
@@ -1326,23 +1683,28 @@ END_VAR
       <LineId Id="1799" Count="0" />
       <LineId Id="1803" Count="1" />
       <LineId Id="1801" Count="1" />
+      <LineId Id="2183" Count="0" />
+      <LineId Id="2182" Count="0" />
+      <LineId Id="2184" Count="1" />
       <LineId Id="935" Count="3" />
       <LineId Id="1536" Count="0" />
       <LineId Id="939" Count="3" />
+      <LineId Id="2068" Count="0" />
       <LineId Id="900" Count="0" />
-      <LineId Id="1406" Count="2" />
+      <LineId Id="1407" Count="0" />
+      <LineId Id="2067" Count="0" />
+      <LineId Id="1408" Count="0" />
       <LineId Id="1857" Count="0" />
       <LineId Id="1859" Count="0" />
       <LineId Id="1410" Count="0" />
-      <LineId Id="1866" Count="5" />
-      <LineId Id="1930" Count="1" />
+      <LineId Id="1866" Count="4" />
+      <LineId Id="2178" Count="0" />
       <LineId Id="1937" Count="2" />
       <LineId Id="1944" Count="0" />
       <LineId Id="1936" Count="0" />
       <LineId Id="1933" Count="0" />
+      <LineId Id="2126" Count="0" />
       <LineId Id="1946" Count="1" />
-      <LineId Id="1934" Count="1" />
-      <LineId Id="1932" Count="0" />
       <LineId Id="1865" Count="0" />
     </LineIds>
     <LineIds Name="Fahrauftrag.CollisionSolution">
@@ -1393,11 +1755,86 @@ END_VAR
       <LineId Id="93" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
+    <LineIds Name="Fahrauftrag.CollisionsSolution_new">
+      <LineId Id="15" Count="12" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="28" Count="13" />
+      <LineId Id="153" Count="1" />
+      <LineId Id="156" Count="0" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="42" Count="8" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="51" Count="8" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="60" Count="4" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="65" Count="3" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="169" Count="0" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="174" Count="0" />
+      <LineId Id="168" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="211" Count="0" />
+      <LineId Id="176" Count="0" />
+      <LineId Id="171" Count="0" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="172" Count="0" />
+      <LineId Id="71" Count="4" />
+      <LineId Id="175" Count="0" />
+      <LineId Id="76" Count="9" />
+      <LineId Id="177" Count="0" />
+      <LineId Id="86" Count="1" />
+      <LineId Id="194" Count="0" />
+      <LineId Id="218" Count="0" />
+      <LineId Id="226" Count="0" />
+      <LineId Id="233" Count="5" />
+      <LineId Id="195" Count="0" />
+      <LineId Id="219" Count="0" />
+      <LineId Id="192" Count="0" />
+      <LineId Id="221" Count="0" />
+      <LineId Id="228" Count="2" />
+      <LineId Id="222" Count="0" />
+      <LineId Id="224" Count="0" />
+      <LineId Id="227" Count="0" />
+      <LineId Id="223" Count="0" />
+      <LineId Id="225" Count="0" />
+      <LineId Id="231" Count="1" />
+      <LineId Id="220" Count="0" />
+      <LineId Id="193" Count="0" />
+      <LineId Id="191" Count="0" />
+      <LineId Id="88" Count="4" />
+      <LineId Id="196" Count="0" />
+      <LineId Id="93" Count="2" />
+      <LineId Id="197" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="198" Count="0" />
+      <LineId Id="97" Count="7" />
+      <LineId Id="199" Count="0" />
+      <LineId Id="105" Count="20" />
+      <LineId Id="200" Count="0" />
+      <LineId Id="126" Count="0" />
+      <LineId Id="201" Count="0" />
+      <LineId Id="127" Count="7" />
+      <LineId Id="205" Count="0" />
+      <LineId Id="204" Count="0" />
+      <LineId Id="206" Count="1" />
+      <LineId Id="202" Count="0" />
+      <LineId Id="135" Count="2" />
+      <LineId Id="203" Count="0" />
+      <LineId Id="138" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
     <LineIds Name="Fahrauftrag.continueAfterCollision">
       <LineId Id="6" Count="3" />
       <LineId Id="17" Count="1" />
       <LineId Id="28" Count="0" />
       <LineId Id="38" Count="0" />
+      <LineId Id="148" Count="0" />
+      <LineId Id="151" Count="0" />
+      <LineId Id="149" Count="0" />
       <LineId Id="83" Count="21" />
       <LineId Id="107" Count="0" />
       <LineId Id="45" Count="0" />
@@ -1413,7 +1850,9 @@ END_VAR
       <LineId Id="22" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="27" Count="0" />
+      <LineId Id="152" Count="1" />
       <LineId Id="109" Count="0" />
+      <LineId Id="154" Count="0" />
       <LineId Id="111" Count="28" />
       <LineId Id="110" Count="0" />
       <LineId Id="140" Count="0" />
@@ -1440,6 +1879,10 @@ END_VAR
     <LineIds Name="Fahrauftrag.drivingBack">
       <LineId Id="7" Count="0" />
       <LineId Id="115" Count="0" />
+      <LineId Id="154" Count="2" />
+      <LineId Id="158" Count="0" />
+      <LineId Id="153" Count="0" />
+      <LineId Id="152" Count="0" />
       <LineId Id="118" Count="0" />
       <LineId Id="116" Count="0" />
       <LineId Id="119" Count="0" />
@@ -1464,8 +1907,17 @@ END_VAR
       <LineId Id="139" Count="0" />
       <LineId Id="41" Count="0" />
       <LineId Id="110" Count="0" />
-      <LineId Id="140" Count="0" />
       <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Fahrauftrag.errorTest">
+      <LineId Id="12" Count="0" />
+      <LineId Id="6" Count="5" />
+      <LineId Id="33" Count="1" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="15" Count="1" />
+      <LineId Id="18" Count="2" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="21" Count="0" />
     </LineIds>
     <LineIds Name="Fahrauftrag.findNodesToRemove">
       <LineId Id="118" Count="0" />
@@ -1478,16 +1930,41 @@ END_VAR
       <LineId Id="117" Count="0" />
       <LineId Id="114" Count="1" />
     </LineIds>
+    <LineIds Name="Fahrauftrag.otherRoboInfo">
+      <LineId Id="69" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="6" Count="5" />
+      <LineId Id="70" Count="1" />
+      <LineId Id="12" Count="6" />
+      <LineId Id="40" Count="3" />
+      <LineId Id="19" Count="2" />
+      <LineId Id="44" Count="3" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="24" Count="4" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="59" Count="1" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="52" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="74" Count="2" />
+      <LineId Id="72" Count="1" />
+    </LineIds>
     <LineIds Name="Fahrauftrag.removeAllToken">
       <LineId Id="6" Count="37" />
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="Fahrauftrag.TeilVerloren">
-      <LineId Id="5" Count="2" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="8" Count="0" />
+    <LineIds Name="Fahrauftrag.resetCollision">
+      <LineId Id="14" Count="1" />
+      <LineId Id="6" Count="4" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="22" Count="8" />
+      <LineId Id="32" Count="7" />
     </LineIds>
   </POU>
 </TcPlcObject>

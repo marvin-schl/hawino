@@ -69,6 +69,9 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
+    <Compile Include="Kollisionserkennung_1.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MQTT_1.TcTTO">
       <SubType>Code</SubType>
     </Compile>
@@ -106,9 +109,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\GW2\AStar.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\UserPOUs\GW2\CollisionSolution.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\GW2\DS_GW1.TcPOU">
