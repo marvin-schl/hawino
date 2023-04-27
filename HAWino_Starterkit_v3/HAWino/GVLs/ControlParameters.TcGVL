@@ -69,7 +69,7 @@ VAR_GLOBAL
 	maxRotVel			: LREAL				:= 100;
 	maxRotAcc			: LREAL				:= 100;	
 	
-	thetaDZ				: LREAL				:= 0.2;
+	thetaDZ				: LREAL				:= 0.1;
 	
 END_VAR]]></Declaration>
   </GVL>
