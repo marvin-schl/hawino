@@ -1294,7 +1294,7 @@
 		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1006">424de6000000000000007600000028000000100000000e000000010004000000000070000000000000000000000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffff788833338887ffff78883bb38887ffffffff3bb3ffffffffffff8778fffffffffffffffffffffffffffffffff999ffff78f78fffffffffff78f78ffff999ffff78f7888fffffffff78f78f78f999ffff78f78f78ffffffff78f7888ff999ffffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.200.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.214.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="2">
 				<Cpu BaseTime="1000"/>
@@ -3408,25 +3408,25 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>MQTT.resetVar</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>MQTT.stMqtt_HAWino_In</Name>
 							<Comment><![CDATA[ Attention! Don't link TIME Variables, otherwise we get an error!]]></Comment>
 							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
+						</Var>
+						<Var>
+							<Name>MQTT.resetGoBack</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MQTT.FeedbackToGW1</Name>
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
-							<Name>MQTT.resetVar</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>MQTT.RoboNmbToGoBack</Name>
 							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>MQTT.resetGoBack</Name>
-							<Type>BOOL</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
@@ -3440,16 +3440,16 @@
 							<Type GUID="{AF674DC3-C06A-03AE-A51C-A518FFE766C3}">ST_PwrMgmt_HAWino_Out</Type>
 						</Var>
 						<Var>
-							<Name>MQTT.goBack</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>MQTT.Auftrag</Name>
 							<Type GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}">Auftrag</Type>
 						</Var>
 						<Var>
 							<Name>MQTT.StatusFromGW1</Name>
 							<Type>STRING(50)</Type>
+						</Var>
+						<Var>
+							<Name>MQTT.goBack</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MQTT.resetButton</Name>
@@ -3482,6 +3482,11 @@
 							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
 						</Var>
 						<Var>
+							<Name>Fahrauftrag.goBack</Name>
+							<Comment><![CDATA[zurückfahren auf Befehl von anderem HAWino]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>Fahrauftrag.Auftrag</Name>
 							<Comment><![CDATA[Auftrag von GW1]]></Comment>
 							<Type GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}">Auftrag</Type>
@@ -3490,11 +3495,6 @@
 							<Name>Fahrauftrag.StatusFromGW1</Name>
 							<Comment><![CDATA[Status von GW1]]></Comment>
 							<Type>STRING(50)</Type>
-						</Var>
-						<Var>
-							<Name>Fahrauftrag.goBack</Name>
-							<Comment><![CDATA[zurückfahren auf Befehl von anderem HAWino]]></Comment>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.reset</Name>
@@ -3507,12 +3507,12 @@
 							<Type GUID="{ED505E53-AC03-A7B8-5B0E-7E9F26DE47AE}">ARRAY [0..4] OF BOOL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.shutdownButton</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>IrDistanceSensors.distanceRaw</Name>
 							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.shutdownButton</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.batteryVoltageRaw</Name>
@@ -3548,11 +3548,6 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>Fahrauftrag.resetVar</Name>
-							<Comment><![CDATA[messages von MQTT zurücksetzen]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>Fahrauftrag.TrajectoryController.xBoEnable</Name>
 							<Comment><![CDATA[ Freigabesignal für Fahrt, Roboter stoppt bei FALSE]]></Comment>
 							<Type>BOOL</Type>
@@ -3575,6 +3570,11 @@
 							<Name>Fahrauftrag.FeedbackToGW1</Name>
 							<Comment><![CDATA[Feedback/Status des Roboters an GW1]]></Comment>
 							<Type>STRING(50)</Type>
+						</Var>
+						<Var>
+							<Name>Fahrauftrag.resetVarMQTT</Name>
+							<Comment><![CDATA[messages von MQTT zurücksetzen]]></Comment>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>Fahrauftrag.resetGoBack</Name>
@@ -3614,17 +3614,13 @@
 							<Type>REAL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.stMqtt_HAWino_IN</Name>
-							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
-							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
-						</Var>
-						<Var>
 							<Name>Gripper.driveEnable</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>Gripper.driveVelocity</Name>
-							<Type>INT</Type>
+							<Name>PowerManager.stMqtt_HAWino_IN</Name>
+							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
+							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.sliderToSimulink</Name>
@@ -3633,6 +3629,10 @@
 						<Var>
 							<Name>Gripper.partInGripperToSimulink</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.driveVelocity</Name>
+							<Type>INT</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="1" ContextId="3" AreaNo="48">
@@ -6682,7 +6682,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="MQTT_1 Inputs^MQTT.FeedbackToGW1" VarB="PlcTask Outputs^Fahrauftrag.FeedbackToGW1"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.RoboNmbToGoBack" VarB="PlcTask Outputs^Fahrauftrag.RoboNmbToGoBack"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.resetGoBack" VarB="PlcTask Outputs^Fahrauftrag.resetGoBack"/>
-				<Link VarA="MQTT_1 Inputs^MQTT.resetVar" VarB="PlcTask Outputs^Fahrauftrag.resetVar"/>
+				<Link VarA="MQTT_1 Inputs^MQTT.resetVar" VarB="PlcTask Outputs^Fahrauftrag.resetVarMQTT"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^bComCheckAnswer" VarB="MQTT_1 Outputs^MQTT.bComCheckAnswer"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.txtReadInit" VarB="PlcTask Outputs^HAWino.initDone"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.Auftrag" VarB="MQTT_1 Outputs^MQTT.Auftrag"/>
@@ -6692,7 +6692,6 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yRPposition" VarB="ControlTask Outputs^ControlPRG.yRPposition"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yUintWaypointIndex" VarB="ControlTask Outputs^ControlPRG.yUintWaypointIndex"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yVworldRef" VarB="ControlTask Outputs^ControlPRG.yVworldRef"/>
-				<Link VarA="PlcTask Inputs^Fahrauftrag.collision" VarB="Kollisionserkennung_1 Outputs^Kollisionserkennung.robotCollision"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.goBack" VarB="MQTT_1 Outputs^MQTT.goBack"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.reset" VarB="MQTT_1 Outputs^MQTT.resetButton"/>
 			</OwnerB>

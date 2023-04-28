@@ -15,9 +15,9 @@ VAR_OUTPUT
 	parkingSlots : ARRAY[1..4] OF RobotPoseSimple;				//Array mit Parkplätzen der Roboter
 	endNodePickup, endNodeStorage, endNodeCharging : INT;
 	endNodeParking : ARRAY[1..4] OF INT;
+	FailedReadAssigment : BOOL := FALSE;
 END_VAR
 VAR
-	Failed : BOOL := FALSE;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -59,7 +59,7 @@ IF assigment.Art = 'Fahrauftrag' THEN
 			endNodePickup := 148;			
 		ELSE
 			//Fehler
-			Failed := TRUE;
+			FailedReadAssigment := TRUE;
 		END_IF
 	ELSIF assigment.AbholStation = 2 THEN
 		IF assigment.AbholTasche = 1 THEN
@@ -88,7 +88,7 @@ IF assigment.Art = 'Fahrauftrag' THEN
 			endNodePickup := 154;			
 		ELSE
 			//Fehler
-			Failed := TRUE;
+			FailedReadAssigment := TRUE;
 		END_IF
 	ELSIF assigment.AbholStation = 3 THEN
 		IF assigment.AbholTasche = 1 THEN
@@ -117,7 +117,7 @@ IF assigment.Art = 'Fahrauftrag' THEN
 			endNodePickup := 160;			
 		ELSE
 			//Fehler
-			Failed := TRUE;
+			FailedReadAssigment := TRUE;
 		END_IF
 	ELSIF assigment.AbholStation = 4 THEN
 		IF assigment.AbholTasche = 1 THEN
@@ -146,11 +146,11 @@ IF assigment.Art = 'Fahrauftrag' THEN
 			endNodePickup := 166;			
 		ELSE
 			//Fehler
-			Failed := TRUE;
+			FailedReadAssigment := TRUE;
 		END_IF
 	ELSE
 		//Fehler
-		Failed := TRUE;		
+		FailedReadAssigment := TRUE;		
 	END_IF
 	
 	//*pi/180
@@ -183,7 +183,7 @@ IF assigment.Art = 'Fahrauftrag' THEN
 			endNodeStorage := 150;		
 		ELSE
 			//Fehler
-			Failed := TRUE;
+			FailedReadAssigment := TRUE;
 		END_IF
 	ELSIF assigment.AblageStation = 2 THEN
 		IF assigment.AblageTasche = 1 THEN
@@ -212,7 +212,7 @@ IF assigment.Art = 'Fahrauftrag' THEN
 			endNodeStorage := 156;			
 		ELSE
 			//Fehler
-			Failed := TRUE;
+			FailedReadAssigment := TRUE;
 		END_IF
 	ELSIF assigment.AblageStation = 3 THEN
 		IF assigment.AblageTasche = 1 THEN
@@ -241,7 +241,7 @@ IF assigment.Art = 'Fahrauftrag' THEN
 			endNodeStorage := 162;	
 		ELSE
 			//Fehler
-			Failed := TRUE;
+			FailedReadAssigment := TRUE;
 		END_IF
 	ELSIF assigment.AblageStation = 4 THEN
 		IF assigment.AblageTasche = 1 THEN
@@ -270,11 +270,11 @@ IF assigment.Art = 'Fahrauftrag' THEN
 			endNodeStorage := 168;		
 		ELSE
 			//Fehler
-			Failed := TRUE;
+			FailedReadAssigment:= TRUE;
 		END_IF
 	ELSE
 		//Fehler
-		Failed := TRUE;		
+		FailedReadAssigment := TRUE;		
 	END_IF
 	
 	
@@ -317,6 +317,8 @@ ELSIF assigment.Art = 'Ladeauftrag' THEN
 		lastNodeCharging := ToRobotPoseSimple(x := 6716, y := 3100, theta := -1);
 		chargingLocation := ToRobotPoseSimple(x := 6716, y := 3504, theta := 15.2*pi/180);
 		endNodeCharging := 170;
+	ELSE
+		FailedReadAssigment := TRUE;
 	END_IF
 	
 	//lastPointsToCharging[0] := ToRobotPoseSimple(x := chargingLocation.x, y := lastNodeCharging.y, theta := chargingLocation.theta);
@@ -565,6 +567,7 @@ endNodeParking[4] := 90;
       <LineId Id="472" Count="0" />
       <LineId Id="475" Count="1" />
       <LineId Id="559" Count="0" />
+      <LineId Id="658" Count="1" />
       <LineId Id="471" Count="0" />
       <LineId Id="477" Count="0" />
       <LineId Id="480" Count="1" />
