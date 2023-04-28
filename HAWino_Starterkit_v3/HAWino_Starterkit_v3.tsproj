@@ -1294,7 +1294,7 @@
 		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1006">424de6000000000000007600000028000000100000000e000000010004000000000070000000000000000000000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffff788833338887ffff78883bb38887ffffffff3bb3ffffffffffff8778fffffffffffffffffffffffffffffffff999ffff78f78fffffffffff78f78ffff999ffff78f7888fffffffff78f78f78f999ffff78f78f78ffffffff78f7888ff999ffffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.214.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.200.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="2">
 				<Cpu BaseTime="1000"/>
@@ -3341,6 +3341,11 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.state</Name>
+							<Comment><![CDATA[sets controller state]]></Comment>
+							<Type GUID="{4D01AD9A-1F2F-377C-0812-CF417AB6D9DE}">ControllerState</Type>
+						</Var>
+						<Var>
 							<Name>WheelEncoders.vXCartesianFromMotors</Name>
 							<Comment><![CDATA[OUTPUTS]]></Comment>
 							<Type>LREAL</Type>
@@ -3370,11 +3375,6 @@
 						<Var>
 							<Name>ControlPRG.robot.vThetaToRobot</Name>
 							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.state</Name>
-							<Comment><![CDATA[sets controller state]]></Comment>
-							<Type GUID="{4D01AD9A-1F2F-377C-0812-CF417AB6D9DE}">ControllerState</Type>
 						</Var>
 						<Var>
 							<Name>ControlPRG.yBoArrivedAtDestination</Name>
@@ -3805,9 +3805,6 @@
 				</Image>
 				<Image Id="4" AddrType="10" ImageType="3">
 					<Name>Prozessabbild-3</Name>
-				</Image>
-				<Image Id="5" AddrType="10" ImageType="3">
-					<Name>Prozessabbild-4</Name>
 				</Image>
 				<Box Id="1" BoxType="9099">
 					<Name>Klemme 1 (EK1200)</Name>
@@ -6617,14 +6614,12 @@ Bit1: Value smaller than Limit2]]></Comment>
 		<MappingInfo Identifier="{00000000-2002-0850-0020-500800205008}" Id="#x02030090"/>
 		<MappingInfo Identifier="{00000000-2002-0850-0120-500831000403}" Id="#x02030030"/>
 		<MappingInfo Identifier="{00000000-2003-0850-0220-500842000403}" Id="#x02030060"/>
-		<MappingInfo Identifier="{00000000-2004-0850-0320-500853000403}" Id="#x02030070"/>
 		<MappingInfo Identifier="{08502001-2003-0850-0020-500802205008}" Id="#x020300a0" Watchdog="14000000040000000400000004000000"/>
-		<MappingInfo Identifier="{08502001-2004-0850-0020-500803205008}" Id="#x020300f0" Watchdog="14000000040000000400000004000000"/>
+		<MappingInfo Identifier="{08502001-2004-0850-0020-500803205008}" Id="#x020300e0" Watchdog="14000000040000000400000004000000"/>
 		<MappingInfo Identifier="{08502001-0040-0304-0020-500840000403}" Id="#x02030040" Watchdog="00000000000000000000000000000000"/>
 		<MappingInfo Identifier="{08502002-2003-0850-0120-500802205008}" Id="#x02030100" Watchdog="04000000280000000400000004000000"/>
-		<MappingInfo Identifier="{08502002-2004-0850-0120-500803205008}" Id="#x02030140" Watchdog="04000000280000000400000004000000"/>
 		<MappingInfo Identifier="{08502002-0060-0201-0120-500820000101}" Id="#x020300c0" Watchdog="04000000280000000400000004000000"/>
-		<MappingInfo Identifier="{08502003-2004-0850-0220-500803205008}" Id="#x02030160" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{08502003-2004-0850-0220-500803205008}" Id="#x02030130" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{08502003-0010-0304-0020-500810000403}" Id="#x02030020" Watchdog="04000000140000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-2003-0850-1000-010102205008}" Id="#x020300b0" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-0060-0201-1000-010120000101}" Id="#x02030080" Watchdog="04000000040000000400000004000000"/>
@@ -6643,9 +6638,6 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^IrDistanceSensors.distanceRaw[9]" VarB="AI Standard Channel 1^Value"/>
 				<Link VarA="PlcTask Inputs^PowerManager.batteryVoltageRaw" VarB="AI Standard Channel 3^Value"/>
 				<Link VarA="PlcTask Inputs^PowerManager.supplyCurrentRaw" VarB="AI Standard Channel 2^Value"/>
-			</OwnerB>
-			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Digitale Ausgänge A5 (EL2004)">
-				<Link VarA="Kollisionserkennung_1 Outputs^PowerManager.shutdownTrigger" VarB="InitiateShutdown^Output"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Digitale Eingänge A4 (EL1008)">
 				<Link VarA="ControlTask Inputs^ControlPRG.robot.bumper" VarB="Bumper (S1)^Input"/>
@@ -6692,7 +6684,6 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="MQTT_1 Inputs^MQTT.resetGoBack" VarB="PlcTask Outputs^Fahrauftrag.resetGoBack"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.resetVar" VarB="PlcTask Outputs^Fahrauftrag.resetVar"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^bComCheckAnswer" VarB="MQTT_1 Outputs^MQTT.bComCheckAnswer"/>
-				<Link VarA="MQTT_1 Inputs^MQTT.stMqtt_HAWino_In^nRobotNumber" VarB="Kollisionserkennung_1 Outputs^HAWino.Robot_Number"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.txtReadInit" VarB="PlcTask Outputs^HAWino.initDone"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.Auftrag" VarB="MQTT_1 Outputs^MQTT.Auftrag"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.StatusFromGW1" VarB="MQTT_1 Outputs^MQTT.StatusFromGW1"/>
