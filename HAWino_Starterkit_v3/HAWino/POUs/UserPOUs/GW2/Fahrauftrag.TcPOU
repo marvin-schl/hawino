@@ -84,10 +84,10 @@ IF lastCollision[1] <> collision[1] OR lastCollision[2] <> collision[2] OR lastC
 	lastCollision := collision;
 END_IF
 
-IF collision[0] THEN
-	TrajectoryController.xBoEnable := FALSE;
-	FeedbackToGW1 := 'Kameraausfall';
-ELSIF collision[Var_HAWIno.Robot_Number] AND newCollision THEN //hier doch eher noch "and collisionSolutionWorking" hinzufügen
+//IF collision[0] THEN
+	//TrajectoryController.xBoEnable := FALSE;
+	//FeedbackToGW1 := 'Kameraausfall';
+IF collision[Var_HAWIno.Robot_Number] AND newCollision THEN //hier doch eher noch "and collisionSolutionWorking" hinzufügen
 	TrajectoryController.xBoEnable := FALSE;
 	IF NOT collisionSolutionWorking THEN
 		sk0 := TRUE;
@@ -787,7 +787,7 @@ IF sk20 AND NOT sk24 AND otherRoboAtStation AND thisRoboAtStation THEN
 	//checken, ob an gleicher Station
 	higherXRobo := SEL((camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x > camera.cameraData.robotPositionArray[otherRobo[0]].x), otherRobo[0], Var_HAWIno.Robot_Number);
 	lowerXRobo := SEL((camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x < camera.cameraData.robotPositionArray[otherRobo[0]].x), otherRobo[0], Var_HAWIno.Robot_Number);
-	IF camera.cameraData.robotPositionArray[higherXRobo].theta = pi AND camera.cameraData.robotPositionArray[lowerXRobo].theta = 0 THEN
+	IF camera.cameraData.robotPositionArray[higherXRobo].theta > 3 and camera.cameraData.robotPositionArray[higherXRobo].theta < -3 AND camera.cameraData.robotPositionArray[lowerXRobo].theta > -0.1 AND camera.cameraData.robotPositionArray[lowerXRobo].theta < 0.1 THEN
 		sameStation := TRUE;
 	ELSE
 		sameStation := FALSE;
@@ -1293,14 +1293,14 @@ IF otherRobo[0] > 0 THEN
 		otherRoboAtStop := FALSE;
 	END_IF
 	
-	IF camera.cameraData.robotPositionArray[otherRobo[0]].x > 600 AND camera.cameraData.robotPositionArray[otherRobo[0]].x < 5200 AND camera.cameraData.robotPositionArray[otherRobo[0]].y > 2400 AND camera.cameraData.robotPositionArray[otherRobo[0]].y < 3200  THEN
+	IF camera.cameraData.robotPositionArray[otherRobo[0]].x > 600 AND camera.cameraData.robotPositionArray[otherRobo[0]].x < 5200 AND camera.cameraData.robotPositionArray[otherRobo[0]].y > 2340 AND camera.cameraData.robotPositionArray[otherRobo[0]].y < 3345  THEN
 		//Anderer Roboter im Bereich der Stationen
 		otherRoboAtStation := TRUE;
 	ELSE
 		otherRoboAtStation := FALSE;
 	END_IF
 	
-	IF camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x > 600 AND camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x < 5200 AND camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y > 2400 AND camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y < 3200  THEN
+	IF camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x > 600 AND camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x < 5200 AND camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y > 2340 AND camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y < 3345  THEN
 		thisRoboAtStation := TRUE;
 	ELSE
 		thisRoboAtStation := FALSE;

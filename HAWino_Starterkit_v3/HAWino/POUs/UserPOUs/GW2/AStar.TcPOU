@@ -9,7 +9,7 @@ VAR_INPUT
 	blockedNodes : ARRAY[1..11] OF INT;
 END_VAR
 VAR_OUTPUT
-	finishedASearch : BOOL := FALSE;
+	finishedASearch, AStarFailed : BOOL := FALSE;
 	xCoordinates, yCoordinates : ARRAY[0..100] OF LREAL;
 END_VAR
 VAR
@@ -84,6 +84,12 @@ FOR i := 0 TO numberOfNodes BY 1 DO
  
 //Löschen der Knoten über Station und die nahegelegenen diagonalen Verbindungen
  FOR counter := 0 TO 30 BY 1 DO 
+	//Fail, wenn Zielknoten bei entfernten Knoten ist
+	IF removeNode[counter] = endNode THEN
+		AStarFailed := TRUE;
+	END_IF
+	
+	//Verbindungen zu und um entfernte Knoten entfernen
 	IF removeNode[counter] > 0 THEN 
 		FOR j := 1 TO 170 BY 1 DO
 			matrix[removeNode[counter],j] := 0;
@@ -442,6 +448,9 @@ END_FOR
       <LineId Id="774" Count="26" />
       <LineId Id="803" Count="0" />
       <LineId Id="1193" Count="1" />
+      <LineId Id="1703" Count="0" />
+      <LineId Id="1700" Count="2" />
+      <LineId Id="1704" Count="1" />
       <LineId Id="1650" Count="0" />
       <LineId Id="1195" Count="3" />
       <LineId Id="1228" Count="0" />
@@ -503,7 +512,7 @@ END_FOR
       <LineId Id="1002" Count="15" />
       <LineId Id="1649" Count="0" />
       <LineId Id="67" Count="0" />
-      <LineId Id="1651" Count="0" />
+      <LineId Id="1652" Count="0" />
     </LineIds>
     <LineIds Name="AStar.reset">
       <LineId Id="5" Count="4" />
