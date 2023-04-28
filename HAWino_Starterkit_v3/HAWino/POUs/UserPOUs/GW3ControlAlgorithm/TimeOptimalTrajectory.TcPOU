@@ -32,10 +32,9 @@ VAR
 	maxSlowVel			: LREAL				:= ControlParameters.maxSlowVel;
 	
 	maxRotVel			: LREAL				:= ControlParameters.maxRotVel;
-	maxRotAcc			: LREAL				:= ControlParameters.maxRotAcc;
+	maxRotAcc			: LREAL				:= ControlParameters.maxRotAcc;	
 	
 	thetaDZ				: LREAL				:= ControlParameters.thetaDZ;
-	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -60,6 +59,37 @@ END_IF
 
 ]]></ST>
     </Implementation>
+    <Method Name="calculateTrajectoryContraints" Id="{4d5600a1-f114-493e-b0d3-fc4ad629ae31}">
+      <Declaration><![CDATA[METHOD calculateTrajectoryContraints : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	rotationPerArcLength: LREAL;
+	mVel, mAcc, bVel, bAcc: LREAL;
+	endPoint, startPoint: RobotPoseSimple;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[maxVel  := ControlParameters.maxVel;
+maxAcc	:= ControlParameters.maxAcc;
+IF path.length-2*ControlParameters.thetaDZ > 0 THEN
+	endPoint := path.endPointVal;
+	startPoint :=  path.startPointVal;
+	rotationPerArcLength := ABS((endpoint.theta-startPoint.theta)/(path.length-2*ControlParameters.thetaDZ));
+	IF rotationPerArcLength >= pi/(1-2*ControlParameters.thetaDZ) THEN
+		maxVel  := 0.3;
+		maxAcc	:= 0.2;
+	ELSIF rotationPerArcLength > pi/(1.5-2*ControlParameters.thetaDZ) AND  rotationPerArcLength < pi/(1-2*ControlParameters.thetaDZ) THEN
+		mVel :=  (0.3-ControlParameters.maxVel)/(pi/(1-2*ControlParameters.thetaDZ- pi/(1.5-2*ControlParameters.thetaDZ)));
+		bVel := ControlParameters.maxVel-mVel*pi/1.1;
+		mAcc :=  (0.2-ControlParameters.maxAcc)/(pi/(1-2*ControlParameters.thetaDZ- pi/(1.5-2*ControlParameters.thetaDZ)));
+		bAcc := ControlParameters.maxAcc-mAcc*pi/1.1;
+		maxVel := mVel*rotationPerArcLength + bVel;
+		maxAcc := mAcc*rotationPerArcLength + bAcc;
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="generateTrajectory" Id="{3d1dbbe1-33ce-40a6-ae71-929ba959894c}">
       <Declaration><![CDATA[METHOD generateTrajectory : BOOL
 VAR_INPUT
@@ -102,11 +132,12 @@ END_VAR
 VAR
 	extendedWayPointList			:	ARRAY [0..101] OF RobotPoseSimple;
 	i								: INT;
-	maxInitialPoseError				: LREAL := 35;		// unit: mm
+	maxInitialPoseError				: LREAL := 50;		// unit: mm
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Insert actual position as first waypoint if robot is too far away from first
-IF (SQRT(EXPT(currentPose.x - newWayPointList[0].x, 2) + EXPT(currentPose.y - newWayPointList[0].y, 2)) > maxInitialPoseError) AND currentPose.x <> 0 AND currentPose.y <> 0 THEN
+// x and y have to be < 100 => noise of encoder integrates onto invalid cam data, (100,100) is still an invalid point
+IF (SQRT(EXPT(currentPose.x - newWayPointList[0].x, 2) + EXPT(currentPose.y - newWayPointList[0].y, 2)) > maxInitialPoseError) AND currentPose.x > 100 AND currentPose.y > 100 THEN
 	// shift all elements +1 to right except the lat one (gets overwritten)
 	FOR i := 100 TO 0 BY -1 DO
 		extendedWayPointList[i + 1] := newWayPointList[i];
@@ -115,7 +146,7 @@ IF (SQRT(EXPT(currentPose.x - newWayPointList[0].x, 2) + EXPT(currentPose.y - ne
 	// insert actual pose as first waypoint
 	extendedWayPointList[0] := currentPose;
 ELSE
-	// shift all elements +1 to right except the lat one (gets overwritten)
+	//dont shift all elements
 	FOR i := 0 TO 100 BY 1 DO
 		extendedWayPointList[i] := newWayPointList[i];
 	END_FOR
@@ -127,7 +158,10 @@ END_IF
 
 path(waypointListRaw := extendedWayPointList, maxRadius := maxRadius, thetaDZ := thetaDZ);
 
+
+
 IF path.ready THEN
+	calculateTrajectoryContraints();
 	trajectoryPlanner(path := path, 
 				  qAccMax := maxAcc, 
 				  qVelMax := maxVel, 
@@ -152,18 +186,59 @@ IF path.ready THEN
       <LineId Id="138" Count="3" />
       <LineId Id="71" Count="0" />
     </LineIds>
+    <LineIds Name="TimeOptimalTrajectory.calculateTrajectoryContraints">
+      <LineId Id="41" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="19" Count="2" />
+      <LineId Id="25" Count="3" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="11" Count="0" />
+    </LineIds>
     <LineIds Name="TimeOptimalTrajectory.generateTrajectory">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.reset">
-      <LineId Id="25" Count="4" />
+      <LineId Id="15" Count="1" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="17" Count="0" />
       <LineId Id="7" Count="0" />
+      <LineId Id="25" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.setRobotPose">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.setWaypointList">
-      <LineId Id="130" Count="32" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="130" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="68" Count="6" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="79" Count="3" />
+      <LineId Id="85" Count="1" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="119" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="34" Count="1" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="120" Count="0" />
+      <LineId Id="30" Count="0" />
       <LineId Id="24" Count="0" />
     </LineIds>
   </POU>
