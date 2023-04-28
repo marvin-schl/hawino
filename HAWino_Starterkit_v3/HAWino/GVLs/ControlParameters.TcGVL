@@ -15,9 +15,9 @@ VAR_GLOBAL
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++
 	
 	//controller Gain Matrix
-	controllerK: ARRAY [0..2,0..2] OF LREAL := [2,0,0,
-									  0,2,0,
-									  0,0,2];
+	controllerK: ARRAY [0..2,0..2] OF LREAL := [3,0,0,
+									  			0,3,0,
+									  			0,0,4];
 									  
 	//Maximal Translational Velocity (vX, vY)
 	vtrans_max: LREAL := 934;
@@ -73,8 +73,8 @@ VAR_GLOBAL
 	samplingTime		: LREAL				:= 0.05;
 	
 	
-	maxVel				: LREAL				:= 0.5;
-	maxAcc				: LREAL				:= 0.4;
+	maxVel				: LREAL				:= 0.6;
+	maxAcc				: LREAL				:= 0.5;
 	
 	arcLengthSlow		: LREAL				:= 0.2;
 	maxSlowVel			: LREAL				:= 0.08;

@@ -9,11 +9,13 @@
 PROGRAM GW2DummyPRG
 VAR
 	roboter: TrajectoryControl;
+	enable: BOOL 	:= FALSE;
 	set: BOOL 		:= FALSE;
+	tuning1: BOOL	:= FALSE;
+	tuning2: BOOL	:= FALSE;
 	circle: BOOL	:= FALSE;
 	square: BOOL	:= FALSE;
 	point: BOOL 	:= FALSE;
-	enable: BOOL 	:= FALSE;
 	cyclic: BOOL	:= FALSE;
 	
 	wpl: ARRAY [0..100] OF RobotPoseSimple;
@@ -23,6 +25,7 @@ VAR
 	xRef: LREAL 	:= 0;
 	yRef: LREAL 	:= 0;
 	thetaRef: LREAL := 0;
+
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -35,6 +38,10 @@ ELSIF square THEN
 	wpl := generateWPLRect();
 ELSIF point THEN
 	wpl := generateWPLPoint();
+ELSIF tuning1 THEN
+	wpl := generateTuning1();
+ELSIF tuning2 THEN
+	wpl := generateTuning2();
 ELSIF cyclic THEN
 	driveCyclic();
 ELSIF set THEN
@@ -84,6 +91,65 @@ ELSIF state = 92 THEN
 		END_IF
 	END_IF
 END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="generateTuning1" Id="{5f45be23-7836-4571-8b56-a0cd29c8b8ba}">
+      <Declaration><![CDATA[METHOD generateTuning1 : ARRAY[0..100] OF RobotPoseSimple
+VAR
+// tuning 1 ist eine kurze fahrt zwischen 2 direkt aneinanderliegenden Stationen, um eine kurze und schnelle Drehung zu generieren.
+	
+	RechteckX: ARRAY[0..3] OF LREAL := [2433,3235, -1];
+	RechteckY: ARRAY[0..3] OF LREAL := [2937,2941, -1];
+	Theta:	   ARRAY[0..3] OF LREAL := [pi,  0,    -1];
+	
+	wpl:  ARRAY[0..100] OF RobotPoseSimple;
+	i: INT := 0;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+FOR i := 0 TO 100 DO
+	IF   RechteckX[i] <> -1 AND  RechteckY[i] <> -1  THEN
+		wpl[i].x 		:= RechteckX[i];
+		wpl[i].y 		:= RechteckY[i];
+		wpl[i].theta	:= Theta[i];
+	ELSE 
+		wpl[i].x 		:= -1;
+		wpl[i].y 		:= -1;
+		wpl[i].theta	:= -1;
+	END_IF
+END_FOR
+
+generateTuning1 := wpl;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="generateTuning2" Id="{0d873ffe-e25e-404a-bcb1-6e213c01bf72}">
+      <Declaration><![CDATA[METHOD generateTuning2 : ARRAY[0..100] OF RobotPoseSimple
+VAR
+//tuning 2 ist eine Fahrt mit aufnahme und einlesen an station 4 und dann einlesen und ablegen an station 1, um einen weiteren typischen use case abzubilden mit hoher translatorischer Geschwindigkeit
+	RechteckX: ARRAY[0..10] OF LREAL := [4879, 5379, 5379,  386,  386,  890, -1];
+	RechteckY: ARRAY[0..10] OF LREAL := [2844, 2844, 2300, 2300, 2838, 2838, -1];
+	Theta:	   ARRAY[0..10] OF LREAL := [  PI, 0,     0,    0,    0,     0,    0,   0,    0,    -1];
+	
+	wpl:  ARRAY[0..100] OF RobotPoseSimple;
+	i: INT := 0;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+FOR i := 0 TO 100 DO
+	IF   RechteckX[i] <> -1 AND  RechteckY[i] <> -1  THEN
+		wpl[i].x 		:= RechteckX[i];
+		wpl[i].y 		:= RechteckY[i];
+		wpl[i].theta	:= Theta[i];
+	ELSE 
+		wpl[i].x 		:= -1;
+		wpl[i].y 		:= -1;
+		wpl[i].theta	:= -1;
+	END_IF
+END_FOR
+
+generateTuning2 := wpl;]]></ST>
       </Implementation>
     </Method>
     <Method Name="generateWPLCircle" Id="{723e581b-c10b-48a5-af6d-0cb88e71c220}">
@@ -245,7 +311,12 @@ generateWPLStationReverse := wpl;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="GW2DummyPRG">
-      <LineId Id="230" Count="17" />
+      <LineId Id="230" Count="8" />
+      <LineId Id="274" Count="0" />
+      <LineId Id="273" Count="0" />
+      <LineId Id="276" Count="0" />
+      <LineId Id="275" Count="0" />
+      <LineId Id="239" Count="8" />
       <LineId Id="95" Count="0" />
     </LineIds>
     <LineIds Name="GW2DummyPRG.driveCyclic">
@@ -273,6 +344,14 @@ generateWPLStationReverse := wpl;]]></ST>
       <LineId Id="35" Count="2" />
       <LineId Id="32" Count="0" />
       <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="GW2DummyPRG.generateTuning1">
+      <LineId Id="16" Count="12" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="GW2DummyPRG.generateTuning2">
+      <LineId Id="16" Count="12" />
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="GW2DummyPRG.generateWPLCircle">
       <LineId Id="68" Count="8" />

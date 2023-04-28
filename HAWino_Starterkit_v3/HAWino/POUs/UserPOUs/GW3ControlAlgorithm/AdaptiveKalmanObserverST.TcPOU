@@ -100,8 +100,13 @@ VAR
 	scaledCovMatX, scaledCovMatY, scaledCovMatT, tempMat : ARRAY[0..2,0..2] OF LREAL;
 	multiplierX, multiplierY, multiplierT : LREAL;
 	
-	vXRef,vYRef : LREAL := 300;
-	vTRef : LREAL := 1;
+	// Refrence velocities from measurement
+	//vXRef,vYRef : LREAL := 300;
+	//vTRef : LREAL := 1;
+	
+	//Refrence velocities (max. vel. in feedbacklaw)
+	vXRef, vYRef : LREAL := ControlParameters.vtrans_max;
+	vTRef : LREAL := ControlParameters.vrot_max;
 	
 	QT1 : ARRAY[0..2,0..2] OF LREAL :=[0.7645,	-0.2488,	0.0015,
 									  -0.2488,	1.0596,		-0.0026,

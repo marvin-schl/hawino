@@ -10,5 +10,8 @@
     <Content Include="Measurements.tcscopex">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="MeasurementsNew.tcscopex">
+      <SubType>Content</SubType>
+    </Content>
   </ItemGroup>
 </Project>
