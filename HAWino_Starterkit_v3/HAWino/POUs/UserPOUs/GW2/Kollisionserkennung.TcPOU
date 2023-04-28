@@ -10,12 +10,11 @@ VAR
 	collisionDetected : BOOL := FALSE;
 	robotCollision AT%Q* : ARRAY[0..4] OF BOOL;
 		
-	robotNumber : INT := Var_HAWIno.Robot_Number;
 	xRobot, yRobot: LREAL;
 	i, j, k, l, m, n, o : INT := 1;
 	quadrant : INT := 0;
 	robotActive :ARRAY[1..4] OF INT;
-	noCamera, cameraDown, permanentDown  : BOOL := FALSE;
+	noCamera, cameraDown, permanentDown, stateCameraDown  : BOOL := FALSE;
 	
 	//Bounding Box
 	x1Box,y1Box,x2Box,y2Box,x3Box,y3Box,x4Box,y4Box : LREAL; 
@@ -32,7 +31,7 @@ END_VAR
 
 //suche die Position des passenden Roboters
 FOR i := 1 TO 4 BY 1 DO
-	IF i = robotNumber THEN
+	IF i = Var_HAWIno.Robot_Number THEN
 		xRobot := robotPoseArray[i].x;
 		yRobot := robotPoseArray[i].y;
 	END_IF
@@ -51,6 +50,14 @@ beta := ATAN(laenge/breite); //Winkel des festen Dreiecks
 IF xRobot <> 0 AND yRobot <> 0 THEN
 	noCamera := FALSE;
 	cameraDown := FALSE;
+	
+	//Zurücksetzen wenn Kameradaten wieder da
+	IF stateCameraDown = TRUE THEN
+		stateCameraDown := FALSE;
+		FOR n:= 0 TO 4 BY 1 DO
+			robotCollision[n] := FALSE;
+		END_FOR
+	END_IF
 	
 	//Zwischenspeicher der letzten Positionen wenn die Kameradaten ausfallen
 	FOR m := 1 TO 8 BY 1 DO
@@ -74,18 +81,23 @@ END_IF
 
 //Kameradaten ausfallen, dann die lokale Position wird zugegriffen
 IF cameraDown = TRUE AND permanentDown = FALSE THEN
-	xRobot := robotPoseLokal[robotNumber].x;
-	yRobot := robotPoseLokal[robotNumber].y;
+	xRobot := robotPoseLokal[Var_HAWIno.Robot_Number].x;
+	yRobot := robotPoseLokal[Var_HAWIno.Robot_Number].y;
 	FOR l := 1 TO 8 BY 1 DO
 		robotPoseArray[l].x := robotPoseLokal[l].x;
 		robotPoseArray[l].y := robotPoseLokal[l].y;
 		robotPoseArray[l].theta := robotPoseLokal[l].theta;
 		robotPoseArray[l].e := robotPoseLokal[l].e;
 	END_FOR
-END_IF
-
 //Kameradaten 2s lang ausfallen, ist die gesamte Array True
-
+ELSIF cameraDown = TRUE AND permanentDown = TRUE THEN
+	xRobot := 0.0;
+	yRobot := 0.0;
+	FOR n:= 0 TO 4 BY 1 DO
+		robotCollision[n] := TRUE;
+	END_FOR
+	stateCameraDown := TRUE;
+END_IF
 
 //Bounding Box dreht mit der Roboterblickrichtung
 IF gamma >= 0 AND gamma < pi/2 THEN //Quadrant 1
@@ -136,14 +148,14 @@ END_IF
 
 //Finde alle aktiven Roboter im Feld
 FOR j := 1 TO 4 BY 1 DO
-	IF robotPoseArray[j].x <> 0 AND robotPoseArray[j].y <> 0 AND j <> robotNumber THEN
+	IF robotPoseArray[j].x <> 0 AND robotPoseArray[j].y <> 0 AND j <> Var_HAWIno.Robot_Number THEN
 		robotActive[j] := j;
 	END_IF
 END_FOR
 
 //Erkennt Roboter Kollision in Box?
 FOR k := 1 TO 4 BY 1 DO
-	IF robotActive [k] <> 0 AND robotActive [k] <> robotNumber THEN
+	IF robotActive [k] <> 0 AND robotActive [k] <> Var_HAWIno.Robot_Number THEN
 		IF quadrant = 1 THEN
 			IF robotPoseArray[robotActive[k]].x < x2Box AND robotPoseArray[robotActive[k]].x > x4Box AND robotPoseArray[robotActive[k]].y < y3Box AND robotPoseArray[robotActive[k]].y > y1Box THEN
 				collisionDetected := TRUE;
@@ -191,7 +203,14 @@ END_FOR ]]></ST>
       <LineId Id="294" Count="0" />
       <LineId Id="389" Count="0" />
       <LineId Id="514" Count="0" />
+      <LineId Id="664" Count="0" />
+      <LineId Id="666" Count="0" />
       <LineId Id="318" Count="0" />
+      <LineId Id="659" Count="0" />
+      <LineId Id="662" Count="1" />
+      <LineId Id="661" Count="0" />
+      <LineId Id="660" Count="0" />
+      <LineId Id="665" Count="0" />
       <LineId Id="408" Count="0" />
       <LineId Id="402" Count="1" />
       <LineId Id="405" Count="2" />
@@ -213,10 +232,11 @@ END_FOR ]]></ST>
       <LineId Id="504" Count="0" />
       <LineId Id="509" Count="4" />
       <LineId Id="508" Count="0" />
+      <LineId Id="654" Count="0" />
+      <LineId Id="650" Count="1" />
+      <LineId Id="653" Count="0" />
+      <LineId Id="655" Count="3" />
       <LineId Id="503" Count="0" />
-      <LineId Id="623" Count="0" />
-      <LineId Id="622" Count="0" />
-      <LineId Id="624" Count="0" />
       <LineId Id="506" Count="0" />
       <LineId Id="412" Count="84" />
       <LineId Id="498" Count="0" />
