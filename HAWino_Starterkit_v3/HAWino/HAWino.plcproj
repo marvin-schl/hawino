@@ -62,6 +62,9 @@
     <Compile Include="DUTs\RobotPose.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GVLs\ControlParameters.TcGVL">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GVLs\Var_HAWIno.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>

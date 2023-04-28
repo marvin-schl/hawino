@@ -21,20 +21,20 @@ VAR
 	wayPointListRaw		: ARRAY [0..100] OF RobotPoseSimple;
 	cnt					: INT 				:= 0;
 	
-    maxRadius		    : LREAL				:= 0.1;
+    maxRadius		    : LREAL				:= ControlParameters.maxRadius;
 	
-	samplingTime		: LREAL				:= 0.05;
+	samplingTime		: LREAL				:= ControlParameters.samplingTime;
 	
-	maxVel				: LREAL				:= 0.6;
-	maxAcc				: LREAL				:= 0.5;
+	maxVel				: LREAL				:= ControlParameters.maxVel;
+	maxAcc				: LREAL				:= ControlParameters.maxAcc;
 	
-	arcLengthSlow		: LREAL				:= 0.224352;
-	maxSlowVel			: LREAL				:= 0.08;
+	arcLengthSlow		: LREAL				:= ControlParameters.arcLengthSlow;
+	maxSlowVel			: LREAL				:= ControlParameters.maxSlowVel;
 	
-	maxRotVel			: LREAL				:= 1;
-	maxRotAcc			: LREAL				:= 100;	
+	maxRotVel			: LREAL				:= ControlParameters.maxRotVel;
+	maxRotAcc			: LREAL				:= ControlParameters.maxRotAcc;	
 	
-	thetaDZ				: LREAL				:= 0.2;
+	thetaDZ				: LREAL				:= ControlParameters.thetaDZ;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -59,6 +59,37 @@ END_IF
 
 ]]></ST>
     </Implementation>
+    <Method Name="calculateTrajectoryContraints" Id="{4d5600a1-f114-493e-b0d3-fc4ad629ae31}">
+      <Declaration><![CDATA[METHOD calculateTrajectoryContraints : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	rotationPerArcLength: LREAL;
+	mVel, mAcc, bVel, bAcc: LREAL;
+	endPoint, startPoint: RobotPoseSimple;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[maxVel  := ControlParameters.maxVel;
+maxAcc	:= ControlParameters.maxAcc;
+IF path.length-2*ControlParameters.thetaDZ > 0 THEN
+	endPoint := path.endPointVal;
+	startPoint :=  path.startPointVal;
+	rotationPerArcLength := ABS((endpoint.theta-startPoint.theta)/(path.length-2*ControlParameters.thetaDZ));
+	IF rotationPerArcLength >= pi/(1-2*ControlParameters.thetaDZ) THEN
+		maxVel  := 0.3;
+		maxAcc	:= 0.2;
+	ELSIF rotationPerArcLength > pi/(1.5-2*ControlParameters.thetaDZ) AND  rotationPerArcLength < pi/(1-2*ControlParameters.thetaDZ) THEN
+		mVel :=  (0.3-ControlParameters.maxVel)/(pi/(1-2*ControlParameters.thetaDZ- pi/(1.5-2*ControlParameters.thetaDZ)));
+		bVel := ControlParameters.maxVel-mVel*pi/1.1;
+		mAcc :=  (0.2-ControlParameters.maxAcc)/(pi/(1-2*ControlParameters.thetaDZ- pi/(1.5-2*ControlParameters.thetaDZ)));
+		bAcc := ControlParameters.maxAcc-mAcc*pi/1.1;
+		maxVel := mVel*rotationPerArcLength + bVel;
+		maxAcc := mAcc*rotationPerArcLength + bAcc;
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="generateTrajectory" Id="{3d1dbbe1-33ce-40a6-ae71-929ba959894c}">
       <Declaration><![CDATA[METHOD generateTrajectory : BOOL
 VAR_INPUT
@@ -127,7 +158,10 @@ END_IF
 
 path(waypointListRaw := extendedWayPointList, maxRadius := maxRadius, thetaDZ := thetaDZ);
 
+
+
 IF path.ready THEN
+	calculateTrajectoryContraints();
 	trajectoryPlanner(path := path, 
 				  qAccMax := maxAcc, 
 				  qVelMax := maxVel, 
@@ -151,6 +185,19 @@ IF path.ready THEN
       <LineId Id="207" Count="0" />
       <LineId Id="138" Count="3" />
       <LineId Id="71" Count="0" />
+    </LineIds>
+    <LineIds Name="TimeOptimalTrajectory.calculateTrajectoryContraints">
+      <LineId Id="41" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="19" Count="2" />
+      <LineId Id="25" Count="3" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="11" Count="0" />
     </LineIds>
     <LineIds Name="TimeOptimalTrajectory.generateTrajectory">
       <LineId Id="5" Count="0" />
@@ -179,7 +226,10 @@ IF path.ready THEN
       <LineId Id="87" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="119" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="140" Count="0" />
       <LineId Id="118" Count="0" />
+      <LineId Id="142" Count="0" />
       <LineId Id="18" Count="0" />
       <LineId Id="20" Count="0" />
       <LineId Id="19" Count="0" />
