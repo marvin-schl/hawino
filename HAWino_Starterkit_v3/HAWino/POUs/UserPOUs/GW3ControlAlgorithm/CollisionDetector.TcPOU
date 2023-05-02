@@ -17,7 +17,7 @@ VAR
 	distance: 							LREAL;
 	//Parameters
 	nmbOfRobots:			 INT   := 4;
-	boundBoxRadius:			 LREAL := 480;  //radius of Bounding Box
+	boundBoxRadius:			 LREAL := 600;  //radius of Bounding Box
 	collisionResetDistance:  LREAL := boundBoxRadius; 
 	
 	cameraValid: BOOL := FALSE;
