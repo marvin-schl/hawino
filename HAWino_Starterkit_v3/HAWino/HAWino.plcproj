@@ -123,6 +123,9 @@
     <Compile Include="POUs\UserPOUs\GW2\ReadAssigment.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\CollisionDetector.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\KalmanObserverST.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -240,7 +243,7 @@
     <Compile Include="POUs\UserPOUs\UserFunctions\Robot2World.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\UserFunctions\RP2RPS.TcPOU">
+    <Compile Include="POUs\UserPOUs\UserFunctions\RPS2RP.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\RPS2ARRAY.TcPOU">

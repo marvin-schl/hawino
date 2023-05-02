@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="CollisionDetector" Id="{b5da739a-57ab-4aa3-a0b1-fcac69a76a73}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK CollisionDetector
+VAR_INPUT
+	rawRobotPoses: 		ARRAY [1..8] OF RobotPose;
+	observedPose: 						RobotPoseSimple;
+	vX, vY:							    LREAL;
+END_VAR
+VAR_OUTPUT
+	collisionDetected: 	ARRAY [0..4] OF BOOL;
+END_VAR
+VAR
+	velocity: RobotPose;
+	robotPoses, lastPoses, lastVelocities:				ARRAY [1..8] OF RobotPose;
+	collsionCanditates:					ARRAY [0..4] OF BOOL; 			
+	distance: 							LREAL;
+	//Parameters
+	nmbOfRobots:			 INT   := 4;
+	boundBoxRadius:			 LREAL := 480;  //radius of Bounding Box
+	collisionResetDistance:  LREAL := boundBoxRadius; 
+	
+	cameraValid: BOOL := FALSE;
+	i : INT;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[handleCameraData();
+filterCollisionCandidates();
+velocity.x := vX;
+velocity.y := vY;
+
+FOR i := 1 TO nmbOfRobots BY 1 DO
+	//only reset a detected collision if the distance between both robots is large enough
+	IF i <> Var_HAWino.Robot_Number AND collisionDetected[i] THEN
+		distance := SQRT(EXPT(robotPoses[i].x- rawRobotPoses[Var_HAWino.Robot_Number].x,2) + EXPT(robotPoses[i].y - rawRobotPoses[Var_HAWino.Robot_Number].y,2));
+		IF distance > collisionResetDistance THEN
+			collisionDetected[i] := FALSE;
+			collisionDetected[Var_HAWino.Robot_Number] := FALSE;
+		END_IF
+	END_IF
+	
+	IF i <> Var_HAWino.Robot_Number AND collsionCanditates[i] THEN
+		distance := SQRT(EXPT(robotPoses[i].x- rawRobotPoses[Var_HAWino.Robot_Number].x,2) + EXPT(robotPoses[i].y - rawRobotPoses[Var_HAWino.Robot_Number].y,2));
+		IF distance < boundBoxRadius THEN
+			collisionDetected[i] := TRUE;
+			collisionDetected[Var_HAWino.Robot_Number] := TRUE;
+		END_IF
+	END_IF
+END_FOR
+
+lastPoses := robotPoses;]]></ST>
+    </Implementation>
+    <Method Name="filterCollisionCandidates" Id="{5d82ddba-5fb3-4406-a08e-a7fbc3168e76}">
+      <Declaration><![CDATA[METHOD filterCollisionCandidates 
+VAR_INPUT
+END_VAR
+VAR
+	phi, phiLower, phiUpper: LREAL;
+	vxCandidate, vyCandidate, vAbsSelf, dVAbs, enclosedAngle, directionOfMovement: LREAL;	
+	i : INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := 1 TO nmbOfRobots BY 1 DO
+	//check for every Robot i wether it is moving toward this robot or if this robot is moving towards Robot i
+	IF i <> Var_HAWino.Robot_Number THEN
+		collsionCanditates[i] := isCollisionPossible(candidateNmb := i, targetNmb := Var_HAWino.Robot_Number) OR isCollisionPossible(candidateNmb := Var_HAWino.Robot_Number, targetNmb := i);
+	END_IF
+END_FOR
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="handleCameraData" Id="{25a3e0ac-8dc4-4a4e-932f-c935f9d60db6}">
+      <Declaration><![CDATA[METHOD handleCameraData 
+VAR_INPUT
+END_VAR
+VAR
+	i : INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[cameraValid := FALSE;
+FOR i := 1 TO nmbOfRobots BY 1 DO
+	IF i = Var_HAWIno.Robot_Number THEN //use observer data for the robot this fb is running on
+		robotPoses[i] := RPS2RP(observedPose);
+	ELSIF rawRobotPoses[i].x <> 0 AND rawRobotPoses[i].y <> 0 THEN //for all other robots only update robot pose if camera data is valid
+		robotPoses[i] := rawRobotPoses[i];
+		cameraValid := TRUE;
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="isCollisionPossible" Id="{a43ebd86-fab2-462b-8f71-727d22a53e8d}">
+      <Declaration><![CDATA[METHOD isCollisionPossible : BOOL
+VAR_INPUT
+	candidateNmb: 	INT;
+	targetNmb:		INT;
+END_VAR
+VAR
+	vxCandidate, vyCandidate: LREAL;
+	directionOfMovement, directionOfTarget: LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//default
+isCollisionPossible := FALSE;
+
+//candidate can only collide if it is moving -> calculate velocities
+IF candidateNmb <> Var_HAWino.Robot_Number AND cameraValid THEN
+	//if candidate is not this robot -> differentiate cam data -> only if camera is valid otherwise v = 0
+	vxCandidate  		:=  (robotPoses[candidateNmb].x - lastPoses[candidateNmb].x)/Var_HAWIno.CONTROLLER_CYCLE_TIME;	
+	vyCandidate  		:=  (robotPoses[candidateNmb].y - lastPoses[candidateNmb].y)/Var_HAWIno.CONTROLLER_CYCLE_TIME;
+	lastVelocities[candidateNmb].x := vxCandidate;
+	lastVelocities[candidateNmb].y := vyCandidate;
+ELSIF candidateNmb <> Var_HAWino.Robot_Number AND NOT cameraValid THEN
+	//if camera is invalid then take the last known velocity
+	vxCandidate := vxCandidate;
+	vyCandidate := vxCandidate;
+ELSE
+	//if candidate is this robot -> take velocity measurements
+	vxCandidate 		:= velocity.x;
+	vyCandidate			:= velocity.y;
+END_IF		
+
+//if the candidate is moving
+IF vxCandidate <> 0 OR vyCandidate <> 0 THEN
+	//check in which direction it is moving
+	directionOfMovement	:= ATAN2(y := vyCandidate, x:= vxCandidate);
+	
+	//check in which direction target robot is located
+	directionOfTarget   := ATAN2(y := robotPoses[targetNmb].y-robotPoses[candidateNmb].y, x := robotPoses[targetNmb].x-robotPoses[candidateNmb].x);
+	directionOfTarget := normalizeAngle(angle := directionOfTarget, lowerBound := directionOfMovement - pi, upperBound := directionOfMovement + pi); //angle handling
+	
+	//potential collision if target is in the pi/2 bounding box of the movenent direction
+	IF ABS(directionOfTarget-directionOfMovement) < pi/2 THEN
+		isCollisionPossible := TRUE;
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="CollisionDetector">
+      <LineId Id="31" Count="2" />
+      <LineId Id="77" Count="1" />
+      <LineId Id="34" Count="18" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="CollisionDetector.filterCollisionCandidates">
+      <LineId Id="12" Count="5" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CollisionDetector.handleCameraData">
+      <LineId Id="9" Count="7" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="CollisionDetector.isCollisionPossible">
+      <LineId Id="14" Count="32" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
