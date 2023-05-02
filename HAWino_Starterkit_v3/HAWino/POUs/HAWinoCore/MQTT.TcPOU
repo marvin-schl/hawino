@@ -115,12 +115,14 @@ IF txtReadInit THEN
 		sTopicSubToGW1_Status  := CONCAT(sTopicSubToGW1, '/Status');
 		sTopicSubToGW1_Auftrag  := CONCAT(sTopicSubToGW1, '/Auftrag');
 		sTopicPubToGW1 := CONCAT('VPJ/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
-		sTopicSubCollision := CONCAT('Collision/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
+		sTopicSubCollision := CONCAT('VPJ/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
+		sTopicSubCollision := CONCAT(sTopicSubCollision, '/Collision');
 		sTopicSubReset  := CONCAT('VPJ/Robot_', INT_TO_STRING(.Var_HAWIno.Robot_Number));
 		sTopicSubReset  := CONCAT(sTopicSubToGW1, '/Reset');
 		FOR n := 1 TO 4 BY 1 DO
 			IF n <> .Var_HAWIno.Robot_Number THEN
-				sTopicPubCollision[n] := CONCAT('Collision/Robot_', INT_TO_STRING(n));
+				sTopicPubCollision[n] := CONCAT('VPJ/Robot_', INT_TO_STRING(n));
+				sTopicPubCollision[n] := CONCAT(sTopicPubCollision[n], '/Collision');
 			END_IF
 		END_FOR
 		initMQTT:= TRUE;
@@ -392,6 +394,7 @@ IF txtReadInit THEN
 					WerkstueckAusgelesen := 1;
 				//END_IF
 				Robotstatus.Status := '';
+				sPayloadRcv_Status := '';
 			END_IF
 			
 			IF fbMessage.CompareTopic(sTopic:=sTopicSubToGW1_Auftrag) THEN
@@ -400,6 +403,7 @@ IF txtReadInit THEN
 			// Json-String aufteilen und in Variablen schreiben
 				fbJsonDataType.SetSymbolFromJson(sPayloadRcv,'Auftrag',SIZEOF(Auftrag),ADR(Auftrag));
 				//AuftragDa := 1;
+				//sPayloadRcv zurücksetzen???
 			END_IF
 			
 			//Nachricht von anderem HAWino, dass dieser zurückfahren soll
@@ -418,6 +422,7 @@ IF txtReadInit THEN
 	IF resetVar THEN
 		StatusFromGW1 := '';
 		Robotstatus.Status := '';
+		sPayloadRcv_Status := '';
 		Auftrag.AbholStation := 0;
 		Auftrag.AbholTasche := 0;
 		Auftrag.AblageStation := 0;
@@ -467,10 +472,13 @@ END_IF]]></ST>
       <LineId Id="1209" Count="0" />
       <LineId Id="1494" Count="0" />
       <LineId Id="1704" Count="0" />
+      <LineId Id="2353" Count="0" />
       <LineId Id="1845" Count="1" />
       <LineId Id="1707" Count="0" />
       <LineId Id="1711" Count="0" />
-      <LineId Id="1714" Count="1" />
+      <LineId Id="1714" Count="0" />
+      <LineId Id="2352" Count="0" />
+      <LineId Id="1715" Count="0" />
       <LineId Id="1712" Count="0" />
       <LineId Id="825" Count="0" />
       <LineId Id="822" Count="0" />
@@ -579,6 +587,7 @@ END_IF]]></ST>
       <LineId Id="1610" Count="1" />
       <LineId Id="1201" Count="0" />
       <LineId Id="1206" Count="0" />
+      <LineId Id="2252" Count="0" />
       <LineId Id="1192" Count="0" />
       <LineId Id="1212" Count="0" />
       <LineId Id="1214" Count="1" />
@@ -586,6 +595,7 @@ END_IF]]></ST>
       <LineId Id="1216" Count="0" />
       <LineId Id="1213" Count="0" />
       <LineId Id="1613" Count="0" />
+      <LineId Id="2153" Count="0" />
       <LineId Id="416" Count="0" />
       <LineId Id="1729" Count="0" />
       <LineId Id="1852" Count="0" />
@@ -603,6 +613,7 @@ END_IF]]></ST>
       <LineId Id="1400" Count="0" />
       <LineId Id="1603" Count="0" />
       <LineId Id="2054" Count="0" />
+      <LineId Id="2253" Count="0" />
       <LineId Id="1606" Count="3" />
       <LineId Id="1605" Count="0" />
       <LineId Id="1854" Count="0" />

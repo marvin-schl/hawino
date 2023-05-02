@@ -116,12 +116,6 @@
               <Children />
             </Node>
             <Node>
-              <Title>observerK</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
               <Title>Q</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
@@ -140,12 +134,6 @@
               <Children />
             </Node>
             <Node>
-              <Title>sObsDelayedCycles</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
               <Title>state</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
@@ -159,12 +147,6 @@
             </Node>
             <Node>
               <Title>thetaDZ</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>thetaKalman</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -248,7 +230,7 @@
               <Children />
             </Node>
             <Node>
-              <Title>thetaObs</Title>
+              <Title>theta</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -266,12 +248,6 @@
               <Children />
             </Node>
             <Node>
-              <Title>xObs</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
               <Title>xRef</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
@@ -279,12 +255,6 @@
             </Node>
             <Node>
               <Title>yCam</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children />
-            </Node>
-            <Node>
-              <Title>yObs</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -320,25 +290,6 @@
                     </Node>
                     <Node>
                       <Title>Y: yCam</Title>
-                      <Expanded>False</Expanded>
-                      <FileName></FileName>
-                      <Children />
-                    </Node>
-                  </Children>
-                </Node>
-                <Node>
-                  <Title>xObs, yObs</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children>
-                    <Node>
-                      <Title>X: xObs</Title>
-                      <Expanded>False</Expanded>
-                      <FileName></FileName>
-                      <Children />
-                    </Node>
-                    <Node>
-                      <Title>Y: yObs</Title>
                       <Expanded>False</Expanded>
                       <FileName></FileName>
                       <Children />
@@ -398,12 +349,6 @@
               <FileName></FileName>
               <Children>
                 <Node>
-                  <Title>xObs</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
                   <Title>xRef</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
@@ -428,12 +373,6 @@
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
-                <Node>
-                  <Title>yObs</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
                 <Node>
                   <Title>yRef</Title>
                   <Expanded>False</Expanded>
@@ -460,7 +399,7 @@
               <FileName></FileName>
               <Children>
                 <Node>
-                  <Title>thetaObs</Title>
+                  <Title>theta</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
@@ -472,7 +411,7 @@
                   <Children />
                 </Node>
                 <Node>
-                  <Title>thetaKalman</Title>
+                  <Title>theta (1)</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
@@ -673,12 +612,6 @@
                 </Node>
                 <Node>
                   <Title>samplingTime</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-                <Node>
-                  <Title>sObsDelayedCycles</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
