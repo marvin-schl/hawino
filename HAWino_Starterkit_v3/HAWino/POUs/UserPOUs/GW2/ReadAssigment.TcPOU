@@ -297,14 +297,14 @@ END_IF
 //////////////////////////////////Parkplätze/////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Parkplätze "seitlich" der Ladestation
-parkingSlots[1] := ToRobotPoseSimple(x := 7100, y := 1000, theta := -1);
-endNodeParking[1] := 36;
-parkingSlots[2] := ToRobotPoseSimple(x := 7100, y := 1400, theta := -1);
-endNodeParking[2] := 54;
-parkingSlots[3] := ToRobotPoseSimple(x := 7100, y := 1800, theta := -1);
-endNodeParking[3] := 72;
-parkingSlots[4] := ToRobotPoseSimple(x := 7100, y := 2200, theta := -1);
-endNodeParking[4] := 90;
+parkingSlots[1] := ToRobotPoseSimple(x := 1000, y := 600, theta := -1);
+endNodeParking[1] := 3;
+parkingSlots[2] := ToRobotPoseSimple(x := 2200, y := 600, theta := -1);
+endNodeParking[2] := 6;
+parkingSlots[3] := ToRobotPoseSimple(x := 3400, y := 600, theta := -1);
+endNodeParking[3] := 9;
+parkingSlots[4] := ToRobotPoseSimple(x := 4600, y := 600, theta := -1);
+endNodeParking[4] := 12;
 
 ]]></ST>
     </Implementation>

@@ -22,7 +22,7 @@ VAR
 	matrix : ARRAY[1..170,1..170] OF LREAL;
 	row, col : LREAL;
 	xNode, yNode : ARRAY[1..170] OF LREAL;
-	removeNode : ARRAY[0..30] OF INT := [36, 54, 72, 90, 93, 96, 99, 102, 111, 114, 117, 120, 124, 125, 142, 143];
+	removeNode : ARRAY[0..30] OF INT := [3, 6, 9, 12, 93, 96, 99, 102, 111, 114, 117, 120, 124, 125, 142, 143];
 	startNode : INT := 0; //fragwürdig
 	diff_x, diff_y, diff_total : ARRAY[1..170] OF LREAL;
 	min_total : LREAL;
@@ -150,9 +150,9 @@ FOR i := 0 TO numberOfNodes BY 1 DO
  matrix[107, numberOfNodes + number + 1] := 1000;
  
  //Parkplätze mit nur einer Verbindung
- FOR cntPark := 36 TO 91 BY 18 DO
-	 matrix[cntPark, cntPark-1] := 1000;
-	 matrix[cntPark-1, cntPark] := 1000;
+ FOR cntPark := 3 TO 12 BY 3 DO
+	 matrix[cntPark, cntPark + 18] := 1000;
+	 matrix[cntPark + 18, cntPark] := 1000;
  END_FOR
  
  //Umrechnung von Knoten in Koordinaten

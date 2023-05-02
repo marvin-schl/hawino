@@ -71,7 +71,7 @@ END_IF
 //IF collision[0] THEN
 	//TrajectoryController.xBoEnable := FALSE;
 	//FeedbackToGW1 := 'Kameraausfall';
-IF collision[Var_HAWIno.Robot_Number] AND newCollision AND NOT collisionSolutionWorking THEN //hier doch eher noch "and collisionSolutionWorking" hinzufügen
+IF collision[Var_HAWIno.Robot_Number] AND newCollision AND NOT collisionSolutionWorking THEN
 	TrajectoryController.xBoEnable := FALSE;
 	IF NOT collisionSolutionWorking THEN
 		sk0 := TRUE;
@@ -1076,6 +1076,7 @@ IF gripper.state = CoreGripperControlState.Open AND Gripper.partGripped THEN
 	removeAllToken();
 	FeedbackToGW1 := 'Error Teil verloren';
 	Gripper.closeGripperCommand := FALSE;
+	resetVarMQTT := FALSE;
 END_IF
 	
 //ERROR: Error von GW3
@@ -1084,6 +1085,7 @@ IF trajectoryController.yControllerState = ControllerState.error THEN
 	removeAllToken();
 	FeedbackToGW1 := 'Error Bumper';
 	Gripper.closeGripperCommand := FALSE;
+	resetVarMQTT := FALSE;
 END_IF
 
 //wenn AStern auch nach 100 Zyklen (1s) Failed
@@ -1092,6 +1094,7 @@ IF failedCounter > 100 THEN
 	removeAllToken();
 	FeedbackToGW1 := 'Error AStar';
 	Gripper.closeGripperCommand := FALSE;
+	resetVarMQTT := FALSE;
 	//wenn Kollision anderen Wegschicken?
 END_IF
 ]]></ST>
@@ -1233,7 +1236,7 @@ IF newCollision THEN
 END_IF
 
 IF otherRobo[0] > 0 THEN
-	IF cameraX[otherRobo[0]] > 7000 AND cameraX[otherRobo[0]] < 7200 THEN
+	IF cameraY[otherRobo[0]] > 650 THEN
 		//Anderer Roboter auf Parkplatz
 		otherRoboAtStop := TRUE;	
 	ELSIF cameraX[otherRobo[0]] > 6100 AND cameraX[otherRobo[0]] < 6800 AND cameraY[otherRobo[0]] > 3400 AND cameraY[otherRobo[0]] < 3600  THEN
@@ -1243,14 +1246,14 @@ IF otherRobo[0] > 0 THEN
 		otherRoboAtStop := FALSE;
 	END_IF
 	
-	IF cameraX[otherRobo[0]] > 600 AND cameraX[otherRobo[0]] < 5200 AND cameraY[otherRobo[0]] > 2340 AND cameraY[otherRobo[0]] < 3345  THEN
+	IF cameraX[otherRobo[0]] > 0 AND cameraX[otherRobo[0]] < 5200 AND cameraY[otherRobo[0]] > 2340 AND cameraY[otherRobo[0]] < 3345  THEN
 		//Anderer Roboter im Bereich der Stationen
 		otherRoboAtStation := TRUE;
 	ELSE
 		otherRoboAtStation := FALSE;
 	END_IF
 	
-	IF cameraX[Var_HAWIno.Robot_Number] > 600 AND cameraX[Var_HAWIno.Robot_Number] < 5200 AND cameraY[Var_HAWIno.Robot_Number] > 2340 AND cameraY[Var_HAWIno.Robot_Number] < 3345  THEN
+	IF cameraX[Var_HAWIno.Robot_Number] > 0 AND cameraX[Var_HAWIno.Robot_Number] < 5200 AND cameraY[Var_HAWIno.Robot_Number] > 2340 AND cameraY[Var_HAWIno.Robot_Number] < 3345  THEN
 		thisRoboAtStation := TRUE;
 	ELSE
 		thisRoboAtStation := FALSE;
@@ -1829,16 +1832,19 @@ sk33 := FALSE;]]></ST>
     <LineIds Name="Fahrauftrag.errorTest">
       <LineId Id="12" Count="0" />
       <LineId Id="6" Count="5" />
+      <LineId Id="63" Count="0" />
       <LineId Id="33" Count="1" />
       <LineId Id="13" Count="0" />
       <LineId Id="15" Count="1" />
       <LineId Id="18" Count="2" />
+      <LineId Id="64" Count="0" />
       <LineId Id="17" Count="0" />
       <LineId Id="38" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="39" Count="1" />
       <LineId Id="43" Count="1" />
       <LineId Id="42" Count="0" />
+      <LineId Id="65" Count="0" />
       <LineId Id="59" Count="0" />
       <LineId Id="41" Count="0" />
       <LineId Id="50" Count="0" />

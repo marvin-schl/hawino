@@ -137,7 +137,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Insert actual position as first waypoint if robot is too far away from first
 // x and y have to be < 100 => noise of encoder integrates onto invalid cam data, (100,100) is still an invalid point
-IF (SQRT(EXPT(currentPose.x - newWayPointList[0].x, 2) + EXPT(currentPose.y - newWayPointList[0].y, 2)) > maxInitialPoseError) AND currentPose.x > 100 AND currentPose.y > 100 THEN
+IF (SQRT(EXPT(currentPose.x - newWayPointList[0].x, 2) + EXPT(currentPose.y - newWayPointList[0].y, 2)) > maxInitialPoseError) AND currentPose.x > 100 AND currentPose.y > 100  THEN
 	// shift all elements +1 to right except the lat one (gets overwritten)
 	FOR i := 100 TO 0 BY -1 DO
 		extendedWayPointList[i + 1] := newWayPointList[i];
@@ -145,6 +145,10 @@ IF (SQRT(EXPT(currentPose.x - newWayPointList[0].x, 2) + EXPT(currentPose.y - ne
 
 	// insert actual pose as first waypoint
 	extendedWayPointList[0] := currentPose;
+ELSIF newWayPointList[1].x = -1 AND newWayPointList[1].y = -1 THEN //only one point in wpl
+	extendedWayPointList[0] := currentPose;
+	extendedWayPointList[1] := newWayPointList[0];
+	extendedWayPointList[2] := newWayPointList[1]; //(-1, -1, -1)
 ELSE
 	//dont shift all elements
 	FOR i := 0 TO 100 BY 1 DO
@@ -217,6 +221,7 @@ IF path.ready THEN
       <LineId Id="130" Count="0" />
       <LineId Id="64" Count="0" />
       <LineId Id="68" Count="6" />
+      <LineId Id="159" Count="3" />
       <LineId Id="76" Count="0" />
       <LineId Id="79" Count="3" />
       <LineId Id="85" Count="1" />
