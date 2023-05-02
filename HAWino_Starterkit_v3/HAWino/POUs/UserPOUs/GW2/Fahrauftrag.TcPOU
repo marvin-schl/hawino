@@ -69,7 +69,7 @@ END_IF
 //IF collision[0] THEN
 	//TrajectoryController.xBoEnable := FALSE;
 	//FeedbackToGW1 := 'Kameraausfall';
-IF collision[Var_HAWIno.Robot_Number] AND newCollision THEN //hier doch eher noch "and collisionSolutionWorking" hinzufügen
+IF collision[Var_HAWIno.Robot_Number] AND newCollision AND NOT collisionSolutionWorking THEN //hier doch eher noch "and collisionSolutionWorking" hinzufügen
 	TrajectoryController.xBoEnable := FALSE;
 	IF NOT collisionSolutionWorking THEN
 		sk0 := TRUE;

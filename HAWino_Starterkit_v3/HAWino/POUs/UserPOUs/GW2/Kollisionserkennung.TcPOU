@@ -12,7 +12,7 @@ VAR
 		
 	xRobot, yRobot: LREAL;
 	i, j, k, l, m, n, o : INT := 1;
-	quadrant : INT := 0;
+	quadrant, counter : INT := 0;
 	noCamera, cameraDown, permanentDown, stateCameraDown  : BOOL := FALSE;
 	
 	//Bounding Box
@@ -26,7 +26,8 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[ timer(IN:= noCamera, PT := timeValue); //Roboter darf 2s blind fahren
+      <ST><![CDATA[ ////////Main function/////////
+timer(IN:= noCamera, PT := timeValue); //Roboter darf 2s blind fahren
 
 //suche die Position des passenden Roboters
 FOR i := 1 TO 4 BY 1 DO
@@ -36,7 +37,7 @@ FOR i := 1 TO 4 BY 1 DO
 	END_IF
 END_FOR
 
-//350mm Durchmesser des Roboters & 70mm Toleranzabstand
+//350mm Durchmesser des Roboters & 130mm Toleranzabstand
 breite := 350 + 130; 
 laenge := 350 + 130;
 diagonal := SQRT(EXPT(breite,2) + EXPT(laenge,2));
@@ -70,7 +71,7 @@ IF xRobot <> 0 AND yRobot <> 0 THEN
 ELSE
 	noCamera := TRUE;
 	cameraDown := TRUE;
-	//Kameradaten länger als 2s ausfallen, setzen die Array auf true
+	//Kameradaten länger als 2s ausfallen, setzt die Array auf true
 	IF timer.Q THEN
 		permanentDown := TRUE;
 	ELSE
@@ -92,14 +93,16 @@ IF cameraDown = TRUE AND permanentDown = FALSE THEN
 ELSIF cameraDown = TRUE AND permanentDown = TRUE THEN
 	xRobot := 0.0;
 	yRobot := 0.0;
-	FOR o:= 1 TO 4 BY 1 DO
-		robotCollision[o] := TRUE;
-	END_FOR
-	FOR l := 1 TO 8 BY 1 DO
-		robotPoseArray[l].x := 0.0;
-		robotPoseArray[l].y := 0.0;
-		robotPoseArray[l].theta := 0.0;
-		robotPoseArray[l].e := 0.0;
+	FOR o:= 0 TO 4 BY 1 DO
+		IF o = 0
+			robotCollision[o] := TRUE;
+		ELSE 
+			robotCollision[o] := TRUE;
+			robotPoseArray[o].x := 0.0;
+			robotPoseArray[o].y := 0.0;
+			robotPoseArray[o].theta := 0.0;
+			robotPoseArray[o].e := 0.0;
+		END_IF
 	END_FOR
 	stateCameraDown := TRUE;
 END_IF
@@ -181,74 +184,29 @@ FOR k := 1 TO 4 BY 1 DO
 		END_IF
 	END_IF
 	
+	//Kollision erkannt und die beteiligten Robotern werden True gesetzt
 	IF collisionDetected = TRUE THEN
 		robotCollision[k] := TRUE;
 		robotCollision[Var_HAWIno.Robot_Number] := TRUE; 
 	ELSE 
 		robotCollision[k] := FALSE;
-		robotCollision[Var_HAWIno.Robot_Number] := TRUE; 
 	END_IF
-END_FOR ]]></ST>
+END_FOR 
+
+//Keine Roboter kollidieren sich, setzt der Roboter zurück
+FOR l := 1 TO 4 BY 1 DO
+	IF robotCollision[l] = FALSE THEN
+		counter := counter + 1;
+	END_IF
+END_FOR
+IF counter = 3 THEN
+	robotCollision[Var_HAWIno.Robot_Number] := FALSE;
+END_IF]]></ST>
     </Implementation>
     <LineIds Name="Kollisionserkennung">
-      <LineId Id="398" Count="0" />
-      <LineId Id="515" Count="0" />
-      <LineId Id="399" Count="0" />
-      <LineId Id="22" Count="5" />
-      <LineId Id="342" Count="0" />
-      <LineId Id="29" Count="5" />
-      <LineId Id="36" Count="1" />
-      <LineId Id="40" Count="0" />
-      <LineId Id="305" Count="0" />
-      <LineId Id="294" Count="0" />
-      <LineId Id="389" Count="0" />
-      <LineId Id="514" Count="0" />
-      <LineId Id="664" Count="0" />
-      <LineId Id="666" Count="0" />
-      <LineId Id="318" Count="0" />
-      <LineId Id="659" Count="0" />
-      <LineId Id="662" Count="1" />
-      <LineId Id="661" Count="0" />
-      <LineId Id="660" Count="0" />
-      <LineId Id="665" Count="0" />
-      <LineId Id="408" Count="0" />
-      <LineId Id="402" Count="1" />
-      <LineId Id="405" Count="2" />
-      <LineId Id="404" Count="0" />
-      <LineId Id="156" Count="0" />
-      <LineId Id="310" Count="0" />
-      <LineId Id="307" Count="0" />
-      <LineId Id="391" Count="0" />
-      <LineId Id="516" Count="1" />
-      <LineId Id="392" Count="0" />
-      <LineId Id="552" Count="0" />
-      <LineId Id="620" Count="1" />
-      <LineId Id="394" Count="0" />
-      <LineId Id="306" Count="0" />
-      <LineId Id="507" Count="0" />
-      <LineId Id="501" Count="0" />
-      <LineId Id="411" Count="0" />
-      <LineId Id="502" Count="0" />
-      <LineId Id="504" Count="0" />
-      <LineId Id="509" Count="4" />
-      <LineId Id="508" Count="0" />
-      <LineId Id="654" Count="0" />
-      <LineId Id="650" Count="1" />
-      <LineId Id="653" Count="0" />
-      <LineId Id="655" Count="2" />
-      <LineId Id="693" Count="4" />
-      <LineId Id="692" Count="0" />
-      <LineId Id="658" Count="0" />
-      <LineId Id="503" Count="0" />
-      <LineId Id="506" Count="0" />
-      <LineId Id="412" Count="45" />
-      <LineId Id="465" Count="31" />
-      <LineId Id="498" Count="0" />
-      <LineId Id="709" Count="0" />
-      <LineId Id="546" Count="0" />
-      <LineId Id="548" Count="0" />
-      <LineId Id="710" Count="0" />
-      <LineId Id="499" Count="0" />
+      <LineId Id="756" Count="170" />
+      <LineId Id="930" Count="0" />
+      <LineId Id="927" Count="2" />
       <LineId Id="409" Count="0" />
     </LineIds>
   </POU>
