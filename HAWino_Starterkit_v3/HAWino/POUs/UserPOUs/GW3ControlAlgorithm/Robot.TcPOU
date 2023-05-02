@@ -22,6 +22,7 @@ VAR
 	i1Raw AT%I*: UINT;
 	i2Raw AT%I*: UINT;
 	i3Raw AT%I*: UINT;
+	
 	//inputs to robot
 	vXtoRobot 		AT%Q*: LREAL;
 	vYtoRobot		AT%Q*: LREAL;

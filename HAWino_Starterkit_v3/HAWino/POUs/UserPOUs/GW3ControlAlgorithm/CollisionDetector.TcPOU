@@ -3,21 +3,21 @@
   <POU Name="CollisionDetector" Id="{b5da739a-57ab-4aa3-a0b1-fcac69a76a73}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK CollisionDetector
 VAR_INPUT
-	rawRobotPoses: 		ARRAY [1..8] OF RobotPoseSimple;
+	rawRobotPoses: 		ARRAY [1..8] OF RobotPose;
 	observedPose: 						RobotPoseSimple;
-	velocity:							RobotPoseSimple;
+	vX, vY:							    LREAL;
 END_VAR
 VAR_OUTPUT
 	collisionDetected: 	ARRAY [0..4] OF BOOL;
 END_VAR
 VAR
-	
-	robotPoses, lastPoses, lastVelocities:				ARRAY [1..8] OF RobotPoseSimple;
+	velocity: RobotPose;
+	robotPoses, lastPoses, lastVelocities:				ARRAY [1..8] OF RobotPose;
 	collsionCanditates:					ARRAY [0..4] OF BOOL; 			
 	distance: 							LREAL;
 	//Parameters
 	nmbOfRobots:			 INT   := 4;
-	boundBoxRadius:			 LREAL := 300;  //radius of Bounding Box
+	boundBoxRadius:			 LREAL := 480;  //radius of Bounding Box
 	collisionResetDistance:  LREAL := boundBoxRadius; 
 	
 	cameraValid: BOOL := FALSE;
@@ -28,6 +28,8 @@ END_VAR
     <Implementation>
       <ST><![CDATA[handleCameraData();
 filterCollisionCandidates();
+velocity.x := vX;
+velocity.y := vY;
 
 FOR i := 1 TO nmbOfRobots BY 1 DO
 	//only reset a detected collision if the distance between both robots is large enough
@@ -80,7 +82,7 @@ END_VAR]]></Declaration>
         <ST><![CDATA[cameraValid := FALSE;
 FOR i := 1 TO nmbOfRobots BY 1 DO
 	IF i = Var_HAWIno.Robot_Number THEN //use observer data for the robot this fb is running on
-		robotPoses[i] := observedPose;
+		robotPoses[i] := RPS2RP(observedPose);
 	ELSIF rawRobotPoses[i].x <> 0 AND rawRobotPoses[i].y <> 0 THEN //for all other robots only update robot pose if camera data is valid
 		robotPoses[i] := rawRobotPoses[i];
 		cameraValid := TRUE;
@@ -137,7 +139,9 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="CollisionDetector">
-      <LineId Id="31" Count="21" />
+      <LineId Id="31" Count="2" />
+      <LineId Id="77" Count="1" />
+      <LineId Id="34" Count="18" />
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="CollisionDetector.filterCollisionCandidates">

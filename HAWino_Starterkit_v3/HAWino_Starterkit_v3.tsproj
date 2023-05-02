@@ -365,6 +365,15 @@
 			</Properties>
 		</DataType>
 		<DataType>
+			<Name GUID="{ED505E53-AC03-A7B8-5B0E-7E9F26DE47AE}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..4] OF BOOL</Name>
+			<BitSize>40</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>5</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
 			<Name GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}" AutoDeleteType="true">ST_PwrMgmt_HAWino_In</Name>
 			<BitSize>448</BitSize>
 			<SubItem>
@@ -498,15 +507,6 @@
 				<BitSize>16</BitSize>
 				<BitOffs>704</BitOffs>
 			</SubItem>
-		</DataType>
-		<DataType>
-			<Name GUID="{ED505E53-AC03-A7B8-5B0E-7E9F26DE47AE}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..4] OF BOOL</Name>
-			<BitSize>40</BitSize>
-			<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
-			<ArrayInfo>
-				<LBound>0</LBound>
-				<Elements>5</Elements>
-			</ArrayInfo>
 		</DataType>
 		<DataType>
 			<Name GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}" IecBaseType="true" AutoDeleteType="true">ARRAY [1..9] OF INT</Name>
@@ -3400,6 +3400,10 @@
 						<Var>
 							<Name>ControlPRG.yVworldRef</Name>
 							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.collision</Name>
+							<Type GUID="{ED505E53-AC03-A7B8-5B0E-7E9F26DE47AE}">ARRAY [0..4] OF BOOL</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="1" ContextId="1" AreaNo="16">
@@ -6681,6 +6685,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yRPposition" VarB="ControlTask Outputs^ControlPRG.yRPposition"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yUintWaypointIndex" VarB="ControlTask Outputs^ControlPRG.yUintWaypointIndex"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.TrajectoryController.yVworldRef" VarB="ControlTask Outputs^ControlPRG.yVworldRef"/>
+				<Link VarA="PlcTask Inputs^Fahrauftrag.collision" VarB="ControlTask Outputs^ControlPRG.collision"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.goBack" VarB="MQTT_1 Outputs^MQTT.goBack"/>
 				<Link VarA="PlcTask Inputs^Fahrauftrag.reset" VarB="MQTT_1 Outputs^MQTT.resetButton"/>
 			</OwnerB>
