@@ -49,7 +49,7 @@ VAR
 	otherRoboAtStation, otherRoboAtStop, thisRoboAtStation, drivingAtStation, newCollision, sameStation : BOOL;			//anderer beteiligter HAWino ist im Stationsbereich
 	
 	//error
-	noCamera, AStarFailed, error : BOOL;
+	noCamera, error : BOOL;
 	resetTimer : TON;
 	failedCounter: INT;
 	cameraX, cameraY : ARRAY[1..4] OF LREAL;
@@ -240,7 +240,7 @@ END_IF
 IF s10 AND NOT s11a AND StatusFromGW1 = 'WerkstueckAusgelesen' THEN
 	s10 := 0; s11a := 1;
 	lastRelevantStateForCollision := 's11a';
-	resetVarMQTT := TRUE;
+	//resetVarMQTT := TRUE;
 	
 	//Auftrag auswerten
 	EndNode   := readAssigment.endNodeStorage;																	
@@ -261,6 +261,7 @@ IF s11a AND NOT s11b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 T
 	finished_ASearch := AStar.finishedASearch;
 	xPointList := AStar.xCoordinates;
 	yPointList := AStar.yCoordinates;
+	//resetVarMQTT := FALSE;
 ELSIF s11a AND NOT s11b THEN
 	//IF readAssigment.assigment.AbholTasche < 3 THEN	
 	//	xRobotStartposition := actualCamX - 200;
@@ -326,7 +327,7 @@ END_IF
 IF s16 AND NOT s17 AND StatusFromGW1 = 'WerkstueckAusgelesen' THEN
 	s16 := 0; s17 := 1;
 	lastRelevantStateForCollision := 's17';
-	resetVarMQTT := TRUE;
+	//resetVarMQTT := TRUE;
 	//	Fahrauftrag zur Ablage
 	ZEROS_RobotPoseSimple(wayPointList);
 	wayPointList := readAssigment.pointsFromReaderToSlot;
@@ -346,6 +347,7 @@ END_IF
 IF s18 AND NOT s19 AND trajectoryController.yControllerState = ControllerState.ready THEN
 	s18 := 0; s19 := 1;
 	trajectoryController.xBoEnable := TRUE;
+	//resetVarMQTT := FALSE;
 END_IF
 	
 //	RückmeldungGW3 Fahrt abwarten
@@ -573,7 +575,7 @@ IF Auftrag.Art = '' AND (trajectoryController.yControllerState = ControllerState
 	TrajectoryController.xBoReset := FALSE;
 END_IF
 
-IF AStarFailed THEN
+IF AStar.AStarFailed THEN
 	drivingBack();
 	removeAllToken();
 	continueAfterCollision();
@@ -754,11 +756,15 @@ END_IF
 IF sk26 AND NOT sk30 AND NOT drivingAtStation AND NOT goBack THEN
 	todo := 'Warten';
 	//darf ich fahren? nur wenn kleinere Roboternummer
-	FOR n := 0 TO 4 BY 1 DO
-		IF otherRobo[n] > Var_HAWIno.Robot_Number THEN
-			todo := 'Fahren';
-		END_IF
-	END_FOR
+	//FOR n := 0 TO 4 BY 1 DO
+	//	IF otherRobo[n] > Var_HAWIno.Robot_Number THEN
+	//		todo := 'Fahren';
+	//	END_IF
+	//END_FOR			
+	IF SQRT(EXPT(camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x - AStar.xEnd,2) + EXPT(camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x - 2800,2)) < SQRT(EXPT(camera.cameraData.robotPositionArray[otherRobo[0]].x - AStar.xEnd,2) + EXPT(camera.cameraData.robotPositionArray[otherRobo[0]].x - 2800,2)) THEN
+		//dieser Robo dichter dran
+		todo := 'Fahren';
+	END_IF
 	sk26 := 0; sk30 := 1;
 END_IF
 
@@ -814,6 +820,7 @@ ELSIF lastRelevantStateForCollision = 's6a' THEN
 	s6a := 1;
 ELSIF lastRelevantStateForCollision = 's6b' THEN
 	s6b := 1;
+	//Greifer muss zu, was passiert hier
 	//readAssigment.pointsFromSlotToReader
 	//Arrays resetten
 	ZEROS(diffToList);
@@ -906,7 +913,9 @@ END_IF]]></ST>
     <Method Name="doReset" Id="{11fc1a94-8006-4f54-bbc3-6cfe2505c8b8}">
       <Declaration><![CDATA[METHOD doReset : BOOL
 VAR_INPUT
+	
 END_VAR
+
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[resetVarMQTT := TRUE;
@@ -920,7 +929,6 @@ FeedbackToGW1 := 'Verfuegbar';
 Gripper.closeGripperCommand := FALSE;
 ZEROS_INT(removeNodeCollision);
 error := FALSE;
-AStarFailed := FALSE;
 failedCounter := 1;
 
 //Statemaschine zurücksetzen
@@ -1052,7 +1060,6 @@ IF trajectoryController.yBoArrivedAtDestination THEN //hier and goBack entfernt
 	trajectoryController.xBoEnable := FALSE;
 	resetGoBack := true;
 	firstTime := TRUE;
-	AStarFailed := FALSE;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -1064,11 +1071,11 @@ END_VAR
       <Implementation>
         <ST><![CDATA[//ERROR: Teil verloren
 IF gripper.state = CoreGripperControlState.Open AND Gripper.partGripped THEN
-	//error := TRUE;
-	//TrajectoryController.xBoEnable := FALSE;	
-	//removeAllToken();
-	//FeedbackToGW1 := 'Error Teil verloren';
-	//Gripper.closeGripperCommand := FALSE;
+	error := TRUE;
+	TrajectoryController.xBoEnable := FALSE;	
+	removeAllToken();
+	FeedbackToGW1 := 'Error Teil verloren';
+	Gripper.closeGripperCommand := FALSE;
 END_IF
 	
 //ERROR: Error von GW3
@@ -1080,20 +1087,14 @@ IF trajectoryController.yControllerState = ControllerState.error THEN
 END_IF
 
 //wenn AStern auch nach 100 Zyklen (1s) Failed
-IF failedCounter = 100 THEN
+IF failedCounter > 100 THEN
 	error := TRUE;
 	removeAllToken();
 	FeedbackToGW1 := 'Error AStar';
 	Gripper.closeGripperCommand := FALSE;
+	//wenn Kollision anderen Wegschicken?
 END_IF
-
-//fehlerhafter Auftrag
-IF ReadAssigment.FailedReadAssigment THEN
-	error := TRUE;
-	removeAllToken();
-	FeedbackToGW1 := 'Error fehlerhafter Auftrag';
-	Gripper.closeGripperCommand := FALSE;
-END_IF]]></ST>
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="findNodesToRemove" Id="{ef8384d2-b9d5-47a0-af76-48b877d17d18}">
@@ -1256,7 +1257,7 @@ IF otherRobo[0] > 0 THEN
 	END_IF
 	
 	//Stationsfahrt: anderen Robo wegschicken -> Timer nötig????
-	IF lastRelevantStateForCollision = 's6a' OR lastRelevantStateForCollision = 's10' OR lastRelevantStateForCollision = 's16' OR lastRelevantStateForCollision = 's17' THEN
+	IF lastRelevantStateForCollision = 's6a' OR lastRelevantStateForCollision = 's6b' OR lastRelevantStateForCollision = 's10' OR lastRelevantStateForCollision = 's16' OR lastRelevantStateForCollision = 's17' THEN
 		//anderen Wegschicken
 		IF newCollision THEN
 			RoboNmbToGoBack := otherRobo[0];
@@ -1501,7 +1502,9 @@ sk33 := FALSE;]]></ST>
       <LineId Id="141" Count="0" />
       <LineId Id="992" Count="2" />
       <LineId Id="1091" Count="2" />
-      <LineId Id="995" Count="2" />
+      <LineId Id="995" Count="0" />
+      <LineId Id="2427" Count="0" />
+      <LineId Id="996" Count="1" />
       <LineId Id="1104" Count="0" />
       <LineId Id="1106" Count="1" />
       <LineId Id="1105" Count="0" />
@@ -1543,7 +1546,9 @@ sk33 := FALSE;]]></ST>
       <LineId Id="294" Count="0" />
       <LineId Id="79" Count="0" />
       <LineId Id="295" Count="0" />
-      <LineId Id="316" Count="13" />
+      <LineId Id="316" Count="9" />
+      <LineId Id="2428" Count="0" />
+      <LineId Id="326" Count="3" />
       <LineId Id="402" Count="0" />
       <LineId Id="2192" Count="0" />
       <LineId Id="404" Count="0" />
@@ -1718,7 +1723,11 @@ sk33 := FALSE;]]></ST>
       <LineId Id="198" Count="0" />
       <LineId Id="97" Count="7" />
       <LineId Id="199" Count="0" />
-      <LineId Id="105" Count="20" />
+      <LineId Id="105" Count="8" />
+      <LineId Id="245" Count="1" />
+      <LineId Id="248" Count="0" />
+      <LineId Id="247" Count="0" />
+      <LineId Id="114" Count="11" />
       <LineId Id="200" Count="0" />
       <LineId Id="126" Count="0" />
       <LineId Id="201" Count="0" />
@@ -1736,6 +1745,7 @@ sk33 := FALSE;]]></ST>
       <LineId Id="6" Count="3" />
       <LineId Id="163" Count="1" />
       <LineId Id="17" Count="1" />
+      <LineId Id="173" Count="0" />
       <LineId Id="28" Count="0" />
       <LineId Id="38" Count="0" />
       <LineId Id="148" Count="0" />
@@ -1773,7 +1783,7 @@ sk33 := FALSE;]]></ST>
       <LineId Id="84" Count="0" />
       <LineId Id="86" Count="0" />
       <LineId Id="76" Count="0" />
-      <LineId Id="91" Count="1" />
+      <LineId Id="92" Count="0" />
       <LineId Id="87" Count="0" />
       <LineId Id="75" Count="0" />
       <LineId Id="72" Count="0" />
@@ -1814,7 +1824,6 @@ sk33 := FALSE;]]></ST>
       <LineId Id="139" Count="0" />
       <LineId Id="41" Count="0" />
       <LineId Id="110" Count="0" />
-      <LineId Id="172" Count="0" />
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="Fahrauftrag.errorTest">
@@ -1830,10 +1839,8 @@ sk33 := FALSE;]]></ST>
       <LineId Id="39" Count="1" />
       <LineId Id="43" Count="1" />
       <LineId Id="42" Count="0" />
+      <LineId Id="59" Count="0" />
       <LineId Id="41" Count="0" />
-      <LineId Id="49" Count="0" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="51" Count="4" />
       <LineId Id="50" Count="0" />
     </LineIds>
     <LineIds Name="Fahrauftrag.findNodesToRemove">
