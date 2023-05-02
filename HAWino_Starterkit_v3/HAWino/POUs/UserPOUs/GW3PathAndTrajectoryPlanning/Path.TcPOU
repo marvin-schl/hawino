@@ -310,7 +310,7 @@ FOR i := 1 TO 99 DO
 	END_IF
 	
 	
-	IF phi1 <> phi2 AND phi1 <> normalizeAngle(phi2+pi, pi, -pi)  AND ABS(alpha1-alpha2) > 0.43633231 THEN
+	IF phi1 <> phi2 AND phi1 <> normalizeAngle(phi2+pi, pi, -pi)  AND ABS(alpha1-alpha2) > 25.0/180.0*pi AND  ABS(alpha1-alpha2) < 345.0/180.0*pi THEN
 		waypointList[nextIDX].theta := waypointListRaw[i].theta;	
 		waypointList[nextIDX].y := waypointListRaw[i].y/1000;	
 		waypointList[nextIDX].x := waypointListRaw[i].x/1000;	
