@@ -94,7 +94,7 @@ ELSIF cameraDown = TRUE AND permanentDown = TRUE THEN
 	xRobot := 0.0;
 	yRobot := 0.0;
 	FOR o:= 0 TO 4 BY 1 DO
-		IF o = 0
+		IF o = 0 THEN
 			robotCollision[o] := TRUE;
 		ELSE 
 			robotCollision[o] := TRUE;
