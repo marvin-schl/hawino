@@ -3253,6 +3253,23 @@
 							<Type>UINT</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.xBoEnable</Name>
+							<Comment><![CDATA[////////////////////////////////////////////
+////////// LINKS TO GW2  ///////////////////
+////////////////////////////////////////////]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.xBoReset</Name>
+							<Comment><![CDATA[ implemented, reset error state => idle]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.newWaypointListAvailable</Name>
+							<Comment><![CDATA[ implemented, Status-Bit zur Signalisierung einer neuen WP-Liste]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>ControlPRG.robot.i1Raw</Name>
 							<Type>UINT</Type>
 						</Var>
@@ -3291,23 +3308,6 @@
 							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
 						</Var>
 						<Var>
-							<Name>ControlPRG.xBoEnable</Name>
-							<Comment><![CDATA[////////////////////////////////////////////
-////////// LINKS TO GW2  ///////////////////
-////////////////////////////////////////////]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.xBoReset</Name>
-							<Comment><![CDATA[ implemented, reset error state => idle]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.newWaypointListAvailable</Name>
-							<Comment><![CDATA[ implemented, Status-Bit zur Signalisierung einer neuen WP-Liste]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>ControlPRG.waypointList</Name>
 							<Comment><![CDATA[ implemented, Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)]]></Comment>
 							<Type GUID="{57D1290D-8922-6C29-A5EB-E802603DE228}">ARRAY [0..100] OF RobotPoseSimple</Type>
@@ -3341,6 +3341,16 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
+							<Name>ControlPRG.state</Name>
+							<Comment><![CDATA[sets controller state]]></Comment>
+							<Type GUID="{4D01AD9A-1F2F-377C-0812-CF417AB6D9DE}">ControllerState</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yBoArrivedAtDestination</Name>
+							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>WheelEncoders.vXCartesianFromMotors</Name>
 							<Comment><![CDATA[OUTPUTS]]></Comment>
 							<Type>LREAL</Type>
@@ -3372,16 +3382,6 @@
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>ControlPRG.state</Name>
-							<Comment><![CDATA[sets controller state]]></Comment>
-							<Type GUID="{4D01AD9A-1F2F-377C-0812-CF417AB6D9DE}">ControllerState</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yBoArrivedAtDestination</Name>
-							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>ControlPRG.yUintWaypointIndex</Name>
 							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
 							<Type>INT</Type>
@@ -3408,16 +3408,11 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MQTT.stMqtt_HAWino_In</Name>
-							<Comment><![CDATA[ Attention! Don't link TIME Variables, otherwise we get an error!]]></Comment>
-							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
-						</Var>
-						<Var>
-							<Name>MQTT.FeedbackToGW1</Name>
-							<Type>STRING(50)</Type>
-						</Var>
-						<Var>
 							<Name>MQTT.resetVar</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MQTT.resetGoBack</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -3425,8 +3420,13 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MQTT.resetGoBack</Name>
-							<Type>BOOL</Type>
+							<Name>MQTT.stMqtt_HAWino_In</Name>
+							<Comment><![CDATA[ Attention! Don't link TIME Variables, otherwise we get an error!]]></Comment>
+							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
+						</Var>
+						<Var>
+							<Name>MQTT.FeedbackToGW1</Name>
+							<Type>STRING(50)</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
@@ -3436,12 +3436,16 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MQTT.stMqtt_HAWino_Out</Name>
-							<Type GUID="{AF674DC3-C06A-03AE-A51C-A518FFE766C3}">ST_PwrMgmt_HAWino_Out</Type>
-						</Var>
-						<Var>
 							<Name>MQTT.goBack</Name>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MQTT.resetButton</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MQTT.stMqtt_HAWino_Out</Name>
+							<Type GUID="{AF674DC3-C06A-03AE-A51C-A518FFE766C3}">ST_PwrMgmt_HAWino_Out</Type>
 						</Var>
 						<Var>
 							<Name>MQTT.Auftrag</Name>
@@ -3451,34 +3455,8 @@
 							<Name>MQTT.StatusFromGW1</Name>
 							<Type>STRING(50)</Type>
 						</Var>
-						<Var>
-							<Name>MQTT.resetButton</Name>
-							<Type>BOOL</Type>
-						</Var>
 					</Vars>
 					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
-						<Name>Kollisionserkennung_1 Inputs</Name>
-						<Var>
-							<Name>Kollisionserkennung.robotPoseArray</Name>
-							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
-						</Var>
-						<Var>
-							<Name>Kollisionserkennung.vxRobot</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>Kollisionserkennung.vyRobot</Name>
-							<Type>LREAL</Type>
-						</Var>
-					</Vars>
-					<Vars VarGrpType="2" ContextId="2" AreaNo="33">
-						<Name>Kollisionserkennung_1 Outputs</Name>
-						<Var>
-							<Name>Kollisionserkennung.robotCollision</Name>
-							<Type GUID="{ED505E53-AC03-A7B8-5B0E-7E9F26DE47AE}">ARRAY [0..4] OF BOOL</Type>
-						</Var>
-					</Vars>
-					<Vars VarGrpType="1" ContextId="3" AreaNo="48">
 						<Name>PlcTask Inputs</Name>
 						<Var>
 							<Name>Fahrauftrag.TrajectoryController.yBoArrivedAtDestination</Name>
@@ -3529,12 +3507,12 @@
 							<Type GUID="{ED505E53-AC03-A7B8-5B0E-7E9F26DE47AE}">ARRAY [0..4] OF BOOL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.shutdownButton</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>IrDistanceSensors.distanceRaw</Name>
 							<Type GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}">ARRAY [1..9] OF INT</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.shutdownButton</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.batteryVoltageRaw</Name>
@@ -3543,10 +3521,6 @@
 						<Var>
 							<Name>PowerManager.supplyCurrentRaw</Name>
 							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>PowerManager.requestShutdown</Name>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>PowerManager.SOC</Name>
@@ -3567,13 +3541,8 @@
 							<Type>LREAL</Type>
 						</Var>
 					</Vars>
-					<Vars VarGrpType="2" ContextId="3" AreaNo="49">
+					<Vars VarGrpType="2" ContextId="2" AreaNo="33">
 						<Name>PlcTask Outputs</Name>
-						<Var>
-							<Name>HAWino.Robot_Number</Name>
-							<Comment><![CDATA[CX35CDD6]]></Comment>
-							<Type>INT</Type>
-						</Var>
 						<Var>
 							<Name>HAWino.initDone</Name>
 							<Type>BOOL</Type>
@@ -3617,10 +3586,6 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.shutdownTrigger</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>IrDistanceSensors.distance_mm</Name>
 							<Type GUID="{E653CDAE-1A31-0819-E492-0347803C1564}">ARRAY [1..9] OF REAL</Type>
 						</Var>
@@ -3649,17 +3614,13 @@
 							<Type>REAL</Type>
 						</Var>
 						<Var>
-							<Name>PowerManager.stMqtt_HAWino_IN</Name>
-							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
-							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
-						</Var>
-						<Var>
 							<Name>Gripper.driveEnable</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>Gripper.driveVelocity</Name>
-							<Type>INT</Type>
+							<Name>PowerManager.stMqtt_HAWino_IN</Name>
+							<Comment><![CDATA[ Link MQTT-DatenStruct]]></Comment>
+							<Type GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}">ST_PwrMgmt_HAWino_In</Type>
 						</Var>
 						<Var>
 							<Name>Gripper.sliderToSimulink</Name>
@@ -3668,6 +3629,45 @@
 						<Var>
 							<Name>Gripper.partInGripperToSimulink</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Gripper.driveVelocity</Name>
+							<Type>INT</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="1" ContextId="3" AreaNo="48">
+						<Name>Kollisionserkennung_1 Inputs</Name>
+						<Var>
+							<Name>Kollisionserkennung.robotPoseArray</Name>
+							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
+						</Var>
+						<Var>
+							<Name>Kollisionserkennung.vxRobot</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>Kollisionserkennung.vyRobot</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.requestShutdown</Name>
+							<Type>BOOL</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="2" ContextId="3" AreaNo="49">
+						<Name>Kollisionserkennung_1 Outputs</Name>
+						<Var>
+							<Name>Kollisionserkennung.robotCollision</Name>
+							<Type GUID="{ED505E53-AC03-A7B8-5B0E-7E9F26DE47AE}">ARRAY [0..4] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>HAWino.Robot_Number</Name>
+							<Comment><![CDATA[CX35CDD6]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PowerManager.shutdownTrigger</Name>
+							<Type>BOOL</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2022-04-26T16:44:07">
@@ -3725,20 +3725,20 @@
 						</Context>
 						<Context>
 							<Id NeedCalleeCall="true">2</Id>
-							<Name>Kollisionserkennung_1</Name>
-							<ManualConfig>
-								<OTCID>#x02010090</OTCID>
-							</ManualConfig>
-							<Priority>21</Priority>
-							<CycleTime>10000000</CycleTime>
-						</Context>
-						<Context>
-							<Id NeedCalleeCall="true">3</Id>
 							<Name>PlcTask</Name>
 							<ManualConfig>
 								<OTCID>#x02010030</OTCID>
 							</ManualConfig>
 							<Priority>20</Priority>
+							<CycleTime>10000000</CycleTime>
+						</Context>
+						<Context>
+							<Id NeedCalleeCall="true">3</Id>
+							<Name>Kollisionserkennung_1</Name>
+							<ManualConfig>
+								<OTCID>#x02010090</OTCID>
+							</ManualConfig>
+							<Priority>21</Priority>
 							<CycleTime>10000000</CycleTime>
 						</Context>
 					</Contexts>
@@ -3747,15 +3747,15 @@
 							<Name>Camera.cameraData.oid</Name>
 							<Type GUID="{18071995-0000-0000-0000-00000000000F}">OTCID</Type>
 							<Comment><![CDATA[ To be set in PLC_Instance object and required for FW_ObjMgr_GetObjectInstance()]]></Comment>
-							<AreaNo>#x00000033</AreaNo>
+							<AreaNo>#x00000023</AreaNo>
 							<Data>30000101</Data>
 						</InitSymbol>
 					</InitSymbols>
 					<TaskPouOids>
 						<TaskPouOid Prio="1" OTCID="#x08502001"/>
 						<TaskPouOid Prio="11" OTCID="#x08502002"/>
-						<TaskPouOid Prio="20" OTCID="#x08502004"/>
-						<TaskPouOid Prio="21" OTCID="#x08502003"/>
+						<TaskPouOid Prio="20" OTCID="#x08502003"/>
+						<TaskPouOid Prio="21" OTCID="#x08502004"/>
 					</TaskPouOids>
 				</Instance>
 			</Project>
@@ -6613,15 +6613,15 @@ Bit1: Value smaller than Limit2]]></Comment>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500810000403}" Id="#x02030010"/>
 		<MappingInfo Identifier="{00000000-2002-0850-0020-500800205008}" Id="#x02030090"/>
 		<MappingInfo Identifier="{00000000-2002-0850-0120-500831000403}" Id="#x02030030"/>
-		<MappingInfo Identifier="{00000000-2004-0850-0320-500842000403}" Id="#x02030070"/>
-		<MappingInfo Identifier="{08502001-2003-0850-0020-500802205008}" Id="#x02030020" Watchdog="0a000000040000000400000004000000"/>
+		<MappingInfo Identifier="{00000000-2003-0850-0220-500842000403}" Id="#x02030060"/>
+		<MappingInfo Identifier="{08502001-2003-0850-0020-500802205008}" Id="#x02030070" Watchdog="14000000040000000400000004000000"/>
 		<MappingInfo Identifier="{08502001-2004-0850-0020-500803205008}" Id="#x020300a0" Watchdog="14000000040000000400000004000000"/>
 		<MappingInfo Identifier="{08502001-0040-0304-0020-500840000403}" Id="#x02030040" Watchdog="00000000000000000000000000000000"/>
-		<MappingInfo Identifier="{08502002-2004-0850-0120-500803205008}" Id="#x020300d0" Watchdog="04000000280000000400000004000000"/>
+		<MappingInfo Identifier="{08502002-2003-0850-0120-500802205008}" Id="#x020300d0" Watchdog="04000000280000000400000004000000"/>
 		<MappingInfo Identifier="{08502002-0060-0201-0120-500820000101}" Id="#x020300c0" Watchdog="04000000280000000400000004000000"/>
-		<MappingInfo Identifier="{08502003-2004-0850-0220-500803205008}" Id="#x020300e0" Watchdog="08000000040000000400000004000000"/>
-		<MappingInfo Identifier="{08502004-0010-0304-0020-500810000403}" Id="#x02030060" Watchdog="00000000000000000000000000000000"/>
-		<MappingInfo Identifier="{02010050-2004-0850-1000-010103205008}" Id="#x020300b0" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{08502003-2004-0850-0220-500803205008}" Id="#x020300e0" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{08502003-0010-0304-0020-500810000403}" Id="#x02030020" Watchdog="00000000000000000000000000000000"/>
+		<MappingInfo Identifier="{02010050-2003-0850-1000-010102205008}" Id="#x020300b0" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-0060-0201-1000-010120000101}" Id="#x02030080" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIPC^HAWino^HAWino Instance">
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Analoge Eingänge A6 (EL3068)">
