@@ -42,8 +42,6 @@ VAR
 	wayPointList_finished : ARRAY[0..100] OF INT;
 	countClosed : INT := 1;
 	countPointList : INT := 1;
-	error : BOOL := FALSE;
-	//destinationUnreachable : BOOL := FALSE;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -52,6 +50,11 @@ openList := nullOpenList;
 
 FOR counter1 := 1 TO 11 DO
 	removeNode[15 + counter1] := blockedNodes[counter1];
+	
+	//Fail, wenn Zielknoten bei entfernten Knoten ist
+	IF blockedNodes[counter1] = endNode THEN
+		AStarFailed := TRUE;
+	END_IF
 END_FOR 
 
 ///////////////////////////////////////////Erstellen der Adjezenzmatrix//////////////////////////////////////////////////////////////////
@@ -83,12 +86,7 @@ FOR i := 0 TO numberOfNodes BY 1 DO
  END_FOR
  
 //Löschen der Knoten über Station und die nahegelegenen diagonalen Verbindungen
- FOR counter := 0 TO 30 BY 1 DO 
-	//Fail, wenn Zielknoten bei entfernten Knoten ist
-	IF removeNode[counter] = endNode THEN
-		AStarFailed := TRUE;
-	END_IF
-	
+ FOR counter := 0 TO 30 BY 1 DO 	
 	//Verbindungen zu und um entfernte Knoten entfernen
 	IF removeNode[counter] > 0 THEN 
 		FOR j := 1 TO 170 BY 1 DO
@@ -271,7 +269,7 @@ FOR i := 0 TO numberOfNodes BY 1 DO
  openList[1,1] := 0;
  
  //Goal reached?
- WHILE currentNode <> endNode DO
+ WHILE currentNode <> endNode AND AStarFailed = FALSE DO
 	 //clear neighborlist
  	countNeighbor := 1;
 	neighborList := nullMatrix_Neighbor;
@@ -290,6 +288,10 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 			countNeighbor := countNeighbor + 1;
 		END_IF
 	END_FOR
+	
+	IF countNeighbor = 1 THEN
+		AStarFailed := TRUE;
+	END_IF
 	
 	//possible neighbors will be inserted in openList
 	FOR w := 1 TO 8 BY 1 DO
@@ -354,9 +356,8 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 	countClosed := countClosed + 1;
 	closedList[countClosed] := currentNode;
 	
-	IF currentNode = 0 THEN
-		error := TRUE;
-		EXIT;
+	IF currentNode = 0 OR countClosed > 170 OR countOpen > 170 THEN
+		AStarFailed := TRUE;
 	END_IF
  END_WHILE
  
@@ -391,7 +392,7 @@ FOR t := 0 TO 100 BY 1 DO
 	END_IF
 END_FOR
  
- IF error = FALSE THEN
+ IF AStarFailed = FALSE THEN
 	 finishedASearch := TRUE;
  END_IF]]></ST>
     </Implementation>
@@ -429,7 +430,7 @@ countOpen := 1;
 countTemp := 1;
 countClosed := 1;
 countPointList := 1;
-error := FALSE;
+AStarFailed := FALSE;
 
 FOR numb := 16 TO 30 BY 1 DO
 	removeNode[numb] := 0;
@@ -443,14 +444,16 @@ END_FOR
       <LineId Id="1084" Count="0" />
       <LineId Id="1130" Count="0" />
       <LineId Id="1601" Count="2" />
+      <LineId Id="1799" Count="0" />
+      <LineId Id="1802" Count="0" />
+      <LineId Id="1800" Count="1" />
+      <LineId Id="1798" Count="0" />
       <LineId Id="773" Count="0" />
       <LineId Id="1605" Count="0" />
       <LineId Id="774" Count="26" />
       <LineId Id="803" Count="0" />
       <LineId Id="1193" Count="1" />
-      <LineId Id="1703" Count="0" />
-      <LineId Id="1700" Count="2" />
-      <LineId Id="1704" Count="1" />
+      <LineId Id="1705" Count="0" />
       <LineId Id="1650" Count="0" />
       <LineId Id="1195" Count="3" />
       <LineId Id="1228" Count="0" />
@@ -502,12 +505,12 @@ END_FOR
       <LineId Id="867" Count="2" />
       <LineId Id="872" Count="2" />
       <LineId Id="878" Count="18" />
-      <LineId Id="898" Count="72" />
+      <LineId Id="898" Count="12" />
+      <LineId Id="1750" Count="3" />
+      <LineId Id="911" Count="59" />
       <LineId Id="1217" Count="0" />
       <LineId Id="971" Count="1" />
-      <LineId Id="1590" Count="2" />
-      <LineId Id="1600" Count="0" />
-      <LineId Id="1593" Count="0" />
+      <LineId Id="1590" Count="3" />
       <LineId Id="973" Count="16" />
       <LineId Id="1002" Count="15" />
       <LineId Id="1649" Count="0" />

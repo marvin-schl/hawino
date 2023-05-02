@@ -161,7 +161,7 @@ path(waypointListRaw := extendedWayPointList, maxRadius := maxRadius, thetaDZ :=
 
 
 IF path.ready THEN
-	calculateTrajectoryContraints();
+	calculateTrajectoryContraints();	//zur Not auskommentieren
 	trajectoryPlanner(path := path, 
 				  qAccMax := maxAcc, 
 				  qVelMax := maxVel, 
