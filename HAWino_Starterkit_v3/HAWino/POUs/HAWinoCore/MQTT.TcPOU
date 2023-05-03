@@ -91,7 +91,7 @@ VAR
 	sPayloadPubCollision : STRING(100);
 	
 	FeedbackToGW1 AT%I*: STRING(50);
-	RoboNmbToGoBack AT%I* : INT;
+	RoboNmbToGoBack AT%I* : ARRAY[0..4] OF INT;
 	resetVar, resetGoBack AT%I*: BOOL;
 	Auftrag AT%Q*: Auftrag;
 	StatusFromGW1 AT%Q*: STRING(50);
@@ -349,16 +349,18 @@ IF txtReadInit THEN
 			//	i:= 0;
 			//END_IF
 			
-			IF RoboNmbToGoBack > 0 THEN
-				sPayloadPubCollision := '{"todo":"goBack"}';
-				
-				fbIotMqttClient.Publish(sTopic:= sTopicPubCollision[RoboNmbToGoBack], 
-												pPayload:=ADR(sPayloadPubCollision), 
-												nPayloadSize:= INT_TO_UDINT(LEN(sPayloadPubCollision)),
-												eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
-												bRetain:= FALSE, 
-												bQueue:= FALSE);
-			END_IF
+			FOR n := 0 TO 4 BY 1 DO
+				IF RoboNmbToGoBack[n] > 0 THEN
+					sPayloadPubCollision := '{"todo":"goBack"}';
+					
+					fbIotMqttClient.Publish(sTopic:= sTopicPubCollision[RoboNmbToGoBack[n]], 
+													pPayload:=ADR(sPayloadPubCollision), 
+													nPayloadSize:= INT_TO_UDINT(LEN(sPayloadPubCollision)),
+													eQoS:= TcIotMqttQos.AtMostOnceDelivery, 
+													bRetain:= FALSE, 
+													bQueue:= FALSE);
+				END_IF
+			END_FOR
 		END_IF
 	END_IF
 	
@@ -563,11 +565,13 @@ END_IF]]></ST>
       <LineId Id="1142" Count="5" />
       <LineId Id="1153" Count="1" />
       <LineId Id="1716" Count="0" />
+      <LineId Id="2452" Count="0" />
       <LineId Id="1728" Count="0" />
       <LineId Id="1718" Count="0" />
       <LineId Id="1720" Count="5" />
       <LineId Id="1717" Count="0" />
       <LineId Id="1038" Count="0" />
+      <LineId Id="2453" Count="0" />
       <LineId Id="344" Count="0" />
       <LineId Id="308" Count="0" />
       <LineId Id="347" Count="0" />
