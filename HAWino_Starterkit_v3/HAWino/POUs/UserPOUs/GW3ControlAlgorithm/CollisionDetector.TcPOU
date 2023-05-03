@@ -20,7 +20,7 @@ VAR
 	boundBoxRadius:			 LREAL := 700;  //radius of Bounding Box
 	collisionResetDistance:  LREAL := boundBoxRadius + 100; 
 	
-	cameraValid: BOOL := FALSE;
+	cameraValid : ARRAY [0..4] OF BOOL;
 	i : INT;
 END_VAR
 
@@ -31,7 +31,7 @@ filterCollisionCandidates();
 velocity.x := vX;
 velocity.y := vY;
 
-FOR i := 1 TO nmbOfRobots BY 1 DO
+FOR i := 1 TO nmbOfRobots BY 1 DO	
 	//only reset a detected collision if the distance between both robots is large enough
 	IF i <> Var_HAWino.Robot_Number AND collisionDetected[i] THEN
 		distance := SQRT(EXPT(robotPoses[i].x- rawRobotPoses[Var_HAWino.Robot_Number].x,2) + EXPT(robotPoses[i].y - rawRobotPoses[Var_HAWino.Robot_Number].y,2));
@@ -39,15 +39,15 @@ FOR i := 1 TO nmbOfRobots BY 1 DO
 			collisionDetected[i] := FALSE;
 			collisionDetected[Var_HAWino.Robot_Number] := FALSE;
 		END_IF
-	END_IF
-	
-	IF i <> Var_HAWino.Robot_Number AND collsionCanditates[i] THEN
+	ELSIF i <> Var_HAWino.Robot_Number AND collsionCanditates[i] THEN
 		distance := SQRT(EXPT(robotPoses[i].x- rawRobotPoses[Var_HAWino.Robot_Number].x,2) + EXPT(robotPoses[i].y - rawRobotPoses[Var_HAWino.Robot_Number].y,2));
 		IF distance < boundBoxRadius THEN
 			collisionDetected[i] := TRUE;
 			collisionDetected[Var_HAWino.Robot_Number] := TRUE;
 		END_IF
 	END_IF
+	
+
 END_FOR
 
 lastPoses := robotPoses;]]></ST>
@@ -65,7 +65,8 @@ END_VAR]]></Declaration>
         <ST><![CDATA[FOR i := 1 TO nmbOfRobots BY 1 DO
 	//check for every Robot i wether it is moving toward this robot or if this robot is moving towards Robot i
 	IF i <> Var_HAWino.Robot_Number THEN
-		collsionCanditates[i] := isCollisionPossible(candidateNmb := i, targetNmb := Var_HAWino.Robot_Number) OR isCollisionPossible(candidateNmb := Var_HAWino.Robot_Number, targetNmb := i);
+		collsionCanditates[i]  := isCollisionPossible(candidateNmb := Var_HAWino.Robot_Number, targetNmb := i); //check if this HAWino is moving towards HAWino i
+		collsionCanditates[i]  := isCollisionPossible(candidateNmb := i, targetNmb := Var_HAWino.Robot_Number); //check if this HAWino is moving towards HAWino i
 	END_IF
 END_FOR
 ]]></ST>
@@ -79,13 +80,16 @@ VAR
 	i : INT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[cameraValid := FALSE;
-FOR i := 1 TO nmbOfRobots BY 1 DO
+        <ST><![CDATA[FOR i := 1 TO nmbOfRobots BY 1 DO
+	cameraValid[i] := FALSE;
 	IF i = Var_HAWIno.Robot_Number THEN //use observer data for the robot this fb is running on
+		cameraValid[i] := TRUE;
 		robotPoses[i] := RPS2RP(observedPose);
+	ELSIF rawRobotPoses[i].x = robotPoses[i].x AND rawRobotPoses[i].y = robotPoses[i].y THEN
+		cameraValid[i] := FALSE;
 	ELSIF rawRobotPoses[i].x <> 0 AND rawRobotPoses[i].y <> 0 THEN //for all other robots only update robot pose if camera data is valid
 		robotPoses[i] := rawRobotPoses[i];
-		cameraValid := TRUE;
+		cameraValid[i] := TRUE;
 	END_IF
 END_FOR]]></ST>
       </Implementation>
@@ -106,16 +110,16 @@ END_VAR
 isCollisionPossible := FALSE;
 
 //candidate can only collide if it is moving -> calculate velocities
-IF candidateNmb <> Var_HAWino.Robot_Number AND cameraValid THEN
+IF candidateNmb <> Var_HAWino.Robot_Number AND cameraValid[candidateNmb] THEN
 	//if candidate is not this robot -> differentiate cam data -> only if camera is valid otherwise v = 0
-	vxCandidate  		:=  (robotPoses[candidateNmb].x - lastPoses[candidateNmb].x)/Var_HAWIno.CONTROLLER_CYCLE_TIME;	
-	vyCandidate  		:=  (robotPoses[candidateNmb].y - lastPoses[candidateNmb].y)/Var_HAWIno.CONTROLLER_CYCLE_TIME;
-	lastVelocities[candidateNmb].x := vxCandidate;
-	lastVelocities[candidateNmb].y := vyCandidate;
-ELSIF candidateNmb <> Var_HAWino.Robot_Number AND NOT cameraValid THEN
+	vxCandidate  					:=  (robotPoses[candidateNmb].x - lastPoses[candidateNmb].x)/Var_HAWIno.CONTROLLER_CYCLE_TIME;	
+	vyCandidate  					:=  (robotPoses[candidateNmb].y - lastPoses[candidateNmb].y)/Var_HAWIno.CONTROLLER_CYCLE_TIME;
+	lastVelocities[candidateNmb].x  :=  vxCandidate;
+	lastVelocities[candidateNmb].y  :=  vyCandidate;
+ELSIF candidateNmb <> Var_HAWino.Robot_Number AND NOT cameraValid[candidateNmb] THEN
 	//if camera is invalid then take the last known velocity
-	vxCandidate := vxCandidate;
-	vyCandidate := vxCandidate;
+	vxCandidate := lastVelocities[candidateNmb].x;
+	vyCandidate := lastVelocities[candidateNmb].y;
 ELSE
 	//if candidate is this robot -> take velocity measurements
 	vxCandidate 		:= velocity.x;
@@ -128,11 +132,11 @@ IF vxCandidate <> 0 OR vyCandidate <> 0 THEN
 	directionOfMovement	:= ATAN2(y := vyCandidate, x:= vxCandidate);
 	
 	//check in which direction target robot is located
-	directionOfTarget   := ATAN2(y := robotPoses[targetNmb].y-robotPoses[candidateNmb].y, x := robotPoses[targetNmb].x-robotPoses[candidateNmb].x);
-	directionOfTarget := normalizeAngle(angle := directionOfTarget, lowerBound := directionOfMovement - pi, upperBound := directionOfMovement + pi); //angle handling
+	directionOfTarget   := ATAN2(y := robotPoses[candidateNmb].y-robotPoses[targetNmb].y, x := robotPoses[candidateNmb].x-robotPoses[targetNmb].x);
+	directionOfTarget 	:= normalizeAngle(angle := directionOfTarget, lowerBound := directionOfMovement - pi, upperBound := directionOfMovement + pi); //angle handling
 	
 	//potential collision if target is in the pi/2 bounding box of the movenent direction
-	IF ABS(directionOfTarget-directionOfMovement) < pi/2 THEN
+	IF ABS(directionOfTarget-directionOfMovement) > pi/2 THEN
 		isCollisionPossible := TRUE;
 	END_IF
 END_IF]]></ST>
@@ -141,15 +145,29 @@ END_IF]]></ST>
     <LineIds Name="CollisionDetector">
       <LineId Id="31" Count="2" />
       <LineId Id="77" Count="1" />
-      <LineId Id="34" Count="18" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="112" Count="6" />
+      <LineId Id="111" Count="0" />
+      <LineId Id="45" Count="5" />
+      <LineId Id="102" Count="1" />
+      <LineId Id="51" Count="1" />
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="CollisionDetector.filterCollisionCandidates">
-      <LineId Id="12" Count="5" />
+      <LineId Id="12" Count="2" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="15" Count="2" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="CollisionDetector.handleCameraData">
-      <LineId Id="9" Count="7" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="26" Count="1" />
+      <LineId Id="13" Count="2" />
+      <LineId Id="25" Count="0" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="CollisionDetector.isCollisionPossible">
