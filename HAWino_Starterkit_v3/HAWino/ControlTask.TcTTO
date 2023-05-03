@@ -3,7 +3,7 @@
   <Task Name="ControlTask" Id="{7ad294b1-a7c5-4741-8178-893977b10bea}">
     <!--CycleTime in micro seconds.-->
     <CycleTime>2000</CycleTime>
-    <Priority>23</Priority>
+    <Priority>1</Priority>
     <PouCall>
       <Name>MotorDrivers</Name>
     </PouCall>
