@@ -63,8 +63,10 @@ CameraDataSaved();
 
 collisionFree := NOT collision[Var_HAWIno.Robot_Number];
 
-IF (lastCollision[1] <> collision[1] OR lastCollision[2] <> collision[2] OR lastCollision[3] <> collision[3] OR lastCollision[4] <> collision[4] OR collision[0]) AND collision[Var_HAWIno.Robot_Number] THEN
-	newCollision := TRUE;
+IF lastCollision[1] <> collision[1] OR lastCollision[2] <> collision[2] OR lastCollision[3] <> collision[3] OR lastCollision[4] <> collision[4] OR collision[0] THEN
+	IF collision[Var_HAWIno.Robot_Number] THEN
+		newCollision := TRUE;
+	END_IF
 	lastCollision := collision;
 END_IF
 
@@ -136,6 +138,7 @@ END_IF
 IF s1b AND NOT s2 AND finished_ASearch THEN
 	ZEROS_RobotPoseSimple(wayPointList);
 	ZEROS_INT(removeNodeCollision);
+	finished_ASearch := FALSE;
 	FOR i := 0 TO 100 BY 1 DO
  		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i], y:= yPointList[i], theta:= -1);
 		IF xPointList[i] = 0 THEN
@@ -180,7 +183,7 @@ IF s5 AND NOT s6a AND trajectoryController.yBoArrivedAtDestination THEN
 	Gripper.closeGripperCommand := TRUE;
 END_IF
 												
-IF s6a AND NOT s6b AND NOT Gripper.partGripped THEN
+IF s6a AND NOT s6b THEN
 	s6a := 0; s6b := 1;	
 	lastRelevantStateForCollision := 's6b';
 	//	RückmeldungGW1 Teil aufgenommen setzen
@@ -190,19 +193,19 @@ IF s6a AND NOT s6b AND NOT Gripper.partGripped THEN
 	wayPointList := readAssigment.pointsFromSlotToReader;
 	TrajectoryController.setWaypointList(wayPointList);
 	trajectoryController.newWaypointListAvailable := TRUE;
-ELSIF s6a AND NOT s6b AND Gripper.partGripped THEN
-	Gripper.closeGripperCommand := FALSE;
-	ZEROS_RobotPoseSimple(wayPointList);
-	IF auftrag.AbholTasche = 1 OR auftrag.AbholTasche = 2 THEN
-		wayPointList[0] := ToRobotPoseSimple(x := readAssigment.pickupLocation.x - 100, y := readAssigment.pickupLocation.y, theta := readAssigment.pickupLocation.theta);
-	ELSIF auftrag.AbholTasche = 3 OR auftrag.AbholTasche = 4 THEN
-		wayPointList[0] := ToRobotPoseSimple(x := readAssigment.pickupLocation.x + 100, y := readAssigment.pickupLocation.y, theta := readAssigment.pickupLocation.theta);
-	END_IF
-	wayPointList[1] := readAssigment.pickupLocation;
-	wayPointList[2] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
-	TrajectoryController.setWaypointList(waypointList);
-	trajectoryController.newWaypointListAvailable := TRUE;
-	s6a := 0; s2 := 1;
+//ELSIF s6a AND NOT s6b AND Gripper.partGripped THEN
+	//Gripper.closeGripperCommand := FALSE;
+	//ZEROS_RobotPoseSimple(wayPointList);
+	//IF auftrag.AbholTasche = 1 OR auftrag.AbholTasche = 2 THEN
+	//	wayPointList[0] := ToRobotPoseSimple(x := readAssigment.pickupLocation.x - 100, y := readAssigment.pickupLocation.y, theta := readAssigment.pickupLocation.theta);
+	//ELSIF auftrag.AbholTasche = 3 OR auftrag.AbholTasche = 4 THEN
+	//	wayPointList[0] := ToRobotPoseSimple(x := readAssigment.pickupLocation.x + 100, y := readAssigment.pickupLocation.y, theta := readAssigment.pickupLocation.theta);
+	//ND_IF
+	//wayPointList[1] := readAssigment.pickupLocation;
+	//wayPointList[2] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
+	//TrajectoryController.setWaypointList(waypointList);
+	//trajectoryController.newWaypointListAvailable := TRUE;
+	//s6a := 0; s2 := 1;
 END_IF
 
 
@@ -278,6 +281,7 @@ END_IF
 IF s11b AND NOT s12 AND finished_ASearch THEN
 	ZEROS_RobotPoseSimple(wayPointList);
 	ZEROS_INT(removeNodeCollision);
+	finished_ASearch := FALSE;
 	FOR i := 0 TO 100 BY 1 DO
  		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i], y:= yPointList[i], theta:= -1);
 		IF xPointList[i] = 0 THEN
@@ -418,6 +422,7 @@ END_IF
 IF s26b AND NOT s27 AND finished_ASearch THEN
 	ZEROS_RobotPoseSimple(wayPointList);
 	ZEROS_INT(removeNodeCollision);
+	finished_ASearch := FALSE;
 	FOR i := 0 TO 100 BY 1 DO
  		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i], y:= yPointList[i], theta:= -1);
 		IF xPointList[i] = 0 THEN
@@ -502,6 +507,7 @@ END_IF
 IF s21b AND NOT s22 AND finished_ASearch THEN
 	ZEROS_RobotPoseSimple(wayPointList);
 	ZEROS_INT(removeNodeCollision);
+	finished_ASearch := FALSE;
 	FOR i := 0 TO 100 BY 1 DO
  		wayPointList[i] := ToRobotPoseSimple(x:= xPointList[i], y:= yPointList[i], theta:= -1);
 		IF xPointList[i] = 0 THEN
@@ -558,7 +564,7 @@ IF s25 AND NOT s0 AND trajectoryController.yBoArrivedAtDestination THEN
 END_IF
 
 ////////////////////////////////////////////////////////RESET und ERROR/////////////////////////////////////////////////////
-IF reset THEN
+IF reset AND NOT s31 THEN //nur wenn nicht an der Ladestation
 	TrajectoryController.xBoEnable := FALSE;
 	doReset();
 	resetTimer.PT := T#1S;
@@ -582,9 +588,6 @@ IF Auftrag.Art = '' AND (trajectoryController.yControllerState = ControllerState
 END_IF
 
 IF AStar.AStarFailed THEN
-	drivingBack();
-	removeAllToken();
-	continueAfterCollision();
 	failedCounter := failedCounter + 1;
 ELSE
 	failedCounter := 1;
@@ -730,6 +733,7 @@ IF sk24 AND NOT sk25 AND sameStation THEN
 	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;	
 	continueAfterCollision();
 	sk24 := 0; sk25 := 1;
+	//hier weiteren state 
 END_IF
 
 //gleicher Bereich nicht gleiche Station
@@ -1099,8 +1103,8 @@ END_IF
 //wenn AStern auch nach 100 Zyklen (1s) Failed
 IF failedCounter > 100 THEN
 	error := TRUE;
-	removeAllToken();
-	FeedbackToGW1 := 'Error AStar';
+	//removeAllToken();
+	FeedbackToGW1 := 'Fehler AStar';
 	Gripper.closeGripperCommand := FALSE;
 	resetVarMQTT := FALSE;
 	//wenn Kollision anderen Wegschicken?
@@ -1379,7 +1383,9 @@ sk33 := FALSE;]]></ST>
       <LineId Id="2372" Count="0" />
       <LineId Id="1671" Count="0" />
       <LineId Id="1471" Count="0" />
-      <LineId Id="2005" Count="4" />
+      <LineId Id="2005" Count="2" />
+      <LineId Id="2503" Count="1" />
+      <LineId Id="2008" Count="1" />
       <LineId Id="2179" Count="0" />
       <LineId Id="1999" Count="0" />
       <LineId Id="2180" Count="1" />
@@ -1431,6 +1437,7 @@ sk33 := FALSE;]]></ST>
       <LineId Id="605" Count="0" />
       <LineId Id="1365" Count="0" />
       <LineId Id="2247" Count="0" />
+      <LineId Id="2505" Count="0" />
       <LineId Id="531" Count="1" />
       <LineId Id="557" Count="2" />
       <LineId Id="556" Count="0" />
@@ -1528,6 +1535,7 @@ sk33 := FALSE;]]></ST>
       <LineId Id="611" Count="0" />
       <LineId Id="1364" Count="0" />
       <LineId Id="2248" Count="0" />
+      <LineId Id="2506" Count="0" />
       <LineId Id="612" Count="8" />
       <LineId Id="622" Count="2" />
       <LineId Id="607" Count="0" />
@@ -1607,6 +1615,7 @@ sk33 := FALSE;]]></ST>
       <LineId Id="745" Count="0" />
       <LineId Id="1366" Count="0" />
       <LineId Id="2249" Count="0" />
+      <LineId Id="2507" Count="0" />
       <LineId Id="746" Count="8" />
       <LineId Id="756" Count="1" />
       <LineId Id="1288" Count="0" />
@@ -1637,6 +1646,7 @@ sk33 := FALSE;]]></ST>
       <LineId Id="901" Count="1" />
       <LineId Id="1367" Count="0" />
       <LineId Id="2250" Count="0" />
+      <LineId Id="2508" Count="0" />
       <LineId Id="903" Count="7" />
       <LineId Id="1923" Count="0" />
       <LineId Id="911" Count="22" />
@@ -1672,9 +1682,6 @@ sk33 := FALSE;]]></ST>
       <LineId Id="1865" Count="0" />
       <LineId Id="2252" Count="0" />
       <LineId Id="2251" Count="0" />
-      <LineId Id="2253" Count="0" />
-      <LineId Id="2258" Count="0" />
-      <LineId Id="2255" Count="0" />
       <LineId Id="2260" Count="1" />
       <LineId Id="2263" Count="0" />
       <LineId Id="2254" Count="0" />
@@ -1732,6 +1739,7 @@ sk33 := FALSE;]]></ST>
       <LineId Id="221" Count="0" />
       <LineId Id="228" Count="2" />
       <LineId Id="222" Count="0" />
+      <LineId Id="257" Count="0" />
       <LineId Id="224" Count="0" />
       <LineId Id="227" Count="0" />
       <LineId Id="223" Count="0" />

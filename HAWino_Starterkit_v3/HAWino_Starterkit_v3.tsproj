@@ -268,112 +268,6 @@
 			</SubItem>
 		</DataType>
 		<DataType>
-			<Name GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}" AutoDeleteType="true">RobotPoseSimple</Name>
-			<BitSize>192</BitSize>
-			<SubItem>
-				<Name>x</Name>
-				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
-				<BitSize>64</BitSize>
-				<BitOffs>0</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>y</Name>
-				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
-				<BitSize>64</BitSize>
-				<BitOffs>64</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>theta</Name>
-				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
-				<BitSize>64</BitSize>
-				<BitOffs>128</BitOffs>
-			</SubItem>
-		</DataType>
-		<DataType>
-			<Name GUID="{3157D781-AEE6-75C1-0F14-5410698AD079}" AutoDeleteType="true">RobotPose</Name>
-			<BitSize>256</BitSize>
-			<ExtendsType GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</ExtendsType>
-			<SubItem>
-				<Name>e</Name>
-				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
-				<BitSize>64</BitSize>
-				<BitOffs>192</BitOffs>
-			</SubItem>
-		</DataType>
-		<DataType>
-			<Name GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}" IecBaseType="true" AutoDeleteType="true">ARRAY [1..8] OF RobotPose</Name>
-			<Comment><![CDATA[input from camera]]></Comment>
-			<BitSize>2048</BitSize>
-			<BaseType GUID="{3157D781-AEE6-75C1-0F14-5410698AD079}">RobotPose</BaseType>
-			<ArrayInfo>
-				<LBound>1</LBound>
-				<Elements>8</Elements>
-			</ArrayInfo>
-		</DataType>
-		<DataType>
-			<Name GUID="{57D1290D-8922-6C29-A5EB-E802603DE228}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..100] OF RobotPoseSimple</Name>
-			<Comment><![CDATA[ Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)]]></Comment>
-			<BitSize>19392</BitSize>
-			<BaseType GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</BaseType>
-			<ArrayInfo>
-				<LBound>0</LBound>
-				<Elements>101</Elements>
-			</ArrayInfo>
-		</DataType>
-		<DataType>
-			<Name GUID="{4D01AD9A-1F2F-377C-0812-CF417AB6D9DE}" AutoDeleteType="true">ControllerState</Name>
-			<BitSize>16</BitSize>
-			<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
-			<EnumInfo>
-				<Text><![CDATA[init]]></Text>
-				<Enum>0</Enum>
-			</EnumInfo>
-			<EnumInfo>
-				<Text><![CDATA[idle]]></Text>
-				<Enum>1</Enum>
-			</EnumInfo>
-			<EnumInfo>
-				<Text><![CDATA[calcTrajectory]]></Text>
-				<Enum>2</Enum>
-			</EnumInfo>
-			<EnumInfo>
-				<Text><![CDATA[setTrajectory]]></Text>
-				<Enum>3</Enum>
-			</EnumInfo>
-			<EnumInfo>
-				<Text><![CDATA[ready]]></Text>
-				<Enum>4</Enum>
-			</EnumInfo>
-			<EnumInfo>
-				<Text><![CDATA[driving]]></Text>
-				<Enum>5</Enum>
-			</EnumInfo>
-			<EnumInfo>
-				<Text><![CDATA[error]]></Text>
-				<Enum>6</Enum>
-			</EnumInfo>
-			<Properties>
-				<Property>
-					<Name>qualified_only</Name>
-				</Property>
-				<Property>
-					<Name>strict</Name>
-				</Property>
-				<Property>
-					<Name>generate_implicit_init_function</Name>
-				</Property>
-			</Properties>
-		</DataType>
-		<DataType>
-			<Name GUID="{ED505E53-AC03-A7B8-5B0E-7E9F26DE47AE}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..4] OF BOOL</Name>
-			<BitSize>40</BitSize>
-			<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
-			<ArrayInfo>
-				<LBound>0</LBound>
-				<Elements>5</Elements>
-			</ArrayInfo>
-		</DataType>
-		<DataType>
 			<Name GUID="{5239F980-93FF-D9EA-98DA-5457AA1FCE58}" AutoDeleteType="true">ST_PwrMgmt_HAWino_In</Name>
 			<BitSize>448</BitSize>
 			<SubItem>
@@ -509,6 +403,81 @@
 			</SubItem>
 		</DataType>
 		<DataType>
+			<Name GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}" AutoDeleteType="true">RobotPoseSimple</Name>
+			<BitSize>192</BitSize>
+			<SubItem>
+				<Name>x</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>y</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>64</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>theta</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>128</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{4D01AD9A-1F2F-377C-0812-CF417AB6D9DE}" AutoDeleteType="true">ControllerState</Name>
+			<BitSize>16</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
+			<EnumInfo>
+				<Text><![CDATA[init]]></Text>
+				<Enum>0</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[idle]]></Text>
+				<Enum>1</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[calcTrajectory]]></Text>
+				<Enum>2</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[setTrajectory]]></Text>
+				<Enum>3</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[ready]]></Text>
+				<Enum>4</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[driving]]></Text>
+				<Enum>5</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[error]]></Text>
+				<Enum>6</Enum>
+			</EnumInfo>
+			<Properties>
+				<Property>
+					<Name>qualified_only</Name>
+				</Property>
+				<Property>
+					<Name>strict</Name>
+				</Property>
+				<Property>
+					<Name>generate_implicit_init_function</Name>
+				</Property>
+			</Properties>
+		</DataType>
+		<DataType>
+			<Name GUID="{ED505E53-AC03-A7B8-5B0E-7E9F26DE47AE}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..4] OF BOOL</Name>
+			<BitSize>40</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>5</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
 			<Name GUID="{AA94C361-B6DB-9EE1-ECAB-B44C5FC1F3CF}" IecBaseType="true" AutoDeleteType="true">ARRAY [1..9] OF INT</Name>
 			<BitSize>144</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
@@ -518,12 +487,43 @@
 			</ArrayInfo>
 		</DataType>
 		<DataType>
+			<Name GUID="{57D1290D-8922-6C29-A5EB-E802603DE228}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..100] OF RobotPoseSimple</Name>
+			<Comment><![CDATA[ Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)]]></Comment>
+			<BitSize>19392</BitSize>
+			<BaseType GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>101</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
 			<Name GUID="{E653CDAE-1A31-0819-E492-0347803C1564}" IecBaseType="true" AutoDeleteType="true">ARRAY [1..9] OF REAL</Name>
 			<BitSize>288</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-00000000000D}">REAL</BaseType>
 			<ArrayInfo>
 				<LBound>1</LBound>
 				<Elements>9</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{3157D781-AEE6-75C1-0F14-5410698AD079}" AutoDeleteType="true">RobotPose</Name>
+			<BitSize>256</BitSize>
+			<ExtendsType GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</ExtendsType>
+			<SubItem>
+				<Name>e</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>192</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}" IecBaseType="true" AutoDeleteType="true">ARRAY [1..8] OF RobotPose</Name>
+			<Comment><![CDATA[input from camera]]></Comment>
+			<BitSize>2048</BitSize>
+			<BaseType GUID="{3157D781-AEE6-75C1-0F14-5410698AD079}">RobotPose</BaseType>
+			<ArrayInfo>
+				<LBound>1</LBound>
+				<Elements>8</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
@@ -1294,7 +1294,7 @@
 		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1006">424de6000000000000007600000028000000100000000e000000010004000000000070000000000000000000000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffff788833338887ffff78883bb38887ffffffff3bb3ffffffffffff8778fffffffffffffffffffffffffffffffff999ffff78f78fffffffffff78f78ffff999ffff78f7888fffffffff78f78f78f999ffff78f78f78ffffffff78f7888ff999ffffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.207.184.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.200.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="2">
 				<Cpu BaseTime="1000"/>
@@ -1302,7 +1302,7 @@
 				<IoIdleTask Priority="8" Affinity="#x00000002"/>
 			</Settings>
 			<Tasks>
-				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
+				<Task Id="3" Priority="25" CycleTime="100000" AmsPort="350" AdtTasks="true">
 					<Name>PlcTask</Name>
 				</Task>
 				<Task Id="4" Priority="11" CycleTime="1000000" AmsPort="351" Affinity="#x00000002" ExceedWarning="1" AdtTasks="true">
@@ -1314,7 +1314,7 @@
 				<Task Id="6" Priority="14" CycleTime="100000" AmsPort="353" Affinity="#x00000002" AdtTasks="true">
 					<Name>TcCOM_DataProcessing</Name>
 				</Task>
-				<Task Id="7" Priority="1" CycleTime="20000" AmsPort="354" AdtTasks="true">
+				<Task Id="7" Priority="23" CycleTime="20000" AmsPort="354" AdtTasks="true">
 					<Name>ControlTask</Name>
 				</Task>
 				<Task Id="8" Priority="22" CycleTime="200000" AmsPort="355" DisableFpExceptions="true" AdtTasks="true">
@@ -3217,190 +3217,6 @@
 					<Name>HAWino Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
-						<Name>ControlTask Inputs</Name>
-						<Var>
-							<Name>MotorDrivers.bumper</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MotorDrivers.bumperStopReset</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MotorDrivers.vXCartesianToMotors</Name>
-							<Comment><![CDATA[Inputs: CartesianToMotors + Bumper]]></Comment>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>MotorDrivers.vYCartesianToMotors</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>MotorDrivers.vThetaCartesianToMotors</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>WheelEncoders.encDataFromMotor1</Name>
-							<Comment><![CDATA[INPUTS]]></Comment>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>WheelEncoders.encDataFromMotor2</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>WheelEncoders.encDataFromMotor3</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.xBoEnable</Name>
-							<Comment><![CDATA[////////////////////////////////////////////
-////////// LINKS TO GW2  ///////////////////
-////////////////////////////////////////////]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.xBoReset</Name>
-							<Comment><![CDATA[ implemented, reset error state => idle]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.newWaypointListAvailable</Name>
-							<Comment><![CDATA[ implemented, Status-Bit zur Signalisierung einer neuen WP-Liste]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.i1Raw</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.i2Raw</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.i3Raw</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.slider</Name>
-							<Comment><![CDATA[outputs from robot]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.bumper</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vel.n1MotorRaw</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vel.n2MotorRaw</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vel.n3MotorRaw</Name>
-							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robotPoses</Name>
-							<Comment><![CDATA[input from camera]]></Comment>
-							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.waypointList</Name>
-							<Comment><![CDATA[ implemented, Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)]]></Comment>
-							<Type GUID="{57D1290D-8922-6C29-A5EB-E802603DE228}">ARRAY [0..100] OF RobotPoseSimple</Type>
-						</Var>
-					</Vars>
-					<Vars VarGrpType="2" AreaNo="1">
-						<Name>ControlTask Outputs</Name>
-						<Var>
-							<Name>MotorDrivers.enableToMotor1</Name>
-							<Comment><![CDATA[Outputs: Motor Values and Enable Signal]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MotorDrivers.enableToMotor2</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MotorDrivers.enableToMotor3</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MotorDrivers.velocityToMotor1</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>MotorDrivers.velocityToMotor2</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>MotorDrivers.velocityToMotor3</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.state</Name>
-							<Comment><![CDATA[sets controller state]]></Comment>
-							<Type GUID="{4D01AD9A-1F2F-377C-0812-CF417AB6D9DE}">ControllerState</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yBoArrivedAtDestination</Name>
-							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>WheelEncoders.vXCartesianFromMotors</Name>
-							<Comment><![CDATA[OUTPUTS]]></Comment>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>WheelEncoders.vYCartesianFromMotors</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>WheelEncoders.vthetaCartesianFromMotors</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.kobserver.delayedCycles</Name>
-							<Comment><![CDATA[Camdelay 160ms / Cycletyme 2ms]]></Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vXtoRobot</Name>
-							<Comment><![CDATA[inputs to robot]]></Comment>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vYtoRobot</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.robot.vThetaToRobot</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yUintWaypointIndex</Name>
-							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.collision</Name>
-							<Type GUID="{ED505E53-AC03-A7B8-5B0E-7E9F26DE47AE}">ARRAY [0..4] OF BOOL</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yRPposition</Name>
-							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
-							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
-						</Var>
-						<Var>
-							<Name>ControlPRG.yVworldRef</Name>
-							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
-						</Var>
-					</Vars>
-					<Vars VarGrpType="1" ContextId="1" AreaNo="16">
 						<Name>MQTT_1 Inputs</Name>
 						<Var>
 							<Name>MQTT.nBatteryTemperature</Name>
@@ -3433,7 +3249,7 @@
 							<Type>INT</Type>
 						</Var>
 					</Vars>
-					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
+					<Vars VarGrpType="2" AreaNo="1">
 						<Name>MQTT_1 Outputs</Name>
 						<Var>
 							<Name>MQTT.bComCheckAnswer</Name>
@@ -3460,7 +3276,7 @@
 							<Type>BOOL</Type>
 						</Var>
 					</Vars>
-					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
+					<Vars VarGrpType="1" ContextId="1" AreaNo="16">
 						<Name>PlcTask Inputs</Name>
 						<Var>
 							<Name>Fahrauftrag.TrajectoryController.yBoArrivedAtDestination</Name>
@@ -3545,7 +3361,7 @@
 							<Type>LREAL</Type>
 						</Var>
 					</Vars>
-					<Vars VarGrpType="2" ContextId="2" AreaNo="33">
+					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
 						<Name>PlcTask Outputs</Name>
 						<Var>
 							<Name>HAWino.initDone</Name>
@@ -3639,7 +3455,7 @@
 							<Type>LREAL</Type>
 						</Var>
 					</Vars>
-					<Vars VarGrpType="1" ContextId="3" AreaNo="48">
+					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
 						<Name>Kollisionserkennung_1 Inputs</Name>
 						<Var>
 							<Name>Kollisionserkennung.robotPoseArray</Name>
@@ -3653,15 +3469,199 @@
 							<Name>Kollisionserkennung.vyRobot</Name>
 							<Type>LREAL</Type>
 						</Var>
+					</Vars>
+					<Vars VarGrpType="2" ContextId="2" AreaNo="33">
+						<Name>Kollisionserkennung_1 Outputs</Name>
+						<Var>
+							<Name>Kollisionserkennung.robotCollision</Name>
+							<Type GUID="{ED505E53-AC03-A7B8-5B0E-7E9F26DE47AE}">ARRAY [0..4] OF BOOL</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="1" ContextId="3" AreaNo="48">
+						<Name>ControlTask Inputs</Name>
+						<Var>
+							<Name>MotorDrivers.bumper</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.bumperStopReset</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.vXCartesianToMotors</Name>
+							<Comment><![CDATA[Inputs: CartesianToMotors + Bumper]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.vYCartesianToMotors</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.vThetaCartesianToMotors</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>WheelEncoders.encDataFromMotor1</Name>
+							<Comment><![CDATA[INPUTS]]></Comment>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>WheelEncoders.encDataFromMotor2</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>WheelEncoders.encDataFromMotor3</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.i1Raw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.i2Raw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.i3Raw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.slider</Name>
+							<Comment><![CDATA[outputs from robot]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.bumper</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vel.n1MotorRaw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vel.n2MotorRaw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vel.n3MotorRaw</Name>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robotPoses</Name>
+							<Comment><![CDATA[input from camera]]></Comment>
+							<Type GUID="{0054C5F4-9145-D7A8-94B2-6449EC3FAE4D}">ARRAY [1..8] OF RobotPose</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.xBoEnable</Name>
+							<Comment><![CDATA[////////////////////////////////////////////
+////////// LINKS TO GW2  ///////////////////
+////////////////////////////////////////////]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.xBoReset</Name>
+							<Comment><![CDATA[ implemented, reset error state => idle]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.newWaypointListAvailable</Name>
+							<Comment><![CDATA[ implemented, Status-Bit zur Signalisierung einer neuen WP-Liste]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.waypointList</Name>
+							<Comment><![CDATA[ implemented, Wegpunktliste mit Roboter-Posen in globalen Koordinaten (x, y, theta)]]></Comment>
+							<Type GUID="{57D1290D-8922-6C29-A5EB-E802603DE228}">ARRAY [0..100] OF RobotPoseSimple</Type>
+						</Var>
 						<Var>
 							<Name>PowerManager.requestShutdown</Name>
 							<Type>BOOL</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" ContextId="3" AreaNo="49">
-						<Name>Kollisionserkennung_1 Outputs</Name>
+						<Name>ControlTask Outputs</Name>
 						<Var>
-							<Name>Kollisionserkennung.robotCollision</Name>
+							<Name>MotorDrivers.enableToMotor1</Name>
+							<Comment><![CDATA[Outputs: Motor Values and Enable Signal]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.enableToMotor2</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.enableToMotor3</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.velocityToMotor1</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.velocityToMotor2</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>MotorDrivers.velocityToMotor3</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.state</Name>
+							<Comment><![CDATA[sets controller state]]></Comment>
+							<Type GUID="{4D01AD9A-1F2F-377C-0812-CF417AB6D9DE}">ControllerState</Type>
+						</Var>
+						<Var>
+							<Name>WheelEncoders.vXCartesianFromMotors</Name>
+							<Comment><![CDATA[OUTPUTS]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>WheelEncoders.vYCartesianFromMotors</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>WheelEncoders.vthetaCartesianFromMotors</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.kobserver.delayedCycles</Name>
+							<Comment><![CDATA[Camdelay 160ms / Cycletyme 2ms]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vXtoRobot</Name>
+							<Comment><![CDATA[inputs to robot]]></Comment>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vYtoRobot</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.robot.vThetaToRobot</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yBoArrivedAtDestination</Name>
+							<Comment><![CDATA[ implemented, TRUE, wenn Ziel erreicht, Ziel entspricht letzten gültigen WP]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yUintWaypointIndex</Name>
+							<Comment><![CDATA[ implemented, COUNTER zur Anzeige, des Indexes des nächstes WP]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yRPposition</Name>
+							<Comment><![CDATA[ implemented, aktuelle Roboterposition, für Simulationszwecke]]></Comment>
+							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.yVworldRef</Name>
+							<Type GUID="{330EC0FB-8424-E532-8462-F14CA9A67555}">RobotPoseSimple</Type>
+						</Var>
+						<Var>
+							<Name>ControlPRG.collision</Name>
 							<Type GUID="{ED505E53-AC03-A7B8-5B0E-7E9F26DE47AE}">ARRAY [0..4] OF BOOL</Type>
 						</Var>
 						<Var>
@@ -3719,15 +3719,6 @@
 					<Contexts>
 						<Context>
 							<Id NeedCalleeCall="true">0</Id>
-							<Name>ControlTask</Name>
-							<ManualConfig>
-								<OTCID>#x02010070</OTCID>
-							</ManualConfig>
-							<Priority>1</Priority>
-							<CycleTime>2000000</CycleTime>
-						</Context>
-						<Context>
-							<Id NeedCalleeCall="true">1</Id>
 							<Name>MQTT_1</Name>
 							<ManualConfig>
 								<OTCID>#x02010040</OTCID>
@@ -3736,16 +3727,16 @@
 							<CycleTime>100000000</CycleTime>
 						</Context>
 						<Context>
-							<Id NeedCalleeCall="true">2</Id>
+							<Id NeedCalleeCall="true">1</Id>
 							<Name>PlcTask</Name>
 							<ManualConfig>
 								<OTCID>#x02010030</OTCID>
 							</ManualConfig>
-							<Priority>20</Priority>
+							<Priority>25</Priority>
 							<CycleTime>10000000</CycleTime>
 						</Context>
 						<Context>
-							<Id NeedCalleeCall="true">3</Id>
+							<Id NeedCalleeCall="true">2</Id>
 							<Name>Kollisionserkennung_1</Name>
 							<ManualConfig>
 								<OTCID>#x02010090</OTCID>
@@ -3753,21 +3744,30 @@
 							<Priority>21</Priority>
 							<CycleTime>10000000</CycleTime>
 						</Context>
+						<Context>
+							<Id NeedCalleeCall="true">3</Id>
+							<Name>ControlTask</Name>
+							<ManualConfig>
+								<OTCID>#x02010070</OTCID>
+							</ManualConfig>
+							<Priority>23</Priority>
+							<CycleTime>2000000</CycleTime>
+						</Context>
 					</Contexts>
 					<InitSymbols>
 						<InitSymbol>
 							<Name>Camera.cameraData.oid</Name>
 							<Type GUID="{18071995-0000-0000-0000-00000000000F}">OTCID</Type>
 							<Comment><![CDATA[ To be set in PLC_Instance object and required for FW_ObjMgr_GetObjectInstance()]]></Comment>
-							<AreaNo>#x00000023</AreaNo>
+							<AreaNo>#x00000013</AreaNo>
 							<Data>30000101</Data>
 						</InitSymbol>
 					</InitSymbols>
 					<TaskPouOids>
-						<TaskPouOid Prio="1" OTCID="#x08502001"/>
 						<TaskPouOid Prio="11" OTCID="#x08502002"/>
-						<TaskPouOid Prio="20" OTCID="#x08502003"/>
 						<TaskPouOid Prio="21" OTCID="#x08502004"/>
+						<TaskPouOid Prio="23" OTCID="#x08502001"/>
+						<TaskPouOid Prio="25" OTCID="#x08502003"/>
 					</TaskPouOids>
 				</Instance>
 			</Project>
@@ -3817,9 +3817,6 @@
 				</Image>
 				<Image Id="4" AddrType="10" ImageType="3">
 					<Name>Prozessabbild-3</Name>
-				</Image>
-				<Image Id="5" AddrType="10" ImageType="3">
-					<Name>Prozessabbild-4</Name>
 				</Image>
 				<Box Id="1" BoxType="9099">
 					<Name>Klemme 1 (EK1200)</Name>
@@ -6222,7 +6219,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 								<ManualConfig>
 									<OTCID>#x02010030</OTCID>
 								</ManualConfig>
-								<Priority>20</Priority>
+								<Priority>25</Priority>
 								<CycleTime>10000000</CycleTime>
 							</Context>
 						</Contexts>
@@ -6625,17 +6622,15 @@ Bit1: Value smaller than Limit2]]></Comment>
 	</Project>
 	<Mappings>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500800205008}" Id="#x02030050"/>
-		<MappingInfo Identifier="{00000000-2001-0850-0020-500810000403}" Id="#x02030010"/>
+		<MappingInfo Identifier="{00000000-2001-0850-0320-500842000403}" Id="#x02030040"/>
 		<MappingInfo Identifier="{00000000-2002-0850-0020-500800205008}" Id="#x02030090"/>
-		<MappingInfo Identifier="{00000000-2002-0850-0120-500831000403}" Id="#x02030030"/>
-		<MappingInfo Identifier="{00000000-2003-0850-0220-500842000403}" Id="#x02030070"/>
-		<MappingInfo Identifier="{00000000-2004-0850-0320-500853000403}" Id="#x02030060"/>
-		<MappingInfo Identifier="{08502001-2003-0850-0020-500802205008}" Id="#x020300a0" Watchdog="14000000040000000400000004000000"/>
-		<MappingInfo Identifier="{08502001-0040-0304-0020-500840000403}" Id="#x02030040" Watchdog="00000000000000000000000000000000"/>
-		<MappingInfo Identifier="{08502002-2003-0850-0120-500802205008}" Id="#x02030100" Watchdog="04000000280000000400000004000000"/>
-		<MappingInfo Identifier="{08502002-0060-0201-0120-500820000101}" Id="#x020300c0" Watchdog="04000000280000000400000004000000"/>
-		<MappingInfo Identifier="{08502003-0010-0304-0020-500810000403}" Id="#x02030020" Watchdog="04000000140000000400000004000000"/>
-		<MappingInfo Identifier="{02010050-2003-0850-1000-010102205008}" Id="#x020300b0" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{00000000-2002-0850-0020-500810000403}" Id="#x02030010"/>
+		<MappingInfo Identifier="{00000000-2003-0850-0120-500831000403}" Id="#x02030020"/>
+		<MappingInfo Identifier="{08502001-0030-0304-0020-500830000403}" Id="#x02030030" Watchdog="00000000000000000000000000000000"/>
+		<MappingInfo Identifier="{08502002-2003-0850-0020-500801205008}" Id="#x020300a0" Watchdog="04000000280000000400000004000000"/>
+		<MappingInfo Identifier="{08502002-0060-0201-0020-500820000101}" Id="#x02030070" Watchdog="04000000280000000400000004000000"/>
+		<MappingInfo Identifier="{08502003-2001-0850-0120-500803205008}" Id="#x020300b0" Watchdog="04000000140000000400000004000000"/>
+		<MappingInfo Identifier="{02010050-2003-0850-1000-010101205008}" Id="#x02030060" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-0060-0201-1000-010120000101}" Id="#x02030080" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIPC^HAWino^HAWino Instance">
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Analoge Eingänge A6 (EL3068)">
@@ -6654,7 +6649,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^PowerManager.supplyCurrentRaw" VarB="AI Standard Channel 2^Value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Digitale Ausgänge A5 (EL2004)">
-				<Link VarA="Kollisionserkennung_1 Outputs^PowerManager.shutdownTrigger" VarB="InitiateShutdown^Output"/>
+				<Link VarA="ControlTask Outputs^PowerManager.shutdownTrigger" VarB="InitiateShutdown^Output"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Digitale Eingänge A4 (EL1008)">
 				<Link VarA="ControlTask Inputs^ControlPRG.robot.bumper" VarB="Bumper (S1)^Input"/>
