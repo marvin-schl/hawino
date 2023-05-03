@@ -38,8 +38,8 @@ FOR i := 1 TO 4 BY 1 DO
 END_FOR
 
 //350mm Durchmesser des Roboters & 130mm Toleranzabstand
-breite := 350 + 130; 
-laenge := 350 + 130;
+breite := 350 + 80; 
+laenge := 350 + 80;
 diagonal := SQRT(EXPT(breite,2) + EXPT(laenge,2));
 IF vyRobot <> 0 AND vxRobot <> 0 THEN
 	gamma  := ATAN2(vyRobot,vxRobot); //Drehung des Roboters
@@ -59,13 +59,23 @@ IF xRobot <> 0 AND yRobot <> 0 THEN
 		END_FOR
 	END_IF
 	
-	//Zwischenspeicher der letzten Positionen wenn die Kameradaten ausfallen
-	FOR m := 1 TO 4 BY 1 DO
-		robotPoseLokal[m].x := robotPoseArray[m].x;
-		robotPoseLokal[m].y := robotPoseArray[m].y;
-		robotPoseLokal[m].theta := robotPoseArray[m].theta;
-		robotPoseLokal[m].e := robotPoseArray[m].e;
-	END_FOR
+	//Zwischenspeicher der letzten Positionen lokal wenn die Kameradaten nicht ausfallen
+	IF robotPoseArray[1].x <> 0 AND robotPoseArray[1].y <> 0 THEN
+		robotPoseLokal[1].x := robotPoseArray[1].x;
+		robotPoseLokal[1].y := robotPoseArray[1].y;
+	END_IF
+	IF robotPoseArray[2].x <> 0 AND robotPoseArray[2].y <> 0 THEN
+		robotPoseLokal[2].x := robotPoseArray[2].x;
+		robotPoseLokal[2].y := robotPoseArray[2].y;
+	END_IF
+	IF robotPoseArray[3].x <> 0 AND robotPoseArray[3].y <> 0 THEN
+		robotPoseLokal[3].x := robotPoseArray[3].x;
+		robotPoseLokal[3].y := robotPoseArray[3].y;
+	END_IF
+	IF robotPoseArray[4].x <> 0 AND robotPoseArray[4].y <> 0 THEN
+		robotPoseLokal[4].x := robotPoseArray[4].x;
+		robotPoseLokal[4].y := robotPoseArray[4].y;
+	END_IF
 	
 //Kameradaten ausfallen	
 ELSE
@@ -83,12 +93,7 @@ END_IF
 IF cameraDown = TRUE AND permanentDown = FALSE THEN
 	xRobot := robotPoseLokal[Var_HAWIno.Robot_Number].x;
 	yRobot := robotPoseLokal[Var_HAWIno.Robot_Number].y;
-	FOR l := 1 TO 4 BY 1 DO
-		robotPoseArray[l].x := robotPoseLokal[l].x;
-		robotPoseArray[l].y := robotPoseLokal[l].y;
-		robotPoseArray[l].theta := robotPoseLokal[l].theta;
-		robotPoseArray[l].e := robotPoseLokal[l].e;
-	END_FOR
+	
 //Kameradaten 2s lang ausfallen, ist die gesamte Array robotCollision True und RobotPoseArray = 0
 ELSIF cameraDown = TRUE AND permanentDown = TRUE THEN
 	xRobot := 0.0;
@@ -158,25 +163,25 @@ END_IF
 FOR k := 1 TO 4 BY 1 DO
 	IF k <> Var_HAWIno.Robot_Number THEN
 		IF quadrant = 1 THEN
-			IF robotPoseArray[k].x < x2Box AND robotPoseArray[k].x > x4Box AND robotPoseArray[k].y < y3Box AND robotPoseArray[k].y > y1Box THEN
+			IF robotPoseLokal[k].x < x2Box AND robotPoseLokal[k].x > x4Box AND robotPoseLokal[k].y < y3Box AND robotPoseLokal[k].y > y1Box THEN
 				collisionDetected := TRUE;
 			ELSE
 				collisionDetected := FALSE;
 			END_IF
 		ELSIF quadrant = 2 THEN
-			IF robotPoseArray[k].x < x1Box AND robotPoseArray[k].x > x3Box AND robotPoseArray[k].y < y2Box AND robotPoseArray[k].y > y4Box THEN
+			IF robotPoseLokal[k].x < x1Box AND robotPoseLokal[k].x > x3Box AND robotPoseLokal[k].y < y2Box AND robotPoseLokal[k].y > y4Box THEN
 				collisionDetected := TRUE;
 			ELSE
 				collisionDetected := FALSE;
 			END_IF
 		ELSIF quadrant = 3 THEN
-			IF robotPoseArray[k].x < x4Box AND robotPoseArray[k].x > x2Box AND robotPoseArray[k].y < y1Box AND robotPoseArray[k].y > y3Box THEN
+			IF robotPoseLokal[k].x < x4Box AND robotPoseLokal[k].x > x2Box AND robotPoseLokal[k].y < y1Box AND robotPoseLokal[k].y > y3Box THEN
 				collisionDetected := TRUE;
 			ELSE
 				collisionDetected := FALSE;
 			END_IF
 		ELSIF quadrant = 4 THEN
-			IF robotPoseArray[k].x < x3Box AND robotPoseArray[k].x > x1Box AND robotPoseArray[k].y < y4Box AND robotPoseArray[k].y > y2Box THEN
+			IF robotPoseLokal[k].x < x3Box AND robotPoseLokal[k].x > x1Box AND robotPoseLokal[k].y < y4Box AND robotPoseLokal[k].y > y2Box THEN
 				collisionDetected := TRUE;
 			ELSE
 				collisionDetected := FALSE;
@@ -188,12 +193,13 @@ FOR k := 1 TO 4 BY 1 DO
 	IF collisionDetected = TRUE THEN
 		robotCollision[k] := TRUE;
 		robotCollision[Var_HAWIno.Robot_Number] := TRUE; 
-	ELSE 
+	ELSIF collisionDetected = FALSE AND k <> Var_HAWIno.Robot_Number THEN
 		robotCollision[k] := FALSE;
 	END_IF
 END_FOR 
 
 //Keine Roboter kollidieren sich, setzt der Roboter zurück
+counter := 0;
 FOR l := 1 TO 4 BY 1 DO
 	IF robotCollision[l] = FALSE THEN
 		counter := counter + 1;
@@ -204,7 +210,12 @@ IF counter = 3 THEN
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="Kollisionserkennung">
-      <LineId Id="756" Count="170" />
+      <LineId Id="756" Count="32" />
+      <LineId Id="954" Count="15" />
+      <LineId Id="795" Count="17" />
+      <LineId Id="818" Count="105" />
+      <LineId Id="970" Count="0" />
+      <LineId Id="924" Count="2" />
       <LineId Id="930" Count="0" />
       <LineId Id="927" Count="2" />
       <LineId Id="409" Count="0" />
