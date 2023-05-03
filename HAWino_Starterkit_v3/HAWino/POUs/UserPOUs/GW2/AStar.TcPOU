@@ -269,7 +269,7 @@ FOR i := 0 TO numberOfNodes BY 1 DO
  openList[1,1] := 0;
  
  //Goal reached?
- WHILE currentNode <> endNode AND AStarFailed = FALSE DO
+ WHILE currentNode <> endNode AND NOT AStarFailed DO
 	 //clear neighborlist
  	countNeighbor := 1;
 	neighborList := nullMatrix_Neighbor;
@@ -392,7 +392,7 @@ FOR t := 0 TO 100 BY 1 DO
 	END_IF
 END_FOR
  
- IF AStarFailed = FALSE THEN
+ IF NOT AStarFailed THEN
 	 finishedASearch := TRUE;
  END_IF]]></ST>
     </Implementation>

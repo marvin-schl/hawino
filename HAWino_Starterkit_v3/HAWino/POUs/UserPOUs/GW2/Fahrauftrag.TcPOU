@@ -63,7 +63,7 @@ CameraDataSaved();
 
 collisionFree := NOT collision[Var_HAWIno.Robot_Number];
 
-IF lastCollision[1] <> collision[1] OR lastCollision[2] <> collision[2] OR lastCollision[3] <> collision[3] OR lastCollision[4] <> collision[4] OR collision[0] THEN
+IF (lastCollision[1] <> collision[1] OR lastCollision[2] <> collision[2] OR lastCollision[3] <> collision[3] OR lastCollision[4] <> collision[4] OR collision[0]) AND collision[Var_HAWIno.Robot_Number] THEN
 	newCollision := TRUE;
 	lastCollision := collision;
 END_IF
@@ -73,9 +73,7 @@ END_IF
 	//FeedbackToGW1 := 'Kameraausfall';
 IF collision[Var_HAWIno.Robot_Number] AND newCollision AND NOT collisionSolutionWorking THEN
 	TrajectoryController.xBoEnable := FALSE;
-	IF NOT collisionSolutionWorking THEN
-		sk0 := TRUE;
-	END_IF
+	sk0 := TRUE;
 	CollisionsSolution_new();
 	newCollision := FALSE;
 	timerCollision.IN := TRUE;
@@ -122,11 +120,13 @@ IF s0 AND NOT s1a AND Auftrag.Art = 'Fahrauftrag' THEN
 END_IF
 
 IF s1a AND NOT s1b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 THEN
-	s1a := 0; s1b := 1;
 	AStar(xRobotActual := xRobotStartposition, yRobotActual := yRobotStartposition, xEnd := xEndvalue, yEnd := yEndvalue, endNode := EndNode, blockedNodes := removeNodeCollision);
 	finished_ASearch := AStar.finishedASearch;
-	xPointList := AStar.xCoordinates;
-	yPointList := AStar.yCoordinates;
+	IF finished_ASearch THEN
+		xPointList := AStar.xCoordinates;
+		yPointList := AStar.yCoordinates;
+		s1a := 0; s1b := 1;
+	END_IF
 ELSIF s1a AND NOT s1b THEN
 	xRobotStartposition := actualCamX;
 	yRobotStartposition := actualCamY;
@@ -256,11 +256,13 @@ IF s10 AND NOT s11a AND StatusFromGW1 = 'WerkstueckAusgelesen' THEN
 END_IF
 
 IF s11a AND NOT s11b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 THEN
-	s11a := 0; s11b := 1;
 	AStar(xRobotActual := xRobotStartposition, yRobotActual := yRobotStartposition, xEnd := xEndvalue, yEnd := yEndvalue, endNode := EndNode, blockedNodes := removeNodeCollision);
 	finished_ASearch := AStar.finishedASearch;
-	xPointList := AStar.xCoordinates;
-	yPointList := AStar.yCoordinates;
+	IF finished_ASearch THEN
+		xPointList := AStar.xCoordinates;
+		yPointList := AStar.yCoordinates;
+		s11a := 0; s11b := 1;
+	END_IF
 	//resetVarMQTT := FALSE;
 ELSIF s11a AND NOT s11b THEN
 	//IF readAssigment.assigment.AbholTasche < 3 THEN	
@@ -400,11 +402,13 @@ IF s0 AND NOT s26a AND Auftrag.Art = 'Ladeauftrag' THEN
 END_IF
 
 IF s26a AND NOT s26b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 THEN
-	s26a := 0; s26b := 1;
 	AStar(xRobotActual := xRobotStartposition, yRobotActual := yRobotStartposition, xEnd := xEndvalue, yEnd := yEndvalue, endNode := EndNode, blockedNodes := removeNodeCollision);
 	finished_ASearch := AStar.finishedASearch;
-	xPointList := AStar.xCoordinates;
-	yPointList := AStar.yCoordinates;
+	IF finished_ASearch THEN
+		xPointList := AStar.xCoordinates;
+		yPointList := AStar.yCoordinates;
+		s26a := 0; s26b := 1;
+	END_IF
 ELSIF s26a AND NOT s26b THEN
 	xRobotStartposition := actualCamX;
 	yRobotStartposition := actualCamY;
@@ -477,11 +481,13 @@ END_IF
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 IF s21a AND NOT s21b AND xRobotStartposition <> 0 AND yRobotStartposition <> 0 AND gripper.state = CoreGripperControlState.Closed THEN
-	s21a := 0; s21b := 1;
 	AStar(xRobotActual := xRobotStartposition, yRobotActual := yRobotStartposition, xEnd := xEndvalue, yEnd := yEndvalue, endNode := EndNode, blockedNodes := removeNodeCollision);
 	finished_ASearch := AStar.finishedASearch;
-	xPointList := AStar.xCoordinates;
-	yPointList := AStar.yCoordinates;
+	IF finished_ASearch THEN
+		xPointList := AStar.xCoordinates;
+		yPointList := AStar.yCoordinates;
+		s21a := 0; s21b := 1;
+	END_IF
 ELSIF s21a AND NOT s21b THEN
 	//IF readAssigment.assigment.AbholTasche < 3 THEN	
 	//	xRobotStartposition := actualCamX - 200;
@@ -659,6 +665,8 @@ END_IF
 /////////////////////////////////////////////////////////////ATSTOP////////////////////////////////////////////////////////////////////////////
 
 IF sk0 AND NOT sk10 AND otherRoboAtStop AND timerCollision.Q THEN
+	findNodesToRemove(collisionRobo := otherRobo);
+	
 	xRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].x;
 	yRobotStartposition := camera.cameraData.robotPositionArray[Var_HAWIno.Robot_Number].y;
 	continueAfterCollision();
@@ -1236,7 +1244,7 @@ IF newCollision THEN
 END_IF
 
 IF otherRobo[0] > 0 THEN
-	IF cameraY[otherRobo[0]] > 650 THEN
+	IF cameraY[otherRobo[0]] < 650 THEN
 		//Anderer Roboter auf Parkplatz
 		otherRoboAtStop := TRUE;	
 	ELSIF cameraX[otherRobo[0]] > 6100 AND cameraX[otherRobo[0]] < 6800 AND cameraY[otherRobo[0]] > 3400 AND cameraY[otherRobo[0]] < 3600  THEN
@@ -1377,8 +1385,6 @@ sk33 := FALSE;]]></ST>
       <LineId Id="2180" Count="1" />
       <LineId Id="2000" Count="1" />
       <LineId Id="2124" Count="0" />
-      <LineId Id="2123" Count="0" />
-      <LineId Id="2125" Count="0" />
       <LineId Id="2070" Count="0" />
       <LineId Id="2014" Count="0" />
       <LineId Id="2003" Count="1" />
@@ -1414,8 +1420,10 @@ sk33 := FALSE;]]></ST>
       <LineId Id="91" Count="0" />
       <LineId Id="983" Count="0" />
       <LineId Id="982" Count="0" />
-      <LineId Id="984" Count="0" />
-      <LineId Id="1087" Count="3" />
+      <LineId Id="1087" Count="1" />
+      <LineId Id="2482" Count="1" />
+      <LineId Id="2485" Count="1" />
+      <LineId Id="2484" Count="0" />
       <LineId Id="987" Count="2" />
       <LineId Id="985" Count="0" />
       <LineId Id="527" Count="0" />
@@ -1503,9 +1511,11 @@ sk33 := FALSE;]]></ST>
       <LineId Id="568" Count="0" />
       <LineId Id="1095" Count="2" />
       <LineId Id="141" Count="0" />
-      <LineId Id="992" Count="2" />
-      <LineId Id="1091" Count="2" />
-      <LineId Id="995" Count="0" />
+      <LineId Id="992" Count="1" />
+      <LineId Id="1091" Count="1" />
+      <LineId Id="2487" Count="1" />
+      <LineId Id="2490" Count="1" />
+      <LineId Id="2489" Count="0" />
       <LineId Id="2427" Count="0" />
       <LineId Id="996" Count="1" />
       <LineId Id="1104" Count="0" />
@@ -1587,7 +1597,12 @@ sk33 := FALSE;]]></ST>
       <LineId Id="1247" Count="1" />
       <LineId Id="737" Count="0" />
       <LineId Id="1197" Count="0" />
-      <LineId Id="1199" Count="10" />
+      <LineId Id="1199" Count="1" />
+      <LineId Id="1202" Count="1" />
+      <LineId Id="2492" Count="1" />
+      <LineId Id="2495" Count="1" />
+      <LineId Id="2494" Count="0" />
+      <LineId Id="1206" Count="3" />
       <LineId Id="742" Count="1" />
       <LineId Id="745" Count="0" />
       <LineId Id="1366" Count="0" />
@@ -1611,7 +1626,12 @@ sk33 := FALSE;]]></ST>
       <LineId Id="876" Count="1" />
       <LineId Id="802" Count="0" />
       <LineId Id="896" Count="2" />
-      <LineId Id="1271" Count="14" />
+      <LineId Id="1271" Count="1" />
+      <LineId Id="1274" Count="1" />
+      <LineId Id="2497" Count="1" />
+      <LineId Id="2500" Count="1" />
+      <LineId Id="2499" Count="0" />
+      <LineId Id="1278" Count="7" />
       <LineId Id="899" Count="0" />
       <LineId Id="1286" Count="0" />
       <LineId Id="901" Count="1" />
@@ -1677,7 +1697,9 @@ sk33 := FALSE;]]></ST>
       <LineId Id="155" Count="0" />
       <LineId Id="42" Count="8" />
       <LineId Id="162" Count="0" />
-      <LineId Id="51" Count="8" />
+      <LineId Id="51" Count="5" />
+      <LineId Id="255" Count="1" />
+      <LineId Id="57" Count="2" />
       <LineId Id="163" Count="0" />
       <LineId Id="60" Count="4" />
       <LineId Id="164" Count="0" />
