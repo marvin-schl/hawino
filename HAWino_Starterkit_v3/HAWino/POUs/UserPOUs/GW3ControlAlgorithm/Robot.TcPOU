@@ -15,7 +15,8 @@ VAR_OUTPUT
 	bumperGotTriggered: BOOL;
 END_VAR
 VAR
-	sliderTrigger: F_TRIG;
+	sliderTrigger:  F_TRIG;
+	sldierTON:		TON;	
 	bumperTrigger: R_TRIG;
 	i1, i2, i3: INT;
 	
@@ -41,7 +42,9 @@ i1 := UINT_TO_INT(i1Raw);
 i2 := UINT_TO_INT(i2Raw);
 i3 := UINT_TO_INT(i3Raw);
 
-sliderTrigger(CLK := slider, Q => sliderGotTriggered);
+sldierTON(IN := slider, PT := T#200MS); //slider has to be HIGH for at least 250ms
+sliderTrigger(CLK := sldierTON.Q, Q => sliderGotTriggered); 
+
 bumperTrigger(CLK := bumper, Q => bumperGotTriggered);
 
 vX 		:= vel.vXRobot;
@@ -63,7 +66,10 @@ END_IF
     <LineIds Name="Robot">
       <LineId Id="147" Count="0" />
       <LineId Id="197" Count="3" />
-      <LineId Id="148" Count="17" />
+      <LineId Id="235" Count="0" />
+      <LineId Id="148" Count="1" />
+      <LineId Id="234" Count="0" />
+      <LineId Id="150" Count="15" />
       <LineId Id="9" Count="0" />
     </LineIds>
   </POU>
