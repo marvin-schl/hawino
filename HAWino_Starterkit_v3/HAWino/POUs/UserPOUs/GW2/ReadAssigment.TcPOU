@@ -114,13 +114,13 @@ IF assigment.Art = 'Fahrauftrag' THEN
 			//RFID links anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 4360, y := 2838, theta := -1);
 			pickupLocation := ToRobotPoseSimple(x := 4470, y := 2838, theta := 0); 
-			readerCheckOut := ToRobotPoseSimple(x := 4470, y := 2944, theta := 0); 
+			readerCheckOut := ToRobotPoseSimple(x := 4470, y := 2940, theta := 0); 
 			endNodePickup := 164;
 		ELSIF assigment.AbholTasche = 2 THEN
 			//RFID links anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 4360, y := 2732, theta := -1);
 			pickupLocation := ToRobotPoseSimple(x := 4470, y := 2732, theta := 0);
-			readerCheckOut := ToRobotPoseSimple(x := 4470, y := 2944, theta := 0);
+			readerCheckOut := ToRobotPoseSimple(x := 4470, y := 2940, theta := 0);
 			endNodePickup := 163;
 		ELSIF assigment.AbholTasche = 3 THEN
 			//RFID rechts anfahren
@@ -222,13 +222,13 @@ IF assigment.Art = 'Fahrauftrag' THEN
 			//RFID links anfahren
 			lastNodeStorage := ToRobotPoseSimple(x := 4360, y := 2838, theta := -1);
 			storageLocation := ToRobotPoseSimple(x := 4470, y := 2838, theta := 0);
-			readerCheckIn := ToRobotPoseSimple(x := 4470, y := 2944, theta := 0);
+			readerCheckIn := ToRobotPoseSimple(x := 4470, y := 2940, theta := 0);
 			endNodeStorage := 165;
 		ELSIF assigment.AblageTasche = 2 THEN
 			//RFID links anfahren
 			lastNodeStorage := ToRobotPoseSimple(x := 4360, y := 2732, theta := -1);
 			storageLocation := ToRobotPoseSimple(x := 4470, y := 2732, theta := 0);
-			readerCheckIn := ToRobotPoseSimple(x := 4470, y := 2944, theta := 0);
+			readerCheckIn := ToRobotPoseSimple(x := 4470, y := 2940, theta := 0);
 			endNodeStorage := 165;
 		ELSIF assigment.AblageTasche = 3 THEN
 			//RFID rechts anfahren	
@@ -297,13 +297,13 @@ END_IF
 //////////////////////////////////Parkplätze/////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Parkplätze "seitlich" der Ladestation
-parkingSlots[1] := ToRobotPoseSimple(x := 1000, y := 600, theta := -1);
+parkingSlots[1] := ToRobotPoseSimple(x := 1000, y := 500, theta := -1);
 endNodeParking[1] := 3;
-parkingSlots[2] := ToRobotPoseSimple(x := 2200, y := 600, theta := -1);
+parkingSlots[2] := ToRobotPoseSimple(x := 2200, y := 500, theta := -1);
 endNodeParking[2] := 6;
-parkingSlots[3] := ToRobotPoseSimple(x := 3400, y := 600, theta := -1);
+parkingSlots[3] := ToRobotPoseSimple(x := 3400, y := 500, theta := -1);
 endNodeParking[3] := 9;
-parkingSlots[4] := ToRobotPoseSimple(x := 4600, y := 600, theta := -1);
+parkingSlots[4] := ToRobotPoseSimple(x := 4600, y := 500, theta := -1);
 endNodeParking[4] := 12;
 
 ]]></ST>
