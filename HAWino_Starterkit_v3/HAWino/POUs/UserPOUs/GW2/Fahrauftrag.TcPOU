@@ -48,6 +48,9 @@ VAR
 	otherRobo : ARRAY[0..4] OF INT;				//andere HAWinos, die an Kollision beteilgit
 	otherRoboAtStation, otherRoboAtStop, thisRoboAtStation, drivingAtStation, newCollision, sameStation : BOOL;			//anderer beteiligter HAWino ist im Stationsbereich
 	
+	//Greifer
+	closeGripperCommand AT%Q* : BOOL;
+	
 	//error
 	noCamera, error : BOOL;
 	resetTimer : TON;
@@ -180,7 +183,7 @@ IF s5 AND NOT s6a AND trajectoryController.yBoArrivedAtDestination THEN
 	trajectoryController.xBoEnable := FALSE;
 	//	Greifersteuerung
 	IF NOT Gripper.partGripped THEN
-		Gripper.closeGripperCommand := TRUE;
+		closeGripperCommand := TRUE;
 		s5 := 0; s6a := 1;
 	END_IF
 END_IF
@@ -372,7 +375,7 @@ IF s20 AND NOT s21a AND trajectoryController.yBoArrivedAtDestination THEN
 	lastRelevantStateForCollision := 's21a';
 	trajectoryController.xBoEnable := FALSE;
 	//	Greifersteuerung
-	Gripper.closeGripperCommand := FALSE;
+	closeGripperCommand := FALSE;
 	//	RückmeldungGW1 Teil abgelegt
 	FeedbackToGW1 := 'Teil abgelegt';
 	//	Fahrauftrag zum Parkplatz
@@ -976,7 +979,7 @@ actualCamY := 0;
 trajectoryController.newWaypointListAvailable := FALSE;
 trajectoryController.xBoEnable := FALSE;
 FeedbackToGW1 := 'Verfuegbar';
-Gripper.closeGripperCommand := FALSE;
+closeGripperCommand := FALSE;
 ZEROS_INT(removeNodeCollision);
 error := FALSE;
 failedCounter := 1;
@@ -1125,7 +1128,7 @@ IF gripper.state = CoreGripperControlState.Open AND Gripper.partGripped THEN
 	TrajectoryController.xBoEnable := FALSE;	
 	removeAllToken();
 	FeedbackToGW1 := 'Error Teil verloren';
-	Gripper.closeGripperCommand := FALSE;
+	closeGripperCommand := FALSE;
 	resetVarMQTT := FALSE;
 END_IF
 	
@@ -1134,7 +1137,7 @@ IF trajectoryController.yControllerState = ControllerState.error THEN
 	error := TRUE;
 	removeAllToken();
 	FeedbackToGW1 := 'Error Bumper';
-	Gripper.closeGripperCommand := FALSE;
+	closeGripperCommand := FALSE;
 	resetVarMQTT := FALSE;
 END_IF
 
@@ -1143,7 +1146,7 @@ IF failedCounter > 1000 THEN
 	error := TRUE;
 	//removeAllToken();
 	FeedbackToGW1 := 'Fehler AStar';
-	Gripper.closeGripperCommand := FALSE;
+	closeGripperCommand := FALSE;
 	resetVarMQTT := FALSE;
 	//wenn Kollision anderen Wegschicken?
 END_IF
