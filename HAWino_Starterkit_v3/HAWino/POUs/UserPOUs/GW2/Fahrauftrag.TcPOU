@@ -469,13 +469,13 @@ IF s30 AND NOT s31 AND trajectoryController.yBoArrivedAtDestination THEN
 	s30 := 0; s31 := 1;
 	lastRelevantStateForCollision := 's31';
 	trajectoryController.xBoEnable := FALSE;
-	resetVarMQTT := FALSE;															//testen
+	resetVarMQTT := FALSE;														
 	//	RückmeldungGW1 Teil aufgenommen setzen
 	FeedbackToGW1 := 'An Ladestation';
 END_IF
 
 IF s31 AND NOT s32 AND StatusFromGW1 = 'FertigGeladen' THEN
-	s31 := 0; s32 := 1; //s21a := 1;
+	s31 := 0; s32 := 1;
 	lastRelevantStateForCollision := 's32';
 	//	Fahrauftrag von Ladestation weg
 	ZEROS_RobotPoseSimple(wayPointList);
@@ -960,6 +960,8 @@ ELSIF lastRelevantStateForCollision = 's26a' THEN
 	s26a := 1;
 ELSIF lastRelevantStateForCollision = 's31' THEN
 	s31 := 1;
+ELSIF lastRelevantStateForCollision = 's32' THEN
+	s32 := 1;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -1865,6 +1867,8 @@ sk33 := FALSE;]]></ST>
       <LineId Id="12" Count="3" />
       <LineId Id="26" Count="0" />
       <LineId Id="25" Count="0" />
+      <LineId Id="183" Count="0" />
+      <LineId Id="182" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="Fahrauftrag.doReset">
