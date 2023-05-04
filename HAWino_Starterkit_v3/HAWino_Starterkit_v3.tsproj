@@ -1303,7 +1303,7 @@
 		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1006">424de6000000000000007600000028000000100000000e000000010004000000000070000000000000000000000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffff788833338887ffff78883bb38887ffffffff3bb3ffffffffffff8778fffffffffffffffffffffffffffffffff999ffff78f78fffffffffff78f78ffff999ffff78f7888fffffffff78f78f78f999ffff78f78f78ffffffff78f7888ff999ffffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" TargetNetId="5.53.205.200.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{953E7D24-8971-4ED8-AECF-7CA52AD733DF}" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="2">
 				<Cpu BaseTime="1000"/>
@@ -3422,6 +3422,7 @@
 						</Var>
 						<Var>
 							<Name>MQTT.resetVar</Name>
+							<Comment><![CDATA[Reset Variablen, um Ausgänge zurückzusetzen]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -3431,14 +3432,17 @@
 						</Var>
 						<Var>
 							<Name>MQTT.FeedbackToGW1</Name>
+							<Comment><![CDATA[Statusmeldungen an Gewerk 1]]></Comment>
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
 							<Name>MQTT.resetGoBack</Name>
+							<Comment><![CDATA[Reset Variablen, um Ausgänge zurückzusetzen]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MQTT.RoboNmbToGoBack</Name>
+							<Comment><![CDATA[Nummer, der Roboter, die zurück sollen]]></Comment>
 							<Type GUID="{79FE465E-CA88-2577-C755-F5ED8D4F8E5D}">ARRAY [0..4] OF INT</Type>
 						</Var>
 					</Vars>
@@ -3454,18 +3458,22 @@
 						</Var>
 						<Var>
 							<Name>MQTT.Auftrag</Name>
+							<Comment><![CDATA[Auftrag von Gewerk 1 gesendet]]></Comment>
 							<Type GUID="{8AC1FBCA-2DFA-33D8-FEC6-77F0D6A0E95F}">Auftrag</Type>
 						</Var>
 						<Var>
 							<Name>MQTT.StatusFromGW1</Name>
+							<Comment><![CDATA[Statusrückmeldungen von Gewerk 1 gesendet]]></Comment>
 							<Type>STRING(50)</Type>
 						</Var>
 						<Var>
 							<Name>MQTT.goBack</Name>
+							<Comment><![CDATA[true, wenn Roboter Platz machen soll]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MQTT.resetButton</Name>
+							<Comment><![CDATA[Reset von Gewerk 1 kommend]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 					</Vars>
@@ -6645,10 +6653,12 @@ Bit1: Value smaller than Limit2]]></Comment>
 		<MappingInfo Identifier="{00000000-2003-0850-0020-500800205008}" Id="#x020300d0"/>
 		<MappingInfo Identifier="{00000000-2003-0850-0320-500842000403}" Id="#x02030060"/>
 		<MappingInfo Identifier="{08502001-2003-0850-0020-500803205008}" Id="#x02030070" Watchdog="14000000040000000400000004000000"/>
+		<MappingInfo Identifier="{08502001-2004-0850-0020-500802205008}" Id="#x020300e0" Watchdog="14000000040000000400000004000000"/>
 		<MappingInfo Identifier="{08502001-0040-0304-0020-500840000403}" Id="#x02030040" Watchdog="00000000000000000000000000000000"/>
 		<MappingInfo Identifier="{08502002-2003-0850-0120-500803205008}" Id="#x020300c0" Watchdog="04000000280000000400000004000000"/>
 		<MappingInfo Identifier="{08502002-0060-0201-0120-500820000101}" Id="#x020300b0" Watchdog="04000000280000000400000004000000"/>
 		<MappingInfo Identifier="{08502003-0010-0304-0020-500810000403}" Id="#x02030020" Watchdog="00000000000000000000000000000000"/>
+		<MappingInfo Identifier="{08502004-2003-0850-0220-500803205008}" Id="#x020300f0" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-2003-0850-1000-010103205008}" Id="#x020300a0" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{02010050-0060-0201-1000-010120000101}" Id="#x02030080" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIPC^HAWino^HAWino Instance">
@@ -6707,6 +6717,9 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="ControlTask Inputs^MotorDrivers.vThetaCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vThetaToRobot"/>
 				<Link VarA="ControlTask Inputs^MotorDrivers.vXCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vXtoRobot"/>
 				<Link VarA="ControlTask Inputs^MotorDrivers.vYCartesianToMotors" VarB="ControlTask Outputs^ControlPRG.robot.vYtoRobot"/>
+				<Link VarA="Kollisionserkennung_1 Inputs^Kollisionserkennung.robotPoseArray" VarB="PlcTask Outputs^Camera.cameraData.robotPosition"/>
+				<Link VarA="Kollisionserkennung_1 Inputs^Kollisionserkennung.vxRobot" VarB="ControlTask Outputs^ControlPRG.robot.vXtoRobot"/>
+				<Link VarA="Kollisionserkennung_1 Inputs^Kollisionserkennung.vyRobot" VarB="ControlTask Outputs^ControlPRG.robot.vYtoRobot"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.FeedbackToGW1" VarB="PlcTask Outputs^Fahrauftrag.FeedbackToGW1"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.RoboNmbToGoBack" VarB="PlcTask Outputs^Fahrauftrag.RoboNmbToGoBack"/>
 				<Link VarA="MQTT_1 Inputs^MQTT.resetGoBack" VarB="PlcTask Outputs^Fahrauftrag.resetGoBack"/>

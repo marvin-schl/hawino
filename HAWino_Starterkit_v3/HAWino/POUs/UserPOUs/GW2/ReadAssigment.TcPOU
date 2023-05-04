@@ -6,15 +6,13 @@ VAR_INPUT
 	assigment : Auftrag;
 END_VAR
 VAR_OUTPUT
-	//lastPointsToPickup : ARRAY[0..2] OF RobotPoseSimple;		//Weg zum Abholort (letzte Punkte)
 	pointsFromSlotToReader : ARRAY[0..100] OF RobotPoseSimple;	//Weg vom Abholort zur Abmeldung 
-	//lastPointsToStorage : ARRAY[0..2] OF RobotPoseSimple;		//Weg zum Ablageort (letzte Punkte)
 	pointsFromReaderToSlot : ARRAY[0..100] OF RobotPoseSimple;	//Weg vom Abmelden zur Ablage
-	lastPointsToCharging : ARRAY[0..2] OF RobotPoseSimple; 		//Weg zur Ladestation
+	lastPointsToCharging : ARRAY[0..2] OF RobotPoseSimple; 		//letzte Wegpunkte zur Ladestation
 	lastNodePickUp, lastNodeStorage, pickupLocation, readerCheckOut, readerCheckIn, storageLocation, lastNodeCharging, chargingLocation : RobotPoseSimple;
 	parkingSlots : ARRAY[1..4] OF RobotPoseSimple;				//Array mit Parkplätzen der Roboter
-	endNodePickup, endNodeStorage, endNodeCharging : INT;
-	endNodeParking : ARRAY[1..4] OF INT;
+	endNodePickup, endNodeStorage, endNodeCharging : INT;		//Endknoten
+	endNodeParking : ARRAY[1..4] OF INT;						//Knoten für Parkplätze
 END_VAR
 VAR
 END_VAR
@@ -23,14 +21,12 @@ END_VAR
       <ST><![CDATA[//FB zur Verarbeitung der Daten, die aus dem Auftrag kommen
 //es werden Wegpunkte zum Anhängen an die Wegpunktliste und auch Wegpunktlisten zur An- und Abmeldung am RFID Reader generiert
 
-//OFFSET ?????
-
 IF assigment.Art = 'Fahrauftrag' THEN
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////FAHRAUFTRAG/////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	//RFID Leser für Abmeldung
+	//Abholort auswerten
 	IF assigment.AbholStation = 1 THEN
 		IF assigment.AbholTasche = 1 THEN
 			//RFID links anfahren
@@ -47,14 +43,14 @@ IF assigment.Art = 'Fahrauftrag' THEN
 		ELSIF assigment.AbholTasche = 3 THEN
 			//RFID rechts anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 1410, y := 2835, theta := -1);
-			pickupLocation := ToRobotPoseSimple(x := 1303, y := 2835, theta := pi); //test
-			readerCheckOut := ToRobotPoseSimple(x := 1303, y := 2935, theta := pi);	//test
+			pickupLocation := ToRobotPoseSimple(x := 1303, y := 2835, theta := pi); 
+			readerCheckOut := ToRobotPoseSimple(x := 1303, y := 2935, theta := pi);	
 			endNodePickup := 149;
 		ELSIF assigment.AbholTasche = 4 THEN
 			//RFID rechts anfahren	
 			lastNodePickUp := ToRobotPoseSimple(x := 1410, y := 2736, theta := -1);
-			pickupLocation := ToRobotPoseSimple(x := 1300, y := 2736, theta := pi);	//test
-			readerCheckOut := ToRobotPoseSimple(x := 1303, y := 2935, theta := pi);	//test
+			pickupLocation := ToRobotPoseSimple(x := 1300, y := 2736, theta := pi);	
+			readerCheckOut := ToRobotPoseSimple(x := 1303, y := 2935, theta := pi);	
 			endNodePickup := 148;			
 		END_IF
 	ELSIF assigment.AbholStation = 2 THEN
@@ -67,7 +63,7 @@ IF assigment.Art = 'Fahrauftrag' THEN
 		ELSIF assigment.AbholTasche = 2 THEN
 			//RFID links anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 1990, y := 2731, theta := -1);
-			pickupLocation := ToRobotPoseSimple(x := 2110, y := 2731, theta := 0); //test
+			pickupLocation := ToRobotPoseSimple(x := 2110, y := 2731, theta := 0); 
 			readerCheckOut := ToRobotPoseSimple(x := 2110, y := 2931, theta := 0);
 			endNodePickup := 151;
 		ELSIF assigment.AbholTasche = 3 THEN
@@ -79,7 +75,7 @@ IF assigment.Art = 'Fahrauftrag' THEN
 		ELSIF assigment.AbholTasche = 4 THEN
 			//RFID rechts anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 2550, y := 2732, theta := -1);
-			pickupLocation := ToRobotPoseSimple(x := 2435, y := 2732, theta := pi);	//-x
+			pickupLocation := ToRobotPoseSimple(x := 2435, y := 2732, theta := pi);	
 			readerCheckOut := ToRobotPoseSimple(x := 2435, y := 2940, theta := pi);	
 			endNodePickup := 154;			
 		END_IF
@@ -99,8 +95,8 @@ IF assigment.Art = 'Fahrauftrag' THEN
 		ELSIF assigment.AbholTasche = 3 THEN
 			//RFID rechts anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 3760, y := 2840, theta := -1);
-			pickupLocation := ToRobotPoseSimple(x := 3643, y := 2840, theta := pi); //test
-			readerCheckOut := ToRobotPoseSimple(x := 3662, y := 2940, theta := pi); //test
+			pickupLocation := ToRobotPoseSimple(x := 3643, y := 2840, theta := pi); 
+			readerCheckOut := ToRobotPoseSimple(x := 3662, y := 2940, theta := pi); 
 			endNodePickup := 161;	
 		ELSIF assigment.AbholTasche = 4 THEN
 			//RFID rechts anfahren
@@ -125,20 +121,20 @@ IF assigment.Art = 'Fahrauftrag' THEN
 		ELSIF assigment.AbholTasche = 3 THEN
 			//RFID rechts anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 5000, y := 2855, theta := -1);
-			pickupLocation := ToRobotPoseSimple(x := 4875, y := 2855, theta := pi); //test
-			readerCheckOut := ToRobotPoseSimple(x := 4875, y := 2942, theta := pi);	//test
+			pickupLocation := ToRobotPoseSimple(x := 4875, y := 2855, theta := pi); 
+			readerCheckOut := ToRobotPoseSimple(x := 4875, y := 2942, theta := pi);	
 			endNodePickup := 167;
 		ELSIF assigment.AbholTasche = 4 THEN
 			//RFID rechts anfahren
 			lastNodePickUp := ToRobotPoseSimple(x := 5000, y := 2737, theta := -1);
-			pickupLocation := ToRobotPoseSimple(x := 4870, y := 2737, theta := pi); //test
-			readerCheckOut := ToRobotPoseSimple(x := 4875, y := 2942, theta := pi);	//test
+			pickupLocation := ToRobotPoseSimple(x := 4870, y := 2737, theta := pi); 
+			readerCheckOut := ToRobotPoseSimple(x := 4875, y := 2942, theta := pi);	
 			endNodePickup := 166;			
 		END_IF	
 	END_IF
 	
 
-	//Auswählen RFID Leser für Anmeldung
+	//Ablageort auswerten
 	IF assigment.AblageStation = 1 THEN
 		IF assigment.AblageTasche = 1 THEN
 			//RFID links anfahren
@@ -245,37 +241,26 @@ IF assigment.Art = 'Fahrauftrag' THEN
 		END_IF		
 	END_IF
 	
-	
-	//Abholort (3 Punkte) an Wegpunktliste anfügen
-	//lastPointsToPickup[0] := lastNodePickUp;
-	//lastPointsToPickup[0] := ToRobotPoseSimple(x := lastNodePickUp.x, y := pickupLocation.y, theta := pickupLocation.theta);
-	//lastPointsToPickup[0] := pickupLocation;
-	//lastPointsToPickup[1] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
-	
-	//erstellen 3 Wegpunkte für fahren von Tasche zu RFID Leser
+	//3 Wegpunkte für Fahrt von Tasche zu RFID Leser
 	pointsFromSlotToReader[0] := pickupLocation;
 	pointsFromSlotToReader[1] := ToRobotPoseSimple(x := lastNodePickUp.x, y := pickupLocation.y, theta := pickupLocation.theta);
 	pointsFromSlotToReader[2] := ToRobotPoseSimple(x := lastNodePickUp.x, y := readerCheckOut.y, theta := readerCheckOut.theta);
 	pointsFromSlotToReader[3] := readerCheckOut;
 	pointsFromSlotToReader[4] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 	
-	//Ablageort (3 Punkte) an Wegpunktliste anfügen (Ankunft Reader)
-	//lastPointsToStorage[0] := lastNodeStorage;
-	//lastPointsToStorage[0] := ToRobotPoseSimple(x := lastNodeStorage.x, y := readerCheckIn.y, theta := readerCheckIn.theta);
-	//lastPointsToStorage[0] := readerCheckIn;
-	//lastPointsToStorage[1] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
-	
-	//3 Wegpunkte von RFID Leser zu Ablageort
+	//3 Wegpunkte von RFID Leser zu Ablagetasche
 	pointsFromReaderToSlot[0] := readerCheckIn;
 	pointsFromReaderToSlot[1] := ToRobotPoseSimple(x := lastNodeStorage.x, y := readerCheckIn.y, theta := readerCheckIn.theta);
 	pointsFromReaderToSlot[2] := ToRobotPoseSimple(x := lastNodeStorage.x, y := storageLocation.y, theta := storageLocation.theta);
 	pointsFromReaderToSlot[3] := storageLocation;
 	pointsFromReaderToSlot[4] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 
+	
 ELSIF assigment.Art = 'Ladeauftrag' THEN
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////LADEAUFTRAG////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //Abholstation gibt an ob Ladestation 1 oder 2, Rest der Werte wird ignoriert	
 	IF assigment.AbholStation = 1 THEN
 		lastNodeCharging := ToRobotPoseSimple(x := 6117, y := 3100, theta := -1);
@@ -287,7 +272,6 @@ ELSIF assigment.Art = 'Ladeauftrag' THEN
 		endNodeCharging := 170;
 	END_IF
 	
-	//lastPointsToCharging[0] := ToRobotPoseSimple(x := chargingLocation.x, y := lastNodeCharging.y, theta := chargingLocation.theta);
 	lastPointsToCharging[0] := chargingLocation;
 	lastPointsToCharging[1] := ToRobotPoseSimple(x := -1, y := -1, theta := -1);
 END_IF
@@ -296,7 +280,7 @@ END_IF
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////Parkplätze/////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Parkplätze "seitlich" der Ladestation
+
 parkingSlots[1] := ToRobotPoseSimple(x := 1000, y := 500, theta := -1);
 endNodeParking[1] := 3;
 parkingSlots[2] := ToRobotPoseSimple(x := 2200, y := 500, theta := -1);
@@ -311,8 +295,6 @@ endNodeParking[4] := 12;
     <LineIds Name="ReadAssigment">
       <LineId Id="9" Count="0" />
       <LineId Id="349" Count="0" />
-      <LineId Id="619" Count="0" />
-      <LineId Id="618" Count="0" />
       <LineId Id="465" Count="0" />
       <LineId Id="454" Count="2" />
       <LineId Id="448" Count="0" />
@@ -481,11 +463,6 @@ endNodeParking[4] := 12;
       <LineId Id="557" Count="0" />
       <LineId Id="96" Count="0" />
       <LineId Id="64" Count="0" />
-      <LineId Id="124" Count="1" />
-      <LineId Id="130" Count="0" />
-      <LineId Id="145" Count="0" />
-      <LineId Id="134" Count="1" />
-      <LineId Id="429" Count="0" />
       <LineId Id="127" Count="1" />
       <LineId Id="137" Count="0" />
       <LineId Id="638" Count="0" />
@@ -493,18 +470,16 @@ endNodeParking[4] := 12;
       <LineId Id="138" Count="0" />
       <LineId Id="430" Count="0" />
       <LineId Id="139" Count="0" />
-      <LineId Id="59" Count="0" />
-      <LineId Id="140" Count="2" />
-      <LineId Id="431" Count="0" />
-      <LineId Id="100" Count="0" />
       <LineId Id="99" Count="0" />
       <LineId Id="639" Count="0" />
       <LineId Id="146" Count="2" />
       <LineId Id="432" Count="0" />
+      <LineId Id="657" Count="0" />
       <LineId Id="466" Count="0" />
       <LineId Id="453" Count="0" />
       <LineId Id="451" Count="1" />
       <LineId Id="143" Count="0" />
+      <LineId Id="658" Count="0" />
       <LineId Id="469" Count="0" />
       <LineId Id="473" Count="0" />
       <LineId Id="470" Count="0" />
@@ -515,7 +490,7 @@ endNodeParking[4] := 12;
       <LineId Id="559" Count="0" />
       <LineId Id="471" Count="0" />
       <LineId Id="477" Count="0" />
-      <LineId Id="480" Count="1" />
+      <LineId Id="481" Count="0" />
       <LineId Id="478" Count="0" />
       <LineId Id="461" Count="0" />
       <LineId Id="468" Count="0" />

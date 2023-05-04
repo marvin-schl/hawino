@@ -450,7 +450,7 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[//integrate backward
-posBackward[idxBackward] := posBackward[idxBackward-1] - velBackward[idxBackward-1]*deltaT;
+ posBackward[idxBackward] := posBackward[idxBackward-1] - velBackward[idxBackward-1]*deltaT;
 velBackward[idxBackward] := velBackward[idxBackward-1] - acc*deltaT;
 
 //get new minimum acceleration

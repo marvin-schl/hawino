@@ -3,27 +3,29 @@
   <POU Name="AStar" Id="{7641bcc2-8598-421f-b509-a825c115c758}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK AStar
 VAR_INPUT
-	xRobotActual, yRobotActual : LREAL;
-	xEnd, yEnd : LREAL;
-	endNode : INT ;
-	blockedNodes : ARRAY[1..11] OF INT;
+	xRobotActual, yRobotActual : LREAL;						//aktuelle Roboterposition
+	xEnd, yEnd : LREAL;										//Endkoordinaten
+	endNode : INT ;											//Endknoten
+	blockedNodes : ARRAY[1..11] OF INT;						//geblockte Knoten
 END_VAR
 VAR_OUTPUT
-	finishedASearch, AStarFailed : BOOL := FALSE;
-	xCoordinates, yCoordinates : ARRAY[0..100] OF LREAL;
+	finishedASearch, AStarFailed : BOOL := FALSE;			//Erfolg oder Misserfolg von AStern
+	xCoordinates, yCoordinates : ARRAY[0..100] OF LREAL;	//Koordinatenliste des Weges
 END_VAR
 VAR
+	//Nullarrays für Zurücksetzen
 	nullMatrix_Neighbor : ARRAY[1..8,1..5] OF LREAL := [40(0)];
 	nullMatrix_TempArray : ARRAY[1..170,1..7] OF LREAL := [1190(0)];
 	nullOpenList : ARRAY[1..170,1..6] OF LREAL := [1020(0)];
+	
 	numberOfNodes : INT := 144;
-	a, b, c, d, e, i, j, k, m, o, p, q, t, v, w, counter, counter1, number, cnt1, cnt2, cntPark : INT;
 	numberOfColumns : INT := 18;
-	matrix : ARRAY[1..170,1..170] OF LREAL;
+	a, b, c, d, e, i, j, k, m, o, p, q, t, v, w, counter, counter1, number, cnt1, cnt2, cntPark : INT;
+	matrix : ARRAY[1..170,1..170] OF LREAL;				//Adjezenzmatrix
 	row, col : LREAL;
-	xNode, yNode : ARRAY[1..170] OF LREAL;
-	removeNode : ARRAY[0..30] OF INT := [3, 6, 9, 12, 93, 96, 99, 102, 111, 114, 117, 120, 124, 125, 142, 143];
-	startNode : INT := 0; //fragwürdig
+	xNode, yNode : ARRAY[1..170] OF LREAL;				//Koordinaten der Knoten
+	removeNode : ARRAY[0..30] OF INT := [3, 6, 9, 12, 93, 96, 99, 102, 111, 114, 117, 120, 124, 125, 142, 143];	//zu entfernende Knoten
+	startNode : INT := 0;
 	diff_x, diff_y, diff_total : ARRAY[1..170] OF LREAL;
 	min_total : LREAL;
 	openList : ARRAY[1..170,1..6] OF LREAL;
@@ -126,7 +128,7 @@ FOR i := 0 TO numberOfNodes BY 1 DO
 	END_IF
  END_FOR
  
- //neues Raster für Taschenanfahrt
+ //neue Knoten für Taschenanfahrt
  o := 0;
  FOR number := 1 TO 24 BY 6 DO
 	 FOR cnt1 := 0 TO 2 BY 1 DO 
@@ -228,11 +230,6 @@ FOR i := 0 TO numberOfNodes BY 1 DO
  yNode[169] := 3100;
  yNode[170] := 3100;
  
- //Knoten für bessere Anfahrt versetzen, damit nicht zu dicht an Station
- //xNode[94] := 1500;
- //xNode[103] := 5100;
- //xNode[112] := 1500;
- //xNode[121] := 5100;
  
  ////////////////////////////////////////////////////Startposition und Endposition bestimmen //////////////////////////////////////////////////////////////////////////
  
@@ -410,10 +407,8 @@ Zeros(closedList);
 zeros_INT(wayPointList);
 zeros(xCoordinates);
 zeros(yCoordinates);
-//Matrix?
 zeros(xNode);
 zeros(yNode);
-//removeNode?
 zeros(diff_x);
 zeros(diff_y);
 zeros(diff_total);
@@ -494,7 +489,6 @@ END_FOR
       <LineId Id="1310" Count="0" />
       <LineId Id="1257" Count="52" />
       <LineId Id="1256" Count="0" />
-      <LineId Id="1407" Count="4" />
       <LineId Id="825" Count="5" />
       <LineId Id="1355" Count="0" />
       <LineId Id="831" Count="1" />
@@ -519,7 +513,8 @@ END_FOR
     </LineIds>
     <LineIds Name="AStar.reset">
       <LineId Id="5" Count="4" />
-      <LineId Id="20" Count="5" />
+      <LineId Id="21" Count="1" />
+      <LineId Id="24" Count="1" />
       <LineId Id="41" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="13" Count="0" />

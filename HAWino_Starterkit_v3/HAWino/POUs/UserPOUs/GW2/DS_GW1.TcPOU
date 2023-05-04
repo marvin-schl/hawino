@@ -83,7 +83,9 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//Case machen! preop op
+      <ST><![CDATA[//Dummy Programm als Schnittstelle für Gewerk 1
+
+//Case machen! preop op
 txtReadInit := MQTT.txtReadInit;
 IF txtReadInit THEN
 	IF NOT initMQTT THEN
@@ -421,6 +423,7 @@ IF txtReadInit THEN
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="DS_GW1">
+      <LineId Id="1439" Count="1" />
       <LineId Id="1004" Count="161" />
       <LineId Id="1232" Count="7" />
       <LineId Id="1347" Count="0" />
