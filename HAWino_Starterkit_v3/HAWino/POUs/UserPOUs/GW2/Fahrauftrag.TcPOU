@@ -59,7 +59,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[timerCollision();
+      <ST><![CDATA[ timerCollision();
 resetTimer();
 errorTest();
 CameraDataSaved();
@@ -716,7 +716,7 @@ IF sk0 AND NOT sk10 AND otherRoboAtStop AND timerCollision.Q THEN
 	sk0 := 0; sk10 := 1;
 END_IF
 
-IF sk10 THEN
+IF sk10 AND collisionFree THEN //hier neuer Code
 	sk10 := 0;
 	resetCollision();
 END_IF
@@ -805,7 +805,7 @@ IF sk28 AND NOT sk29 AND NOT otherRoboAtStation THEN
 	sk28 := 0; sk29 := 1;
 END_IF
 
-//beide im Stationsbereich und keiner auf Transport an Station
+//beide im Stationsbereich und keiner auf Transport an Station - was wenn die hier gegenüber?
 IF sk26 AND NOT sk30 AND NOT drivingAtStation AND NOT goBack THEN
 	todo := 'Warten';
 	//darf ich fahren? nur wenn kleinere Roboternummer
@@ -976,6 +976,7 @@ END_VAR
         <ST><![CDATA[resetVarMQTT := TRUE;
 TrajectoryController.xBoReset := TRUE;
 ZEROS_RobotPoseSimple(wayPointList);
+closeGripperCommand := True;
 actualCamX := 0;
 actualCamY := 0;
 trajectoryController.newWaypointListAvailable := FALSE;
@@ -1873,7 +1874,9 @@ sk33 := FALSE;]]></ST>
     </LineIds>
     <LineIds Name="Fahrauftrag.doReset">
       <LineId Id="73" Count="1" />
-      <LineId Id="77" Count="5" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="78" Count="4" />
       <LineId Id="84" Count="0" />
       <LineId Id="86" Count="0" />
       <LineId Id="76" Count="0" />
