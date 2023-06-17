@@ -14,9 +14,9 @@ VAR_OUTPUT
 END_VAR
 VAR
 	//declare objects
-	kobserver		  : KalmanObserverST;
+	kobserver		  : KalmanObserver;
 	collisionDetector : collisionDetector;
-	controller		  : SimpleStateFeedbackLaw;			//Control law object
+	controller		  : PController;			//Control law object
 	trajectory		  : TimeOptimalTrajectory;			//Trajectory Object
 	robot			  : Robot;							//link to physical I/O of roboter or simulation model of the roboter
 	robotPoses 	 AT%I*: ARRAY [1..8] OF RobotPose;	    //input from camera

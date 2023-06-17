@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="Curve" Id="{962108ba-b764-4703-887f-44bc4cb4c5ee}" SpecialFunc="None">
+    <Declaration><![CDATA[(*Class Curve
+This class defines the general Structure and the relevant Methods of a concrete Spline. Since it does not make sense to instantiate
+a generalized Spline this class is abstract. Concrete Splines which extend this class have to provide Methods for getting Points to 
+a arbitrary arcLength (getPoint), getting first respectively second derivates of itself at an arbitrary arcLength (diff). The generalized 
+Properties provided by this class is the length of a Spline. startPoint and an endPoint.
+*)
+FUNCTION_BLOCK ABSTRACT Curve
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	lengthVar     :LREAL;				//length of the Spline
+	startPoint 	  : RobotPoseSimple;	//startPoint of the Spline
+	endPoint      : RobotPoseSimple;	//endPoint of the Spline
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="calculateLength" Id="{4c02d6a5-f067-4f4f-86c9-78561224f2c0}">
+      <Declaration><![CDATA[(* 
+IMPLEMENTATION IN SUBCLASS
+For internal inital length calculation, should be called in the constructor => protected
+*)
+METHOD PROTECTED ABSTRACT calculateLength : LREAL
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="diff" Id="{abb1aec0-c192-43c2-a1a2-b654a47047f5}">
+      <Declaration><![CDATA[(* 
+IMPLEMNTATION IN SUBCLASS 
+Calculates the derivate of the spline at an arbitrary arcLength. Should be implmented for order one and two. Invalid 
+orders should write a -1 in every component of the return value.
+*)
+METHOD ABSTRACT diff : RobotPoseSimple
+VAR_INPUT
+	arcLength: LREAL; //arcLength at which the corresponding derivative should be calculated
+	order: INT := 1;  //optional: order of the derivate, should be implemented for 1 and 2, default: 1
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="endPointVal" Id="{7962ae8b-69b1-4349-8d50-e8cc4dc9821e}">
+      <Declaration><![CDATA[(*endpoint of the spline*)
+PROPERTY endPointVal : RobotPoseSimple]]></Declaration>
+      <Get Name="Get" Id="{874295b2-4f0f-444d-8da3-65f51689f278}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[endPointVal := endPoint;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{0a3c1837-43da-4af9-9891-48210de97902}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="getPoint" Id="{e1cf1b15-c371-4375-8f5b-cd02de7ff7af}">
+      <Declaration><![CDATA[(*
+IMPLEMENTATION IN SUBCLASS
+Gets the configuration of the Spline at any given arcLength. 
+*)
+METHOD PUBLIC ABSTRACT getPoint : RobotPoseSimple
+VAR_INPUT
+	arcLength: LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="length" Id="{8ff29e3f-4d60-4193-9ab3-f3fd25f3230c}">
+      <Declaration><![CDATA[(* Length of the Spline*)
+PROPERTY length : LREAL]]></Declaration>
+      <Get Name="Get" Id="{4402e7a9-338c-477a-a725-7a816516dece}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ length := lengthVar;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{28a4e29e-362e-4b36-b064-686c9255d71b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="startPointVal" Id="{31816552-8dd4-4368-92f9-6cd8ac4228ea}">
+      <Declaration><![CDATA[(* Startpoint of the Spline *)
+PROPERTY startPointVal : RobotPoseSimple]]></Declaration>
+      <Get Name="Get" Id="{a5ae9440-f337-4737-a62f-30ed86d8e10f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[startPointVal.x := startPoint.x;
+startPointVal.y := startPoint.y;
+startPointVal.theta := startPoint.theta;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{9518b61d-5289-4168-b250-5ef7f6373079}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="Curve">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Curve.calculateLength">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Curve.diff">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Curve.endPointVal.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Curve.endPointVal.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Curve.getPoint">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Curve.length.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Curve.length.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Curve.startPointVal.Get">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="1" />
+    </LineIds>
+    <LineIds Name="Curve.startPointVal.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

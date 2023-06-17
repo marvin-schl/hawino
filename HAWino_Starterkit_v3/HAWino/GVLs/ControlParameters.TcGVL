@@ -11,7 +11,7 @@ VAR_GLOBAL
 	FeedForwardLinearization: BOOL := FALSE;
 
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++	
-	//Parameters for SimpleStateFeedbackLaw (Controller)
+	//Parameters for PController (Controller)
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++
 	
 	//controller Gain Matrix
@@ -30,18 +30,17 @@ VAR_GLOBAL
 	
 					
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++	
-	//Parameters for KalmanST (Observer)
+	//Parameters for KalmanObserver (Observer)
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++
 	
-	//amount of cycles camera is delayed (Camdelay 160ms / Cycletyme 2ms)
+	//amount of cycles camera is delayed (Camdelay 123ms / Cycletyme 2ms)
 	kObsDelayedCycles: INT	:= 61;
 	
-	//Camera Measurement Covariance Matrix
+	//Encoder Process Noise Covariance Matrix
 	Q : ARRAY [0..2,0..2] OF LREAL 		:=[9.3047,    0.4415,   -0.0036,
     									   0.4415,    26.0708,   -0.0078,
    										  -0.0036,   -0.0078,    0.0007];
-	
-	//Encoder Process Noise Covariance Matrix										  
+	//Camera Measurement Covariance Matrix								  
 	RMat : ARRAY [0..2, 0..2] OF LREAL 	:= [0.00127820524383046,    -0.00144745069148629,    1.57202639633006E-06,
 											-0.00144745069148629,    0.0142936660651043,      -2.43008878392535E-05,
 											1.57202639633006E-06,    -2.43008878392535E-05,	  2.50703907504212E-07];
@@ -56,7 +55,6 @@ VAR_GLOBAL
 	// Bezier radius												
     maxRadius		    : LREAL				:= 0.1;
 	
-	//
 	samplingTime		: LREAL				:= 0.05;
 	
 	

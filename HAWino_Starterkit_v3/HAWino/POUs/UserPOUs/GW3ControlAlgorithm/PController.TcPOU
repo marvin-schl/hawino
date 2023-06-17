@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
-  <POU Name="SimpleStateFeedbackLaw" Id="{b6b00111-b334-4516-8a6e-fa6dcb5c765f}" SpecialFunc="None">
-    <Declaration><![CDATA[(*SimpleStateFeedbackLaw:
+  <POU Name="PController" Id="{b6b00111-b334-4516-8a6e-fa6dcb5c765f}" SpecialFunc="None">
+    <Declaration><![CDATA[(*PController:
 Implements a simple state feedback law with a 3x3 control gain matrix 'K', 
 a translation speed limit 'vtrans_max' (x- and y-axis) and a rotational speed 
 limit 'vrot_max'.
 *)
-FUNCTION_BLOCK SimpleStateFeedbackLaw
+FUNCTION_BLOCK PController
 VAR_INPUT
 	xRobotPose: 		RobotPoseSimple; 				//current pose
 	xRobotPoseRef: 		RobotPoseSimple; 				//reference pose
@@ -88,7 +88,7 @@ END_VAR
 reset := TRUE;]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="SimpleStateFeedbackLaw">
+    <LineIds Name="PController">
       <LineId Id="378" Count="1" />
       <LineId Id="9" Count="0" />
       <LineId Id="19" Count="0" />
@@ -121,7 +121,7 @@ reset := TRUE;]]></ST>
       <LineId Id="154" Count="0" />
       <LineId Id="46" Count="0" />
     </LineIds>
-    <LineIds Name="SimpleStateFeedbackLaw.reset">
+    <LineIds Name="PController.reset">
       <LineId Id="5" Count="0" />
       <LineId Id="9" Count="0" />
     </LineIds>

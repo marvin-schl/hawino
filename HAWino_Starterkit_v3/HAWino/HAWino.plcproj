@@ -126,13 +126,7 @@
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\CollisionDetector.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\KalmanObserverST.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\LPF1.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\NonlinearController.TcPOU">
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\KalmanObserver.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\NonLinearController.TcPOU">
@@ -144,10 +138,7 @@
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\SimpleObserver.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\SimpleObserverST.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\SimpleStateFeedbackLaw.TcPOU">
+    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\PController.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\SimpleTrajectory.TcPOU">
@@ -162,46 +153,22 @@
     <Compile Include="POUs\UserPOUs\FKT_Scale.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\GW2DummyPRG.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\TrackingController1.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\UserPOUs\GW3ControlAlgorithm\VelocityMeasurement.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning\BezierCurve.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning\LinearSpline.TcPOU">
+    <Compile Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning\LinearCurve.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning\Path.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning\Spline.TcPOU">
+    <Compile Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning\Curve.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning\TrajectoryPlanner.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\UserPOUs\TestTrajectory.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\UserPOUs\TestAndMeasurement\CameraNoise.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\UserPOUs\TestAndMeasurement\MeasureVariance.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\UserPOUs\TestAndMeasurement\ParameterEstimation.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\UserPOUs\TestAndMeasurement\ParameterEstimation_1.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\UserPOUs\TestAndMeasurement\Sinusfahrt.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\UserPOUs\UserFunctions\AddMat3.TcPOU">
@@ -297,7 +264,6 @@
     <Folder Include="POUs\UserPOUs\GW3ControlAlgorithm" />
     <Folder Include="POUs\UserPOUs\GW3PathAndTrajectoryPlanning" />
     <Folder Include="POUs\UserPOUs\UserFunctions" />
-    <Folder Include="POUs\UserPOUs\TestAndMeasurement" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
